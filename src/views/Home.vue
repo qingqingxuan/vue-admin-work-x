@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <img src="../assets/logo.png" @click="imageClick" />
+    <HelloWorld :msg="message" />
   </div>
 </template>
 
@@ -15,5 +15,14 @@ import { testClassDeco } from "../utils";
   },
 })
 @testClassDeco
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  message = "this is message";
+  mounted(): void {
+    console.log("mounted");
+  }
+  imageClick() {
+    console.log(this);
+    this.message = "this is new message";
+  }
+}
 </script>

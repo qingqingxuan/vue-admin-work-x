@@ -1,35 +1,35 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import { createRouter, createWebHashHistory } from "vue-router";
+import Home from "../views/Home.vue";
 
-import LayoutStore, { Layout } from 'vaw-layouts-x'
+import LayoutStore, { Layout } from "vaw-layouts-x";
 
 const routes = [
   {
-    path: '/',
-    name: 'root',
+    path: "/",
+    name: "root",
     component: Layout,
     meta: {
-      title: 'Dashboard'
+      title: "Dashboard",
     },
     children: [
       {
-        path: 'index',
-        name: 'Home',
+        path: "index",
+        name: "Home",
         component: Home,
         meta: {
-          title: '首页',
-          affix: true
-        }
-      }
-    ]
-  }
-]
+          title: "首页",
+          affix: true,
+        },
+      },
+    ],
+  },
+];
 
-LayoutStore.initPermissionRoute(routes)
+LayoutStore.initPermissionRoute(routes);
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
