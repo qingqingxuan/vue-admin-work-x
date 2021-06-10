@@ -25,6 +25,8 @@ module.exports = {
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
+    // eslint-disable-next-line
+    'vue/no-multiple-template-root': 0,
     'vue/html-self-closing': ['error', {
       'html': {
         'void': 'always',
