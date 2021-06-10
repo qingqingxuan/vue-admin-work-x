@@ -1,32 +1,19 @@
 <template>
   <div class="home">
-    <img
-      alt="Vue logo"
-      src="../assets/logo.png"
-    />
-    <HelloWorld :msg="react.name" />
-    <button @click="changeName">改一下名</button>
+    <img src="../assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import { ref } from '@vue/reactivity'
-
-export default {
-  name: 'Home',
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
+import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { testClassDeco } from "../utils";
+@Options({
   components: {
-    HelloWorld
+    HelloWorld,
   },
-  setup() {
-    const react = ref({
-      name: '张三'
-    })
-    const changeName = function () {
-      react.name = 'new 张三'
-    }
-    return { react, changeName }
-  }
-}
+})
+@testClassDeco
+export default class Home extends Vue {}
 </script>
