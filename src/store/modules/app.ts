@@ -7,6 +7,14 @@ export const appModule: Module<AppState, RootState> = {
     version: "1.0.0",
     layoutMode: "lcr",
   },
+  getters: {
+    getVersion(state): string {
+      return state.version;
+    },
+    getLayoutMode(state): string {
+      return state.layoutMode;
+    },
+  },
   actions: {
     changeVersion({ commit }, newVersion) {
       commit("CHANGE_VERSION", newVersion);

@@ -2,7 +2,9 @@
   <div class="home">
     <img src="../assets/logo.png" @click="imageClick" />
     <div @click="nickNameClick">{{ userState.user.nickName }}</div>
-    <div @click="changeVersion('12345612345646')">12 {{ name }}</div>
+    <div @click="changeVersion('12345612345646')">
+      12 {{ name }} 12 {{ version + "   " + layoutMode }}
+    </div>
     <HelloWorld :msg="message" />
   </div>
 </template>
@@ -10,7 +12,7 @@
 <script lang="ts">
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 import { defineComponent, ref } from "vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import { ParentState } from "@/store/types";
 import { useStore } from "@/store";
 export default defineComponent({
@@ -22,6 +24,12 @@ export default defineComponent({
         return state.app.version;
       },
     }),
+    ...mapGetters({
+      version: "app/getVersion",
+    }),
+    layoutMode() {
+      return this.$store.getters["app/getLayoutMode"];
+    },
   },
   methods: {
     ...mapActions("app", ["changeVersion"]),
