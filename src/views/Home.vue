@@ -1,28 +1,48 @@
 <template>
   <div class="home">
     <img src="../assets/logo.png" @click="imageClick" />
+    <div @click="nickNameClick">{{ userState.user.nickName }}</div>
+    <div @click="changeVersion('12345612345646')">12 {{ name }}</div>
     <HelloWorld :msg="message" />
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
-import { testClassDeco } from "../utils";
-@Options({
-  components: {
-    HelloWorld,
+import { defineComponent, ref } from "vue";
+import { mapActions, mapState } from "vuex";
+import { ParentState } from "@/store/types";
+import { useStore } from "@/store";
+export default defineComponent({
+  name: "Home",
+  components: { HelloWorld },
+  computed: {
+    ...mapState<ParentState>({
+      name: (state: ParentState) => {
+        return state.app.version;
+      },
+    }),
   },
-})
-@testClassDeco
-export default class Home extends Vue {
-  message = "this is message";
-  mounted(): void {
-    console.log("mounted");
-  }
-  imageClick() {
-    console.log(this);
-    this.message = "this is new message";
-  }
-}
+  methods: {
+    ...mapActions("app", ["changeVersion"]),
+    nickNameClick() {
+      this.$store.dispatch("user/changeNickName", "太阳花");
+    },
+  },
+  setup() {
+    const message = ref("this is message");
+    const a = ref(10);
+    const store = useStore();
+    const userState = store.state;
+    // const nickNameClick = () => {
+    //   store.dispatch("user/changeNickName", "太阳花");
+    // };
+    return {
+      message,
+      a,
+      userState,
+      // nickNameClick,
+    };
+  },
+});
 </script>

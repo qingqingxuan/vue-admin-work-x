@@ -19,4 +19,7 @@ module.exports = {
     "@vue/prettier",
     "@vue/prettier/@typescript-eslint",
   ],
+  rules: {
+    "@typescript-eslint/no-explicit-any": ["off"],
+  },
 };
