@@ -1,6 +1,6 @@
 import { baseAddress } from "@/api/url";
 import Mock from "mockjs";
-import { baseData } from "../base";
+import { baseData } from "../base.ts";
 
 export const adminRoutes = [
   {

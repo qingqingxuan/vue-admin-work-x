@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home.vue";
 import Login from "@/views/login/index.vue";
 
 import { Layout } from "vaw-layouts-x";
@@ -28,10 +27,18 @@ export const routes = [
       {
         path: "index",
         name: "Home",
-        component: Home,
+        component: (): any => import('@/views/index/main.vue'),
         meta: {
-          title: "首页",
+          title: "主控台",
           affix: true,
+        },
+      },
+      {
+        path: "work-place",
+        name: "WorkPlace",
+        component: (): any => import('@/views/index/work-place.vue'),
+        meta: {
+          title: "工作台",
         },
       },
     ],

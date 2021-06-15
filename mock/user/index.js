@@ -6,7 +6,7 @@ import {
 } from "@/api/url";
 import { randomString } from "@/utils";
 import Mock from "mockjs";
-import { baseData } from "../base";
+import { baseData } from "../base.ts";
 import { adminRoutes, editorRoutes } from "../router";
 
 Mock.mock(RegExp(login), function (options) {

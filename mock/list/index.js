@@ -1,5 +1,5 @@
 import Mock, { Random } from "mockjs";
-import { baseData } from "../base";
+import { baseData } from "../base.ts";
 import {
   getDepartmentList,
   getTableList,
