@@ -1,9 +1,12 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png" @click="imageClick" />
+    <img
+      src="../assets/logo.png"
+      @click="imageClick"
+    />
     <div @click="nickNameClick">{{ userState.user.nickName }}</div>
     <div @click="changeVersion('12345612345646')">
-      12 {{ name }} 12 {{ version + "   " + layoutMode }}
+      12 {{ userName }} 12 {{ version + "   " + layoutMode }}
     </div>
     <HelloWorld :msg="message" />
   </div>
@@ -20,15 +23,15 @@ export default defineComponent({
   components: { HelloWorld },
   computed: {
     ...mapState<ParentState>({
-      name: (state: ParentState) => {
-        return state.app.version;
+      userName: (state: ParentState) => {
+        return state.user.userName;
       },
     }),
     ...mapGetters({
       version: "app/getVersion",
     }),
     layoutMode() {
-      return this.$store.getters["app/getLayoutMode"];
+      return this.$store.getters["app/getAppName"];
     },
   },
   methods: {

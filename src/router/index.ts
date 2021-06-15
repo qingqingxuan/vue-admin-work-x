@@ -2,9 +2,14 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import Login from "@/views/login/index.vue";
 
-import LayoutStore, { Layout } from "vaw-layouts-x";
+import { Layout } from "vaw-layouts-x";
 
-const routes = [
+export const routes = [
+  {
+    path: '/404',
+    hidden: true,
+    component: (): any => import('@/views/404.vue')
+  },
   {
     path: "/login",
     name: "Login",
@@ -32,8 +37,6 @@ const routes = [
     ],
   },
 ];
-
-LayoutStore.initPermissionRoute(routes);
 
 const router = createRouter({
   history: createWebHashHistory(),
