@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png" @click="imageClick" />
+    <img
+      src="../assets/logo.png"
+      @click="imageClick"
+    />
     <div @click="nickNameClick">{{ userState.user.nickName }}</div>
     <div @click="changeVersion('12345612345646')">
       12 {{ userName }} 12 {{ version + "   " + layoutMode }}

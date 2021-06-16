@@ -42,14 +42,11 @@ function getRoutes() {
 }
 
 
+
 function getComponent(it: OriginRoute) {
-  return (resolve: any) => {
-    if (it.children && it.children.length > 0) {
-      require(['vaw-layouts-x/src/components/RouteViewLayout.vue'], resolve)
-    } else {
-      require(['@/views' + it.menuUrl], resolve)
-    }
-  }
+  return it.children && it.children.length > 0 ? 
+    (): any => import('vaw-layouts-x/src/components/RouterViewLayout.vue') : 
+    (): any => import('@/views' + it.menuUrl + '.vue')
 }
 
 function getCharCount(str: string, char: string) {
@@ -82,7 +79,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
         affix: !!it.affix,
         cacheable: !!it.cacheable,
         icon: it.icon || '',
-        tip: it.tip
+        badge: it.tip
       }
     }
     if (it.children) {
@@ -99,7 +96,7 @@ function isTokenExpired(): boolean {
   const token = Cookies.get("admin-token");
   return !!token;
 }
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   NProgress.start();
   if (whiteRoutes.includes(to.path)) {
     NProgress.done();
@@ -116,19 +113,18 @@ router.beforeEach((to) => {
       if (isEmptyRoute) {
         // 加载路由
         const accessRoutes: Array<RouteRecordRaw> = []
-        getRoutes().then(routes => {
-          accessRoutes.push(...routes)
-          accessRoutes.push({
-            path: '/:pathMatch(.*)*',
-            redirect: '/404',
-            hidden: true
-          } as RouteRecordRaw)
-          LayoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
-          accessRoutes.forEach(it => {
-            router.addRoute(it)
-          })
-          return { ...to, replace: true }
+        const tempRoutes = await getRoutes()
+        accessRoutes.push(...tempRoutes)
+        accessRoutes.push({
+          path: '/:pathMatch(.*)*',
+          redirect: '/404',
+          hidden: true
+        } as RouteRecordRaw)
+        accessRoutes.forEach(it => {
+          router.addRoute(it)
         })
+        LayoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
+        return { ...to, replace: true }
       } else {
         return true;
       }

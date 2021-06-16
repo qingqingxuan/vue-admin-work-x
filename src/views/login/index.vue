@@ -97,7 +97,7 @@ export default defineComponent({
               .replace({
                 path: route.query.redirect
                   ? (route.query.redirect as string)
-                  : "/index",
+                  : "/",
               })
               .then(() => {
                 loading.value = false;

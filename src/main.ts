@@ -14,14 +14,17 @@ import * as urlPath from "@/api/url";
 import "../mock/index.ts";
 import { registerComponents } from "./components";
 
+import { TinyEmitter } from 'tiny-emitter'
+
 const app = createApp(App);
 app.config.globalProperties.$urlPath = urlPath;
 app.config.globalProperties.$isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
 app.config.globalProperties.$isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1
+app.config.globalProperties.$emitter = new TinyEmitter();
 registerComponents(app);
 app.use(LayoutStore, {
   state: {
-    layoutMode: "ltr"
+    layoutMode: 'ltr'
   },
   actions: {
     onLogout() {
@@ -41,5 +44,6 @@ declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
     $isMobile: boolean;
     $isAndroid: boolean;
+    $emitter: TinyEmitter;
   }
 }

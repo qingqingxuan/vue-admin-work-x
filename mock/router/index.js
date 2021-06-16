@@ -4,28 +4,28 @@ import { baseData } from "../base.ts";
 
 export const adminRoutes = [
   {
-    menuUrl: "/authority",
+    menuUrl: "/system",
     menuName: "系统管理",
     icon: "system",
     tip: "new",
     children: [
       {
-        menuUrl: "/authority/department",
+        menuUrl: "/system/department",
         menuName: "部门管理",
         tip: "new",
       },
       {
-        menuUrl: "/authority/user",
+        menuUrl: "/system/user",
         menuName: "用户管理",
         tip: "circle",
       },
       {
-        menuUrl: "/authority/role",
+        menuUrl: "/system/role",
         menuName: "角色管理",
         tip: "12",
       },
       {
-        menuUrl: "/authority/menu",
+        menuUrl: "/system/menu",
         menuName: "菜单管理",
       },
     ],
@@ -56,7 +56,7 @@ export const adminRoutes = [
   {
     menuUrl: "/form",
     menuName: "表单页面",
-    tip: "circle",
+    tip: "dot",
     icon: "form",
     children: [
       {

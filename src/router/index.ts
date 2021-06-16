@@ -16,16 +16,20 @@ export const routes = [
     component: Login,
   },
   {
-    path: "/",
+    path: '/',
+    redirect: '/index/home',
+    hidden: true
+  },
+  {
+    path: "/index",
     name: "root",
     component: Layout,
-    redirect: "/index",
     meta: {
       title: "Dashboard",
     },
     children: [
       {
-        path: "index",
+        path: "home",
         name: "Home",
         component: (): any => import('@/views/index/main.vue'),
         meta: {

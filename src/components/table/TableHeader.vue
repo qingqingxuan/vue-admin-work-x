@@ -1,11 +1,23 @@
 <template>
-  <div id="tableHeaderContainer" class="table-header-container">
-    <el-card :body-style="{padding: '0px'}" shadow="never">
+  <div
+    id="tableHeaderContainer"
+    class="table-header-container"
+  >
+    <el-card
+      :body-style="{padding: '0px'}"
+      shadow="never"
+    >
       <template #header>
         <div class="wrapper">
-          <el-link :underline="false" @click="collapsed">{{ title }}
-            <i v-if="showArrow" :class="showSearchContent ? 'el-icon-caret-bottom' : 'el-icon-caret-top'"></i>
-          </el-link>
+          <strong
+            :underline="false"
+            @click="collapsed"
+          >{{ title }}
+            <i
+              v-if="showArrow"
+              :class="showSearchContent ? 'el-icon-caret-bottom' : 'el-icon-caret-top'"
+            ></i>
+          </strong>
           <div class="left-wrapper">
             <slot name="left"></slot>
           </div>
@@ -16,40 +28,130 @@
         </div>
       </template>
       <el-collapse-transition>
-        <div v-if="collapsedState" class="search-content-wrapper">
-          <el-row v-for="(row, i) of filterSearchModel" :key="i" :gutter="20" :class="{'margin-top' : i !== 0}">
-            <el-col v-for="(item, index) of row" :key="index" :span=" $isMobile ? 24 : (row.length === 1 && item.type === 'action') ? 24 : item.span || 8">
-              <div v-if="item.type === 'input'" class="flex search-item-wrapper">
+        <div
+          v-if="collapsedState"
+          class="search-content-wrapper"
+        >
+          <el-row
+            v-for="(row, i) of filterSearchModel"
+            :key="i"
+            :gutter="20"
+            :class="{'margin-top' : i !== 0}"
+          >
+            <el-col
+              v-for="(item, index) of row"
+              :key="index"
+              :span=" $isMobile ? 24 : (row.length === 1 && item.type === 'action') ? 24 : item.span || 8"
+            >
+              <div
+                v-if="item.type === 'input'"
+                class="flex search-item-wrapper"
+              >
                 <span>{{ item.label }}</span>
-                <el-input v-model="item.value" :placeholder="item.placeholder || '请输入内容'" size="small" clearable class="form-item" />
+                <el-input
+                  v-model="item.value"
+                  :placeholder="item.placeholder || '请输入内容'"
+                  size="small"
+                  clearable
+                  class="form-item"
+                />
               </div>
-              <div v-else-if="item.type === 'select'" class="flex search-item-wrapper">
+              <div
+                v-else-if="item.type === 'select'"
+                class="flex search-item-wrapper"
+              >
                 <span>{{ item.label }}</span>
-                <el-select v-model="item.value" :placeholder="item.placeholder || '请选择条目'" size="small" :filterable="item.filterable ? true : false" clearable class="form-item" @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})">
-                  <el-option v-for="optionItem in item.selectOptions" :key="optionItem.value" :value="optionItem.value" :label="optionItem.label" />
+                <el-select
+                  v-model="item.value"
+                  :placeholder="item.placeholder || '请选择条目'"
+                  size="small"
+                  :filterable="item.filterable ? true : false"
+                  clearable
+                  class="form-item"
+                  @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
+                >
+                  <el-option
+                    v-for="optionItem in item.selectOptions"
+                    :key="optionItem.value"
+                    :value="optionItem.value"
+                    :label="optionItem.label"
+                  />
                 </el-select>
               </div>
-              <div v-else-if="item.type === 'date-range'" class="flex search-item-wrapper">
+              <div
+                v-else-if="item.type === 'date-range'"
+                class="flex search-item-wrapper"
+              >
                 <span>{{ item.label }}</span>
-                <el-date-picker v-model="item.value" type="daterange" range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" class="form-item" size="small" />
+                <el-date-picker
+                  v-model="item.value"
+                  type="daterange"
+                  range-separator="-"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
+                  class="form-item"
+                  size="small"
+                />
               </div>
-              <div v-else-if="item.type === 'date'" class="flex search-item-wrapper">
+              <div
+                v-else-if="item.type === 'date'"
+                class="flex search-item-wrapper"
+              >
                 <span>{{ item.label }}</span>
-                <el-date-picker v-model="item.value" type="date" range-separator="-" :placeholder="item.placeholder || '请选择日期'" class="form-item" size="small" />
+                <el-date-picker
+                  v-model="item.value"
+                  type="date"
+                  range-separator="-"
+                  :placeholder="item.placeholder || '请选择日期'"
+                  class="form-item"
+                  size="small"
+                />
               </div>
-              <div v-else-if="item.type === 'datetime'" class="flex search-item-wrapper">
+              <div
+                v-else-if="item.type === 'datetime'"
+                class="flex search-item-wrapper"
+              >
                 <span>{{ item.label }}</span>
-                <el-date-picker v-model="item.value" type="datetime" :placeholder="item.placeholder || '请选择日期'" class="form-item" size="small" />
+                <el-date-picker
+                  v-model="item.value"
+                  type="datetime"
+                  :placeholder="item.placeholder || '请选择日期'"
+                  class="form-item"
+                  size="small"
+                />
               </div>
-              <div v-else-if="item.type === 'time'" class="flex search-item-wrapper">
+              <div
+                v-else-if="item.type === 'time'"
+                class="flex search-item-wrapper"
+              >
                 <span>{{ item.label }}</span>
-                <el-time-picker v-model="item.value" arrow-control :picker-options="{
+                <el-time-picker
+                  v-model="item.value"
+                  arrow-control
+                  :picker-options="{
                     selectableRange: '00:00:00 - 23:59:59'
-                  }" :placeholder="item.placeholder || '请选择时间'" class="form-item" size="small" />
+                  }"
+                  :placeholder="item.placeholder || '请选择时间'"
+                  class="form-item"
+                  size="small"
+                />
               </div>
-              <div v-else-if="item.type === 'action'" class="flex justify-end">
-                <el-button type="success" size="mini" icon="el-icon-refresh" @click="resetSearch">重置</el-button>
-                <el-button type="primary" size="mini" icon="el-icon-search" @click="doSearch">搜索</el-button>
+              <div
+                v-else-if="item.type === 'action'"
+                class="flex justify-end"
+              >
+                <el-button
+                  type="success"
+                  size="mini"
+                  icon="el-icon-refresh"
+                  @click="resetSearch"
+                >重置</el-button>
+                <el-button
+                  type="primary"
+                  size="mini"
+                  icon="el-icon-search"
+                  @click="doSearch"
+                >搜索</el-button>
               </div>
             </el-col>
           </el-row>
@@ -122,9 +224,9 @@ export default defineComponent({
   },
   mounted() {
     this.$nextTick(() => {
-      this.$parent?.$emit(
+      this.$emitter.emit(
         "tableHeightChanged",
-        document.getElementById("tableHeaderContainer")?.offsetHeight,
+        document.getElementById("tableHeaderContainer")?.offsetHeight
       );
     });
   },
@@ -133,9 +235,9 @@ export default defineComponent({
       this.showSearchContent = !this.showSearchContent;
       // 等动画执行完成，再获取高度，否则获取的高度是不准确的
       setTimeout(() => {
-        this.$parent?.$emit(
+        this.$emitter.emit(
           "tableHeightChanged",
-          document.getElementById("tableHeaderContainer")?.offsetHeight,
+          document.getElementById("tableHeaderContainer")?.offsetHeight
         );
       }, 350);
     },

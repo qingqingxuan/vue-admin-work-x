@@ -4,7 +4,6 @@ import { Module } from "vuex";
 import { UserState, RootState } from "../types";
 
 const userInfo: UserState = JSON.parse(localStorage.getItem('user-info') || '{}')
-
 LayoutStore.setUserInfo({
   nickName: userInfo.nickName || 'admin',
   avatar: userInfo.avatar || 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
