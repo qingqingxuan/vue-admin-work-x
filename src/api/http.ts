@@ -37,12 +37,13 @@ function http({
   };
   beforeRequest && beforeRequest();
   method = method || "GET";
+  const params = Object.assign(typeof data === 'function' ? data() : data || {}, {})
   return method === "GET"
     ? request
-        .get(url, { params: data || {} })
+        .get(url, { params })
         .then(successHandler, failHandler)
     : request
-        .post(url, data || {}, { headers: headers })
+        .post(url, params, { headers: headers })
         .then(successHandler, failHandler);
 };
 

@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <TableHeader></TableHeader>
+    <TableHeader ref="tableHeader"></TableHeader>
     <TableBody ref="tableBody">
       <template #default>
         <el-table
@@ -75,6 +75,7 @@
         </el-table>
       </template>
     </TableBody>
+    <TableFooter ref="tableFooter" />
   </div>
 </template>
 
@@ -86,11 +87,16 @@ export default defineComponent({
   name: "Department",
   mixins: [TableMixin],
   mounted() {
-    this.$post({
-      url: this.$urlPath.getDepartmentList,
-    }).then((res) => {
-      this.dataList = res.data;
-    });
+    this.doRefresh();
+  },
+  methods: {
+    doRefresh() {
+      this.$post({
+        url: this.$urlPath.getDepartmentList,
+      }).then((res) => {
+        this.handleSuccess({ data: res.data });
+      });
+    },
   },
 });
 </script>

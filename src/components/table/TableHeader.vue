@@ -9,15 +9,21 @@
     >
       <template #header>
         <div class="wrapper">
-          <strong
-            :underline="false"
-            @click="collapsed"
-          >{{ title }}
-            <i
-              v-if="showArrow"
-              :class="showSearchContent ? 'el-icon-caret-bottom' : 'el-icon-caret-top'"
-            ></i>
-          </strong>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            :content="showArrow ? '点击展开/收起查询条件' : title"
+            placement="top"
+          >
+            <el-button
+              type="text"
+              @click="collapsed"
+            >
+              {{ title }}<i
+                v-if="showArrow"
+                :class="showSearchContent ? 'el-icon-caret-bottom' : 'el-icon-caret-top'"
+              ></i></el-button>
+          </el-tooltip>
           <div class="left-wrapper">
             <slot name="left"></slot>
           </div>
@@ -28,15 +34,13 @@
         </div>
       </template>
       <el-collapse-transition>
-        <div
-          v-if="collapsedState"
-          class="search-content-wrapper"
-        >
+        <div v-show="collapsedState">
           <el-row
             v-for="(row, i) of filterSearchModel"
             :key="i"
             :gutter="20"
             :class="{'margin-top' : i !== 0}"
+            class="search-content-wrapper"
           >
             <el-col
               v-for="(item, index) of row"
@@ -184,6 +188,7 @@ export default defineComponent({
       default: true,
     },
   },
+  inject: ["mEmit"],
   data() {
     return {
       showSearchContent: this.defaultCollapsedState,
@@ -224,7 +229,7 @@ export default defineComponent({
   },
   mounted() {
     this.$nextTick(() => {
-      this.$emitter.emit(
+      this.mEmit.emit(
         "tableHeightChanged",
         document.getElementById("tableHeaderContainer")?.offsetHeight
       );
@@ -233,13 +238,6 @@ export default defineComponent({
   methods: {
     collapsed() {
       this.showSearchContent = !this.showSearchContent;
-      // 等动画执行完成，再获取高度，否则获取的高度是不准确的
-      setTimeout(() => {
-        this.$emitter.emit(
-          "tableHeightChanged",
-          document.getElementById("tableHeaderContainer")?.offsetHeight
-        );
-      }, 350);
     },
     doSearch() {
       this.$emit("doSearch");
@@ -252,6 +250,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+:deep(.el-card__header) {
+  padding: 0px 10px;
+}
+
 .table-header-container {
   .wrapper {
     display: flex;

@@ -5,6 +5,8 @@ import "./utils/router";
 import store, { key } from "./store";
 import ElementPlus from "element-plus";
 import "element-plus/lib/theme-chalk/index.css";
+import 'dayjs/locale/zh-cn'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 import "@/styles/main.css"
 
 import LayoutStore from "vaw-layouts-x";
@@ -36,7 +38,7 @@ app.use(LayoutStore, {
   registerElement: false,
 });
 app.use(store, key).use(router);
-app.use(ElementPlus);
+app.use(ElementPlus, {locale});
 app.use(http);
 app.mount("#app");
 
@@ -45,5 +47,6 @@ declare module "@vue/runtime-core" {
     $isMobile: boolean;
     $isAndroid: boolean;
     $emitter: TinyEmitter;
+    mEmit: TinyEmitter;
   }
 }

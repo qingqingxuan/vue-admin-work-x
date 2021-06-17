@@ -1,16 +1,14 @@
 <template>
   <div class="main-container">
-    <TableHeader :can-collapsed="false">
-      <template v-slot:right>
-        <el-button
-          type="danger"
-          size="mini"
-          icon="el-icon-delete"
-          @click="onDeleteItems"
-        >删除
-        </el-button>
-      </template>
-    </TableHeader>
+    <TableHeader
+      ref="tableHeader"
+      :can-collapsed="likeSearchModel.conditionItems && likeSearchModel.conditionItems.length !== 0"
+      :search-model="likeSearchModel.conditionItems"
+      :default-collapsed-state="true"
+      title="查询条件"
+      @doSearch="doSearch"
+      @resetSearch="likeSearchModel.resetSearch"
+    />
     <TableBody ref="tableBody">
       <template #default>
         <el-table
@@ -21,12 +19,7 @@
           :size="tableConfig.size"
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
-          @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            width="45"
-          />
           <el-table-column
             align="center"
             label="序号"
@@ -48,7 +41,7 @@
             <template v-slot="scope">
               <div class="avatar-container">
                 <el-image
-                  :src="require('@/assets/img_avatar_01.jpeg')"
+                  :src="require('@/assets/img_avatar_default.png')"
                   class="avatar"
                   :class="{'avatar-vip' : scope.row.vip === 1}"
                 />
@@ -77,6 +70,18 @@
           </el-table-column>
           <el-table-column
             align="center"
+            label="状态"
+          >
+            <template v-slot="scope">
+              <el-switch
+                v-model="scope.row.status"
+                :active-value="1"
+                :inactive-value="0"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column
+            align="center"
             label="地址"
             prop="address"
           />
@@ -92,29 +97,6 @@
             prop="lastLoginIp"
             width="130px"
           />
-          <el-table-column
-            align="center"
-            label="状态"
-          >
-            <template v-slot="scope">
-              <el-switch
-                v-model="scope.row.status"
-                :active-value="1"
-                :inactive-value="0"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="操作"
-          >
-            <template v-slot="scope">
-              <el-button
-                type="text"
-                @click="onDeleteItem(scope.row)"
-              >删除</el-button>
-            </template>
-          </el-table-column>
         </el-table>
       </template>
     </TableBody>
@@ -123,11 +105,12 @@
 </template>
 
 <script lang="ts">
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
-import { ElMessage, ElMessageBox } from "element-plus";
+import TableFooter from "@/components/table/TableFooter.vue";
+import TableMixin, { LikeSearchMixin } from "@/mixins/TableMixin";
+import { defineComponent, reactive, ref } from "@vue/runtime-core";
+import { ElMessageBox } from "element-plus";
 export default defineComponent({
-  name: "Table",
+  name: "TableWithSearch",
   mixins: [TableMixin],
   mounted() {
     this.doRefresh();
@@ -136,33 +119,57 @@ export default defineComponent({
     doRefresh() {
       this.$post({
         url: this.$urlPath.getTableList,
-        data: () => {
-          return {
-            ...this.getPageInfo(),
-          };
-        },
+        data: this.getPageInfo(),
       })
-        .then((res) => {
-          this.handleSuccess(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onDeleteItems() {
-      ElMessageBox.confirm("确定要删除这些数据吗？", "提示")
-        .then(() => {
-          ElMessage.success("数据模拟删除成功");
-        })
+        .then(this.handleSuccess)
         .catch(console.log);
     },
-    onDeleteItem(item: any) {
-      ElMessageBox.confirm("确定要删除此数据吗？", "提示")
-        .then(() => {
-          this.dataList.splice(this.dataList.indexOf(item), 1);
-        })
-        .catch(console.log);
-    },
+  },
+  setup() {
+    const tableFooter = ref<InstanceType<typeof TableFooter>>();
+    const likeSearchModule = LikeSearchMixin();
+    likeSearchModule.likeSearchModel.extraParams = () => ({
+      ...tableFooter.value?.withPageInfoData(),
+    });
+    likeSearchModule.likeSearchModel.conditionItems = reactive([
+      {
+        name: "name",
+        label: "用户姓名",
+        value: "",
+        type: "input",
+        placeholder: "请输入用户姓名",
+        span: 8,
+      },
+      {
+        name: "sex",
+        label: "用户姓别",
+        value: "",
+        type: "select",
+        placeholder: "请选择用户姓别",
+        selectOptions: [
+          {
+            label: "男",
+            value: 0,
+          },
+          {
+            label: "女",
+            value: 1,
+          },
+        ],
+        span: 8,
+      },
+    ]);
+    const doSearch = () => {
+      const params = likeSearchModule.getSearchParams();
+      ElMessageBox.alert(
+        `模拟模糊搜索成功，搜索参数为：${JSON.stringify(params)}`
+      );
+    };
+    return {
+      tableFooter,
+      ...likeSearchModule,
+      doSearch,
+    };
   },
 });
 </script>
@@ -171,10 +178,12 @@ export default defineComponent({
 .avatar-container {
   position: relative;
   width: 30px;
+  height: 30px;
   margin: 0 auto;
   vertical-align: middle;
   .avatar {
     width: 100%;
+    height: 100%;
     border-radius: 50%;
   }
   .avatar-vip {
