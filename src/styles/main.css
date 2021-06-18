@@ -87,6 +87,11 @@ body .el-table__fixed::before {
   right: 0px;
 }
 
+.table-container .el-button{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .dialog-container {
   max-height: 65vh;
   overflow: auto;

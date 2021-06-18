@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { PageModelMixin } from "@/mixins/TableMixin";
+import { PageModelSetup } from "@/mixins/TableMixin";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
@@ -53,7 +53,7 @@ export default defineComponent({
   },
   setup() {
     return {
-      ...PageModelMixin(),
+      ...PageModelSetup(),
     };
   },
 });

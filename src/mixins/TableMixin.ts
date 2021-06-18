@@ -1,49 +1,54 @@
 import { TinyEmitter } from 'tiny-emitter';
-import { defineComponent, inject, onBeforeMount, onMounted, reactive } from 'vue';
+import { defineComponent, inject, onBeforeUnmount, onMounted, reactive } from 'vue';
 import { Vue } from 'vue-class-component';
 
 import TableHeader from '@/components/table/TableHeader.vue'
 import TableFooter from "@/components/table/TableFooter.vue";
 
-interface HeaderCellStyle {
-  backgroundColor? :string,
-  color: string
-}
+export const PageModelMixin = defineComponent({
+  inject: ['mEmit'],
+  data() {
+    return {
+      pageModel: {
+        currentPage: 1,
+        pageSize: 10,
+        totalSize: 0
+      }
+    }
+  },
+  methods: {
+    pageSizeChanged(pageSize: number){
+      this.pageModel.pageSize = pageSize
+      this.pageModel.currentPage = 1
+      this.mEmit?.emit('pageChanged', this.pageModel)
+    },
+    currentChanged(currentPage: number) {
+      this.pageModel.currentPage = currentPage
+      this.mEmit?.emit('pageChanged', this.pageModel)
+    },
+    withPageInfoData(otherParams = {}) {
+      return {
+        ...otherParams,
+        page: this.pageModel.currentPage,
+        pageSize: this.pageModel.pageSize
+      }
+    },
+    setTotalSize(totalSize: number){
+      this.pageModel.totalSize = totalSize
+    },
+    refresh() {
+      this.mEmit?.emit('pageChanged', this.pageModel)
+    }
+  },
+  mounted () {
+    this.mEmit?.on('setTotalSize', this.setTotalSize)
+  },
+  beforeUnmount() {
+    this.mEmit?.off('setTotalSize', this.setTotalSize)
+  }
+})
 
-interface TableConfig {
-  dataList: Array<any>;
-  stripe: boolean,
-  border: boolean,
-  size: string,
-  headerCellStyle: HeaderCellStyle,
-  height: string | number,
-  tableLoading: boolean
-}
-
-interface SelectOptionItem{
-  label: string;
-  value: any
-}
-
-export interface TableSearchItem {
-    name: string;
-    label: string;
-    value: any;
-    type: string,
-    placeholder?: string;
-    selectOptions?: Array<SelectOptionItem>;
-    associatedOption?: string;
-    onChange?: (value: any, associationItem: string) => void;
-    span?: number
-}
-
-
-export interface LikeSearchModel{
-  conditionItems: Array<TableSearchItem>,
-  extraParams?: (() => Record<string, any>) |  Record<string, any>
-}
-
-export const PageModelMixin = function(): Record<string, any> {
+export const PageModelSetup = function(): Record<string, any> {
   const mEmit = inject<TinyEmitter>('mEmit') 
   const pageModel = reactive({
     currentPage: 1,
@@ -75,7 +80,7 @@ export const PageModelMixin = function(): Record<string, any> {
   onMounted(() => {
     mEmit?.on('setTotalSize', setTotalSize)
   })
-  onBeforeMount(() => {
+  onBeforeUnmount(() => {
     mEmit?.off('setTotalSize', setTotalSize)
   })
   return {
@@ -88,8 +93,42 @@ export const PageModelMixin = function(): Record<string, any> {
   }
 }
 
-export const LikeSearchMixin = function() : Record<string, any> {
-  const likeSearchModel: LikeSearchModel = { conditionItems: [] }
+export const LikeSearchMixin = defineComponent({
+  data() {
+    return {
+      likeSearchModel: { conditionItems: [] } as LikeSearchModel
+    }
+  },
+  methods: {
+    generatorSearchParams () {
+      if (this.likeSearchModel.conditionItems && this.likeSearchModel.conditionItems.length > 0) {
+        return this.likeSearchModel.conditionItems.reduce((pre: any, cur: any) => {
+          pre[cur.name] = cur.value
+          return pre
+        }, {})
+      }
+      return {}
+    },
+    getSearchParams() {
+      let searchParams = this.generatorSearchParams()
+      if (typeof this.likeSearchModel.extraParams === 'function') {
+        searchParams = Object.assign(searchParams, this.likeSearchModel.extraParams())
+      } else if (typeof this.likeSearchModel.extraParams === 'object') {
+        searchParams = Object.assign(searchParams, this.likeSearchModel.extraParams)
+      }
+      return searchParams
+    },
+    resetSearch () {
+      this.likeSearchModel.conditionItems && this.likeSearchModel.conditionItems.forEach(it => { it.value = '' })
+    },
+    hasSearchParams () {
+      return this.likeSearchModel.conditionItems?.some(it => it.value !== '')
+    }
+  }
+})
+
+export const LikeSearchSetup = function() : Record<string, any> {
+  const likeSearchModel: LikeSearchModel = { conditionItems: null }
   const generatorSearchParams = () => {
     if (likeSearchModel.conditionItems && likeSearchModel.conditionItems.length > 0) {
       return likeSearchModel.conditionItems.reduce((pre: any, cur: any) => {
@@ -112,7 +151,7 @@ export const LikeSearchMixin = function() : Record<string, any> {
     likeSearchModel.conditionItems && likeSearchModel.conditionItems.forEach(it => { it.value = '' })
   }
   const hasSearchParams = () => {
-    return likeSearchModel.conditionItems.some(it => it.value !== '')
+    return likeSearchModel.conditionItems?.some(it => it.value !== '')
   }
   
   return {

@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "reinstall": "npm uninstall vaw-layouts-x && npm install vaw-layouts-x && npm run serve",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -16,7 +17,6 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "tiny-emitter": "^2.1.0",
-    "vaw-layouts-x": "0.0.1-18",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",

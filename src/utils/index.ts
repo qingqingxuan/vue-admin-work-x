@@ -38,3 +38,17 @@ export function randomString(length: number) {
     return char.toUpperCase()
   })
 }
+
+export function currentDate() {
+  const d = new Date()
+  let str = ''
+  str += d.getFullYear() + '-' // 获取当前年份
+  const month = d.getMonth() + 1
+  str += month < 10 ? '0' + month + '-' : month + '-' // 获取当前月份（0——11）
+  str += d.getDate() + ' '
+  const hours = d.getHours()
+  str += hours < 10 ? '0' + hours : hours + ':'
+  str += d.getMinutes() + ':'
+  str += d.getSeconds()
+  return str
+}

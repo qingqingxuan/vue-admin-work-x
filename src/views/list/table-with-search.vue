@@ -106,7 +106,7 @@
 
 <script lang="ts">
 import TableFooter from "@/components/table/TableFooter.vue";
-import TableMixin, { LikeSearchMixin } from "@/mixins/TableMixin";
+import TableMixin, { LikeSearchSetup } from "@/mixins/TableMixin";
 import { defineComponent, reactive, ref } from "@vue/runtime-core";
 import { ElMessageBox } from "element-plus";
 export default defineComponent({
@@ -114,6 +114,7 @@ export default defineComponent({
   mixins: [TableMixin],
   mounted() {
     this.doRefresh();
+    console.log((this as any).likeSearchModel);
   },
   methods: {
     doRefresh() {
@@ -127,7 +128,7 @@ export default defineComponent({
   },
   setup() {
     const tableFooter = ref<InstanceType<typeof TableFooter>>();
-    const likeSearchModule = LikeSearchMixin();
+    const likeSearchModule = LikeSearchSetup();
     likeSearchModule.likeSearchModel.extraParams = () => ({
       ...tableFooter.value?.withPageInfoData(),
     });

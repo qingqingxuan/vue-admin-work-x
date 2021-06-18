@@ -1,6 +1,16 @@
 <template>
   <div class="main-container">
-    <TableHeader ref="tableHeader"></TableHeader>
+    <TableHeader ref="tableHeader">
+      <template #right>
+        <el-button
+          type="primary"
+          size="mini"
+          icon="el-icon-plus"
+          @click="onAddItem"
+        >添加
+        </el-button>
+      </template>
+    </TableHeader>
     <TableBody ref="tableBody">
       <template #default>
         <el-table
@@ -75,14 +85,20 @@
         </el-table>
       </template>
     </TableBody>
-    <TableFooter ref="tableFooter" />
+    <Dialog ref="dialog">
+      <template #content>
+        <BaseForm :form-items="formItems"></BaseForm>
+      </template>
+    </Dialog>
   </div>
 </template>
 
 <script lang="ts">
+import Dialog from "@/components/common/Dialog.vue";
 import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
-
+import { defineComponent, reactive, ref } from "@vue/runtime-core";
+import { ElMessage } from "element-plus";
+const DP_CODE_FLAG = "dp_code_";
 export default defineComponent({
   name: "Department",
   mixins: [TableMixin],
@@ -97,6 +113,96 @@ export default defineComponent({
         this.handleSuccess({ data: res.data });
       });
     },
+    onAddItem() {
+      (this.$refs.dialog as any)
+        .show({ showSubmitLoading: true })
+        .then((res: any) => {
+          res.close();
+        });
+    },
+  },
+  setup() {
+    const dialog = ref<InstanceType<typeof Dialog>>();
+    const formItems = reactive([
+      {
+        label: "部门名称",
+        type: "input",
+        name: "name",
+        value: "",
+        maxLength: 50,
+        inputType: "text",
+        placeholder: "请输入部门名称",
+        validator: (value: any) => {
+          if (!value) {
+            ElMessage.error(value.placeholder);
+            return false;
+          }
+          return true;
+        },
+      },
+      {
+        label: "部门编号",
+        type: "input",
+        name: "depCode",
+        value: "",
+        maxLength: 10,
+        inputType: "text",
+        placeholder: "请输入部门编号",
+        validator: (value: any) => {
+          if (!value) {
+            ElMessage.error(value.placeholder);
+            return false;
+          }
+          return true;
+        },
+      },
+      {
+        label: "部门状态",
+        type: "radio-group",
+        name: "status",
+        value: "",
+        radioOptions: [
+          {
+            label: "正常",
+            value: 1,
+          },
+          {
+            label: "禁用",
+            value: 0,
+          },
+        ],
+      },
+    ]);
+    const onUpdateItem = (item: any) => {
+      formItems.forEach((it) => {
+        const propName = item[it.name];
+        if (propName) {
+          if (it.name === "depCode") {
+            it.value = propName.replace(DP_CODE_FLAG, "");
+          } else {
+            it.value = propName;
+          }
+        }
+      });
+      dialog.value?.show().then((component: typeof Dialog) => {
+        formItems.forEach((it) => {
+          const propName = item[it.name];
+          if (propName) {
+            if (it.name === "depCode") {
+              item[it.name] = DP_CODE_FLAG + it.value;
+            } else {
+              item[it.name] = it.value;
+            }
+          }
+        });
+        component.close();
+      });
+    };
+    return {
+      formItems,
+      onUpdateItem,
+      dialog,
+    };
   },
 });
 </script>
