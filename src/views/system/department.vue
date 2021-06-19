@@ -97,7 +97,7 @@
 import Dialog from "@/components/common/Dialog.vue";
 import TableMixin from "@/mixins/TableMixin";
 import { defineComponent, reactive, ref } from "@vue/runtime-core";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 const DP_CODE_FLAG = "dp_code_";
 export default defineComponent({
   name: "Department",
@@ -109,9 +109,7 @@ export default defineComponent({
     doRefresh() {
       this.$post({
         url: this.$urlPath.getDepartmentList,
-      }).then((res) => {
-        this.handleSuccess({ data: res.data });
-      });
+      }).then(this.handleSuccess);
     },
     onAddItem() {
       (this.$refs.dialog as any)
@@ -119,6 +117,15 @@ export default defineComponent({
         .then((res: any) => {
           res.close();
         });
+    },
+    onDeleteItem(item: any) {
+      ElMessageBox.confirm("确定要删除此信息，删除后不可恢复？", "提示")
+        .then(() => {
+          this.dataList = this.dataList.filter((it) => {
+            return it.id !== item.id;
+          });
+        })
+        .catch(console.log);
     },
   },
   setup() {
@@ -184,19 +191,21 @@ export default defineComponent({
           }
         }
       });
-      dialog.value?.show().then((component: typeof Dialog) => {
-        formItems.forEach((it) => {
-          const propName = item[it.name];
-          if (propName) {
-            if (it.name === "depCode") {
-              item[it.name] = DP_CODE_FLAG + it.value;
-            } else {
-              item[it.name] = it.value;
+      dialog.value
+        ?.show({ showSubmitLoading: true })
+        .then((component: typeof Dialog) => {
+          formItems.forEach((it) => {
+            const propName = item[it.name];
+            if (propName) {
+              if (it.name === "depCode") {
+                item[it.name] = DP_CODE_FLAG + it.value;
+              } else {
+                item[it.name] = it.value;
+              }
             }
-          }
+          });
+          component.close();
         });
-        component.close();
-      });
     };
     return {
       formItems,

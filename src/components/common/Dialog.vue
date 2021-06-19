@@ -73,7 +73,7 @@ export default defineComponent({
         (this as any).resolve = resolve;
       });
     },
-    close(afterAction: () => void) {
+    close(afterAction?: () => void | null) {
       this.dialogVisible = false;
       afterAction && afterAction();
     },

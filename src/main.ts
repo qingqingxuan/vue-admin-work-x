@@ -18,11 +18,14 @@ import { registerComponents } from "./components";
 
 import { TinyEmitter } from 'tiny-emitter'
 
+import * as _ from 'lodash'
+
 const app = createApp(App);
 app.config.globalProperties.$urlPath = urlPath;
 app.config.globalProperties.$isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
 app.config.globalProperties.$isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1
 app.config.globalProperties.$emitter = new TinyEmitter();
+app.config.globalProperties.$_ = _
 registerComponents(app);
 app.use(LayoutStore, {
   state: {
@@ -48,5 +51,6 @@ declare module "@vue/runtime-core" {
     $isAndroid: boolean;
     $emitter: TinyEmitter;
     mEmit: TinyEmitter;
+    $_: typeof _;
   }
 }
