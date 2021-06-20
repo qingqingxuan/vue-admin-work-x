@@ -35,43 +35,26 @@
             </template>
           </el-table-column>
           <el-table-column
+            v-for="item of tableColumns"
+            :key="item.props"
+            :label="item.label"
+            :prop="item.prop"
             align="center"
-            label="部门名称"
-            prop="name"
-          />
-          <el-table-column
-            align="center"
-            label="部门编号"
-            prop="depCode"
-          />
-          <el-table-column
-            align="center"
-            label="排序"
-            prop="order"
-          />
-          <el-table-column
-            align="center"
-            label="状态"
           >
-            <template v-slot="scope">
+            <template
+              v-if="item.prop === 'status'"
+              v-slot="scope"
+            >
               <el-switch
                 v-model="scope.row.status"
                 :active-value="1"
                 :inactive-value="0"
               />
             </template>
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="创建时间"
-            prop="createTime"
-            width="160px"
-          />
-          <el-table-column
-            align="center"
-            label="操作"
-          >
-            <template v-slot="scope">
+            <template
+              v-else-if="item.prop === 'actions'"
+              v-slot="scope"
+            >
               <el-button
                 type="text"
                 @click="onUpdateItem(scope.row)"
@@ -87,50 +70,109 @@
     </TableBody>
     <Dialog ref="dialog">
       <template #content>
-        <BaseForm :form-items="formItems"></BaseForm>
+        <BaseForm
+          ref="baseForm"
+          :form-items="formItems"
+        ></BaseForm>
       </template>
     </Dialog>
   </div>
 </template>
 
 <script lang="ts">
+import { post } from "@/api/http";
+import { getDepartmentList } from "@/api/url";
+import BaseForm from "@/components/common/BaseForm.vue";
 import Dialog from "@/components/common/Dialog.vue";
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent, reactive, ref } from "@vue/runtime-core";
+import { TableSetup } from "@/mixins/TableMixin";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  reactive,
+  ref,
+} from "@vue/runtime-core";
 import { ElMessage, ElMessageBox } from "element-plus";
+import _ from "lodash";
+interface Department {
+  parentId: number;
+  id: number;
+  name: string;
+  depCode: string;
+  order: number;
+  status: number;
+  children: Array<Department>;
+}
 const DP_CODE_FLAG = "dp_code_";
 export default defineComponent({
   name: "Department",
-  mixins: [TableMixin],
-  mounted() {
-    this.doRefresh();
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getDepartmentList,
-      }).then(this.handleSuccess);
-    },
-    onAddItem() {
-      (this.$refs.dialog as any)
-        .show({ showSubmitLoading: true })
-        .then((res: any) => {
-          res.close();
-        });
-    },
-    onDeleteItem(item: any) {
-      ElMessageBox.confirm("确定要删除此信息，删除后不可恢复？", "提示")
-        .then(() => {
-          this.dataList = this.dataList.filter((it) => {
-            return it.id !== item.id;
-          });
-        })
-        .catch(console.log);
-    },
-  },
   setup() {
+    const tableColumns = reactive([
+      {
+        label: "部门名称",
+        prop: "name",
+      },
+      {
+        label: "部门编号",
+        prop: "depCode",
+      },
+      {
+        label: "排序",
+        prop: "order",
+      },
+      {
+        label: "状态",
+        prop: "status",
+      },
+      {
+        label: "操作",
+        prop: "actions",
+      },
+    ]);
     const dialog = ref<InstanceType<typeof Dialog>>();
+    const baseForm = ref<InstanceType<typeof BaseForm>>();
+    const tableSetup = TableSetup();
+    const parentFormItem = {
+      label: "上级部门",
+      type: "select",
+      name: "parentId",
+      value: "",
+      placeholder: "请选择上级部门",
+      selectOptions: {},
+      validator: (item: any) => {
+        if (!item.value) {
+          ElMessage.error(item.placeholder);
+          return false;
+        }
+        return true;
+      },
+      reset() {
+        this.value = "";
+      },
+    };
+    const depCodeFormItem = {
+      label: "部门编号",
+      type: "input",
+      name: "depCode",
+      value: "",
+      maxLength: 10,
+      disabled: false,
+      inputType: "text",
+      placeholder: "请输入部门编号",
+      validator: (item: any) => {
+        if (!item.value) {
+          ElMessage.error(item.placeholder);
+          return false;
+        }
+        return true;
+      },
+      reset() {
+        this.value = "";
+        this.disabled = false;
+      },
+    };
     const formItems = reactive([
+      parentFormItem,
       {
         label: "部门名称",
         type: "input",
@@ -139,35 +181,23 @@ export default defineComponent({
         maxLength: 50,
         inputType: "text",
         placeholder: "请输入部门名称",
-        validator: (value: any) => {
-          if (!value) {
-            ElMessage.error(value.placeholder);
+        validator: (item: any) => {
+          if (!item.value) {
+            ElMessage.error(item.placeholder);
             return false;
           }
           return true;
         },
-      },
-      {
-        label: "部门编号",
-        type: "input",
-        name: "depCode",
-        value: "",
-        maxLength: 10,
-        inputType: "text",
-        placeholder: "请输入部门编号",
-        validator: (value: any) => {
-          if (!value) {
-            ElMessage.error(value.placeholder);
-            return false;
-          }
-          return true;
+        reset() {
+          this.value = "";
         },
       },
+      depCodeFormItem,
       {
         label: "部门状态",
         type: "radio-group",
         name: "status",
-        value: "",
+        value: 1,
         radioOptions: [
           {
             label: "正常",
@@ -178,6 +208,9 @@ export default defineComponent({
             value: 0,
           },
         ],
+        reset() {
+          this.value = 1;
+        },
       },
     ]);
     const onUpdateItem = (item: any) => {
@@ -191,6 +224,7 @@ export default defineComponent({
           }
         }
       });
+      depCodeFormItem.disabled = true;
       dialog.value
         ?.show({ showSubmitLoading: true })
         .then((component: typeof Dialog) => {
@@ -207,10 +241,64 @@ export default defineComponent({
           component.close();
         });
     };
+    const doRefresh = () => {
+      post({
+        url: getDepartmentList,
+      }).then(tableSetup.handleSuccess);
+    };
+    onMounted(doRefresh);
+    function filterItems(srcArray: Array<Department>, filterItem: Department) {
+      for (let index = 0; index < srcArray.length; index++) {
+        const element = srcArray[index];
+        if (element.id === filterItem.id) {
+          if (!_.isEmpty(element.children)) {
+            ElMessage.error("当前部门下有子部门，不能删除");
+            return;
+          }
+          srcArray.splice(index, 1);
+          return;
+        } else {
+          if (!_.isEmpty(element.children)) {
+            filterItems(element.children, filterItem);
+          }
+        }
+      }
+    }
+    const onDeleteItem = (item: any) => {
+      ElMessageBox.confirm("确定要删除此信息，删除后不可恢复？", "提示")
+        .then(() => {
+          filterItems(tableSetup.dataList, item);
+        })
+        .catch(console.log);
+    };
+    const onAddItem = () => {
+      formItems.forEach((it: any) => it.reset());
+      dialog.value?.show({ showSubmitLoading: true }).then(() => {
+        ElMessage.success(
+          "模拟添加成功，添加参数为：" +
+            JSON.stringify(baseForm.value?.generatorParams()),
+        );
+        dialog.value?.closeSubmitLoading();
+        dialog.value?.close();
+      });
+    };
+    parentFormItem.selectOptions = computed(() => {
+      return tableSetup.dataList.map((it: any) => {
+        return {
+          label: it.name,
+          value: it.id,
+        };
+      });
+    });
     return {
+      tableColumns,
       formItems,
       onUpdateItem,
       dialog,
+      baseForm,
+      ...tableSetup,
+      onDeleteItem,
+      onAddItem,
     };
   },
 });

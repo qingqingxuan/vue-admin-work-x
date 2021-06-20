@@ -13,8 +13,8 @@ export default defineComponent({
     },
     checkParams() {
       return this.innerFormItems.every(it => {
-        return it.validator?.call(this, it, 
-          this.innerFormItems.find((item: FormItem)=> it.associatedOption === item.name))
+        return it.validator ? it.validator.call(this, it,
+          this.innerFormItems.find((item: FormItem) => it.associatedOption === item.name)) : true
       })
     },
     generatorParams() {

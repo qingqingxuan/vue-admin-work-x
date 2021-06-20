@@ -1,5 +1,5 @@
 interface HeaderCellStyle {
-  backgroundColor? :string,
+  backgroundColor?: string,
   color: string
 }
 
@@ -13,7 +13,7 @@ interface TableConfig {
   tableLoading: boolean
 }
 
-interface SelectOptionItem{
+interface SelectOptionItem {
   label: string;
   value: any
 }
@@ -35,10 +35,11 @@ interface FormItem extends TableSearchItem {
   hidden?: boolean;
   inputType?: string;
   maxLength?: number;
-  rows?: number
+  rows?: number;
+  disabled: boolean
 }
 
-interface LikeSearchModel{
+interface LikeSearchModel {
   conditionItems: Array<TableSearchItem> | null,
-  extraParams?: (() => Record<string, any>) |  Record<string, any>
+  extraParams?: (() => Record<string, any>) | Record<string, any>
 }

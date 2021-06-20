@@ -1,9 +1,10 @@
 import { TinyEmitter } from 'tiny-emitter';
-import { defineComponent, inject, onBeforeUnmount, onMounted, reactive } from 'vue';
+import { defineComponent, inject, onBeforeUnmount, onMounted, provide, reactive, ref } from 'vue';
 import { Vue } from 'vue-class-component';
 
 import TableHeader from '@/components/table/TableHeader.vue'
 import TableFooter from "@/components/table/TableFooter.vue";
+import { useLayoutStore } from 'vaw-layouts-x';
 
 export const PageModelMixin = defineComponent({
   inject: ['mEmit'],
@@ -17,7 +18,7 @@ export const PageModelMixin = defineComponent({
     }
   },
   methods: {
-    pageSizeChanged(pageSize: number){
+    pageSizeChanged(pageSize: number) {
       this.pageModel.pageSize = pageSize
       this.pageModel.currentPage = 1
       this.mEmit?.emit('pageChanged', this.pageModel)
@@ -33,14 +34,14 @@ export const PageModelMixin = defineComponent({
         pageSize: this.pageModel.pageSize
       }
     },
-    setTotalSize(totalSize: number){
+    setTotalSize(totalSize: number) {
       this.pageModel.totalSize = totalSize
     },
     refresh() {
       this.mEmit?.emit('pageChanged', this.pageModel)
     }
   },
-  mounted () {
+  mounted() {
     this.mEmit?.on('setTotalSize', this.setTotalSize)
   },
   beforeUnmount() {
@@ -48,8 +49,8 @@ export const PageModelMixin = defineComponent({
   }
 })
 
-export const PageModelSetup = function(): Record<string, any> {
-  const mEmit = inject<TinyEmitter>('mEmit') 
+export const PageModelSetup = function (): Record<string, any> {
+  const mEmit = inject<TinyEmitter>('mEmit')
   const pageModel = reactive({
     currentPage: 1,
     pageSize: 10,
@@ -74,7 +75,7 @@ export const PageModelSetup = function(): Record<string, any> {
   const setTotalSize = (totalSize: number) => {
     pageModel.totalSize = totalSize
   }
-  const refresh =() => {
+  const refresh = () => {
     mEmit?.emit('pageChanged', pageModel)
   }
   onMounted(() => {
@@ -100,7 +101,7 @@ export const LikeSearchMixin = defineComponent({
     }
   },
   methods: {
-    generatorSearchParams () {
+    generatorSearchParams() {
       if (this.likeSearchModel.conditionItems && this.likeSearchModel.conditionItems.length > 0) {
         return this.likeSearchModel.conditionItems.reduce((pre: any, cur: any) => {
           pre[cur.name] = cur.value
@@ -118,16 +119,16 @@ export const LikeSearchMixin = defineComponent({
       }
       return searchParams
     },
-    resetSearch () {
+    resetSearch() {
       this.likeSearchModel.conditionItems && this.likeSearchModel.conditionItems.forEach(it => { it.value = '' })
     },
-    hasSearchParams () {
+    hasSearchParams() {
       return this.likeSearchModel.conditionItems?.some(it => it.value !== '')
     }
   }
 })
 
-export const LikeSearchSetup = function() : Record<string, any> {
+export const LikeSearchSetup = function (): Record<string, any> {
   const likeSearchModel: LikeSearchModel = { conditionItems: null }
   const generatorSearchParams = () => {
     if (likeSearchModel.conditionItems && likeSearchModel.conditionItems.length > 0) {
@@ -153,7 +154,7 @@ export const LikeSearchSetup = function() : Record<string, any> {
   const hasSearchParams = () => {
     return likeSearchModel.conditionItems?.some(it => it.value !== '')
   }
-  
+
   return {
     likeSearchModel,
     getSearchParams,
@@ -231,3 +232,73 @@ export default defineComponent({
     }
   }
 })
+
+export const TableSetup = function (): Record<string, any> {
+  const dataList = reactive([]) as Array<any>;
+  let selectRows = reactive([]) as Array<any>;
+  const layoutStore = useLayoutStore()
+  const tableConfig = {
+    stripe: layoutStore.state.theme !== 'dark',
+    border: layoutStore.state.theme !== 'dark',
+    size: 'small',
+    headerCellStyle: layoutStore.state.theme === 'dark' ? {
+      color: '#ffffff'
+    } : {
+      backgroundColor: 'rgb(255, 255, 255)',
+      color: '#333333'
+    },
+    height: '100%'
+  } as TableConfig;
+  const tableLoading = false;
+  const mEmit = new TinyEmitter();
+  const tableHeader = ref<InstanceType<typeof TableHeader>>()
+  const tableFooter = ref<InstanceType<typeof TableFooter>>()
+  provide('mEmit', mEmit);
+  onMounted(() => {
+    mEmit.on('pageChanged', pageChanged)
+  })
+  onBeforeUnmount(() => {
+    mEmit.off('pageChanged', pageChanged)
+  })
+  const handleSuccess = ({ data = [], totalSize = 10 }) => {
+    mEmit.emit('setTotalSize', totalSize)
+    dataList.splice(0, dataList.length)
+    dataList.push(...data)
+  }
+  const handleSelectionChange = (tempSelectRows: Array<any>) => {
+    selectRows = tempSelectRows
+  }
+  const pageChanged = () => {
+    doRefresh()
+  }
+  const doRefresh = () => {
+    throw new Error('you must overwrite `doRefresh` function in `component`')
+  }
+  const getTableHeader = () => {
+    if (tableHeader.value) {
+      return tableHeader.value
+    }
+    throw new Error('ref `tableHeader` does not exist on $refs, but please check set ref=`tableHeader` ')
+  }
+  const getTableFooter = () => {
+    if (tableFooter.value) {
+      return tableFooter.value
+    }
+    throw new Error('ref `tableFooter` does not exist on $refs, but please check set ref=`tableFooter` ')
+  }
+  const getPageInfo = () => {
+    return getTableFooter()?.withPageInfoData()
+  }
+  return {
+    dataList,
+    selectRows,
+    tableConfig,
+    tableLoading,
+    handleSuccess,
+    handleSelectionChange,
+    doRefresh,
+    getTableHeader,
+    getTableFooter,
+    getPageInfo
+  }
+}

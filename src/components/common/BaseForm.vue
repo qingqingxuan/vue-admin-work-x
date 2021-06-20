@@ -18,6 +18,7 @@
             :placeholder="item.placeholder || '请输入内容'"
             :size="config.size || 'small'"
             clearable
+            :disabled="item.disabled || false"
             :type="item.inputType || ''"
             :maxlength="item.maxLength"
             :rows="item.rows || 5"
@@ -30,6 +31,7 @@
             :size="config.size || 'small'"
             :filterable="item.filterable ? true : false"
             clearable
+            :disabled="item.disabled || false"
             style="width: 100%"
             class="form-item"
             @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
@@ -49,6 +51,7 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             class="form-item"
+            :disabled="item.disabled || false"
             style="width: 100%"
             :size="config.size || 'small'"
           />
@@ -56,6 +59,7 @@
             v-else-if="item.type === 'date' && !item.hidden"
             v-model="item.value"
             type="date"
+            :disabled="item.disabled || false"
             range-separator="-"
             :placeholder="item.placeholder || '请选择日期'"
             class="form-item"
@@ -65,6 +69,7 @@
             v-else-if="item.type === 'datetime' && !item.hidden"
             v-model="item.value"
             type="datetime"
+            :disabled="item.disabled || false"
             :placeholder="item.placeholder || '请选择日期'"
             class="form-item"
             :size="config.size || 'small'"
@@ -76,6 +81,7 @@
             :picker-options="{
               selectableRange: '00:00:00 - 23:59:59'
             }"
+            :disabled="item.disabled || false"
             :placeholder="item.placeholder || '请选择时间'"
             class="form-item"
             :size="config.size || 'small'"
@@ -83,6 +89,7 @@
           <el-radio-group
             v-if="item.type === 'radio-group' && !item.hidden"
             v-model="item.value"
+            :disabled="item.disabled || false"
             :size="config.size || 'small'"
             @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
           >
@@ -96,6 +103,7 @@
           <el-checkbox-group
             v-if="item.type === 'check-group' && !item.hidden"
             v-model="item.value"
+            :disabled="item.disabled || false"
             :size="config.size || 'small'"
             @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
           >

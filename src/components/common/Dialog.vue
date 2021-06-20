@@ -77,12 +77,40 @@ export default defineComponent({
       this.dialogVisible = false;
       afterAction && afterAction();
     },
+    closeSubmitLoading() {
+      this.loading = false;
+    },
     toggle() {
       this.dialogVisible = !this.dialogVisible;
     },
     onConfirm() {
       if (this.autoClose) {
         this.dialogVisible = false;
+      }
+      const slotItems = this.$slots.content ? this.$slots.content() : null;
+      if (slotItems) {
+        for (let index = 0; index < slotItems.length; index++) {
+          const it = slotItems[index];
+          if (it && it.props) {
+            const formItems = it.props["form-items"];
+            if (formItems) {
+              const validate = formItems.every((it: any) => {
+                return it.validator
+                  ? it.validator.call(
+                      this,
+                      it,
+                      formItems.find(
+                        (item: any) => it.associatedOption === item.name,
+                      ),
+                    )
+                  : true;
+              });
+              if (!validate) {
+                return;
+              }
+            }
+          }
+        }
       }
       if (this.showSubmitLoading) {
         this.loading = true;
