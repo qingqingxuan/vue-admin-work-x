@@ -75,56 +75,50 @@
       </template>
     </TableBody>
     <Dialog ref="dialog">
-      <template>
+      <template #content>
         <el-form
           ref="baseForm"
           :model="menuModel"
           :rules="formRules"
           label-width="80px"
           label-position="right"
+          class="padding"
         >
           <el-form-item label="上级菜单">
-            <el-col :span="20">
-              <el-select
-                v-model="menuModel.parentItem"
-                size="small"
-                placeholder="请输入菜单名称"
-                style="width: 100%"
-              >
-                <el-option
-                  v-for="(item, index) of dataList"
-                  :key="index"
-                  :label="item.menuName"
-                  :value="item.menuUrl"
-                />
-              </el-select>
-            </el-col>
+            <el-select
+              v-model="menuModel.parentItem"
+              size="small"
+              placeholder="请输入菜单名称"
+              style="width: 100%"
+            >
+              <el-option
+                v-for="(item, index) of dataList"
+                :key="index"
+                :label="item.menuName"
+                :value="item.menuUrl"
+              />
+            </el-select>
           </el-form-item>
           <el-form-item
             label="菜单名称"
             prop="name"
           >
-            <el-col :span="20">
-              <el-input
-                v-model="menuModel.name"
-                size="small"
-                placeholder="请输入菜单名称"
-              />
-            </el-col>
+            <el-input
+              v-model="menuModel.name"
+              size="small"
+              placeholder="请输入菜单名称"
+            />
           </el-form-item>
           <el-form-item
             label="菜单地址"
             prop="url"
           >
-            <el-col :span="20">
-              <el-input
-                v-model="menuModel.url"
-                size="small"
-                placeholder="请输入菜单地址"
-              >
-                <template v-slot:prepend>{{ menuModel.parentItem ? menuModel.parentItem : '/' }}</template>
-              </el-input>
-            </el-col>
+            <el-input
+              v-model="menuModel.url"
+              size="small"
+              placeholder="请输入菜单地址"
+            >
+            </el-input>
           </el-form-item>
         </el-form>
       </template>
@@ -133,6 +127,7 @@
 </template>
 
 <script lang="ts">
+import { DialogType } from "@/components/types";
 import TableMixin from "@/mixins/TableMixin";
 import { uuid } from "@/utils";
 import { defineComponent } from "@vue/runtime-core";
@@ -165,6 +160,9 @@ export default defineComponent({
       })
         .then(this.handleSuccess)
         .catch(console.log);
+    },
+    onAddItem() {
+      (this.$refs.dialog as DialogType).show({ showSubmitLoading: true });
     },
   },
 });

@@ -82,8 +82,7 @@
 <script lang="ts">
 import { post } from "@/api/http";
 import { getDepartmentList } from "@/api/url";
-import BaseForm from "@/components/common/BaseForm.vue";
-import Dialog from "@/components/common/Dialog.vue";
+import type { BaseForm, DialogType } from "@/components/types";
 import { TableSetup } from "@/mixins/TableMixin";
 import {
   computed,
@@ -129,8 +128,8 @@ export default defineComponent({
         prop: "actions",
       },
     ]);
-    const dialog = ref<InstanceType<typeof Dialog>>();
-    const baseForm = ref<InstanceType<typeof BaseForm>>();
+    const dialog = ref<DialogType>();
+    const baseForm = ref<BaseForm>();
     const tableSetup = TableSetup();
     const parentFormItem = {
       label: "上级部门",
@@ -220,7 +219,7 @@ export default defineComponent({
       depCodeFormItem.disabled = true;
       dialog.value
         ?.show({ showSubmitLoading: true })
-        .then((component: typeof Dialog) => {
+        .then((component: DialogType) => {
           formItems.forEach((it) => {
             const propName = item[it.name];
             if (propName) {
@@ -269,7 +268,7 @@ export default defineComponent({
       dialog.value?.show({ showSubmitLoading: true }).then(() => {
         ElMessage.success(
           "模拟添加成功，添加参数为：" +
-            JSON.stringify(baseForm.value?.generatorParams())
+            JSON.stringify(baseForm.value?.generatorParams()),
         );
         dialog.value?.closeSubmitLoading();
         dialog.value?.close();

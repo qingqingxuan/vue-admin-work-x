@@ -71,7 +71,6 @@
                 @click="onDeleteItem(scope.row)"
               >删除</el-button>
               <el-button
-                :disabled="scope.row.roleCode === 'ROLE_admin'"
                 type="text"
                 size="mini"
                 @click="showMenu(scope.row)"
@@ -108,10 +107,8 @@
 </template>
 
 <script lang="ts">
-import BaseFormVue from "@/components/common/BaseForm.vue";
-import Dialog from "@/components/common/Dialog.vue";
+import type { BaseForm, DialogType } from "@/components/types";
 import TableMixin from "@/mixins/TableMixin";
-import { currentDate, uuid } from "@/utils";
 import { defineComponent } from "@vue/runtime-core";
 import { ElMessage, ElMessageBox } from "element-plus";
 const ROLE_CODE_FLAG = "ROLE_";
@@ -219,9 +216,9 @@ export default defineComponent({
           this.defaultCheckedKeys = [];
           this.defaultExpandedKeys = [];
           this.handleRoleMenusSelected(this.menuData);
-          (this.$refs.menuDialog as InstanceType<typeof Dialog>)
+          (this.$refs.menuDialog as DialogType)
             .show()
-            .then((component: InstanceType<typeof Dialog>) => {
+            .then((component: DialogType) => {
               ElMessage.success("模拟菜单修改成功");
               component.close();
             });
@@ -232,14 +229,12 @@ export default defineComponent({
       this.formItems.forEach((it: FormItem) => it.reset && it.reset());
       (this.$refs.dialog as any)
         .show({ showSubmitLoading: true })
-        .then((component: InstanceType<typeof Dialog>) => {
+        .then((component: DialogType) => {
           ElMessageBox.confirm(
             "角色模拟添加成功，参数为：" +
               JSON.stringify(
-                (
-                  this.$refs.baseForm as InstanceType<typeof BaseFormVue>
-                ).generatorParams()
-              )
+                (this.$refs.baseForm as BaseForm).generatorParams(),
+              ),
           );
           component.close();
         });
@@ -256,14 +251,12 @@ export default defineComponent({
       });
       (this.$refs.dialog as any)
         .show({ showSubmitLoading: true })
-        .then((component: InstanceType<typeof Dialog>) => {
+        .then((component: DialogType) => {
           ElMessageBox.confirm(
             "角色模拟修改成功，参数为：" +
               JSON.stringify(
-                (
-                  this.$refs.baseForm as InstanceType<typeof BaseFormVue>
-                ).generatorParams()
-              )
+                (this.$refs.baseForm as BaseForm).generatorParams(),
+              ),
           );
           component.close();
         });
@@ -275,9 +268,9 @@ export default defineComponent({
             "角色模拟删除成功，参数为：" +
               JSON.stringify({
                 id: item.id,
-              })
+              }),
           );
-        }
+        },
       );
     },
     handleRoleMenusSelected(menus: Array<any>) {

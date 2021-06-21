@@ -8,6 +8,8 @@ import "element-plus/lib/theme-chalk/index.css";
 import 'dayjs/locale/zh-cn'
 import locale from 'element-plus/lib/locale/lang/zh-cn'
 import "@/styles/main.css"
+import "@/icons/iconfont/iconfont.css"
+import "@/icons/iconfont/iconfont.js"
 
 import LayoutStore from "vaw-layouts-x";
 import http from "@/api/http";
@@ -41,7 +43,7 @@ app.use(LayoutStore, {
   registerElement: false,
 });
 app.use(store, key).use(router);
-app.use(ElementPlus, {locale});
+app.use(ElementPlus, { locale });
 app.use(http);
 app.mount("#app");
 
