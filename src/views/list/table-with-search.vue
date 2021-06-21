@@ -7,7 +7,7 @@
       :default-collapsed-state="true"
       title="查询条件"
       @doSearch="doSearch"
-      @resetSearch="likeSearchModel.resetSearch"
+      @resetSearch="resetSearch"
     />
     <TableBody ref="tableBody">
       <template #default>
@@ -114,7 +114,6 @@ export default defineComponent({
   mixins: [TableMixin],
   mounted() {
     this.doRefresh();
-    console.log((this as any).likeSearchModel);
   },
   methods: {
     doRefresh() {

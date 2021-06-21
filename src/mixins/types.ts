@@ -36,7 +36,8 @@ interface FormItem extends TableSearchItem {
   inputType?: string;
   maxLength?: number;
   rows?: number;
-  disabled: boolean
+  disabled?: boolean,
+  reset?: () => void
 }
 
 interface LikeSearchModel {

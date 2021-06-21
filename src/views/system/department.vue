@@ -139,13 +139,6 @@ export default defineComponent({
       value: "",
       placeholder: "请选择上级部门",
       selectOptions: {},
-      validator: (item: any) => {
-        if (!item.value) {
-          ElMessage.error(item.placeholder);
-          return false;
-        }
-        return true;
-      },
       reset() {
         this.value = "";
       },
@@ -276,7 +269,7 @@ export default defineComponent({
       dialog.value?.show({ showSubmitLoading: true }).then(() => {
         ElMessage.success(
           "模拟添加成功，添加参数为：" +
-            JSON.stringify(baseForm.value?.generatorParams()),
+            JSON.stringify(baseForm.value?.generatorParams())
         );
         dialog.value?.closeSubmitLoading();
         dialog.value?.close();

@@ -148,7 +148,7 @@
                   type="success"
                   size="mini"
                   icon="el-icon-refresh"
-                  @click="resetSearch"
+                  @click="doResetSearch"
                 >重置</el-button>
                 <el-button
                   type="primary"
@@ -242,7 +242,7 @@ export default defineComponent({
     doSearch() {
       this.$emit("doSearch");
     },
-    resetSearch() {
+    doResetSearch() {
       this.$emit("resetSearch");
     },
   },
