@@ -15,6 +15,7 @@ export const adminRoutes = [
         menuUrl: "/system/department",
         menuName: "部门管理",
         tip: "new",
+        cacheable: true
       },
       {
         parentPath: '/system',
@@ -32,6 +33,7 @@ export const adminRoutes = [
         parentPath: '/system',
         menuUrl: "/system/menu",
         menuName: "菜单管理",
+        cacheable: true
       },
     ],
   },

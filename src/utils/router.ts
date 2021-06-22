@@ -14,7 +14,7 @@ NProgress.configure({
 });
 
 
-interface OriginRoute{
+interface OriginRoute {
   menuUrl: string,
   menuName?: string,
   hidden?: boolean,
@@ -44,8 +44,8 @@ function getRoutes() {
 
 
 function getComponent(it: OriginRoute) {
-  return it.children && it.children.length > 0 ? 
-    (): any => import('vaw-layouts-x/src/components/RouterViewLayout.vue') : 
+  return it.children && it.children.length > 0 ?
+    (): any => import('vaw-layouts-x/src/components/RouterViewLayout.vue') :
     (): any => import('@/views' + it.menuUrl + '.vue')
 }
 
