@@ -188,7 +188,11 @@
             <el-switch v-model="menuModel.affix" />
           </el-form-item>
           <el-form-item label="菜单图标">
-            <ul class="icon-wrapper">
+            <ul
+              class="icon-wrapper"
+              v-infinite-scroll="loadIcon"
+              :infinite-scroll-disabled="disableLoad"
+            >
               <li
                 v-for="item of icons"
                 :key="item.name"
@@ -201,6 +205,14 @@
                 ></SvgIcon>
                 <div :style="{'color': menuModel.icon === item.font_class ? 'red' : '#333'}">{{ menuModel.icon === item.font_class ? '已选' : '选择' }}</div>
               </li>
+              <p
+                class="text-center"
+                v-if="!disableLoad"
+              >加载中...</p>
+              <p
+                class="text-center"
+                v-else
+              >没有更多了</p>
             </ul>
           </el-form-item>
         </el-form>
@@ -213,7 +225,7 @@
 import { DialogType } from "@/components/types";
 import TableMixin from "@/mixins/TableMixin";
 import { uuid } from "@/utils";
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent, ref, shallowReactive } from "@vue/runtime-core";
 import { ElMessage, ElMessageBox } from "element-plus";
 import Icons from "@/icons/iconfont/iconfont.json";
 export default defineComponent({
@@ -328,8 +340,20 @@ export default defineComponent({
     },
   },
   setup() {
+    const count = ref(100);
+    const icons = shallowReactive(Icons.glyphs.slice(0, count.value));
+    const disableLoad = ref(false);
+    const loadIcon = () => {
+      setTimeout(() => {
+        const tempIcons = Icons.glyphs.slice(count.value, (count.value += 100));
+        icons.push(...tempIcons);
+        disableLoad.value = icons.length === Icons.glyphs.length;
+      }, 500);
+    };
     return {
-      icons: Icons.glyphs,
+      icons,
+      loadIcon,
+      disableLoad,
     };
   },
 });

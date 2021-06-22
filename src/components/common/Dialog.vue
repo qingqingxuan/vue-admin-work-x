@@ -70,6 +70,10 @@ export default defineComponent({
       this.dialogVisible = true;
       this.loading = false;
       (this as any).validator = config?.validator;
+      this.$nextTick(() => {
+        const contentElement = document.querySelector(".content-wrapper");
+        contentElement?.scrollTo({ top: 0 });
+      });
       return new Promise((resolve) => {
         (this as any).resolve = resolve;
       });

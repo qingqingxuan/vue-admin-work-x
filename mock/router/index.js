@@ -43,11 +43,6 @@ export const adminRoutes = [
     children: [
       {
         parentPath: '/list',
-        menuUrl: "/list/table",
-        menuName: "表格",
-      },
-      {
-        parentPath: '/list',
         menuUrl: "/list/table-with-search",
         menuName: "表格搜索",
       },
@@ -249,10 +244,6 @@ export const editorRoutes = [
     menuName: "列表页面",
     icon: "list",
     children: [
-      {
-        menuUrl: "/list/table",
-        menuName: "表格",
-      },
       {
         menuUrl: "/list/table-with-search",
         menuName: "表格搜索",
