@@ -69,6 +69,7 @@ export default defineComponent({
       this.innerTitle = config?.innerTitle || this.title || "提示";
       this.dialogVisible = true;
       this.loading = false;
+      (this as any).validator = config?.validator;
       return new Promise((resolve) => {
         (this as any).resolve = resolve;
       });
@@ -100,8 +101,8 @@ export default defineComponent({
                       this,
                       it,
                       formItems.find(
-                        (item: any) => it.associatedOption === item.name,
-                      ),
+                        (item: any) => it.associatedOption === item.name
+                      )
                     )
                   : true;
               });
@@ -110,6 +111,11 @@ export default defineComponent({
               }
             }
           }
+        }
+      }
+      if ((this as any).validator) {
+        if (!(this as any).validator()) {
+          return;
         }
       }
       if (this.showSubmitLoading) {

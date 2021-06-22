@@ -181,7 +181,7 @@ export default defineComponent({
         },
         height: '100%'
       } as TableConfig,
-      tableLoading: false,
+      tableLoading: true,
       mEmit: new TinyEmitter()
     }
   },
@@ -205,6 +205,7 @@ export default defineComponent({
     handleSuccess({ data = [], totalSize = 10 }) {
       this.mEmit.emit('setTotalSize', totalSize)
       this.dataList = data
+      this.tableLoading = false
     },
     handleSelectionChange(selectRows: Array<any>) {
       this.selectRows = selectRows

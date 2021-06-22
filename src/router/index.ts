@@ -26,6 +26,7 @@ export const routes = [
     component: Layout,
     meta: {
       title: "Dashboard",
+      icon: 'dashboard-fill'
     },
     children: [
       {

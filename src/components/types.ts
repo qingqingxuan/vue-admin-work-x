@@ -8,6 +8,7 @@ export interface DialogConfig {
   autoClose?: boolean;
   innerTitle?: string;
   showSubmitLoading?: boolean;
+  validator?: () => boolean;
 }
 
 export type DialogType = InstanceType<typeof Dialog>;

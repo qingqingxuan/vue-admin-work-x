@@ -4,32 +4,6 @@
   text-overflow: ellipsis;
 }
 
-.title-left-line {
-  padding: 0.45rem 0.25rem;
-  color: #666;
-  font-size: 0.3rem;
-}
-
-.title-left-line::before {
-  content: "\00A0";
-  display: inline-block;
-  color: #1cbbb4;
-  width: 5px;
-  height: 100%;
-  margin-right: 0.2rem;
-  background-color: #1cbbb4;
-}
-
-.phone-style {
-  width: 35%;
-  margin: 10px auto;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: white;
-  min-height: 90vh;
-  overflow-y: scroll;
-}
-
 .margin-10 {
   margin: 10px;
 }
@@ -128,6 +102,13 @@ body .el-table__fixed::before {
 .el-dialog__footer {
   padding: 10px !important;
   border-top: 1px solid #ececec;
+}
+
+.el-menu [class^=svg-icon] {
+  width: 24px !important;
+  font-size: 18px !important;
+  margin-right: 5px !important;
+  vertical-align: middle !important;
 }
 
 .title {

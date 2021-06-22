@@ -268,7 +268,7 @@ export default defineComponent({
       dialog.value?.show({ showSubmitLoading: true }).then(() => {
         ElMessage.success(
           "模拟添加成功，添加参数为：" +
-            JSON.stringify(baseForm.value?.generatorParams()),
+            JSON.stringify(baseForm.value?.generatorParams())
         );
         dialog.value?.closeSubmitLoading();
         dialog.value?.close();
