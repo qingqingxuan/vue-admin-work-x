@@ -18,11 +18,13 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "tiny-emitter": "^2.1.0",
-    "vaw-layouts-x": "0.0.1-19",
+    "vaw-layouts-x": "0.0.1-20",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vuedraggable": "^4.0.3",
+    "vuex": "^4.0.0-0",
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",

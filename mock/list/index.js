@@ -141,11 +141,16 @@ Mock.mock(RegExp(getCardList), function ({ body }) {
         id: function () {
           return Random.string(10);
         },
-        image: Random.image("300x600", "#50B347", "#FFF", "vue-admin-work"),
-        description: function () {
-          return Random.csentence(50, 200);
+        title: function () {
+          return Random.csentence(5, 10)
         },
-        "price|1000-9999.2": 100,
+        "image|1-9": 1,
+        description: function () {
+          return Random.csentence(10, 15);
+        },
+        "time": function () {
+          return Random.date()
+        },
       },
     ],
   });
@@ -167,14 +172,13 @@ Mock.mock(RegExp(getCommentList), function ({ body }) {
           return Random.cname();
         },
         content: function () {
-          return Random.csentence(50, 200);
+          return Random.csentence(10, 20);
+        },
+        time: function () {
+          return Random.date('yyyy-MM-dd')
         },
         "rate|1-5": 5,
-        "images|0-1": [
-          Random.image("300x600", "#50B347", "#FFF", "vue"),
-          Random.image("300x600", "#409EFF", "#FFF", "vue-admin-work"),
-          Random.image("300x600", "#F56C6C", "#FFF", "前端"),
-        ],
+        "progress|20-100": 50,
         "status|0-1": 1, // 对外展示状态 0 不展示，1 展示
       },
     ],

@@ -55,7 +55,12 @@ export const adminRoutes = [
       },
       {
         parentPath: '/list',
-        menuUrl: "/list/grid-list",
+        menuUrl: "/list/list",
+        menuName: "普通列表",
+      },
+      {
+        parentPath: '/list',
+        menuUrl: "/list/card-list",
         menuName: "卡片列表",
       },
     ],
@@ -118,17 +123,17 @@ export const adminRoutes = [
       {
         parentPath: '/exception',
         menuUrl: "/exception/404",
-        menuName: "404",
+        menuName: "404页面",
       },
       {
         parentPath: '/exception',
         menuUrl: "/exception/403",
-        menuName: "403",
+        menuName: "403页面",
       },
       {
         parentPath: '/exception',
         menuUrl: "/exception/500",
-        menuName: "500",
+        menuName: "500页面",
       },
     ],
   },

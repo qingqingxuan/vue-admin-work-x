@@ -4,7 +4,8 @@
     class="table-container"
     shadow="never"
   >
-    <slot></slot>
+    <slot name="tableConfig"></slot>
+    <slot name="default"></slot>
   </el-card>
 </template>
 
