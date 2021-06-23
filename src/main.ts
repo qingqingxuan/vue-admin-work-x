@@ -20,6 +20,7 @@ import { registerComponents } from "./components";
 import { TinyEmitter } from 'tiny-emitter'
 
 import * as _ from 'lodash'
+import dragger from "./directive/draggable/index";
 
 const app = createApp(App);
 app.config.globalProperties.$urlPath = urlPath;
@@ -44,6 +45,7 @@ app.use(LayoutStore, {
 app.use(store, key).use(router);
 app.use(ElementPlus, { locale });
 app.use(http);
+app.use(dragger)
 app.mount("#app");
 
 declare module "@vue/runtime-core" {

@@ -105,8 +105,8 @@ export default defineComponent({
                       this,
                       it,
                       formItems.find(
-                        (item: any) => it.associatedOption === item.name
-                      )
+                        (item: any) => it.associatedOption === item.name,
+                      ),
                     )
                   : true;
               });

@@ -92,28 +92,6 @@ export default defineComponent({
         .then(this.handleSuccess)
         .catch(console.log);
     },
-    handleCommand({ type, item }) {
-      if (type === "delete") {
-        this.$showConfirmDialog("是否要删除此评论？", () => {
-          this.dataList.splice(this.dataList.indexOf(item), 1);
-          this.$successMsg("评论删除成功");
-        });
-      } else {
-        const tip = item.status === 0 ? "开启" : "关闭";
-        this.$showConfirmDialog(`是否要${tip}此评论？`, () => {
-          item.status = item.status === 0 ? 1 : 0;
-          this.$successMsg(`评论${tip}成功`);
-        });
-      }
-    },
-    load() {
-      if (this.noMore) return;
-      this.pageModel.currentPage += 1;
-      this.loading = true;
-      setTimeout((_) => {
-        this.getData();
-      }, 1000);
-    },
   },
 });
 </script>

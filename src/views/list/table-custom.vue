@@ -124,13 +124,8 @@
 
 <script lang="ts">
 import TableMixin from "@/mixins/TableMixin";
-import BaseForm from "@/components/common/BaseForm.vue";
 import { defineComponent } from "@vue/runtime-core";
-import {
-  DialogType,
-  showConfirmBox,
-  showErrorMessage,
-} from "@/components/types";
+import { showConfirmBox, showErrorMessage } from "@/components/types";
 export default defineComponent({
   name: "TableCustom",
   mixins: [TableMixin],
@@ -171,79 +166,6 @@ export default defineComponent({
       },
     };
   },
-  computed: {
-    checkedTablePropes() {
-      return this.tableProps.filter((it) => it.checked).map((it) => it.props);
-    },
-    formItems() {
-      return formBuilder()
-        .formItem({
-          label: "用户名称",
-          type: "input",
-          name: "nickName",
-          value: this.userModel.nickName,
-          maxLength: 50,
-          inputType: "text",
-          placeholder: "请输入用户名称",
-          associatedOption: "address",
-          validator: ({ value, placeholder }, { value: assValue }) => {
-            if (!value) {
-              this.$errorMsg(placeholder);
-              return false;
-            }
-            if (!assValue) {
-              this.$errorMsg("地址不正确");
-              return false;
-            }
-            return true;
-          },
-        })
-        .formItem({
-          label: "用户性别",
-          type: "radio-group",
-          name: "gender",
-          style: "button",
-          value: this.userModel.gender,
-          radioOptions: [
-            {
-              label: "男",
-              value: 0,
-            },
-            {
-              label: "女",
-              value: 1,
-            },
-          ],
-        })
-        .formItem({
-          label: "联系地址",
-          type: "input",
-          name: "address",
-          value: this.userModel.address,
-          maxLength: 50,
-          inputType: "textarea",
-          row: 5,
-          placeholder: "请输入联系地址",
-        })
-        .formItem({
-          label: "用户状态",
-          type: "radio-group",
-          name: "status",
-          value: this.userModel.status,
-          radioOptions: [
-            {
-              label: "正常",
-              value: 1,
-            },
-            {
-              label: "禁用",
-              value: 0,
-            },
-          ],
-        })
-        .build().formItems;
-    },
-  },
   mounted() {
     this.doRefresh();
   },
@@ -272,7 +194,7 @@ export default defineComponent({
               "模拟删除成功，参数为：" +
                 JSON.stringify({
                   ids: this.selectRows.map((it) => it.id).join(","),
-                })
+                }),
             );
           });
         } else {
@@ -280,8 +202,8 @@ export default defineComponent({
         }
       }
     },
-    onUpdateTable(tableProps) {
-      this.tableProps = tableProps.filter((it) => it.checked);
+    onUpdateTable(tableProps: Array<TablePropsType>) {
+      this.tableProps = tableProps.filter((it: TablePropsType) => it.checked);
     },
   },
 });

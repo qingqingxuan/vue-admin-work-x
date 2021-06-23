@@ -48,9 +48,9 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import AccountInfo from "./components/AccountInfo";
-import PasswordInfo from "./components/PasswordInfo";
-import ResultInfo from "./components/ResultInfo";
+import AccountInfo from "./components/AccountInfo.vue";
+import PasswordInfo from "./components/PasswordInfo.vue";
+import ResultInfo from "./components/ResultInfo.vue";
 export default defineComponent({
   name: "StepForm",
   components: { AccountInfo, PasswordInfo, ResultInfo },
@@ -61,7 +61,7 @@ export default defineComponent({
     };
   },
   methods: {
-    next(accountInfo) {
+    next(accountInfo: any) {
       if (this.activeStep === 1) {
         this.accountInfo = accountInfo;
         this.activeStep += 1;

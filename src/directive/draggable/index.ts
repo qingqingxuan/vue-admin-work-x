@@ -7,8 +7,4 @@ const install = function (app: App) {
 
 draggable.install = install
 
-if (typeof window !== undefined && Window.vue) {
-  install(window.Vue)
-}
-
 export default draggable

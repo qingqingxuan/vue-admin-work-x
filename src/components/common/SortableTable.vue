@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent, PropType } from "@vue/runtime-core";
 import draggable from "vuedraggable";
 export default defineComponent({
   name: "SortableTable",
@@ -59,34 +59,47 @@ export default defineComponent({
   emits: ["update"],
   props: {
     tableProps: {
-      type: Array,
-      default: () => [],
+      type: Array as PropType<TablePropsType[]>,
+    },
+    myName: {
+      type: String,
     },
   },
   data() {
     return {
-      innerTableProps: this.tableProps.map((it) => {
-        return { ...it };
-      }),
-      originTableProps: this.tableProps.map((it) => {
-        return { ...it };
-      }),
+      innerTableProps: (this.tableProps as Array<TablePropsType>).map(
+        (it: TablePropsType) => {
+          return { ...it } as TablePropsType;
+        },
+      ),
+      originTableProps: (this.tableProps as Array<TablePropsType>).map(
+        (it: TablePropsType) => {
+          return { ...it } as TablePropsType;
+        },
+      ),
       isIndeterminate:
-        this.tableProps.filter((it) => it.checked).length !==
-        this.tableProps.length,
-      allChecked: this.tableProps.every((it) => it.checked),
+        (this.tableProps as Array<TablePropsType>).filter(
+          (it: TablePropsType) => it.checked,
+        ).length !== (this.tableProps as Array<TablePropsType>).length,
+      allChecked: (this.tableProps as Array<TablePropsType>).every(
+        (it: TablePropsType) => it.checked,
+      ),
     };
   },
   methods: {
     onDraggableEnd() {
       this.$emit("update", this.innerTableProps);
     },
-    onAllChange(value) {
-      this.innerTableProps.forEach((it) => (it.checked = value));
+    onAllChange(value: boolean) {
+      this.innerTableProps.forEach(
+        (it: TablePropsType) => (it.checked = value),
+      );
       this.$emit("update", this.innerTableProps);
     },
     onChange() {
-      const checkedItems = this.innerTableProps.filter((it) => it.checked);
+      const checkedItems = this.innerTableProps.filter(
+        (it: TablePropsType) => it.checked,
+      );
       this.allChecked = checkedItems.length === this.innerTableProps.length;
       this.isIndeterminate =
         checkedItems.length > 0 &&
@@ -94,7 +107,7 @@ export default defineComponent({
       this.$emit("update", this.innerTableProps);
     },
     onReset() {
-      this.innerTableProps = this.originTableProps.map((it) => {
+      this.innerTableProps = this.originTableProps.map((it: TablePropsType) => {
         return { ...it };
       });
       this.onChange();

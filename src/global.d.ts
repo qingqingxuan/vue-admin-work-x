@@ -6,7 +6,7 @@ declare interface RoleModel {
   [propName: string]: any
 }
 
-declare interface MenuModel{
+declare interface MenuModel {
   id: string;
   parentPath: string;
   path: string;
@@ -18,4 +18,10 @@ declare interface MenuModel{
   hidden?: boolean;
   icon?: string;
   affix?: boolean
+}
+
+declare interface TablePropsType {
+  title: string;
+  prop: string;
+  checked: boolean;
 }

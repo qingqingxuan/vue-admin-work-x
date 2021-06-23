@@ -97,6 +97,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import { ElForm } from "element-plus";
 
 export default defineComponent({
   name: "AccountInfo",
@@ -135,14 +136,16 @@ export default defineComponent({
       this.accountInfo.otherAccount = "";
       this.accountInfo.type = 0;
       this.accountInfo.receiveName = "";
-      this.accountInfo.money = "";
+      this.accountInfo.money = 0;
     },
     nextStep() {
-      this.$refs.stepOneForm.validate((valid) => {
-        if (valid) {
-          this.$emit("next-step", this.accountInfo);
-        }
-      });
+      (this.$refs.stepOneForm as InstanceType<typeof ElForm>).validate(
+        (valid) => {
+          if (valid) {
+            this.$emit("next-step", this.accountInfo);
+          }
+        },
+      );
     },
   },
 });

@@ -51,6 +51,7 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import { ElForm } from "element-plus";
 
 export default defineComponent({
   name: "PasswordInfo",
@@ -83,15 +84,17 @@ export default defineComponent({
       this.$emit("pre-step");
     },
     nextStep() {
-      this.$refs.stepTwoForm.validate((valid) => {
-        if (valid) {
-          this.loadingStatus = true;
-          setTimeout(() => {
-            this.$emit("next-step");
-            this.loadingStatus = false;
-          }, 3000);
-        }
-      });
+      (this.$refs.stepTwoForm as InstanceType<typeof ElForm>).validate(
+        (valid) => {
+          if (valid) {
+            this.loadingStatus = true;
+            setTimeout(() => {
+              this.$emit("next-step");
+              this.loadingStatus = false;
+            }, 3000);
+          }
+        },
+      );
     },
   },
 });

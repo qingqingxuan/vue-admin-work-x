@@ -68,6 +68,7 @@
 </template>
 
 <script lang="ts">
+import { showErrorMessage } from "@/components/types";
 import TableMixin from "@/mixins/TableMixin";
 import { defineComponent } from "@vue/runtime-core";
 import XLSX from "xlsx";
@@ -91,7 +92,7 @@ export default defineComponent({
     },
     exportExcel() {
       if (this.selectRows.length === 0) {
-        this.$errorMsg("请先选择要导出的条目");
+        showErrorMessage("请先选择要导出的条目");
         return;
       }
       const data = this.selectRows.map((it) => {

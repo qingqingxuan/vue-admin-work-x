@@ -90,7 +90,7 @@ export default defineComponent({
           maxLength: 50,
           inputType: "text",
           placeholder: "请输入会议名称",
-          validator: ({ value, placeholder }) => {
+          validator: ({ value = "", placeholder = "" }) => {
             if (!value) {
               showErrorMessage(placeholder);
               return false;
@@ -114,9 +114,11 @@ export default defineComponent({
               value: 1,
             },
           ],
-          onChange: (value, assName) => {
-            const assObj = this.formItems.find((it) => it.name === assName);
-            this.$set(assObj, "hidden", value === 1);
+          onChange: (value = 0, assName = "") => {
+            // const assObj = this.formItems.find(
+            //   (it: any) => it.name === assName,
+            // );
+            // this.$set(assObj, "hidden", value === 1);
           },
         },
         {
@@ -127,7 +129,7 @@ export default defineComponent({
           maxLength: 10,
           inputType: "text",
           placeholder: "请输入会议内容",
-          validator: ({ value, placeholder }) => {
+          validator: ({ value = "", placeholder = "" }) => {
             if (!value) {
               showErrorMessage(placeholder);
               return false;
@@ -141,7 +143,7 @@ export default defineComponent({
           name: "startEndTime",
           placeholder: "请选择会议起止时间",
           value: "",
-          validator: ({ value, placeholder }) => {
+          validator: ({ value = "", placeholder = "" }) => {
             if (!value) {
               showErrorMessage(placeholder);
               return false;
@@ -173,7 +175,7 @@ export default defineComponent({
               value: 4,
             },
           ],
-          validator: ({ value, placeholder }) => {
+          validator: ({ value = "", placeholder = "" }) => {
             if (!value) {
               showErrorMessage(placeholder);
               return false;
