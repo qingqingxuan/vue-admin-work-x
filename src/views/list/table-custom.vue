@@ -194,7 +194,7 @@ export default defineComponent({
               "模拟删除成功，参数为：" +
                 JSON.stringify({
                   ids: this.selectRows.map((it) => it.id).join(","),
-                }),
+                })
             );
           });
         } else {

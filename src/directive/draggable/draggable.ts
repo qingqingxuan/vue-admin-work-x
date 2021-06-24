@@ -11,6 +11,7 @@ const dragger = {
     const header = el.querySelector('.el-dialog__header') as HTMLElement
     header.style.cursor = 'move'
     const dialog = el.querySelector('.el-dialog') as HTMLElement
+    console.log(dialog)
     let startX = 0
     let startY = 0
     let status = ''
@@ -22,8 +23,8 @@ const dragger = {
       const marginTop = parseInt(dialog.style.marginTop) / 100
       range.top = -(document.documentElement.clientHeight * marginTop)
       range.bottom = document.documentElement.clientHeight * (1 - marginTop) - dialog.clientHeight
-      startX = e.clientX - parseInt(dialog.style.left ?? 0)
-      startY = e.clientY - parseInt(dialog.style.top ?? 0)
+      startX = e.clientX - (parseInt(dialog.style.left) || 0)
+      startY = e.clientY - (parseInt(dialog.style.top) || 0)
       const handleMove = (e: MouseEvent) => {
         if (status !== 'down') return
         const moveX = e.clientX

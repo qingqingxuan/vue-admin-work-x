@@ -13,7 +13,6 @@
     <Dialog
       ref="dialog"
       title="这是一个可以拖拽的对话框"
-      v-draggable
     >
       <template #content>
         <div class="text-center text-bold text-lg">《酬乐天咏老见示》唐·刘禹锡</div>

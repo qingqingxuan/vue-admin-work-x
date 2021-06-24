@@ -4,6 +4,7 @@
     v-model="dialogVisible"
     :close-on-click-modal="closeOnClickModal"
     :width="isMobileScreen ? '85%' : '45%'"
+    @vnodeMounted="onVnodeMounted"
   >
     <div class="content-wrapper">
       <slot name="content"></slot>
@@ -31,6 +32,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import { DialogConfig } from "../types";
+import VDraggable from "@/directive/draggable/draggable";
 export default defineComponent({
   name: "Dialog",
   props: {
@@ -78,6 +80,9 @@ export default defineComponent({
         (this as any).resolve = resolve;
       });
     },
+    onVnodeMounted() {
+      VDraggable.mounted(this.$el.nextElementSibling);
+    },
     close(afterAction?: () => void | null) {
       this.dialogVisible = false;
       afterAction && afterAction();
@@ -105,8 +110,8 @@ export default defineComponent({
                       this,
                       it,
                       formItems.find(
-                        (item: any) => it.associatedOption === item.name,
-                      ),
+                        (item: any) => it.associatedOption === item.name
+                      )
                     )
                   : true;
               });
