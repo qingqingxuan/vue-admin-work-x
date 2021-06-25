@@ -1,4 +1,4 @@
-import LayoutStore, { Layout } from 'vaw-layouts-x';
+import LayoutStore, { Layout, mapTwoLevelRouter } from 'vaw-layouts-x';
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import router, { routes as constantRoutes } from "../router";
@@ -44,9 +44,7 @@ function getRoutes() {
 
 
 function getComponent(it: OriginRoute) {
-  return it.children && it.children.length > 0 ?
-    (): any => import('vaw-layouts-x/src/components/RouterViewLayout.vue') :
-    (): any => import('@/views' + it.menuUrl + '.vue')
+  return (): any => import('@/views' + it.menuUrl + '.vue')
 }
 
 function getCharCount(str: string, char: string) {
@@ -120,7 +118,9 @@ router.beforeEach(async (to) => {
           redirect: '/404',
           hidden: true
         } as RouteRecordRaw)
-        accessRoutes.forEach(it => {
+        const mapRoutes = mapTwoLevelRouter(accessRoutes)
+        console.log(mapRoutes);
+        mapRoutes.forEach((it: any) => {
           router.addRoute(it)
         })
         LayoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
