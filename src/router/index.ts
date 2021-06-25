@@ -5,6 +5,17 @@ import { Layout } from "vaw-layouts-x";
 
 export const routes = [
   {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)*',
+        component: (): any => import('@/views/redirect/index.vue')
+      }
+    ]
+  },
+  {
     path: '/404',
     hidden: true,
     component: (): any => import('@/views/404.vue')
