@@ -11,7 +11,6 @@ const dragger = {
     const header = el.querySelector('.el-dialog__header') as HTMLElement
     header.style.cursor = 'move'
     const dialog = el.querySelector('.el-dialog') as HTMLElement
-    console.log(dialog)
     let startX = 0
     let startY = 0
     let status = ''

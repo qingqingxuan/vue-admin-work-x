@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "cropperjs": "^1.5.12",
     "element-plus": "^1.0.2-beta.44",
     "font-awesome": "^4.7.0",
     "js-cookie": "^2.2.1",

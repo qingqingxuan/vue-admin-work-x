@@ -194,6 +194,68 @@ export const adminRoutes = [
     ],
   },
   {
+    menuUrl: "/next",
+    menuName: "多级菜单",
+    icon: "golden-fill",
+    parentPath: '',
+    children: [
+      {
+        parentPath: '/next',
+        menuUrl: "/next/menu1",
+        menuName: "menu-1",
+        cacheable: true
+      },
+      {
+        parentPath: '/next',
+        menuUrl: "/next/menu2",
+        menuName: "menu-2",
+        children: [
+          {
+            parentPath: '/next/menu2',
+            menuUrl: "/next/menu2/menu-2-1",
+            menuName: "menu-2-1",
+            children: [
+              {
+                parentPath: '/next/menu2/menu-2-1',
+                menuUrl: "/next/menu2/menu-2-1/menu-2-1-1",
+                menuName: "menu-2-1-1",
+                cacheable: true
+              },
+              {
+                parentPath: '/next/menu2/menu-2-1',
+                menuUrl: "/next/menu2/menu-2-1/menu-2-1-2",
+                menuName: "menu-2-1-2",
+              }
+            ]
+          },
+          {
+            parentPath: '/next/menu2',
+            menuUrl: "/next/menu2/menu-2-2",
+            menuName: "menu-2-2",
+            cacheable: true
+          },
+        ],
+      },
+    ],
+  },
+  {
+    menuUrl: "/map",
+    menuName: "地图",
+    icon: "medium-square-fill",
+    children: [
+      {
+        parentPath: '/map',
+        menuUrl: "/map/gaode",
+        menuName: "高德地图",
+      },
+      {
+        parentPath: '/map',
+        menuUrl: "/map/baidu",
+        menuName: "百度地图",
+      }
+    ]
+  },
+  {
     menuUrl: "/other",
     menuName: "其它功能",
     icon: "appstore-fill",
@@ -211,6 +273,11 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
+        menuUrl: "/other/cropper",
+        menuName: "图片裁剪",
+      },
+      {
+        parentPath: '/other',
         menuUrl: "/other/qrcode",
         menuName: "二维码",
       },
@@ -223,25 +290,7 @@ export const adminRoutes = [
         parentPath: '/other',
         menuUrl: "/other/to-next-page",
         menuName: "下一页",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "/other/next",
-        menuName: "下一级",
-        children: [
-          {
-            parentPath: '/other/next',
-            menuUrl: "/other/next/next-child",
-            menuName: "三级页面",
-          },
-          {
-            parentPath: '/other/next',
-            menuUrl: "/other/next/cache-next-child",
-            menuName: "缓存页面",
-            cacheable: true,
-          },
-        ],
-      },
+      }
     ],
   },
 ];

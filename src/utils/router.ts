@@ -41,8 +41,6 @@ function getRoutes() {
   })
 }
 
-
-
 function getComponent(it: OriginRoute) {
   return (): any => import('@/views' + it.menuUrl + '.vue')
 }
@@ -119,7 +117,6 @@ router.beforeEach(async (to) => {
           hidden: true
         } as RouteRecordRaw)
         const mapRoutes = mapTwoLevelRouter(accessRoutes)
-        console.log(mapRoutes);
         mapRoutes.forEach((it: any) => {
           router.addRoute(it)
         })
