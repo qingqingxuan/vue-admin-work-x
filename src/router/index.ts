@@ -27,6 +27,21 @@ export const routes = [
     component: Login,
   },
   {
+    path: "/personal",
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: "",
+        name: "Personal",
+        component: (): any => import('@/views/personal/index.vue'),
+        meta: {
+          title: '个人中心',
+        },
+      }
+    ]
+  },
+  {
     path: '/',
     redirect: '/index/home',
     hidden: true

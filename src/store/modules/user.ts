@@ -18,7 +18,7 @@ export const userModule: Module<UserState, RootState> = {
     token: userInfo.token || '',
     userName: userInfo.userName || '',
     nickName: userInfo.nickName || '',
-    avatar: userInfo.avatar || ''
+    avatar: userInfo.avatar || 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
   },
   getters: {
     userId(state) {
@@ -29,7 +29,7 @@ export const userModule: Module<UserState, RootState> = {
     }
   },
   actions: {
-    saveUser({ commit }, userInfo: UserState) { 
+    saveUser({ commit }, userInfo: UserState) {
       return new Promise<void>((res) => {
         commit('SAVE_USER', userInfo);
         res()
@@ -38,7 +38,7 @@ export const userModule: Module<UserState, RootState> = {
     changeNickName({ commit }, newNickName) {
       commit("CHANGE_NICKNAME", newNickName);
     },
-    logout({commit}) {
+    logout({ commit }) {
       commit('LOGOUT')
     }
   },
