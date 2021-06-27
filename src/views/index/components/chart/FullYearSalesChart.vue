@@ -16,8 +16,16 @@
     </div>
   </el-card>
 </template>
-<script>
-import itemChartMixins from "./mixins/item-chart-mixins";
+<script lang="ts">
+import useEcharts from "@/mixins/useEcharts";
+import {
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from "@vue/runtime-core";
+import { dispose, graphic } from "echarts";
+
 const months = [
   "一月",
   "二月",
@@ -32,17 +40,11 @@ const months = [
   "十一月",
   "十二月",
 ];
-export default {
+export default defineComponent({
   name: "FullYearSalesChart",
-  mixins: [itemChartMixins],
-  mounted() {
-    this.init();
-  },
-  beforeUnmount() {
-    this.$echarts.dispose(this.getInstance(this.$refs.fullYearSalesChart));
-  },
-  methods: {
-    init() {
+  setup() {
+    const fullYearSalesChart = ref<HTMLDivElement | null>(null);
+    const init = () => {
       const option = {
         color: ["rgba(110, 199, 205)", "rgba(211, 58, 192)"],
         grid: {
@@ -79,7 +81,7 @@ export default {
             },
             label: {
               show: true,
-              formatter(val) {
+              formatter(val: any) {
                 if (val.dataIndex === 0) {
                   return "";
                 } else {
@@ -89,7 +91,7 @@ export default {
             },
             areaStyle: {
               opacity: 0.8,
-              color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
                   color: "rgba(234, 228, 201)",
@@ -112,7 +114,7 @@ export default {
             },
             label: {
               show: true,
-              formatter(val) {
+              formatter(val: any) {
                 if (val.dataIndex === 0) {
                   return "";
                 } else {
@@ -122,7 +124,7 @@ export default {
             },
             areaStyle: {
               opacity: 0.8,
-              color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
                   color: "rgba(240, 188, 136)",
@@ -136,21 +138,29 @@ export default {
           },
         ],
       };
-      this.getInstance(this.$refs.fullYearSalesChart).setOption(option);
-    },
-    updateChart() {
-      this.getInstance(this.$refs.fullYearSalesChart).resize();
-    },
+      useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(option);
+    };
+    const updateChart = () => {
+      useEcharts(fullYearSalesChart.value as HTMLDivElement).resize();
+    };
+    onMounted(init);
+    onBeforeUnmount(() => {
+      dispose(fullYearSalesChart.value as HTMLDivElement);
+    });
+    return {
+      fullYearSalesChart,
+      updateChart,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
 .chart-item-container {
   width: 100%;
-  height: 245px;
+  height: 400px;
   .chart-item {
-    height: 210px;
+    height: 345px;
   }
 }
 </style>

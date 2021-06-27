@@ -6,19 +6,21 @@
   </div>
 </template>
 
-<script>
-import ItemChartMixins from "./mixins/item-chart-mixins";
-export default {
+<script lang="ts">
+import useEcharts from "@/mixins/useEcharts";
+import {
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from "@vue/runtime-core";
+import { dispose, graphic } from "echarts";
+
+export default defineComponent({
   name: "OrderChart",
-  mixins: [ItemChartMixins],
-  mounted() {
-    this.init();
-  },
-  beforeUnmount() {
-    this.$echarts.dispose(this.getInstance(this.$refs.orderChartWrapper));
-  },
-  methods: {
-    init() {
+  setup() {
+    const orderChartWrapper = ref<HTMLDivElement | null>(null);
+    const init = () => {
       const option = {
         tooltip: {
           trigger: "item",
@@ -56,7 +58,7 @@ export default {
             showSymbol: false,
             areaStyle: {
               opacity: 0.8,
-              color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
                   color: "rgba(128, 255, 165)",
@@ -70,11 +72,19 @@ export default {
           },
         ],
       };
-      this.getInstance(this.$refs.orderChartWrapper).setOption(option);
-    },
-    updateChart() {
-      this.getInstance(this.$refs.orderChartWrapper).resize();
-    },
+      useEcharts(orderChartWrapper.value as HTMLDivElement).setOption(option);
+    };
+    const updateChart = () => {
+      useEcharts(orderChartWrapper.value as HTMLDivElement).resize();
+    };
+    onMounted(init);
+    onBeforeUnmount(() => {
+      dispose(orderChartWrapper.value as HTMLDivElement);
+    });
+    return {
+      orderChartWrapper,
+      updateChart,
+    };
   },
-};
+});
 </script>

@@ -11,29 +11,29 @@
     </template>
     <div
       ref="schoolChart"
-      class="chart-item"
+      class="chart-item margin-tb-lg"
     >
     </div>
   </el-card>
-
 </template>
 
-<script>
+<script lang="ts">
 import chinaData from "@/assets/data/china.json";
 import { convertData } from "@/assets/data/map.js";
-import itemChartMixins from "./mixins/item-chart-mixins";
-export default {
+import useEcharts from "@/mixins/useEcharts";
+import {
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from "@vue/runtime-core";
+import { dispose, registerMap } from "echarts";
+export default defineComponent({
   name: "SchoolChart",
-  mixins: [itemChartMixins],
-  mounted() {
-    this.init();
-  },
-  beforeUnmount() {
-    this.$echarts.dispose(this.getInstance(this.$refs.schoolChart));
-  },
-  methods: {
-    init() {
-      this.$echarts.registerMap("china", chinaData);
+  setup() {
+    const schoolChart = ref<HTMLDivElement | null>(null);
+    const init = () => {
+      registerMap("china", chinaData as any);
       const scatterData = convertData();
       const option = {
         tooltip: {
@@ -87,7 +87,7 @@ export default {
                 return b.value[2] - a.value[2];
               })
               .slice(0, 3),
-            symbolSize: function (val) {
+            symbolSize: function (val: any) {
               return val[2] / 10;
             },
             itemStyle: {
@@ -104,19 +104,27 @@ export default {
           },
         ],
       };
-      this.getInstance(this.$refs.schoolChart).setOption(option);
-    },
-    updateChart() {
-      this.getInstance(this.$refs.schoolChart).resize();
-    },
+      useEcharts(schoolChart.value as HTMLDivElement).setOption(option);
+    };
+    const updateChart = () => {
+      useEcharts(schoolChart.value as HTMLDivElement).resize();
+    };
+    onMounted(init);
+    onBeforeUnmount(() => {
+      dispose(schoolChart.value as HTMLDivElement);
+    });
+    return {
+      schoolChart,
+      updateChart,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>
 .chart-item-container {
   width: 100%;
-  height: calc(215px * 2 + 10px);
+  height: 100%;
   .chart-item {
     height: calc(180px * 2);
   }

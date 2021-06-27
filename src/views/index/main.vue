@@ -15,11 +15,11 @@
             #extra="{ extra }"
           >
             <div class="margin-top">
-              <div class="text-gray">
+              <div>
                 较昨日新增：{{ extra.data }}
                 <i class="el-icon-caret-top text-green"></i>
               </div>
-              <div class="text-gray margin-top-sm">
+              <div class=" margin-top-sm">
                 较上周新增：{{ extra.data1 }}
                 <i class="el-icon-caret-top text-blue"></i>
               </div>
@@ -33,11 +33,11 @@
               class="margin-top"
               style="position: relative"
             >
-              <div class="text-gray">
+              <div>
                 较昨日新增：{{ extra.data }}
                 <i class="el-icon-caret-top text-green"></i>
               </div>
-              <div class="text-gray margin-top-sm">
+              <div class=" margin-top-sm">
                 较上周新增：{{ extra.data1 }}
                 <i class="el-icon-caret-top text-blue"></i>
               </div>
@@ -70,6 +70,14 @@
       :gutter="5"
       class="margin-top-xs"
     >
+      <el-col :span="24">
+        <FullYearSalesChart ref="fullYearSalesChart" />
+      </el-col>
+    </el-row>
+    <el-row
+      :gutter="5"
+      class="margin-top-xs"
+    >
       <el-col
         :xs="24"
         :sm="24"
@@ -89,9 +97,7 @@
         :md="12"
         class="map-margin-tb"
       >
-        <div>
-          <SchoolChart ref="schoolChart" />
-        </div>
+        <SchoolChart ref="schoolChart" />
       </el-col>
       <el-col
         :xs="24"
@@ -105,14 +111,6 @@
             class="margin-top-xs"
           />
         </div>
-      </el-col>
-    </el-row>
-    <el-row
-      :gutter="5"
-      class="margin-top-xs"
-    >
-      <el-col :span="24">
-        <FullYearSalesChart ref="fullYearSalesChart" />
       </el-col>
     </el-row>
   </div>
@@ -198,15 +196,25 @@ export default defineComponent({
   },
   methods: {
     onResize(width?: number) {
-      // this.$refs.mOrderChart[0].updateChart();
-      // this.$refs.salesChart.updateChart();
+      (this.$refs.mOrderChart as InstanceType<typeof OrderChart>).updateChart();
+      (this.$refs.salesChart as InstanceType<typeof SalesChart>).updateChart();
       (
         this.$refs.departmentChart as InstanceType<typeof DepartmentChart>
       ).updateChart();
-      // this.$refs.enrollmentChannelsChart.updateChart();
-      // this.$refs.schoolChart.updateChart();
-      // this.$refs.studentChart.updateChart();
-      // this.$refs.fullYearSalesChart.updateChart();
+      (
+        this.$refs.enrollmentChannelsChart as InstanceType<
+          typeof EnrollmentChannelsChart
+        >
+      ).updateChart();
+      (
+        this.$refs.schoolChart as InstanceType<typeof SchoolChart>
+      ).updateChart();
+      (
+        this.$refs.studentChart as InstanceType<typeof StudentChart>
+      ).updateChart();
+      (
+        this.$refs.fullYearSalesChart as InstanceType<typeof FullYearSalesChart>
+      ).updateChart();
     },
   },
 });
@@ -221,8 +229,10 @@ export default defineComponent({
     margin: 5px 0;
   }
 }
-.chart-item {
-  background-color: #fff;
+.light {
+  .chart-item {
+    background-color: #fff;
+  }
 }
 .stack-avatar-wrapper {
   position: absolute;

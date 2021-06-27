@@ -18,19 +18,20 @@
 
 </template>
 
-<script>
-import itemChartMixins from "./mixins/item-chart-mixins";
-export default {
+<script lang="ts">
+import useEcharts from "@/mixins/useEcharts";
+import {
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from "@vue/runtime-core";
+import { dispose } from "echarts";
+export default defineComponent({
   name: "EnrollmentChannelsChart",
-  mixins: [itemChartMixins],
-  mounted() {
-    this.init();
-  },
-  beforeUnmount() {
-    this.$echarts.dispose(this.getInstance(this.$refs.channelsChart));
-  },
-  methods: {
-    init() {
+  setup() {
+    const channelsChart = ref<HTMLDivElement | null>(null);
+    const init = () => {
       const option = {
         grid: {
           left: "12%",
@@ -76,13 +77,21 @@ export default {
           },
         ],
       };
-      this.getInstance(this.$refs.channelsChart).setOption(option);
-    },
-    updateChart() {
-      this.getInstance(this.$refs.channelsChart).resize();
-    },
+      useEcharts(channelsChart.value as HTMLDivElement).setOption(option);
+    };
+    const updateChart = () => {
+      useEcharts(channelsChart.value as HTMLDivElement).resize();
+    };
+    onMounted(init);
+    onBeforeUnmount(() => {
+      dispose(channelsChart.value as HTMLDivElement);
+    });
+    return {
+      channelsChart,
+      updateChart,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

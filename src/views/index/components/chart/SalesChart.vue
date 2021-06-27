@@ -18,22 +18,15 @@
 
 </template>
 
-<script>
-import ItemChartMixins from "./mixins/item-chart-mixins";
-export default {
+<script lang="ts">
+import { dispose, graphic } from "echarts";
+import useEcharts from "@/mixins/useEcharts";
+import { defineComponent, onBeforeUnmount, onMounted, ref } from "vue";
+export default defineComponent({
   name: "SalesChart",
-  mixins: [ItemChartMixins],
-  mounted() {
-    this.init();
-  },
-  beforeUnmount() {
-    this.$echarts.dispose(this.getInstance(this.$refs.salesChart));
-  },
-  methods: {
-    init() {
-      if (!this.$refs.salesChart) {
-        return;
-      }
+  setup() {
+    const salesChart = ref<HTMLDivElement | null>(null);
+    const init = () => {
       const option = {
         grid: {
           left: "2%",
@@ -67,7 +60,7 @@ export default {
             },
             areaStyle: {
               opacity: 0.8,
-              color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
                   color: "rgba(55, 162, 255)",
@@ -81,13 +74,21 @@ export default {
           },
         ],
       };
-      this.getInstance(this.$refs.salesChart).setOption(option);
-    },
-    updateChart() {
-      this.getInstance(this.$refs.salesChart).resize();
-    },
+      useEcharts(salesChart.value as HTMLDivElement).setOption(option);
+    };
+    const updateChart = () => {
+      useEcharts(salesChart.value as HTMLDivElement).resize();
+    };
+    onMounted(init);
+    onBeforeUnmount(() => {
+      dispose(salesChart.value as HTMLDivElement);
+    });
+    return {
+      salesChart,
+      updateChart,
+    };
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

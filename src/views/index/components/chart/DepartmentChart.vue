@@ -15,7 +15,6 @@
     >
     </div>
   </el-card>
-
 </template>
 
 <script lang="ts">
@@ -25,7 +24,7 @@ import {
   onMounted,
   ref,
 } from "@vue/runtime-core";
-import { dispose, EChartsType, graphic } from "echarts";
+import { dispose, graphic } from "echarts";
 import useEcharts from "@/mixins/useEcharts";
 export default defineComponent({
   name: "DepartmentChart",
