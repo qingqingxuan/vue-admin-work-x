@@ -8,8 +8,8 @@ export default defineComponent({
   },
   methods: {
     refreshItems() {
-      this.innerFormItems = []
-      this.innerFormItems.push(...(this as any).formItems.filter((it: FormItem) => !it.hidden))
+      this.innerFormItems = [] as Array<FormItem>
+      this.innerFormItems.push(...(this as any).formItems.map((it: FormItem) => ({ ...it })))
     },
     checkParams() {
       return this.innerFormItems.every(it => {
@@ -27,7 +27,7 @@ export default defineComponent({
       return {}
     },
     resetParams() {
-      this.innerFormItems && (this.innerFormItems.forEach(it => it.value === ''))
+      this.refreshItems()
     }
   }
 })

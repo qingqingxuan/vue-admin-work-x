@@ -86,7 +86,7 @@ export default defineComponent({
     let interval: any = null;
     const init = () => {
       const option = {
-        color: ["rgba(110, 199, 205)", "rgba(211, 58, 192)"],
+        color: ["rgba(64, 58, 255)", "rgba(136, 188, 241)"],
         grid: {
           top: "10%",
           left: "2%",
@@ -167,11 +167,11 @@ export default defineComponent({
               color: new graphic.LinearGradient(0, 0, 0, 1, [
                 {
                   offset: 0,
-                  color: "rgba(240, 188, 136)",
+                  color: "rgba(64, 158, 255)",
                 },
                 {
                   offset: 1,
-                  color: "rgba(211, 58, 192)",
+                  color: "rgba(136, 188, 241)",
                 },
               ]),
             },
@@ -182,8 +182,8 @@ export default defineComponent({
         loading.value = false;
         nextTick(() =>
           useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
-            option
-          )
+            option,
+          ),
         );
         interval = setInterval(() => {
           const option = {
@@ -197,7 +197,7 @@ export default defineComponent({
             ],
           };
           useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
-            option
+            option,
           );
         }, 5000);
       }, 3000);

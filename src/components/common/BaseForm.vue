@@ -114,6 +114,14 @@
               :label="optionItem.value"
             >{{ optionItem.label }}</component>
           </el-checkbox-group>
+          <el-switch
+            v-if="item.type === 'switch' && !item.hidden"
+            v-model="item.value"
+            :disabled="item.disabled || false"
+            :size="config.size || 'small'"
+            @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
+          >
+          </el-switch>
         </el-col>
       </el-row>
     </el-form-item>
@@ -145,14 +153,14 @@ export default defineComponent({
       },
     },
   },
-  watch: {
-    formItems: {
-      handler() {
-        this.refreshItems();
-      },
-      deep: true,
-    },
-  },
+  // watch: {
+  //   formItems: {
+  //     handler() {
+  //       this.refreshItems();
+  //     },
+  //     deep: true,
+  //   },
+  // },
   mounted() {
     this.refreshItems();
   },

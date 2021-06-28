@@ -91,8 +91,8 @@ export const adminRoutes = [
       },
       {
         parentPath: '/form',
-        menuUrl: "/form/tip",
-        menuName: "通知提示",
+        menuUrl: "/form/form-verify",
+        menuName: "表单验证",
       },
     ],
   },

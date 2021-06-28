@@ -37,6 +37,8 @@ interface FormItem extends TableSearchItem {
   maxLength?: number;
   rows?: number;
   disabled?: boolean,
+  radioOptions?: Array<SelectOptionItem>,
+  checkOptions?: Array<SelectOptionItem>,
   reset?: () => void
 }
 
