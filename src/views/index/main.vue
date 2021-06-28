@@ -14,7 +14,7 @@
             v-if="index === 0"
             #extra="{ extra }"
           >
-            <div class="margin-top">
+            <div class="margin-top-lg">
               <div>
                 较昨日新增：{{ extra.data }}
                 <i class="el-icon-caret-top text-green"></i>
@@ -68,7 +68,7 @@
     </el-row>
     <el-row
       :gutter="5"
-      class="margin-top-xs"
+      class="margin-top-lg"
     >
       <el-col :span="24">
         <FullYearSalesChart ref="fullYearSalesChart" />
@@ -76,7 +76,7 @@
     </el-row>
     <el-row
       :gutter="5"
-      class="margin-top-xs"
+      class="margin-top-lg"
     >
       <el-col
         :xs="24"
@@ -125,7 +125,14 @@ import EnrollmentChannelsChart from "./components/chart/EnrollmentChannelsChart.
 import DepartmentChart from "./components/chart/DepartmentChart.vue";
 import SchoolChart from "./components/chart/SchoolChart.vue";
 import FullYearSalesChart from "./components/chart/FullYearSalesChart.vue";
-import { defineComponent } from "@vue/runtime-core";
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  ref,
+  watch,
+} from "@vue/runtime-core";
+import { useLayoutStore } from "vaw-layouts-x";
 export default defineComponent({
   name: "Main",
   components: {
@@ -138,8 +145,40 @@ export default defineComponent({
     DepartmentChart,
     FullYearSalesChart,
   },
-  data() {
+  setup() {
+    const layoutStore = useLayoutStore();
+    const mOrderChart = ref<InstanceType<typeof OrderChart>>();
+    const salesChart = ref<InstanceType<typeof SalesChart>>();
+    const departmentChart = ref<InstanceType<typeof DepartmentChart>>();
+    const enrollmentChannelsChart =
+      ref<InstanceType<typeof EnrollmentChannelsChart>>();
+    const schoolChart = ref<InstanceType<typeof SchoolChart>>();
+    const studentChart = ref<InstanceType<typeof StudentChart>>();
+    const fullYearSalesChart = ref<InstanceType<typeof FullYearSalesChart>>();
+    const onResize = () => {
+      mOrderChart.value?.updateChart();
+      salesChart.value?.updateChart();
+      departmentChart.value?.updateChart();
+      enrollmentChannelsChart.value?.updateChart();
+      schoolChart.value?.updateChart();
+      studentChart.value?.updateChart();
+      fullYearSalesChart.value?.updateChart();
+    };
+    const collapse = computed(() => {
+      return layoutStore.state.isCollapse;
+    });
+    watch(collapse, (newVal: boolean) => {
+      onResize();
+    });
     return {
+      collapse,
+      mOrderChart,
+      salesChart,
+      departmentChart,
+      enrollmentChannelsChart,
+      schoolChart,
+      studentChart,
+      fullYearSalesChart,
       dataList: [
         {
           title: "今日访问量",
@@ -181,41 +220,6 @@ export default defineComponent({
         },
       ],
     };
-  },
-  computed: {
-    collapse() {
-      return this.$layoutStore.state.isCollapse;
-    },
-  },
-  watch: {
-    collapse(newVal) {
-      setTimeout(() => {
-        (this as any).onResize();
-      }, 500);
-    },
-  },
-  methods: {
-    onResize(width?: number) {
-      (this.$refs.mOrderChart as InstanceType<typeof OrderChart>).updateChart();
-      (this.$refs.salesChart as InstanceType<typeof SalesChart>).updateChart();
-      (
-        this.$refs.departmentChart as InstanceType<typeof DepartmentChart>
-      ).updateChart();
-      (
-        this.$refs.enrollmentChannelsChart as InstanceType<
-          typeof EnrollmentChannelsChart
-        >
-      ).updateChart();
-      (
-        this.$refs.schoolChart as InstanceType<typeof SchoolChart>
-      ).updateChart();
-      (
-        this.$refs.studentChart as InstanceType<typeof StudentChart>
-      ).updateChart();
-      (
-        this.$refs.fullYearSalesChart as InstanceType<typeof FullYearSalesChart>
-      ).updateChart();
-    },
   },
 });
 </script>

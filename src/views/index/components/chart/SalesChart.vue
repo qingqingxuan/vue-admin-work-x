@@ -6,7 +6,7 @@
   >
     <template #header>
       <div class="text-bold">
-        一周销售额走势图（单位：万）
+        一周销售额（单位：万）
       </div>
     </template>
     <div

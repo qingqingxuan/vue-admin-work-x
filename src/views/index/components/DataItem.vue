@@ -30,7 +30,7 @@
     </template>
     <template #default>
       <el-card
-        :body-style="{padding: '15px'}"
+        :body-style="{padding: '10px'}"
         shadow="never"
       >
         <template #header>

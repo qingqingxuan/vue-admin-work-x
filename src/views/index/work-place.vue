@@ -104,9 +104,9 @@
         </el-card>
       </div>
       <div style="flex: 2; margin-left: 5px">
-        <el-card>
+        <el-card :body-style="{padding: 0}">
           <template #header>
-            <div class="flex justify-between margin-tb-10">
+            <div class="flex justify-between">
               <span class="text-bold text-sm">
                 <i class="el-icon-s-order text-blue"></i>
                 快捷操作
@@ -117,19 +117,24 @@
             <el-col
               v-for="(item, index) of fastActions"
               :key="index"
-              :span="6"
+              :span="8"
             >
-              <el-link
-                type="primary"
-                class="margin-bottom"
+              <div
                 @click="fastActionClick(item)"
-              >{{ item.title }}</el-link>
+                class="fast-item-wrapper flex flex-direction justify-center align-center"
+              >
+                <div
+                  :class="[item.icon, 'iconfont']"
+                  :style="{'color': item.color, 'font-size': '20px'}"
+                ></div>
+                <div class="margin-top-xs">{{ item.title }}</div>
+              </div>
             </el-col>
           </el-row>
         </el-card>
         <el-card class="margin-top-xs">
           <template #header>
-            <div class="flex justify-between margin-tb-10">
+            <div class="flex justify-between">
               <span class="text-bold text-sm">
                 <i class="el-icon-s-order text-blue"></i>
                 待办事项
@@ -211,10 +216,11 @@
       </el-card>
       <el-card
         shadow="never"
+        :body-style="{padding: 0}"
         class="margin-top-xs"
       >
         <template #header>
-          <div class="flex justify-between margin-tb-10">
+          <div class="flex justify-between">
             <span class="text-bold text-sm">
               <i class="el-icon-s-order text-blue"></i>
               快捷操作
@@ -225,13 +231,18 @@
           <el-col
             v-for="(item, index) of fastActions"
             :key="index"
-            :span="6"
+            :span="8"
           >
-            <el-link
-              type="primary"
-              class="margin-bottom"
+            <div
               @click="fastActionClick(item)"
-            >{{ item.title }}</el-link>
+              class="fast-item-wrapper flex flex-direction justify-center align-center"
+            >
+              <div
+                :class="[item.icon, 'iconfont']"
+                :style="{'color': item.color, 'font-size': '20px'}"
+              ></div>
+              <div class="margin-top-xs">{{ item.title }}</div>
+            </div>
           </el-col>
         </el-row>
       </el-card>
@@ -240,7 +251,7 @@
         class="margin-top-xs"
       >
         <template #header>
-          <div class="flex justify-between margin-tb-10">
+          <div class="flex justify-between">
             <span class="text-bold text-sm">
               <i class="el-icon-s-order text-blue"></i>
               待办事项
@@ -295,6 +306,7 @@ import {
 import { useRouter } from "vue-router";
 import { useLayoutStore } from "vaw-layouts-x";
 import { useStore } from "@/store";
+import { random } from "lodash";
 const COLORS = ["#67C23A", "#E6A23C", "#F56C6C", "#409EFF"];
 const date = new Date();
 export default defineComponent({
@@ -357,12 +369,13 @@ export default defineComponent({
         tempWaitingItems.push(...waitingItmes.slice(0, 4));
       }
     };
+    const router = useRouter();
     const fastActionClick = ({ path = "/" }) => {
-      useRouter().push({ path });
+      router.push(path);
     };
     onMounted(() => {
       tempWaitingItems.push(
-        ...(waitingItmes.length > 4 ? waitingItmes.slice(0, 4) : waitingItmes),
+        ...(waitingItmes.length > 4 ? waitingItmes.slice(0, 4) : waitingItmes)
       );
     });
     return {
@@ -427,24 +440,40 @@ export default defineComponent({
       ],
       fastActions: [
         {
-          title: "常用操作",
+          title: "首页",
+          icon: "icon-dashboard-fill",
           path: "/",
+          color: COLORS[random(0, COLORS.length)],
         },
         {
-          title: "常用操作",
-          path: "/",
+          title: "系统管理",
+          path: "/system/department",
+          icon: "icon-setting-fill",
+          color: COLORS[random(0, COLORS.length)],
         },
         {
-          title: "快捷操作",
-          path: "/",
+          title: "列表",
+          path: "/list/table-custom",
+          icon: "icon-detail-fill",
+          color: COLORS[random(0, COLORS.length)],
         },
         {
-          title: "快捷操作",
-          path: "/",
+          title: "表单",
+          path: "/form/base-form-view",
+          icon: "icon-file-text-fill",
+          color: COLORS[random(0, COLORS.length)],
         },
         {
-          title: "常用操作",
-          path: "/",
+          title: "多级菜单",
+          path: "/next/menu2/menu-2-1/menu-2-1-1",
+          icon: "icon-golden-fill",
+          color: COLORS[random(0, COLORS.length)],
+        },
+        {
+          title: "更多功能",
+          path: "/other/qrcode",
+          icon: "icon-appstore-fill",
+          color: COLORS[random(0, COLORS.length)],
         },
       ],
       showWatingMode,
@@ -482,6 +511,15 @@ export default defineComponent({
 }
 div.item-action:last-child::after {
   width: 0;
+}
+.fast-item-wrapper {
+  border-right: 1px solid #f7f7f7;
+  border-bottom: 1px solid #f7f7f7;
+  height: 80px;
+}
+.fast-item-wrapper:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 10px #ddd;
 }
 .el-link + .el-link {
   margin-bottom: 10px;

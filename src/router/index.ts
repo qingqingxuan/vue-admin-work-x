@@ -18,7 +18,7 @@ export const routes = [
   {
     path: '/404',
     hidden: true,
-    component: (): any => import('@/views/404.vue')
+    component: (): any => import('@/views/exception/404.vue')
   },
   {
     path: "/login",

@@ -268,6 +268,16 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
+        menuUrl: "/other/tip",
+        menuName: "消息提示",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/clipboard",
+        menuName: "剪切板",
+      },
+      {
+        parentPath: '/other',
         menuUrl: "http://www.baidu.com",
         menuName: "外链",
       },
@@ -288,8 +298,8 @@ export const adminRoutes = [
       },
       {
         parentPath: '/other',
-        menuUrl: "/other/to-next-page",
-        menuName: "下一页",
+        menuUrl: "/other/descriptions",
+        menuName: "详情页面",
       }
     ],
   },

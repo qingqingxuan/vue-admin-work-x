@@ -1,4 +1,4 @@
-import { App, VNode } from "vue"
+import { App } from "vue"
 
 const range = {
   left: 0,

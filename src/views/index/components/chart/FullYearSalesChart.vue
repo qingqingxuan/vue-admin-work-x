@@ -1,31 +1,69 @@
 <template>
-  <el-card
-    class="chart-item-container"
-    :body-style="{padding: 0}"
-    shadow="never"
+  <el-skeleton
+    :loading="loading"
+    animated
   >
-    <template #header>
-      <div class="text-bold">
-        全年销售额分析图
-      </div>
+    <template #template>
+      <el-card>
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
+        <div class="margin-top">
+          <el-skeleton-item variant="text" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+        </div>
+      </el-card>
     </template>
-    <div
-      ref="fullYearSalesChart"
-      class="chart-item"
-    >
-    </div>
-  </el-card>
+    <template #default>
+      <el-card
+        class="chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
+        <template #header>
+          <div class="text-bold">
+            全年销售额分析图（数据为模拟，只为演示效果）
+          </div>
+        </template>
+        <div
+          ref="fullYearSalesChart"
+          class="chart-item"
+        >
+        </div>
+      </el-card>
+    </template>
+  </el-skeleton>
 </template>
 <script lang="ts">
 import useEcharts from "@/mixins/useEcharts";
 import {
   defineComponent,
+  nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
 } from "@vue/runtime-core";
 import { dispose, graphic } from "echarts";
-
+import { random } from "lodash";
+function getData() {
+  const data: number[] = [];
+  while (data.length < 12) {
+    data.push(random(20, 150));
+  }
+  return data;
+}
 const months = [
   "一月",
   "二月",
@@ -43,7 +81,9 @@ const months = [
 export default defineComponent({
   name: "FullYearSalesChart",
   setup() {
+    const loading = ref(true);
     const fullYearSalesChart = ref<HTMLDivElement | null>(null);
+    let interval: any = null;
     const init = () => {
       const option = {
         color: ["rgba(110, 199, 205)", "rgba(211, 58, 192)"],
@@ -74,7 +114,7 @@ export default defineComponent({
             type: "line",
             name: "2019全年销售额",
             stack: "总量",
-            data: [80, 60, 55, 99, 103, 110, 97, 87, 65, 120, 105, 115],
+            data: getData(),
             smooth: true,
             lineStyle: {
               color: "rgba(110, 199, 205)",
@@ -107,7 +147,7 @@ export default defineComponent({
             type: "line",
             name: "2020全年销售额",
             stack: "总量",
-            data: [90, 70, 50, 93, 88, 96, 83, 75, 90, 110, 98, 100],
+            data: getData(),
             smooth: true,
             lineStyle: {
               color: "rgba(211, 58, 192)",
@@ -138,7 +178,29 @@ export default defineComponent({
           },
         ],
       };
-      useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(option);
+      setTimeout(() => {
+        loading.value = false;
+        nextTick(() =>
+          useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
+            option
+          )
+        );
+        interval = setInterval(() => {
+          const option = {
+            series: [
+              {
+                data: getData(),
+              },
+              {
+                data: getData(),
+              },
+            ],
+          };
+          useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
+            option
+          );
+        }, 5000);
+      }, 3000);
     };
     const updateChart = () => {
       useEcharts(fullYearSalesChart.value as HTMLDivElement).resize();
@@ -146,8 +208,12 @@ export default defineComponent({
     onMounted(init);
     onBeforeUnmount(() => {
       dispose(fullYearSalesChart.value as HTMLDivElement);
+      console.log("clear");
+      clearInterval(interval);
     });
+
     return {
+      loading,
       fullYearSalesChart,
       updateChart,
     };
