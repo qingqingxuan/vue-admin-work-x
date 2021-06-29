@@ -357,7 +357,7 @@ export default defineComponent({
       return useLayoutStore().state.device === "mobile";
     });
     const store = useStore();
-    const avatar = store.state.user.avatar;
+    const avatar = computed(() => store.state.user.avatar);
     const tempWaitingItems = reactive([] as Array<any>);
     const showWatingMode = ref(false);
     const toggleMore = () => {

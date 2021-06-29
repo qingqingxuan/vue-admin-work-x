@@ -3,10 +3,14 @@ import Cookies from 'js-cookie';
 import { Module } from "vuex";
 import { UserState, RootState } from "../types";
 
+import Avatar from '@/assets/img_avatar.gif'
+
+const defaultAvatar = Avatar
+
 const userInfo: UserState = JSON.parse(localStorage.getItem('user-info') || '{}')
 LayoutStore.setUserInfo({
   nickName: userInfo.nickName || 'admin',
-  avatar: userInfo.avatar || 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  avatar: userInfo.avatar || defaultAvatar
 })
 
 export const userModule: Module<UserState, RootState> = {
@@ -18,7 +22,7 @@ export const userModule: Module<UserState, RootState> = {
     token: userInfo.token || '',
     userName: userInfo.userName || '',
     nickName: userInfo.nickName || '',
-    avatar: userInfo.avatar || 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+    avatar: userInfo.avatar || defaultAvatar
   },
   getters: {
     userId(state) {
@@ -54,12 +58,12 @@ export const userModule: Module<UserState, RootState> = {
       state.roles = userInfo.roles
       state.userName = userInfo.userName
       state.nickName = userInfo.nickName
-      state.avatar = userInfo.avatar
+      state.avatar = userInfo.avatar || defaultAvatar
       Cookies.set('admin-token', userInfo.token)
       localStorage.setItem('user-info', JSON.stringify(userInfo))
       LayoutStore.setUserInfo({
         nickName: userInfo.nickName,
-        avatar: userInfo.avatar || 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+        avatar: userInfo.avatar || defaultAvatar
       })
     },
     LOGOUT(state) {

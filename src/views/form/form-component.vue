@@ -9,12 +9,9 @@
         :form-items="builderIetms"
       >
         <template #extra>
-          <el-form-item
-            label="活动时间"
-            required
-          >
+          <el-form-item label="活动时间">
             <el-col :span="11">
-              <el-form-item prop="date1">
+              <el-form-item>
                 <el-date-picker
                   type="date"
                   placeholder="选择日期"
@@ -28,7 +25,7 @@
               :span="2"
             >-</el-col>
             <el-col :span="11">
-              <el-form-item prop="date2">
+              <el-form-item>
                 <el-time-picker
                   placeholder="选择时间"
                   v-model="activeTime"

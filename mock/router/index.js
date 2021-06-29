@@ -91,9 +91,74 @@ export const adminRoutes = [
       },
       {
         parentPath: '/form',
-        menuUrl: "/form/form-verify",
-        menuName: "表单验证",
+        menuUrl: "/form/form-component",
+        menuName: "表单组件",
       },
+    ],
+  },
+  {
+    menuUrl: "/other",
+    menuName: "功能/组件",
+    icon: "appstore-fill",
+    parentPath: '',
+    children: [
+      {
+        parentPath: '/other',
+        menuUrl: "/other/chart",
+        menuName: "图表",
+        children: [
+          {
+            parentPath: '/other/chart',
+            menuUrl: "/other/chart/icon",
+            menuName: "图标",
+          },
+          {
+            parentPath: '/other/chart',
+            menuUrl: "/other/chart/echarts",
+            menuName: "echarts",
+          }
+        ]
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/print",
+        menuName: "打印",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/tip",
+        menuName: "消息提示",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/clipboard",
+        menuName: "剪切板",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "http://www.baidu.com",
+        menuName: "外链",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/cropper",
+        menuName: "图片裁剪",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/qrcode",
+        menuName: "二维码",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/css-animation",
+        menuName: "Css动画",
+      },
+      {
+        parentPath: '/other',
+        menuUrl: "/other/descriptions",
+        menuName: "详情页面",
+      }
     ],
   },
   {
@@ -254,54 +319,6 @@ export const adminRoutes = [
         menuName: "百度地图",
       }
     ]
-  },
-  {
-    menuUrl: "/other",
-    menuName: "其它功能",
-    icon: "appstore-fill",
-    parentPath: '',
-    children: [
-      {
-        parentPath: '/other',
-        menuUrl: "/other/print",
-        menuName: "打印",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "/other/tip",
-        menuName: "消息提示",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "/other/clipboard",
-        menuName: "剪切板",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "http://www.baidu.com",
-        menuName: "外链",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "/other/cropper",
-        menuName: "图片裁剪",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "/other/qrcode",
-        menuName: "二维码",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "/other/css-animation",
-        menuName: "Css动画",
-      },
-      {
-        parentPath: '/other',
-        menuUrl: "/other/descriptions",
-        menuName: "详情页面",
-      }
-    ],
   },
 ];
 export const editorRoutes = [

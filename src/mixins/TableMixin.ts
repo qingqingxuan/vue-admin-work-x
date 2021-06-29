@@ -6,6 +6,12 @@ import TableHeader from '@/components/table/TableHeader.vue'
 import TableFooter from "@/components/table/TableFooter.vue";
 import { useLayoutStore } from 'vaw-layouts-x';
 
+export interface PageModel {
+  currentPage: number,
+  pageSize: number,
+  totalSize: number
+}
+
 export const PageModelMixin = defineComponent({
   inject: ['mEmit'],
   data() {
@@ -14,7 +20,7 @@ export const PageModelMixin = defineComponent({
         currentPage: 1,
         pageSize: 10,
         totalSize: 0
-      }
+      } as PageModel
     }
   },
   methods: {
@@ -75,6 +81,9 @@ export const PageModelSetup = function (): Record<string, any> {
   const setTotalSize = (totalSize: number) => {
     pageModel.totalSize = totalSize
   }
+  const setPageSize = (pageSize: number) => {
+    pageModel.pageSize = pageSize
+  }
   const refresh = () => {
     mEmit?.emit('pageChanged', pageModel)
   }
@@ -90,6 +99,7 @@ export const PageModelSetup = function (): Record<string, any> {
     currentChanged,
     withPageInfoData,
     setTotalSize,
+    setPageSize,
     refresh
   }
 }
