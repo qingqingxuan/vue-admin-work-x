@@ -1,15 +1,32 @@
 <template>
-  <div
-    ref="orderChartWrapper"
-    style="height: 100%; width: 100%"
+  <el-skeleton
+    :loading="loading"
+    animated
   >
-  </div>
+    <template #template>
+      <div>
+        <el-skeleton-item variant="text" />
+        <el-skeleton-item
+          variant="text"
+          class="margin-top"
+        />
+      </div>
+    </template>
+    <template #default>
+      <div
+        ref="orderChartWrapper"
+        style="height: 100%; width: 100%"
+      >
+      </div>
+    </template>
+  </el-skeleton>
 </template>
 
 <script lang="ts">
 import useEcharts from "@/mixins/useEcharts";
 import {
   defineComponent,
+  nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
@@ -19,6 +36,7 @@ import { dispose, graphic } from "echarts";
 export default defineComponent({
   name: "OrderChart",
   setup() {
+    const loading = ref(true);
     const orderChartWrapper = ref<HTMLDivElement | null>(null);
     const init = () => {
       const option = {
@@ -72,7 +90,14 @@ export default defineComponent({
           },
         ],
       };
-      useEcharts(orderChartWrapper.value as HTMLDivElement).setOption(option);
+      setTimeout(() => {
+        loading.value = false;
+        nextTick(() => {
+          useEcharts(orderChartWrapper.value as HTMLDivElement).setOption(
+            option
+          );
+        });
+      }, 100);
     };
     const updateChart = () => {
       useEcharts(orderChartWrapper.value as HTMLDivElement).resize();
@@ -82,6 +107,7 @@ export default defineComponent({
       dispose(orderChartWrapper.value as HTMLDivElement);
     });
     return {
+      loading,
       orderChartWrapper,
       updateChart,
     };

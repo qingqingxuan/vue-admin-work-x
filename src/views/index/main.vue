@@ -68,7 +68,7 @@
     </el-row>
     <el-row
       :gutter="5"
-      class="margin-top-lg"
+      class="margin-top-sm"
     >
       <el-col :span="24">
         <FullYearSalesChart ref="fullYearSalesChart" />
@@ -76,7 +76,7 @@
     </el-row>
     <el-row
       :gutter="5"
-      class="margin-top-lg"
+      class="margin-top-sm"
     >
       <el-col
         :xs="24"
@@ -134,7 +134,7 @@ import {
 } from "@vue/runtime-core";
 import { useLayoutStore } from "vaw-layouts-x";
 export default defineComponent({
-  name: "Main",
+  name: "Home",
   components: {
     DataItem,
     OrderChart,

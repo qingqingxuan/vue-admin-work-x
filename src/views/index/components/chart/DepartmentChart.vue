@@ -1,25 +1,56 @@
 <template>
-  <el-card
-    class="flex-sub chart-item-container"
-    :body-style="{padding: 0}"
-    shadow="never"
+  <el-skeleton
+    animated
+    :loading="loading"
   >
-    <template #header>
-      <div class="text-bold">
-        公司各部门人员数量
-      </div>
+    <template #template>
+      <el-card>
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
+        <div class="margin-top">
+          <el-skeleton-item variant="text" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+        </div>
+      </el-card>
     </template>
-    <div
-      ref="departmentChart"
-      class="chart-item"
-    >
-    </div>
-  </el-card>
+    <template #default>
+      <el-card
+        class="flex-sub chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
+        <template #header>
+          <div class="text-bold">
+            公司各部门人员数量
+          </div>
+        </template>
+        <div
+          ref="departmentChart"
+          class="chart-item"
+        >
+        </div>
+      </el-card>
+    </template>
+  </el-skeleton>
 </template>
 
 <script lang="ts">
 import {
   defineComponent,
+  nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
@@ -29,6 +60,7 @@ import useEcharts from "@/mixins/useEcharts";
 export default defineComponent({
   name: "DepartmentChart",
   setup() {
+    const loading = ref(true);
     const departmentChart = ref<HTMLDivElement | null>(null);
     const init = () => {
       const option = {
@@ -84,10 +116,15 @@ export default defineComponent({
           },
         ],
       };
-      const echartInstance = useEcharts(
-        departmentChart.value as HTMLDivElement,
-      );
-      echartInstance.setOption(option);
+      setTimeout(() => {
+        loading.value = false;
+        nextTick(() => {
+          const echartInstance = useEcharts(
+            departmentChart.value as HTMLDivElement
+          );
+          echartInstance.setOption(option);
+        });
+      }, 100);
     };
     const updateChart = () => {
       useEcharts(departmentChart.value as HTMLDivElement).resize();
@@ -97,6 +134,7 @@ export default defineComponent({
       dispose(departmentChart.value as HTMLDivElement);
     });
     return {
+      loading,
       departmentChart,
       updateChart,
     };

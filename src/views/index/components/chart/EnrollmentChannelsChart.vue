@@ -1,27 +1,57 @@
 <template>
-  <el-card
-    class="flex-sub chart-item-container"
-    :body-style="{padding: 0}"
-    shadow="never"
+  <el-skeleton
+    animated
+    :loading="loading"
   >
-    <template #header>
-      <div class="text-bold">
-        招生渠道分析图
-      </div>
+    <template #template>
+      <el-card>
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
+        <div class="margin-top">
+          <el-skeleton-item variant="text" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+        </div>
+      </el-card>
     </template>
-    <div
-      ref="channelsChart"
-      class="chart-item"
-    >
-    </div>
-  </el-card>
-
+    <template #default>
+      <el-card
+        class="flex-sub chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
+        <template #header>
+          <div class="text-bold">
+            招生渠道分析图
+          </div>
+        </template>
+        <div
+          ref="channelsChart"
+          class="chart-item"
+        >
+        </div>
+      </el-card>
+    </template>
+  </el-skeleton>
 </template>
 
 <script lang="ts">
 import useEcharts from "@/mixins/useEcharts";
 import {
   defineComponent,
+  nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
@@ -30,6 +60,7 @@ import { dispose } from "echarts";
 export default defineComponent({
   name: "EnrollmentChannelsChart",
   setup() {
+    const loading = ref(true);
     const channelsChart = ref<HTMLDivElement | null>(null);
     const init = () => {
       const option = {
@@ -77,7 +108,12 @@ export default defineComponent({
           },
         ],
       };
-      useEcharts(channelsChart.value as HTMLDivElement).setOption(option);
+      setTimeout(() => {
+        loading.value = false;
+        nextTick(() => {
+          useEcharts(channelsChart.value as HTMLDivElement).setOption(option);
+        });
+      }, 100);
     };
     const updateChart = () => {
       useEcharts(channelsChart.value as HTMLDivElement).resize();
@@ -87,6 +123,7 @@ export default defineComponent({
       dispose(channelsChart.value as HTMLDivElement);
     });
     return {
+      loading,
       channelsChart,
       updateChart,
     };

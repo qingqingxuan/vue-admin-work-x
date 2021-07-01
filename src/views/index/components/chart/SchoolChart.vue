@@ -1,20 +1,75 @@
 <template>
-  <el-card
-    class="flex-sub chart-item-container"
-    :body-style="{padding: 0}"
-    shadow="never"
+  <el-skeleton
+    animated
+    :loading="loading"
   >
-    <template #header>
-      <div class="text-bold">
-        全国合作校区分布图
-      </div>
+    <template #template>
+      <el-card>
+        <el-skeleton-item
+          variant="h3"
+          style="width: 50%"
+        />
+        <div class="margin-top">
+          <el-skeleton-item variant="text" />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+          <el-skeleton-item
+            variant="text"
+            class="margin-top"
+          />
+        </div>
+      </el-card>
     </template>
-    <div
-      ref="schoolChart"
-      class="chart-item margin-tb-lg"
-    >
-    </div>
-  </el-card>
+    <template #default>
+
+      <el-card
+        class="flex-sub chart-item-container"
+        :body-style="{padding: 0}"
+        shadow="never"
+      >
+        <template #header>
+          <div class="text-bold">
+            全国合作校区分布图
+          </div>
+        </template>
+        <div
+          ref="schoolChart"
+          class="chart-item margin-tb-lg"
+        >
+        </div>
+      </el-card>
+    </template>
+  </el-skeleton>
 </template>
 
 <script lang="ts">
@@ -23,6 +78,7 @@ import { convertData } from "@/assets/data/map.js";
 import useEcharts from "@/mixins/useEcharts";
 import {
   defineComponent,
+  nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
@@ -31,6 +87,7 @@ import { dispose, registerMap } from "echarts";
 export default defineComponent({
   name: "SchoolChart",
   setup() {
+    const loading = ref(true);
     const schoolChart = ref<HTMLDivElement | null>(null);
     const init = () => {
       registerMap("china", chinaData as any);
@@ -104,7 +161,12 @@ export default defineComponent({
           },
         ],
       };
-      useEcharts(schoolChart.value as HTMLDivElement).setOption(option);
+      setTimeout(() => {
+        loading.value = false;
+        nextTick(() => {
+          useEcharts(schoolChart.value as HTMLDivElement).setOption(option);
+        });
+      }, 100);
     };
     const updateChart = () => {
       useEcharts(schoolChart.value as HTMLDivElement).resize();
@@ -114,6 +176,7 @@ export default defineComponent({
       dispose(schoolChart.value as HTMLDivElement);
     });
     return {
+      loading,
       schoolChart,
       updateChart,
     };
