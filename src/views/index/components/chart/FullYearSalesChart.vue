@@ -182,8 +182,8 @@ export default defineComponent({
         loading.value = false;
         nextTick(() =>
           useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
-            option,
-          ),
+            option
+          )
         );
         interval = setInterval(() => {
           const option = {
@@ -197,7 +197,7 @@ export default defineComponent({
             ],
           };
           useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
-            option,
+            option
           );
         }, 5000);
       }, 3000);
@@ -208,10 +208,8 @@ export default defineComponent({
     onMounted(init);
     onBeforeUnmount(() => {
       dispose(fullYearSalesChart.value as HTMLDivElement);
-      console.log("clear");
       clearInterval(interval);
     });
-
     return {
       loading,
       fullYearSalesChart,

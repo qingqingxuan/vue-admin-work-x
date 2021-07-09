@@ -156,13 +156,15 @@ export default defineComponent({
     const studentChart = ref<InstanceType<typeof StudentChart>>();
     const fullYearSalesChart = ref<InstanceType<typeof FullYearSalesChart>>();
     const onResize = () => {
-      mOrderChart.value?.updateChart();
-      salesChart.value?.updateChart();
-      departmentChart.value?.updateChart();
-      enrollmentChannelsChart.value?.updateChart();
-      schoolChart.value?.updateChart();
-      studentChart.value?.updateChart();
-      fullYearSalesChart.value?.updateChart();
+      setTimeout(() => {
+        mOrderChart.value?.updateChart();
+        salesChart.value?.updateChart();
+        departmentChart.value?.updateChart();
+        enrollmentChannelsChart.value?.updateChart();
+        schoolChart.value?.updateChart();
+        studentChart.value?.updateChart();
+        fullYearSalesChart.value?.updateChart();
+      }, 500);
     };
     const collapse = computed(() => {
       return layoutStore.state.isCollapse;
