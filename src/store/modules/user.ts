@@ -7,7 +7,7 @@ import Avatar from '@/assets/img_avatar.gif'
 
 const defaultAvatar = Avatar
 
-const userInfo: UserState = JSON.parse(localStorage.getItem('user-info') || '{}')
+const userInfo: UserState = JSON.parse(localStorage.getItem('x-user-info') || '{}')
 LayoutStore.setUserInfo({
   nickName: userInfo.nickName || 'admin',
   avatar: userInfo.avatar || defaultAvatar
@@ -59,8 +59,8 @@ export const userModule: Module<UserState, RootState> = {
       state.userName = userInfo.userName
       state.nickName = userInfo.nickName
       state.avatar = userInfo.avatar || defaultAvatar
-      Cookies.set('admin-token', userInfo.token)
-      localStorage.setItem('user-info', JSON.stringify(userInfo))
+      Cookies.set('x-admin-token', userInfo.token)
+      localStorage.setItem('x-user-info', JSON.stringify(userInfo))
       LayoutStore.setUserInfo({
         nickName: userInfo.nickName,
         avatar: userInfo.avatar || defaultAvatar
@@ -74,7 +74,7 @@ export const userModule: Module<UserState, RootState> = {
       state.userName = ''
       state.nickName = ''
       state.token = ''
-      Cookies.remove('admin-token')
+      Cookies.remove('x-admin-token')
       localStorage.clear()
       LayoutStore.reset()
     }

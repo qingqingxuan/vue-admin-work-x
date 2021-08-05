@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:cp": "vue-cli-service build && cp -r ./dist/ ../vue-admin-work/release/x/",
     "reinstall": "npm uninstall vaw-layouts-x && npm install vaw-layouts-x && npm run serve",
     "lint": "vue-cli-service lint"
   },
@@ -52,6 +53,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-eslint": "^10.1.0",
+    "compression-webpack-plugin": "^5.0.1",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",

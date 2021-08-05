@@ -31,7 +31,7 @@ app.config.globalProperties.$echarts = echarts
 registerComponents(app);
 app.use(LayoutStore, {
   state: {
-    layoutMode: 'lcr'
+    layoutMode: 'ltr'
   },
   actions: {
     onPersonalCenter() {

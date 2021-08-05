@@ -89,7 +89,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
 const whiteRoutes: string[] = ["/login"];
 
 function isTokenExpired(): boolean {
-  const token = Cookies.get("admin-token");
+  const token = Cookies.get("x-admin-token");
   return !!token;
 }
 router.beforeEach(async (to) => {
