@@ -1,8 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const CompressionPlugin = require("compression-webpack-plugin")
 module.exports = {
-  publicPath:
-    process.env.NODE_ENV === "development" ? "/" : "/vue-admin-work/x",
+  publicPath: "/vue-admin-work-x",
   outputDir: "dist",
   assetsDir: "static",
   lintOnSave: true,
