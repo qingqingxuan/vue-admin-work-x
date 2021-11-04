@@ -10,7 +10,7 @@ Vue Admin Work X，是 Vue Admini Work 系列中基于 Vue3 开发的中后台�
 
 ## 项目地址：
 
-- [🎉 官网&文档地址](http://qingqingxuan.gitee.io/work-p-site)
+- [🎉 官网地址](http://qingqingxuan.gitee.io/work-p-site)
 - [🎉Vue Admin Work X **gitee** 演示地址](http://qingqingxuan.gitee.io/vue-admin-work-x)
 
 ## vue-admin-work 前端讨论群及 QQ 客服
@@ -72,12 +72,11 @@ vue-admin-work 有如下优势:
 
 ## 效果图
 
-| <img src="http://qingqingxuan.gitee.io/img/demo-p-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-p-2.png" style="zoom:20%;" /> |
-| :---------------------------------------------------------------------------: | ----------------------------------------------------------------------------- |
-| <img src="http://qingqingxuan.gitee.io/img/demo-p-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-p-4.png" style="zoom:20%;" /> |
-| <img src="http://qingqingxuan.gitee.io/img/demo-p-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-p-6.png" style="zoom:20%;" /> |
-
-|
+| <img src="http://qingqingxuan.gitee.io/img/project-image-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-2.jpg" style="zoom:20%;" /> |
+| :----------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------ |
+| <img src="http://qingqingxuan.gitee.io/img/project-image-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-4.png" style="zoom:20%;" /> |
+| <img src="http://qingqingxuan.gitee.io/img/project-image-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-6.png" style="zoom:20%;" /> |
+| <img src="http://qingqingxuan.gitee.io/img/project-image-7.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-8.png" style="zoom:20%;" /> |
 
 ## 捐赠
 
