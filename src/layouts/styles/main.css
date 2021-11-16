@@ -1,0 +1,14 @@
+@import "~normalize.css/normalize.css";
+@import "./transition.css";
+@import "./ele-themes/blue/index.css";
+@import "./ele-themes/red/index.css";
+@import "./ele-themes/cyan/index.css";
+@import "./ele-themes/purple/index.css";
+html,
+body,
+#app {
+  height: 100vh;
+}
+* {
+  box-sizing: border-box;
+}

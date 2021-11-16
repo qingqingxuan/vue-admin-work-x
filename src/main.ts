@@ -4,13 +4,13 @@ import router from "./router";
 import "./utils/router";
 import store, { key } from "./store";
 import ElementPlus from "element-plus";
-import "element-plus/lib/theme-chalk/index.css";
+import "element-plus/dist/index.css";
 import 'dayjs/locale/zh-cn'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import "@/styles/main.css"
 import "@/icons/iconfont/iconfont.css"
 import "@/icons/iconfont/iconfont.js"
-import LayoutStore from "vaw-layouts-x";
+import LayoutStore from "@/layouts";
 import http from "@/api/http";
 import * as urlPath from "@/api/url";
 import { registerComponents } from "./components";
@@ -46,7 +46,9 @@ app.use(LayoutStore, {
   registerElement: false,
 });
 app.use(store, key).use(router);
-app.use(ElementPlus, { locale });
+app.use(ElementPlus, {
+  locale: zhCn,
+});
 app.use(http);
 app.use(dragger)
 app.mount("#app");

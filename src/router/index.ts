@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Login from "@/views/login/index.vue";
 
-import { Layout } from "vaw-layouts-x";
+import { Layout } from "@/layouts";
 
 export const routes = [
   {

@@ -8,4 +8,7 @@ declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     $store: Store<ParentState>;
   }
+  interface ComponentCustomProperties {
+    $layoutStore: LocalLayoutStore
+  }
 }

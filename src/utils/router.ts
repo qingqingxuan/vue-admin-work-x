@@ -1,4 +1,5 @@
-import LayoutStore, { Layout, mapTwoLevelRouter } from 'vaw-layouts-x';
+import LayoutStore, { Layout } from '@/layouts';
+import { mapTwoLevelRouter } from '@/layouts/utils';
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import router, { routes as constantRoutes } from "../router";
@@ -8,6 +9,7 @@ import store from '@/store';
 import { baseAddress, getMenuListByRoleId } from '@/api/url';
 import { RouteRecordRaw } from 'vue-router'
 import { toHump } from '.';
+import { RouteRecordRawWithHidden } from '@/layouts/types';
 
 NProgress.configure({
   showSpinner: false,
@@ -26,7 +28,6 @@ interface OriginRoute {
   children: Array<OriginRoute>
 }
 
-type RouteRecordRawWithHidden = RouteRecordRaw & { hidden: boolean }
 
 function getRoutes() {
   return post({

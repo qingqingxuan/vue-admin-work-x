@@ -132,7 +132,7 @@ import {
   ref,
   watch,
 } from "@vue/runtime-core";
-import { useLayoutStore } from "vaw-layouts-x";
+import { useLayoutStore } from "@/layouts/hooks";
 export default defineComponent({
   name: "Home",
   components: {

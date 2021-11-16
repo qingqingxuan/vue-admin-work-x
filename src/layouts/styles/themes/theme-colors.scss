@@ -1,0 +1,154 @@
+@function getDarkMaps($primaryColor) {
+  @return (
+    dark-menuBgColor: #141414,
+    dark-contentBgColor: #0f0f10,
+    dark-activeTextColor: $primaryColor,
+    dark-textColor: #f5f5f5,
+    dark-menuActiveBgColor: #2f2f2f,
+    dark-badgeColor: #000000,
+    
+    dark-headerBgColor: #141414,
+    dark-headerBorderColor: $primaryColor,
+    dark-headerTextColor: #ffffff,
+    dark-headerShadow: #7b7b7b,
+    dark-headerTabItemBgColor: #2f2f2f, 
+    dark-headerTabItemActiveBgColor: #2f2f2f,
+    dark-headerTabItemTextColor: #f5f5f5,
+    dark-headerTabItemActiveTextColor: $primaryColor,
+
+    dark-mainBorderColor: $primaryColor,
+    dark-contentActiveBgColor: #2f2f2f,
+    dark-mainContentBgColor: #000000, 
+    dark-mainCardBgColor: #141414,
+    dark-mainCardBorderColor: $primaryColor,
+    dark-mainTextColor: #f5f5f5,
+    dark-mainActiveTextColor: $primaryColor,
+
+    dark-popoverBgColor: #000,
+    dark-popoverBorderColor: $primaryColor,
+    dark-popoverTextColor: #f5f5f5,
+  )
+};
+
+@function getLightMaps($primaryColor) {
+  @return (
+    light-menuBgColor: #ffffff,
+    light-contentBgColor: #f7faff,
+    light-activeTextColor: #ffffff,
+    light-textColor: #333333,
+    light-menuActiveBgColor: $primaryColor,
+    light-badgeColor: $primaryColor,
+    
+    light-headerBgColor:#ffffff,
+    light-headerTextColor: #333333,
+    light-headerBorderColor: #f5f5f5,
+    light-headerShadow: #f5f5f5f5,
+    light-headerTabItemBgColor: #e8f4ff, 
+    light-headerTabItemActiveBgColor: #e8f4ff,
+    light-headerTabItemTextColor: rgb(97, 97, 97),
+    light-headerTabItemActiveTextColor: $primaryColor,
+
+    light-mainBorderColor: #ffffff,
+    light-contentActiveBgColor: $primaryColor,
+    light-mainContentBgColor: #f0f2f5,
+    light-mainCardBgColor: #ffffff,
+    light-mainCardBorderColor: #f5f5f5,
+    light-mainTextColor: #333333,
+    light-mainActiveTextColor: #888888,
+
+    light-popoverBgColor: #ffffff,
+    light-popoverBorderColor: #f5f5f5,
+    light-popoverTextColor: #333333,
+  )
+};
+
+@function getDarkSideMaps($primaryColor) {
+  @return (
+    dark-side-menuBgColor: #141414,
+    dark-side-contentBgColor: #0f0f10,
+    dark-side-activeTextColor: #ffffff,
+    dark-side-textColor: #f5f5f5,
+    dark-side-menuActiveBgColor: $primaryColor,
+    dark-side-badgeColor: $primaryColor,
+
+    dark-side-headerBgColor:#141414,
+    dark-side-headerTextColor: #ffffff,
+    dark-side-headerBorderColor: #3a3a3a,
+    dark-side-headerShadow: #f5f5f5f5,
+    dark-side-headerTabItemBgColor: #e8f4ff, 
+    dark-side-headerTabItemActiveBgColor: #e8f4ff,
+    dark-side-headerTabItemTextColor: rgb(97, 97, 97),
+    dark-side-headerTabItemActiveTextColor: $primaryColor,
+
+    dark-side-mainBorderColor: #ffffff,
+    dark-side-contentActiveBgColor: $primaryColor,
+    dark-side-mainContentBgColor: #f0f2f5,
+    dark-side-mainCardBgColor: #ffffff,
+    dark-side-mainCardBorderColor: #f5f5f5,
+    dark-side-mainTextColor: #333333,
+    dark-side-mainActiveTextColor: #888888,
+
+    dark-side-popoverBgColor: #ffffff,
+    dark-side-popoverBorderColor: #f5f5f5,
+    dark-side-popoverTextColor: #333333,
+  )
+};
+
+@function getBlueSideMaps($primaryColor) {
+  @return (
+    blue-side-menuBgColor: #409eff,
+    blue-side-contentBgColor: #047fff,
+    blue-side-activeTextColor: #ffffff,
+    blue-side-textColor: #f5f5f5,
+    blue-side-menuActiveBgColor: mix($primaryColor, rgba(0,0,0,0.5)),
+    blue-side-badgeColor: $primaryColor,
+
+    blue-side-headerBgColor:#409eff,
+    blue-side-headerTextColor: #ffffff,
+    blue-side-headerBorderColor: #4390e0,
+    blue-side-headerShadow: #f5f5f5f5,
+    blue-side-headerTabItemBgColor: #e8f4ff, 
+    blue-side-headerTabItemActiveBgColor: #e8f4ff,
+    blue-side-headerTabItemTextColor: rgb(97, 97, 97),
+    blue-side-headerTabItemActiveTextColor: mix($primaryColor, rgba(0,0,0,0.5)),
+
+    blue-side-mainBorderColor: #ffffff,
+    blue-side-contentActiveBgColor: $primaryColor,
+    blue-side-mainContentBgColor: #f0f2f5,
+    blue-side-mainCardBgColor: #ffffff,
+    blue-side-mainCardBorderColor: #f5f5f5,
+    blue-side-mainTextColor: #333333,
+    blue-side-mainActiveTextColor: #888888,
+
+    blue-side-popoverBgColor: #ffffff,
+    blue-side-popoverBorderColor: #f5f5f5,
+    blue-side-popoverTextColor: #333333,
+  )
+};
+
+$cyan-primary-color: #42cece;
+$cyan: map-merge(
+  $map1: map-merge($map1: getDarkMaps($cyan-primary-color), $map2: getLightMaps($cyan-primary-color)), 
+  $map2: map-merge($map1: getDarkSideMaps($cyan-primary-color), $map2: getBlueSideMaps($cyan-primary-color))
+);
+
+
+$purple-primary-color: #722ed1;
+$purple: map-merge(
+  $map1: map-merge($map1: getDarkMaps($purple-primary-color), $map2: getLightMaps($purple-primary-color)), 
+  $map2: map-merge($map1: getDarkSideMaps($purple-primary-color), $map2: getBlueSideMaps($purple-primary-color))
+);
+
+
+$red-primary-color: #f5222d;
+$red: map-merge(
+  $map1: map-merge($map1: getDarkMaps($red-primary-color), $map2: getLightMaps($red-primary-color)), 
+  $map2: map-merge($map1: getDarkSideMaps($red-primary-color), $map2: getBlueSideMaps($red-primary-color))
+);
+
+
+$blue-primary-color: #409eff;
+$blue: map-merge(
+  $map1: map-merge($map1: getDarkMaps($blue-primary-color), $map2: getLightMaps($blue-primary-color)), 
+  $map2: map-merge($map1: getDarkSideMaps($blue-primary-color), $map2: getBlueSideMaps($blue-primary-color))
+);

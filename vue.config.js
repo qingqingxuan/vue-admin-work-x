@@ -11,6 +11,17 @@ module.exports = {
     port: 5567,
     open: true,
   },
+  configureWebpack: {
+    module: {
+      rules: [
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto'
+        }
+      ]
+    }
+  },
   chainWebpack(config) {
     if (process.env.NODE_ENV === 'production') {
       config.plugin('compressionPlugin')

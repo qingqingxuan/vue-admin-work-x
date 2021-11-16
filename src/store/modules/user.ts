@@ -1,4 +1,4 @@
-import LayoutStore from 'vaw-layouts-x';
+import LayoutStore from '@/layouts';
 import Cookies from 'js-cookie';
 import { Module } from "vuex";
 import { UserState, RootState } from "../types";

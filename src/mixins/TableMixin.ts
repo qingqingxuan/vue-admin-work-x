@@ -4,7 +4,7 @@ import { Vue } from 'vue-class-component';
 
 import TableHeader from '@/components/table/TableHeader.vue'
 import TableFooter from "@/components/table/TableFooter.vue";
-import { useLayoutStore } from 'vaw-layouts-x';
+import { useLayoutStore } from '@/layouts/hooks';
 
 export interface PageModel {
   currentPage: number,

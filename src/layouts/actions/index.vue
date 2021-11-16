@@ -1,0 +1,172 @@
+<template>
+  <div class="action-items-wrapper">
+    <span
+      v-if="state.actionItem.showSearch"
+      class="action-item"
+      @click="onShowSearch"
+    >
+      <el-icon :size="16">
+        <search />
+      </el-icon>
+    </span>
+    <el-popover
+      v-if="state.actionItem.showMessage"
+      trigger="click"
+      @after-enter="onPopoverAfterEnter"
+    >
+      <template #reference>
+        <el-badge
+          :value="12"
+          class="badge-action-item"
+        >
+          <span>
+            <el-icon :size="16">
+              <bell />
+            </el-icon>
+          </span>
+        </el-badge>
+      </template>
+      <PopoverMessageContent />
+    </el-popover>
+    <span
+      v-if="state.actionItem.showRefresh"
+      class="iconfont action-item"
+      @click="onRefrehRoute"
+    >
+      <el-icon :size="16">
+        <Refresh />
+      </el-icon>
+    </span>
+    <span
+      v-if="state.actionItem.showFullScreen && state.device !== 'mobile'"
+      class="iconfont action-item"
+      @click="onScreenFull"
+    >
+      <el-icon :size="16">
+        <FullScreen />
+      </el-icon>
+    </span>
+    <span
+      v-if="state.device !== 'mobile'"
+      class="action-item"
+      @click="onShowSetting"
+    >
+      <el-icon :size="16">
+        <SettingIcon />
+      </el-icon>
+    </span>
+    <div
+      v-if="state.actionItem.showFullScreen && state.device !== 'mobile'"
+      class="input-wrapper"
+      :class="{'is-active': showSearchContent}"
+    >
+      <el-input
+        ref="searchContent"
+        v-model="searchContent"
+        placeholder="请输入内容"
+        clearable
+        @change="onChange"
+      />
+    </div>
+    <Setting ref="appSetting" />
+  </div>
+</template>
+
+<script>
+import screenfull from 'screenfull'
+import store from '../store'
+import { Search, Bell, Refresh, FullScreen, Setting as SettingIcon } from '@element-plus/icons'
+export default {
+  name: 'ActionItems',
+  components: { Search, Bell, Refresh, FullScreen, SettingIcon },
+  data() {
+    return {
+      showSearchContent: false,
+      searchContent: '',
+      nums: 3,
+      state: store.state
+    }
+  },
+  methods: {
+    onShowSearch() {
+      this.showSearchContent = !this.showSearchContent
+      this.searchContent = ''
+      if (this.showSearchContent) {
+        this.$refs.searchContent.focus()
+      } else {
+        this.$refs.searchContent.blur()
+      }
+    },
+    onChange(content) {
+      if (!content) {
+        return
+      }
+      window.open('https://www.baidu.com/s?wd=' + content)
+    },
+    onScreenFull() {
+      if (!screenfull.isEnabled) {
+        this.$errorMsg('当前浏览器不支持全屏操作')
+        return false
+      }
+      screenfull.toggle()
+    },
+    onRefrehRoute() {
+      this.$router.replace({ path: '/redirect' + this.$route.path })
+    },
+    onPopoverAfterEnter() {
+      this.$refs.messageContent.update()
+    },
+    clearNum(num) {
+      this.nums = Math.max(0, this.nums - num)
+    },
+    onShowSetting() {
+      this.$refs.appSetting.openDrawer()
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.action-items-wrapper {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: currentColor;
+  z-index: 1;
+  .action-item {
+    min-width: 40px;
+  }
+  .badge-action-item {
+    margin-right: 30px;
+  }
+  .input-wrapper {
+    position: absolute;
+    top: 6px;
+    bottom: 3px;
+    left: 0;
+    width: 0;
+    z-index: -1;
+    transform: translateX(0);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    &.is-active {
+      width: 100%;
+      transform: translateX(-100%);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+  }
+}
+</style>
+<style lang="scss" scoped>
+::v-deep(.el-input) {
+  border: none;
+  border-bottom: 1px solid currentColor;
+}
+::v-deep(.el-input__inner) {
+  border: none !important;
+  height: 35px;
+  line-height: 35px;
+  color: currentColor !important;
+  background-color: transparent !important;
+}
+</style>

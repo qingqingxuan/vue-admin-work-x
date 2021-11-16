@@ -1,0 +1,336 @@
+@mixin sideBar(
+  $menuBgColor: #141414,
+  $menuActiveBgColor: #2f2f2f,
+  $contentBgColor: #0f0f10,
+  $contentActiveBgColor: #2f2f2f,
+  $textColor: #f5f5f5,
+  $activeTextColor: #409eff,
+  $badgeColor: #141414,
+  $parent: "light"
+) {
+  .vaw-tab-split-side-bar-wrapper,
+  .vaw-side-bar-wrapper {
+    background-color: $menuBgColor;
+  }
+  .tab-split-tab-wrapper {
+    background-color: $contentBgColor;
+  }
+  .vaw-tab-split-side-bar-wrapper .tab-split-tab-wrapper .tab-split-content-wrapper {
+    background-color: $contentBgColor;
+    color: $textColor;
+    .label-item-wrapper:hover{
+      color: $activeTextColor;
+    }
+    .label-item-wrapper:hover::after,
+    .vaw-tab-split-item-is-active::after {
+      color: $activeTextColor;
+      background-color: $contentActiveBgColor;
+    }
+    .vaw-tab-split-item-is-active {
+      color: $activeTextColor;
+    }
+  }
+  .logo-title {
+    color: $textColor;
+  }
+  .el-menu-item {
+    position: relative;
+  }
+  .el-sub-menu .el-badge__content:not(.is-dot), .el-menu-item .el-badge__content:not(.is-dot){
+    height: 20px;
+  }
+  .el-menu-item,
+  .el-sub-menu__title {
+    height: 48px;
+    line-height: 48px;
+  }
+  .el-menu-item i,
+  .el-sub-menu__title i {
+    color: $textColor;
+  }
+  .el-menu-item.is-active,
+  .el-menu-item.is-active i {
+    position: relative;
+    color: $activeTextColor !important;
+    z-index: 1;
+  }
+  .el-sub-menu__title:hover {
+    background-color: transparent !important;
+  }
+  .el-menu-item:hover {
+    background-color: $menuActiveBgColor !important;
+  }
+  .el-menu-item.is-active {
+    background-color: $menuActiveBgColor !important;
+  }
+  .el-badge__content {
+    background-color: $badgeColor;
+  }
+  .el-badge__content.is-dot {
+    background: $badgeColor;
+  }
+}
+
+@mixin header(
+  $headerBgColor: #f5f7f9,
+  $headerTextColor: $headerTextColor,
+  $headerActiveTextColor: $headerActiveTextColor,
+  $headerTabItemBgColor: #ffffff,
+  $headerTabItemActiveBgColor: #f5f5f5,
+  $headerTabItemTextColor: #333,
+  $headerTabItemActiveTextColor: #409eff,
+  $headerBorderColor: $headerBorderColor,
+  $headerShadow: #d0d0d0,
+  $parent: "light"
+) {
+  .vaw-header-layout {
+    background-color: $headerBgColor;
+    color: $headerTextColor;
+    border-bottom: 1px solid $headerBorderColor;
+    .badge-action-item:hover, .action-item:hover {
+      cursor: pointer;
+      color: $headerTabItemActiveTextColor;
+    }
+  }
+  .vaw-header-layout {
+    .logo-wrapper {
+      border-bottom: none !important;
+    }
+  }
+  .logo-wrapper {
+    border-bottom: 1px solid $headerBorderColor;
+  }
+  .vaw-nav-bar-wrapper {
+    color: $headerTextColor;
+    background-color: $headerBgColor;
+    border-bottom: 1px solid $headerBorderColor;
+    .badge-action-item:hover, .action-item:hover {
+      cursor: pointer;
+      color: $headerTabItemActiveTextColor;
+    }
+  }
+  .fold-wrapper,
+  .breadcrumb-title {
+    color: $headerTextColor;
+  }
+  .fold-wrapper:hover {
+    color: $headerTabItemActiveTextColor;
+    cursor: pointer;
+  }
+  .vaw-tab-bar-container {
+    background-color: $headerBgColor;
+    box-shadow: 2px 2px 5px $headerShadow;
+    .el-tabs__item {
+      background-color: $headerTabItemBgColor;
+      color: $headerTabItemTextColor;
+    }
+    .is-active {
+      background-color: $headerTabItemActiveBgColor !important;
+      color: $headerTabItemActiveTextColor !important;
+    }
+  }
+  .vaw-avatar-container {
+    color: $headerTextColor;
+  }
+  .el-dropdown {
+    color: $headerTextColor;
+  }
+}
+@mixin mainLayout(
+  $mainContentBgColor: $mainContentBgColor,
+  $mainCardBgColor: $mainCardBgColor,
+  $mainCardBorderColor: $mainCardBorderColor,
+  $mainTextColor: $mainTextColor,
+  $mainActiveTextColor: $mainActiveTextColor,
+  $parent: "light"
+) {
+  .vaw-main-layout-container {
+    background-color: $mainContentBgColor;
+    color: $mainTextColor;
+  }
+  .footer-container {
+    background: $mainCardBgColor;
+    border-top: 1px dashed #848484;
+    color: $mainTextColor;
+  }
+  .el-card {
+    background-color: $mainCardBgColor;
+    border: 1px solid $mainCardBorderColor;
+    color: $mainTextColor;
+    .el-card__header {
+      border-bottom: 1px solid mix($mainCardBorderColor, #e6e6e6);
+    }
+    .el-link.el-link--default {
+      color: $mainActiveTextColor;
+    }
+  }
+  .el-input__inner {
+    background-color: $mainContentBgColor;
+  }
+  .el-dialog {
+    background-color: $mainCardBgColor !important;
+    .el-dialog__header {
+      border-bottom: 2px solid $mainCardBorderColor;
+    }
+    .el-dialog__footer {
+      border-top: 2px solid $mainCardBorderColor;
+    }
+    .el-dialog__title {
+      color: $mainTextColor;
+    }
+    .el-dialog__body {
+      color: $mainTextColor;
+    }
+  }
+
+  @if $parent == dark {
+    .el-tabs__item {
+      color: $mainTextColor;
+    }
+    .el-tabs__item.is-active {
+      color: $mainActiveTextColor;
+    }
+    .el-tabs__active-bar {
+      background-color: $mainActiveTextColor;
+    }
+    .el-button {
+      background: $mainContentBgColor;
+      color: $mainTextColor;
+    }
+    .el-table {
+      background-color: $mainCardBgColor;
+      color: $mainTextColor;
+      .hover-row {
+        background-color: $mainCardBgColor !important;
+      }
+      th,
+      tr {
+        background-color: $mainCardBgColor !important;
+      }
+      th.is-leaf,
+      td {
+        border-bottom: 1px solid $mainTextColor;
+      }
+    }
+    
+    .el-table::before {
+      display: block;
+    }
+    .el-table--striped .el-table__body tr.el-table__row--striped td{
+      background-color: $mainContentBgColor !important;
+    }
+    .el-table__body tr:hover > td {
+      background-color: $mainContentBgColor !important;
+    }
+
+    .el-table__body tr.current-row > td {
+      background-color: $mainContentBgColor !important;
+    }
+
+    .el-table__body tr.hover-row > td {
+      background-color: $mainContentBgColor !important;
+    }
+
+    .el-message-box {
+      background-color: $mainCardBgColor;
+      .el-message-box__title {
+        color: $mainActiveTextColor;
+      }
+      .el-message-box__content {
+        color: $mainTextColor;
+      }
+    }
+  }
+
+  .el-backtop {
+    background: $mainCardBgColor;
+    border: 1px solid $mainCardBorderColor;
+  }
+
+  .el-drawer {
+    background: $mainContentBgColor;
+  }
+
+  .el-input-number__increase,
+  .el-input-number__decrease,
+  .el-range-input {
+    background-color: $mainCardBgColor;
+  }
+  .el-radio-button__inner,
+  .el-textarea__inner,
+  .el-input__inner {
+    color: $mainTextColor;
+    background-color: $mainCardBgColor;
+  }
+  .btn-prev,
+  .btn-next,
+  .el-pager li {
+    background-color: $mainCardBgColor;
+    color: $mainTextColor;
+  }
+  .btn-prev:hover,
+  .btn-next,
+  .el-pager li.active {
+    color: $mainActiveTextColor;
+  }
+
+  .el-steps {
+    .el-step__title.is-process {
+      color: $mainTextColor !important;
+    }
+  }
+
+  .el-picker-panel {
+    background-color: $mainCardBgColor;
+    color: $mainTextColor;
+    border: 1px solid $mainCardBorderColor;
+  }
+
+  .el-input-group__prepend {
+    background-color: $mainCardBgColor;
+    color: $mainTextColor;
+    border: 1px solid $mainCardBorderColor;
+  }
+
+  .el-select-dropdown {
+    background-color: $mainCardBgColor;
+    color: $mainTextColor;
+    border: 1px solid $mainCardBorderColor;
+    .el-select-dropdown__item {
+      color: $mainTextColor;
+      &.selected,
+      &.hover {
+        background-color: $mainContentBgColor;
+      }
+    }
+  }
+
+  .el-dropdown-menu {
+    background-color: $mainCardBgColor;
+    color: $mainTextColor;
+    border: 1px solid $mainCardBorderColor;
+    .el-dropdown-menu__item {
+      color: $mainTextColor;
+      &:hover {
+        background-color: $mainContentBgColor;
+      }
+    }
+  }
+
+  .editor-toolbar a {
+    color: $mainActiveTextColor !important;
+  }
+
+  .CodeMirror {
+    background-color: $mainContentBgColor;
+    color: $mainTextColor;
+  }
+}
+
+@mixin popover($popoverBgColor: #000, $popoverBorderColor: #f5f5f5, $popoverTextColor: #fff, $parent: "light") {
+  .el-popover {
+    background-color: $popoverBgColor;
+    border: 1px solid $popoverBorderColor;
+    color: $popoverTextColor;
+  }
+}

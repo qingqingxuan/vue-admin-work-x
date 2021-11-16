@@ -304,7 +304,7 @@ import {
   ref,
 } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
-import { useLayoutStore } from "vaw-layouts-x";
+import { useLayoutStore } from "@/layouts/hooks";
 import { useStore } from "@/store";
 import { random } from "lodash";
 const COLORS = ["#67C23A", "#E6A23C", "#F56C6C", "#409EFF"];

@@ -1,0 +1,14 @@
+@import './lib.scss';
+// menu colors
+$menuBgColor: #ffffff;
+$textColor: #333333;
+$activeTextColor: #888888;
+// menu colors
+
+:export {
+  menuColor: $menuBgColor;
+  menuTextColor: $textColor;
+  menuActiveTextColor: $activeTextColor;
+}
+
+@include theme('light')

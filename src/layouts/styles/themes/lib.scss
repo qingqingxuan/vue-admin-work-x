@@ -1,0 +1,56 @@
+@import "./common.scss";
+@import "./theme-colors.scss";
+
+$themeColorsMap: (
+  theme_color_red: $red,
+  theme_color_blue: $blue,
+  theme_color_cyan: $cyan,
+  theme_color_purple: $purple,
+);
+
+@mixin theme($themeName: 'light') {
+  @each $key, $value in $themeColorsMap {
+    .#{$themeName}.#{$key} {
+      @include sideBar(
+        $menuBgColor: map-get($map: $value, $key: #{$themeName}-menuBgColor), 
+        $menuActiveBgColor:  map-get($map: $value, $key: #{$themeName}-menuActiveBgColor),
+        $contentBgColor: map-get($map: $value, $key: #{$themeName}-contentBgColor),
+        $contentActiveBgColor: map-get($map: $value, $key: #{$themeName}-contentActiveBgColor),
+        $textColor: map-get($map: $value, $key: #{$themeName}-textColor),
+        $activeTextColor: map-get($map: $value, $key: #{$themeName}-activeTextColor),
+        $badgeColor: map-get($map: $value, $key: #{$themeName}-badgeColor),
+        $parent: $themeName,
+      );
+      @include header(
+        $headerBgColor: map-get($map: $value, $key: #{$themeName}-headerBgColor), 
+        $headerTabItemBgColor: map-get($map: $value, $key: #{$themeName}-headerTabItemBgColor),
+        $headerTabItemActiveBgColor: map-get($map: $value, $key: #{$themeName}-headerTabItemActiveBgColor),
+        $headerTabItemTextColor: map-get($map: $value, $key: #{$themeName}-headerTabItemTextColor),
+        $headerTabItemActiveTextColor: map-get($map: $value, $key: #{$themeName}-headerTabItemActiveTextColor),
+
+        $headerTextColor: map-get($map: $value, $key: #{$themeName}-headerTextColor),
+        $headerActiveTextColor: map-get($map: $value, $key: #{$themeName}-activeTextColor),
+        $headerBorderColor: map-get($map: $value, $key: #{$themeName}-headerBorderColor),
+        $headerShadow: map-get($map: $value, $key: #{$themeName}-headerShadow),
+
+        $parent: $themeName
+      );
+      @include mainLayout(
+        $mainContentBgColor: map-get($map: $value, $key: #{$themeName}-mainContentBgColor), 
+        $mainCardBgColor: map-get($map: $value, $key: #{$themeName}-mainCardBgColor),
+        $mainCardBorderColor: map-get($map: $value, $key: #{$themeName}-mainBorderColor),
+        $mainTextColor: map-get($map: $value, $key: #{$themeName}-mainTextColor),
+        $mainActiveTextColor: map-get($map: $value, $key: #{$themeName}-mainActiveTextColor),
+
+        $parent: $themeName,
+      );
+      @include popover(
+        $popoverBgColor: map-get($map: $value, $key: #{$themeName}-popoverBgColor),
+        $popoverBorderColor:map-get($map: $value, $key: #{$themeName}-popoverBorderColor),
+        $popoverTextColor: map-get($map: $value, $key: #{$themeName}-popoverTextColor),
+
+        $parent: $themeName,
+      );
+    }
+  }
+}
