@@ -13,16 +13,15 @@ Vue Admin Work X是Vue Admin Work系列中唯一一款主体框架和实际项�
 + 一定程度上减少包的体积
 
   #### 坏处是：
-- 扩展性不好，不够灵活
 
-  
+- 扩展性不好，不够灵活
 
   为了满足在实际的开发中，很多人的习惯，直接用Vue Admin Work X做为基础项目进行二次开发，
   Vue Admin Work X做了一次重要升级，把 `vaw-layouts-x`也合并到了Vue Admin Work X项目中，这样就可以根据自己的需求灵活配置和修改。
-  新的项目在`layouts`分支下，原来的 `master` 分支还会继续保留原来的模式一段时间。
+  新的项目在`layout`分支下，原来的 `master` 分支还会继续保留原来的模式一段时间。
   大家可以根据自己的需求，根据不同的分支进行下载。
 
-tip: 本次升级也升级了Element Plus版本，由于Elment Plus版本和之前的差别比较大，可能在某些情况下会有bug，如遇到请提交一个issue，再次感谢大家的支持`
+tip: 本次升级也升级了Element Plus版本，由于Elment Plus版本和之前的差别比较大，可能在某些情况下会有bug，如遇到请提交一个issue，再次感谢大家的支持
 
 
 
