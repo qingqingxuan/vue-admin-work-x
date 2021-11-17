@@ -264,6 +264,7 @@ export default {
   line-height: $tabHeight;
   box-sizing: border-box;
   white-space: nowrap;
+  z-index: -1;
   .contex-menu-wrapper {
     position: absolute;
     width: 130px;

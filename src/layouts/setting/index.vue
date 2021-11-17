@@ -107,7 +107,7 @@ export default {
       styleExampleList: [
         {
           leftBg: '#000000',
-          rightTopBg: '#000000',
+          rightTopBg: '#ffffff',
           rightBottomBg: '#f5f5f5',
           checked: false,
           themeId: 'dark-side'
@@ -121,7 +121,7 @@ export default {
         },
         {
           leftBg: '#047fff',
-          rightTopBg: '#047fff',
+          rightTopBg: '#ffffff',
           rightBottomBg: '#f5f5f5',
           checked: false,
           themeId: 'blue-side'

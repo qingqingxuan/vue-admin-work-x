@@ -3,7 +3,7 @@
     <img
       v-if="showLogo"
       class="logo-img"
-      :src="require('@/assets/logo.png')"
+      :src="require('@/assets/work_logo.png')"
     />
     <transition
       v-if="showTitle"
@@ -12,7 +12,7 @@
       <span
         v-show="!state.isCollapse || alwaysShow"
         class="logo-title"
-      >vue-admin-work</span>
+      >Vue Admin Work X</span>
     </transition>
   </div>
 </template>
