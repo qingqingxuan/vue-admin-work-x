@@ -4,26 +4,24 @@
 
 ## 重要升级
 
-Vue Admin Work X是Vue Admin Work系列中唯一一款主体框架和实际项目分离的版本，当初设计的初衷是为了把主体独立抽取成一个项目。
+Vue Admin Work X 是 Vue Admin Work 系列中唯一一款主体框架和实际项目分离的版本，当初设计的初衷是为了把主体独立抽取成一个项目。
 
-####       好处是：
+#### 好处是：
 
-+ 快速形成新的项目，只需要像其它框架一样，通过package.json引入，便可以立即形成一个项目
+- 快速形成新的项目，只需要像其它框架一样，通过 package.json 引入，便可以立即形成一个项目
 
-+ 一定程度上减少包的体积
+- 一定程度上减少包的体积
 
   #### 坏处是：
 
-- 扩展性不好，不够灵活
+* 扩展性不好，不够灵活
 
-  为了满足在实际的开发中，很多人的习惯，直接用Vue Admin Work X做为基础项目进行二次开发，
-  Vue Admin Work X做了一次重要升级，把 `vaw-layouts-x`也合并到了Vue Admin Work X项目中，这样就可以根据自己的需求灵活配置和修改。
+  为了满足在实际的开发中，很多人的习惯，直接用 Vue Admin Work X 做为基础项目进行二次开发，
+  Vue Admin Work X 做了一次重要升级，把 `vaw-layouts-x`也合并到了 Vue Admin Work X 项目中，这样就可以根据自己的需求灵活配置和修改。
   新的项目在`layout`分支下，原来的 `master` 分支还会继续保留原来的模式一段时间。
   大家可以根据自己的需求，根据不同的分支进行下载。
 
-tip: 本次升级也升级了Element Plus版本，由于Elment Plus版本和之前的差别比较大，可能在某些情况下会有bug，如遇到请提交一个issue，再次感谢大家的支持
-
-
+tip: 本次升级也升级了 Element Plus 版本，由于 Elment Plus 版本和之前的差别比较大，可能在某些情况下会有 bug，如遇到请提交一个 issue，再次感谢大家的支持
 
 ## 简介：
 
@@ -35,6 +33,11 @@ Vue Admin Work X，是 Vue Admini Work 系列中基于 Vue3 开发的中后台�
 
 - [🎉 官网地址](http://qingqingxuan.gitee.io/work-p-site)
 - [🎉Vue Admin Work X **gitee** 演示地址](http://qingqingxuan.gitee.io/vue-admin-work-x)
+
+## Vue Admin Work 授权客服
+
+| <img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" /> |
+| :---------------------------------------------------------------------------------: |
 
 ## vue-admin-work 前端讨论群及 QQ 客服
 
