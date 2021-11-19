@@ -315,9 +315,10 @@ export default {
     .el-tabs__item {
       border-left: none !important;
       border-bottom: none !important;
-      height: calc(#{$tabHeight} - 15px);
-      line-height: calc(#{$tabHeight} - 15px);
+      height: calc(#{$tabHeight} - 10px);
+      line-height: calc(#{$tabHeight} - 10px);
       border-radius: 2px;
+      font-size: 12px;
     }
     .is-focus {
       box-shadow: none !important;

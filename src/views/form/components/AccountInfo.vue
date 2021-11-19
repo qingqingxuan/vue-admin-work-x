@@ -34,6 +34,7 @@
             <el-select
               v-model="accountInfo.type"
               placeholder="请选择"
+              style="width: 110px"
             >
               <el-option
                 v-for="item of accountInfo.types"
@@ -96,65 +97,63 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
-import { ElForm } from "element-plus";
-
+import { ref, reactive, defineComponent } from "vue";
 export default defineComponent({
-  name: "AccountInfo",
-  data() {
-    return {
-      accountInfo: {
-        account: "vue-admin-work@work.com",
-        otherAccount: "qingqingxuanzhaowen",
-        receiveName: "qingqingxuan",
-        money: 100,
-        type: 0,
-        types: [
-          {
-            label: "微信",
-            value: 0,
-          },
-          {
-            label: "支付宝",
-            value: 1,
-          },
-        ],
-      },
-      accountInfoRule: {
-        otherAccount: [
-          { required: true, message: "请输入收款账户", trigger: "blur" },
-        ],
-        receiveName: [
-          { required: true, message: "请输入收款人姓名", trigger: "blur" },
-        ],
-        money: [{ required: true, message: "请输入金额", trigger: "blur" }],
-      },
-    };
-  },
-  methods: {
-    clearStepOneInfo() {
-      this.accountInfo.otherAccount = "";
-      this.accountInfo.type = 0;
-      this.accountInfo.receiveName = "";
-      this.accountInfo.money = 0;
-    },
-    nextStep() {
-      (this.$refs.stepOneForm as InstanceType<typeof ElForm>).validate(
-        (valid) => {
-          if (valid) {
-            this.$emit("next-step", this.accountInfo);
-          }
+  emits: ["next-step"],
+  setup(props, { emit }) {
+    const accountInfo = reactive({
+      account: "vue-admin-work@work.com",
+      otherAccount: "qingqingxuanzhaowen",
+      receiveName: "qingqingxuan",
+      money: 100,
+      type: 0,
+      types: [
+        {
+          label: "微信",
+          value: 0,
         },
-      );
-    },
+        {
+          label: "支付宝",
+          value: 1,
+        },
+      ],
+    });
+    const accountInfoRule = {
+      otherAccount: [
+        { required: true, message: "请输入收款账户", trigger: "blur" },
+      ],
+      receiveName: [
+        { required: true, message: "请输入收款人姓名", trigger: "blur" },
+      ],
+      money: [{ required: true, message: "请输入金额", trigger: "blur" }],
+    };
+    const stepOneForm = ref();
+    function clearStepOneInfo() {
+      accountInfo.account = "";
+      accountInfo.otherAccount = "";
+      accountInfo.receiveName = "";
+      accountInfo.money = 100;
+      accountInfo.type = 0;
+    }
+    function nextStep() {
+      stepOneForm.value?.validate((valid: boolean) => {
+        if (valid) {
+          emit("next-step", accountInfo);
+        }
+      });
+    }
+    return {
+      stepOneForm,
+      accountInfo,
+      accountInfoRule,
+      clearStepOneInfo,
+      nextStep,
+    };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-::v-deep .input-with-select .el-input-group__prepend {
-  width: 90px;
-}
 .tip-wrapper {
   padding: 10px;
 }

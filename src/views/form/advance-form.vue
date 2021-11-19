@@ -158,39 +158,32 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+<script lang="ts" setup>
+import { reactive } from "vue-demi";
 
-export default defineComponent({
-  name: "AdvanceForm",
-  data() {
-    return {
-      managerList: [
-        {
-          id: 1,
-          name: "王冬",
-        },
-        {
-          id: 2,
-          name: "陈新宇",
-        },
-        {
-          id: 3,
-          name: "刘琪",
-        },
-      ],
-      baseInfoModel: {
-        name: "",
-        isOnLine: 0,
-        joinType: "普通",
-        address: "",
-        remark: "",
-        manager: "",
-        studentNum: 100,
-        endTime: "",
-      },
-    };
+const managerList = reactive([
+  {
+    id: 1,
+    name: "王冬",
   },
+  {
+    id: 2,
+    name: "陈新宇",
+  },
+  {
+    id: 3,
+    name: "刘琪",
+  },
+]);
+const baseInfoModel = reactive({
+  name: "",
+  isOnLine: 0,
+  joinType: "普通",
+  address: "",
+  remark: "",
+  manager: "",
+  studentNum: 100,
+  endTime: "",
 });
 </script>
 

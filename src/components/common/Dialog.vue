@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    ref="dialog"
     :title="innerTitle"
     v-model="dialogVisible"
     :close-on-click-modal="closeOnClickModal"
@@ -30,9 +31,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+} from "@vue/runtime-core";
 import { DialogConfig } from "../types";
 import VDraggable from "@/directive/draggable/draggable";
+import { useLayoutStore } from "@/layouts/hooks";
+import { nextTick, ref } from "vue";
 export default defineComponent({
   name: "Dialog",
   props: {
@@ -49,55 +56,53 @@ export default defineComponent({
       default: true,
     },
   },
-  data() {
-    return {
-      dialogVisible: false,
-      innerTitle: this.title,
-      autoClose: false,
-      showSubmitLoading: false,
-      loading: false,
-    };
-  },
-  computed: {
-    isMobileScreen(): boolean {
-      return this.$layoutStore.state.device === "mobile";
-    },
-  },
-  methods: {
-    show(config?: DialogConfig): Promise<any> {
+  setup(props) {
+    const dialog = ref();
+    const dialogVisible = ref(false);
+    const innerTitle = ref(props.title);
+    const autoClose = ref(false);
+    const showSubmitLoading = ref(false);
+    const loading = ref(false);
+    const store = useLayoutStore();
+    let resolve = null;
+    const isMobileScreen = computed(() => {
+      return store.state.device === "mobile";
+    });
+    function show(config?: DialogConfig): Promise<any> {
       config?.beforeShowAction && config.beforeShowAction();
-      this.autoClose = config?.autoClose || false;
-      this.showSubmitLoading = config?.showSubmitLoading || false;
-      this.innerTitle = config?.innerTitle || this.title || "提示";
-      this.dialogVisible = true;
-      this.loading = false;
-      (this as any).validator = config?.validator;
-      this.$nextTick(() => {
+      autoClose.value = config?.autoClose || false;
+      showSubmitLoading.value = config?.showSubmitLoading || false;
+      innerTitle.value = config?.innerTitle || props.title || "提示";
+      dialogVisible.value = true;
+      loading.value = false;
+      nextTick(() => {
         const contentElement = document.querySelector(".content-wrapper");
         contentElement?.scrollTo({ top: 0 });
       });
-      return new Promise((resolve) => {
-        (this as any).resolve = resolve;
+      return new Promise((res) => {
+        resolve = res;
       });
-    },
-    onVnodeMounted() {
-      VDraggable.mounted(this.$el.nextElementSibling);
-    },
-    close(afterAction?: () => void | null) {
-      this.dialogVisible = false;
+    }
+    function onVnodeMounted() {
+      VDraggable.mounted(dialog.value?.$el.nextElementSibling);
+    }
+    function close(afterAction?: () => void | null) {
+      dialogVisible.value = false;
       afterAction && afterAction();
-    },
-    closeSubmitLoading() {
-      this.loading = false;
-    },
-    toggle() {
-      this.dialogVisible = !this.dialogVisible;
-    },
-    onConfirm() {
-      if (this.autoClose) {
-        this.dialogVisible = false;
+    }
+    function closeSubmitLoading() {
+      loading.value = false;
+    }
+    function toggle() {
+      dialogVisible.value = !dialogVisible.value;
+    }
+    function onConfirm() {
+      if (autoClose.value) {
+        dialogVisible.value = false;
       }
-      const slotItems = this.$slots.content ? this.$slots.content() : null;
+      const slotItems = dialog.value.$slots.content
+        ? dialog.value.$slots.content()
+        : null;
       if (slotItems) {
         for (let index = 0; index < slotItems.length; index++) {
           const it = slotItems[index];
@@ -106,8 +111,7 @@ export default defineComponent({
             if (formItems) {
               const validate = formItems.every((it: any) => {
                 return it.validator
-                  ? it.validator.call(
-                      this,
+                  ? it.validator(
                       it,
                       formItems.find(
                         (item: any) => it.associatedOption === item.name
@@ -122,16 +126,22 @@ export default defineComponent({
           }
         }
       }
-      if ((this as any).validator) {
-        if (!(this as any).validator()) {
-          return;
-        }
-      }
-      if (this.showSubmitLoading) {
-        this.loading = true;
-      }
-      (this as any).resolve(this);
-    },
+    }
+    return {
+      dialog,
+      dialogVisible,
+      innerTitle,
+      autoClose,
+      showSubmitLoading,
+      loading,
+      isMobileScreen,
+      onConfirm,
+      toggle,
+      closeSubmitLoading,
+      close,
+      show,
+      onVnodeMounted,
+    };
   },
 });
 </script>

@@ -65,172 +65,160 @@
   </div>
 </template>
 
-<script lang="ts">
-import {
-  BaseForm,
-  showErrorMessage,
-  showSuccessMessage,
-} from "@/components/types";
-import { defineComponent } from "@vue/runtime-core";
-export default defineComponent({
-  name: "BaseFormView",
-  data() {
-    return {
-      formConfig: {
-        labelWidth: 100,
-        size: "small",
-        labelPosition: "right",
-      },
-      formItems: [
-        {
-          label: "会议名称：",
-          type: "input",
-          name: "name",
-          value: "",
-          maxLength: 50,
-          inputType: "text",
-          placeholder: "请输入会议名称",
-          validator: ({ value = "", placeholder = "" }) => {
-            if (!value) {
-              showErrorMessage(placeholder);
-              return false;
-            }
-            return true;
-          },
-        },
-        {
-          label: "会议类型：",
-          type: "radio-group",
-          name: "meetType",
-          associatedOption: "address",
-          value: 0,
-          radioOptions: [
-            {
-              label: "普通",
-              value: 0,
-            },
-            {
-              label: "紧急",
-              value: 1,
-            },
-          ],
-          onChange: (value = 0, assName = "") => {
-            // const assObj = this.formItems.find(
-            //   (it: any) => it.name === assName,
-            // );
-            // this.$set(assObj, "hidden", value === 1);
-          },
-        },
-        {
-          label: "会议内容：",
-          type: "input",
-          name: "content",
-          value: "",
-          maxLength: 10,
-          inputType: "text",
-          placeholder: "请输入会议内容",
-          validator: ({ value = "", placeholder = "" }) => {
-            if (!value) {
-              showErrorMessage(placeholder);
-              return false;
-            }
-            return true;
-          },
-        },
-        {
-          label: "起止时间：",
-          type: "date-range",
-          name: "startEndTime",
-          placeholder: "请选择会议起止时间",
-          value: "",
-          validator: ({ value = "", placeholder = "" }) => {
-            if (!value) {
-              showErrorMessage(placeholder);
-              return false;
-            }
-            return true;
-          },
-        },
-        {
-          label: "起止地点：",
-          type: "select",
-          name: "address",
-          value: "",
-          placeholder: "请选择会议地点",
-          selectOptions: [
-            {
-              label: "会议一室",
-              value: 1,
-            },
-            {
-              label: "会议二室",
-              value: 2,
-            },
-            {
-              label: "会议三室",
-              value: 3,
-            },
-            {
-              label: "会议四室",
-              value: 4,
-            },
-          ],
-          validator: ({ value = "", placeholder = "" }) => {
-            if (!value) {
-              showErrorMessage(placeholder);
-              return false;
-            }
-            return true;
-          },
-        },
-      ],
-      joinMemeber: {
-        value: "",
-        options: [
-          {
-            label: "张三",
-            value: "zhangsan",
-          },
-          {
-            label: "李四",
-            value: "lisi",
-          },
-          {
-            label: "江小鱼",
-            value: "jiangxiaoyu",
-          },
-          {
-            label: "花无缺",
-            value: "huawuque",
-          },
-          {
-            label: "燕南天",
-            value: "yannantian",
-          },
-        ],
-      },
-      remark: {
-        value: "",
-      },
-      submitLoading: false,
-    };
-  },
-  methods: {
-    submit() {
-      if ((this.$refs.baseForm as BaseForm).checkParams()) {
-        if (!this.joinMemeber.value || this.joinMemeber.value.length === 0) {
-          showErrorMessage("请选择与会人员");
-          return false;
-        }
-        this.submitLoading = true;
-        setTimeout(() => {
-          showSuccessMessage("保存成功");
-          this.submitLoading = false;
-        }, 1000);
+<script lang="ts" setup>
+import type { BaseForm } from "@/components/types";
+import { ElMessage } from "element-plus";
+import { ref, shallowReactive } from "vue";
+
+const formConfig = {
+  labelWidth: 100,
+  size: "small",
+  labelPosition: "right",
+};
+const formItems = [
+  {
+    label: "会议名称：",
+    type: "input",
+    name: "name",
+    value: "",
+    maxLength: 50,
+    inputType: "text",
+    placeholder: "请输入会议名称",
+    validator: ({ value = "", placeholder = "" }) => {
+      if (!value) {
+        ElMessage.error(placeholder);
+        return false;
       }
+      return true;
     },
   },
+  {
+    label: "会议类型：",
+    type: "radio-group",
+    name: "meetType",
+    associatedOption: "address",
+    value: 0,
+    radioOptions: [
+      {
+        label: "普通",
+        value: 0,
+      },
+      {
+        label: "紧急",
+        value: 1,
+      },
+    ],
+    onChange: (value = 0, assName = "") => {
+      // const assObj = this.formItems.find(
+      //   (it: any) => it.name === assName,
+      // );
+      // this.$set(assObj, "hidden", value === 1);
+    },
+  },
+  {
+    label: "会议内容：",
+    type: "input",
+    name: "content",
+    value: "",
+    maxLength: 10,
+    inputType: "text",
+    placeholder: "请输入会议内容",
+    validator: ({ value = "", placeholder = "" }) => {
+      if (!value) {
+        ElMessage.error(placeholder);
+        return false;
+      }
+      return true;
+    },
+  },
+  {
+    label: "起止时间：",
+    type: "date-range",
+    name: "startEndTime",
+    placeholder: "请选择会议起止时间",
+    value: "",
+    validator: ({ value = "", placeholder = "" }) => {
+      if (!value) {
+        ElMessage.error(placeholder);
+        return false;
+      }
+      return true;
+    },
+  },
+  {
+    label: "起止地点：",
+    type: "select",
+    name: "address",
+    value: "",
+    placeholder: "请选择会议地点",
+    selectOptions: [
+      {
+        label: "会议一室",
+        value: 1,
+      },
+      {
+        label: "会议二室",
+        value: 2,
+      },
+      {
+        label: "会议三室",
+        value: 3,
+      },
+      {
+        label: "会议四室",
+        value: 4,
+      },
+    ],
+    validator: ({ value = "", placeholder = "" }) => {
+      if (!value) {
+        ElMessage.error(placeholder);
+        return false;
+      }
+      return true;
+    },
+  },
+];
+const joinMemeber = shallowReactive({
+  value: "",
+  options: [
+    {
+      label: "张三",
+      value: "zhangsan",
+    },
+    {
+      label: "李四",
+      value: "lisi",
+    },
+    {
+      label: "江小鱼",
+      value: "jiangxiaoyu",
+    },
+    {
+      label: "花无缺",
+      value: "huawuque",
+    },
+    {
+      label: "燕南天",
+      value: "yannantian",
+    },
+  ],
 });
+const remark = ref("");
+const submitLoading = ref(false);
+const baseForm = ref<BaseForm>();
+function submit() {
+  if (baseForm.value?.checkParams()) {
+    if (!joinMemeber.value) {
+      ElMessage.error("请选择与会人员");
+      return false;
+    }
+    submitLoading.value = true;
+    setTimeout(() => {
+      ElMessage.success("保存成功");
+      submitLoading.value = false;
+    }, 1000);
+  }
+}
 </script>
 
 <style lang="scss" scoped>

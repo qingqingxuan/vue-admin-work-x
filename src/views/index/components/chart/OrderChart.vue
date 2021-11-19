@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import useEcharts from "@/mixins/useEcharts";
+import useEcharts from "@/hooks/Echarts";
 import {
   defineComponent,
   nextTick,

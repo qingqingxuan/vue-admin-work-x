@@ -50,32 +50,19 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import RichTextEditor from "@/components/common/RichTextEditor.vue";
-import { defineComponent } from "@vue/runtime-core";
-export default defineComponent({
-  name: "RichText",
-  components: { RichTextEditor },
-  data() {
-    return {
-      title: "",
-      htmlContent: "",
-      jsonContent: "",
-    };
-  },
-  methods: {
-    getHtmlContent() {
-      this.htmlContent = (
-        this.$refs.richTextEditor as InstanceType<typeof RichTextEditor>
-      ).getHtmlContent();
-    },
-    getJsonContent() {
-      this.jsonContent = (
-        this.$refs.richTextEditor as InstanceType<typeof RichTextEditor>
-      ).getJsonContent();
-    },
-  },
-});
+import { ref } from "vue";
+const title = ref("");
+const htmlContent = ref("");
+const jsonContent = ref("");
+const richTextEditor = ref<typeof RichTextEditor>();
+function getHtmlContent() {
+  htmlContent.value = richTextEditor.value?.getHtmlContent();
+}
+function getJsonContent() {
+  jsonContent.value = richTextEditor.value?.getJsonContent();
+}
 </script>
 
 <style lang="scss" scoped>

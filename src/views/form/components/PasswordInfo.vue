@@ -50,12 +50,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
 import { ElForm } from "element-plus";
+import { ref, reactive, defineComponent } from "vue";
 
 export default defineComponent({
-  name: "PasswordInfo",
-  emits: ["pre-step", "next-step"],
   props: {
     accountInfo: {
       type: Object,
@@ -64,38 +62,42 @@ export default defineComponent({
       },
     },
   },
-  data() {
-    return {
-      passwordModel: {
-        payPassword: "",
-      },
-      passwordRule: {
-        payPassword: [
-          { required: true, message: "请输入支付密码", trigger: "blur" },
-        ],
-      },
-      loadingStatus: false,
+  emits: ["pre-step", "next-step"],
+  setup(props, { emit }) {
+    const passwordModel = reactive({
+      payPassword: "",
+    });
+    const passwordRule = {
+      payPassword: [
+        { required: true, message: "请输入支付密码", trigger: "blur" },
+      ],
     };
-  },
-  methods: {
-    preStep() {
-      this.loadingStatus = false;
-      this.passwordModel.payPassword = "";
-      this.$emit("pre-step");
-    },
-    nextStep() {
-      (this.$refs.stepTwoForm as InstanceType<typeof ElForm>).validate(
-        (valid) => {
-          if (valid) {
-            this.loadingStatus = true;
-            setTimeout(() => {
-              this.$emit("next-step");
-              this.loadingStatus = false;
-            }, 3000);
-          }
-        },
-      );
-    },
+    const loadingStatus = ref(false);
+    const stepTwoForm = ref<typeof ElForm>();
+    function preStep() {
+      loadingStatus.value = false;
+      passwordModel.payPassword = "";
+      emit("pre-step");
+    }
+    function nextStep() {
+      stepTwoForm.value?.validate((valid: boolean) => {
+        if (valid) {
+          loadingStatus.value = true;
+          setTimeout(() => {
+            emit("next-step");
+            loadingStatus.value = false;
+          }, 3000);
+        }
+      });
+    }
+    return {
+      stepTwoForm,
+      passwordModel,
+      passwordRule,
+      loadingStatus,
+      preStep,
+      nextStep,
+    };
   },
 });
 </script>

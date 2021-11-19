@@ -59,7 +59,10 @@
           label="活动名称"
           prop="name"
         >
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input
+            v-model="ruleForm.name"
+            placeholder="请输入活动名称"
+          ></el-input>
         </el-form-item>
         <el-form-item
           label="活动区域"
@@ -166,234 +169,215 @@
   </div>
 </template>
 
-<script lang="ts">
-import {
-  BaseForm,
-  showConfirmBox,
-  showErrorMessage,
-  showSuccessMessage,
-} from "@/components/types";
+<script lang="ts" setup>
+import { showConfirmBox } from "@/components/types";
+import type { BaseForm } from "@/components/types";
+import { ElMessage } from "element-plus";
 import { isEmpty } from "lodash";
-import { defineComponent, reactive, ref } from "vue";
+import { reactive, ref } from "vue";
 
-export default defineComponent({
-  name: "FormVerify",
-  setup() {
-    const ruleForm = reactive({
-      name: "",
-      region: "",
-      date1: "",
-      date2: "",
-      delivery: false,
-      type: [],
-      resource: "",
-      desc: "",
-    });
-    const rules = {
-      name: [
-        { required: true, message: "请输入活动名称", trigger: "blur" },
-        { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
-      ],
-      region: [
-        { required: true, message: "请选择活动区域", trigger: "change" },
-      ],
-      date1: [
-        {
-          type: "date",
-          required: true,
-          message: "请选择日期",
-          trigger: "change",
-        },
-      ],
-      date2: [
-        {
-          type: "date",
-          required: true,
-          message: "请选择时间",
-          trigger: "change",
-        },
-      ],
-      type: [
-        {
-          type: "array",
-          required: true,
-          message: "请至少选择一个活动性质",
-          trigger: "change",
-        },
-      ],
-      resource: [
-        { required: true, message: "请选择活动资源", trigger: "change" },
-      ],
-      desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }],
-    };
-    const ruleFormRef = ref();
-    const onResetForm = () => {
-      ruleFormRef.value.resetFields();
-    };
-    const onSubmitForm = () => {
-      ruleFormRef.value.validate((valid: boolean) => {
-        if (valid) {
-          showSuccessMessage("submit!");
-        } else {
-          return false;
-        }
-      });
-    };
-    const builderIetms = [
-      {
-        name: "name",
-        type: "input",
-        value: "",
-        placeholder: "请输入活动名称",
-        label: "活动名称",
-        validator(item: FormItem) {
-          if (!item.value) {
-            showErrorMessage(item.placeholder);
-            return false;
-          }
-          return true;
-        },
-      },
-      {
-        name: "area",
-        type: "select",
-        label: "活动区域",
-        placeholder: "请选择活动区域",
-        value: "",
-        selectOptions: [
-          {
-            label: "区域一",
-            value: "shanghai",
-          },
-          {
-            label: "区域二",
-            value: "beijing",
-          },
-        ],
-        span: 4,
-        validator(item: FormItem) {
-          if (!item.value) {
-            showErrorMessage(item.placeholder);
-            return false;
-          }
-          return true;
-        },
-      },
-      {
-        name: "delivery",
-        type: "switch",
-        label: "即时配送",
-        value: false,
-      },
-      {
-        name: "type",
-        type: "check-group",
-        label: "活动性质",
-        placeholder: "请选择活动性质",
-        value: [],
-        checkOptions: [
-          {
-            label: "美食/餐厅线上活动",
-            value: 1,
-          },
-          {
-            label: "地推活动",
-            value: 2,
-          },
-          {
-            label: "线下主题活动",
-            value: 3,
-          },
-          {
-            label: "单纯品牌曝光",
-            value: 4,
-          },
-        ],
-        validator(item: FormItem) {
-          if (isEmpty(item.value)) {
-            showErrorMessage(item.placeholder);
-            return false;
-          }
-          return true;
-        },
-      },
-      {
-        name: "resource",
-        type: "radio-group",
-        label: "活动资源",
-        placeholder: "请选择活动资源",
-        value: "",
-        radioOptions: [
-          {
-            label: "线上品牌商赞助",
-            value: 1,
-          },
-          {
-            label: "线下场地免费",
-            value: 2,
-          },
-        ],
-        validator(item: FormItem) {
-          if (!item.value) {
-            showErrorMessage(item.placeholder);
-            return false;
-          }
-          return true;
-        },
-      },
-      {
-        name: "desc",
-        type: "input",
-        inputType: "textarea",
-        value: "",
-        placeholder: "请输入活动形式",
-        label: "活动形式",
-        validator(item: FormItem) {
-          if (!item.value) {
-            showErrorMessage(item.placeholder);
-            return false;
-          }
-          return true;
-        },
-      },
-    ] as Array<FormItem>;
-    const activeDate = ref("");
-    const activeTime = ref("");
-    const builderForm = ref<BaseForm>();
-    const onSubmitBuildForm = () => {
-      if (builderForm.value?.checkParams()) {
-        if (!activeDate.value) {
-          showErrorMessage("请选择日期");
-          return;
-        }
-        if (!activeTime.value) {
-          showErrorMessage("请选择时间");
-          return;
-        }
-        const params = builderForm.value?.generatorParams();
-        params.type = params.type.join(",");
-        console.log(params);
-        showConfirmBox("submit!，参数--->" + JSON.stringify(params));
-      }
-    };
-    const onResetBuildForm = () => {
-      builderForm.value?.resetParams();
-      activeDate.value = "";
-      activeTime.value = "";
-    };
-    return {
-      ruleFormRef,
-      ruleForm,
-      onResetForm,
-      onSubmitForm,
-      rules,
-      builderForm,
-      builderIetms,
-      activeDate,
-      activeTime,
-      onSubmitBuildForm,
-      onResetBuildForm,
-    };
-  },
+const ruleForm = reactive({
+  name: "",
+  region: "",
+  date1: "",
+  date2: "",
+  delivery: false,
+  type: [],
+  resource: "",
+  desc: "",
 });
+const rules = {
+  name: [
+    { required: true, message: "请输入活动名称", trigger: "blur" },
+    { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+  ],
+  region: [{ required: true, message: "请选择活动区域", trigger: "change" }],
+  date1: [
+    {
+      type: "date",
+      required: true,
+      message: "请选择日期",
+      trigger: "change",
+    },
+  ],
+  date2: [
+    {
+      type: "date",
+      required: true,
+      message: "请选择时间",
+      trigger: "change",
+    },
+  ],
+  type: [
+    {
+      type: "array",
+      required: true,
+      message: "请至少选择一个活动性质",
+      trigger: "change",
+    },
+  ],
+  resource: [{ required: true, message: "请选择活动资源", trigger: "change" }],
+  desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }],
+};
+const ruleFormRef = ref();
+const onResetForm = () => {
+  ruleFormRef.value.resetFields();
+};
+const onSubmitForm = () => {
+  ruleFormRef.value.validate((valid: boolean) => {
+    if (valid) {
+      ElMessage.success("submit!");
+    } else {
+      return false;
+    }
+  });
+};
+const builderIetms = [
+  {
+    name: "name",
+    type: "input",
+    value: "",
+    placeholder: "请输入活动名称",
+    label: "活动名称",
+    validator(item: FormItem) {
+      if (!item.value) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+  },
+  {
+    name: "area",
+    type: "select",
+    label: "活动区域",
+    placeholder: "请选择活动区域",
+    value: "",
+    selectOptions: [
+      {
+        label: "区域一",
+        value: "shanghai",
+      },
+      {
+        label: "区域二",
+        value: "beijing",
+      },
+    ],
+    span: 4,
+    validator(item: FormItem) {
+      if (!item.value) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+  },
+  {
+    name: "delivery",
+    type: "switch",
+    label: "即时配送",
+    value: false,
+    reset() {
+      this.value = false;
+    },
+  },
+  {
+    name: "type",
+    type: "check-group",
+    label: "活动性质",
+    placeholder: "请选择活动性质",
+    value: [],
+    checkOptions: [
+      {
+        label: "美食/餐厅线上活动",
+        value: 1,
+      },
+      {
+        label: "地推活动",
+        value: 2,
+      },
+      {
+        label: "线下主题活动",
+        value: 3,
+      },
+      {
+        label: "单纯品牌曝光",
+        value: 4,
+      },
+    ],
+    validator(item: FormItem) {
+      if (isEmpty(item.value)) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+    reset() {
+      this.value = [];
+    },
+  },
+  {
+    name: "resource",
+    type: "radio-group",
+    label: "活动资源",
+    placeholder: "请选择活动资源",
+    value: "",
+    radioOptions: [
+      {
+        label: "线上品牌商赞助",
+        value: 1,
+      },
+      {
+        label: "线下场地免费",
+        value: 2,
+      },
+    ],
+    validator(item: FormItem) {
+      if (!item.value) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+  },
+  {
+    name: "desc",
+    type: "input",
+    inputType: "textarea",
+    value: "",
+    placeholder: "请输入活动形式",
+    label: "活动形式",
+    validator(item: FormItem) {
+      if (!item.value) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+  },
+] as Array<FormItem>;
+const activeDate = ref("");
+const activeTime = ref("");
+const builderForm = ref<BaseForm>();
+const onSubmitBuildForm = () => {
+  if (builderForm.value?.checkParams()) {
+    if (!activeDate.value) {
+      ElMessage.error("请选择日期");
+      return;
+    }
+    if (!activeTime.value) {
+      ElMessage.error("请选择时间");
+      return;
+    }
+    const params = builderForm.value?.generatorParams();
+    params.type = params.type.join(",");
+    console.log(params);
+    showConfirmBox("submit!，参数--->" + JSON.stringify(params));
+  }
+};
+const onResetBuildForm = () => {
+  builderForm.value?.resetParams();
+  activeDate.value = "";
+  activeTime.value = "";
+};
 </script>

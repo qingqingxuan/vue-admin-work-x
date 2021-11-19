@@ -25,20 +25,19 @@
         style="margin-left: 15px"
         circle
         size="small"
-        icon="el-icon-refresh"
+        :icon="RefreshIcon"
         type="primary"
-        @click="refresh"
+        @click="onRefresh"
       />
     </div>
   </el-card>
 </template>
 
 <script lang="ts">
-import { PageModelSetup } from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
+import { Refresh as RefreshIcon } from "@element-plus/icons";
+import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
-  name: "TableFooter",
   props: {
     pageSizes: {
       type: Array,
@@ -51,9 +50,48 @@ export default defineComponent({
       default: true,
     },
   },
-  setup() {
+  emits: ["pageChanged", "refresh"],
+  setup(props, { emit }) {
+    const pageModel = reactive({
+      currentPage: 1,
+      pageSize: 10,
+      totalSize: 0,
+    });
+    const pageSizeChanged = (pageSize: number) => {
+      pageModel.pageSize = pageSize;
+      pageModel.currentPage = 1;
+      emit("pageChanged", pageModel);
+    };
+    const currentChanged = (currentPage: number) => {
+      pageModel.currentPage = currentPage;
+      emit("pageChanged", pageModel);
+    };
+    const withPageInfoData = (otherParams = {}) => {
+      return {
+        ...otherParams,
+        page: pageModel.currentPage,
+        pageSize: pageModel.pageSize,
+      };
+    };
+    const setTotalSize = (totalSize: number) => {
+      pageModel.totalSize = totalSize;
+    };
+    const setPageSize = (pageSize: number) => {
+      pageModel.pageSize = pageSize;
+      console.log(pageModel);
+    };
+    const onRefresh = () => {
+      emit("refresh");
+    };
     return {
-      ...PageModelSetup(),
+      pageModel,
+      pageSizeChanged,
+      currentChanged,
+      withPageInfoData,
+      setTotalSize,
+      setPageSize,
+      onRefresh,
+      RefreshIcon,
     };
   },
 });

@@ -38,34 +38,37 @@
         </el-card>
       </el-col>
     </el-row>
-    <TableFooter ref="tableFooter" />
+    <TableFooter
+      ref="tableFooter"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
-export default defineComponent({
-  name: "CardList",
-  mixins: [TableMixin],
-  mounted() {
-    this.doRefresh();
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getCardList,
-        data: () => {
-          return {
-            ...this.getPageInfo(),
-          };
-        },
-      })
-        .then(this.handleSuccess)
-        .catch(console.log);
-    },
-  },
-});
+<script lang="ts" setup>
+import { getCardList } from "@/api/url";
+import type { TableFooter } from "@/components/types";
+import { useDataTable } from "@/hooks";
+import { usePost } from "@/hooks";
+import { onMounted, ref } from "vue";
+
+const post = usePost();
+const { handleSuccess, dataList } = useDataTable();
+const tableFooter = ref<TableFooter>();
+
+function doRefresh() {
+  post({
+    url: getCardList,
+    data: () => tableFooter.value?.withPageInfoData(),
+  })
+    .then(handleSuccess)
+    .then((res: any) => {
+      tableFooter.value?.setTotalSize(res.totalSize);
+    })
+    .catch(console.log);
+}
+onMounted(doRefresh);
 </script>
 
 <style lang="scss" scoped>

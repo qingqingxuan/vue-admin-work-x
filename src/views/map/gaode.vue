@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@vue/runtime-core";
-import useCreateScript from "@/mixins/useCreateScript";
+import { useCreateScript } from "@/hooks";
 
 const SCRIPT_URL =
   "https://webapi.amap.com/maps?v=1.4.15&key=9f2d3fcc4b12a7c915fded4b55902e21";

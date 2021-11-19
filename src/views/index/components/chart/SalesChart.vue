@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { dispose, graphic } from "echarts";
-import useEcharts from "@/mixins/useEcharts";
+import useEcharts from "@/hooks/Echarts";
 import {
   defineComponent,
   nextTick,

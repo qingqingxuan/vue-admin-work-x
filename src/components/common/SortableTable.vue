@@ -20,7 +20,7 @@
     <draggable
       v-model="innerTableProps"
       animation="500"
-      @end="onDraggableEnd"
+      @update:modelValue="onDraggableEnd"
       tag="transition-group"
       item-key="prop"
     >
@@ -43,7 +43,7 @@
       <el-button
         type="primary"
         size="mini"
-        icon="el-icon-setting"
+        :icon="SettingIcon"
         circle
       />
     </template>
@@ -51,8 +51,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref } from "@vue/runtime-core";
+import { defineComponent, PropType, reactive, ref } from "vue";
 import draggable from "vuedraggable";
+import { Setting as SettingIcon } from "@element-plus/icons";
 export default defineComponent({
   name: "SortableTable",
   components: { draggable },
@@ -60,11 +61,6 @@ export default defineComponent({
   props: {
     tableProps: {
       type: Array as PropType<TablePropsType[]>,
-    },
-  },
-  methods: {
-    onDraggableEnd() {
-      this.$emit("update", this.innerTableProps);
     },
   },
   setup(props, { emit }) {
@@ -92,6 +88,7 @@ export default defineComponent({
       const checkedItems = innerTableProps.filter(
         (it: TablePropsType) => it.checked
       );
+      console.log(checkedItems);
       allChecked.value = checkedItems.length === innerTableProps.length;
       isIndeterminate.value =
         checkedItems.length > 0 &&
@@ -99,14 +96,20 @@ export default defineComponent({
       emit("update", checkedItems);
     };
     const onReset = () => {
-      innerTableProps.splice(0, innerTableProps.length);
+      innerTableProps.length = 0;
       innerTableProps.push(
         ...originTableProps.map((it: TablePropsType) => {
           return { ...it };
         })
       );
+      console.log(originTableProps);
       onChange();
     };
+    function onDraggableEnd(temp: Array<TablePropsType>) {
+      // innerTableProps.length = 0;
+      // innerTableProps.push(...temp);
+      emit("update", temp);
+    }
     return {
       innerTableProps,
       originTableProps,
@@ -115,7 +118,15 @@ export default defineComponent({
       onAllChange,
       onChange,
       onReset,
+      onDraggableEnd,
+      SettingIcon,
     };
   },
 });
 </script>
+
+<style lang="scss" scoped>
+:deep(.el-checkbox) {
+  height: 15px;
+}
+</style>

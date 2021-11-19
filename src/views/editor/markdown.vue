@@ -31,42 +31,29 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import MarkdownEditor from "@/components/common/MarkdownEditor.vue";
-import { defineComponent } from "@vue/runtime-core";
+import { ref } from "vue";
 import SimpleMDE from "simplemde";
 
-export default defineComponent({
-  name: "Markdown",
-  components: {
-    MarkdownEditor,
-  },
-  data() {
-    return {
-      editorText: "",
-      priviewContent: "",
-    };
-  },
-  methods: {
-    addText() {
-      (
-        this.$refs.markdownEditor as InstanceType<typeof MarkdownEditor>
-      ).addText("\n### 新增内容");
-    },
-    addImage() {
-      (
-        this.$refs.markdownEditor as InstanceType<typeof MarkdownEditor>
-      ).addImage(
-        "\n![](https://file.iviewui.com/dist/2ecd3b0452aa197097d5131afacab7b8.png)"
-      );
-    },
-    getHTML() {
-      this.priviewContent = (SimpleMDE.prototype as any).markdown(
-        this.editorText
-      );
-    },
-  },
-});
+const editorText = ref("");
+const priviewContent = ref("");
+
+const markdownEditor = ref<typeof MarkdownEditor>();
+
+function addText() {
+  markdownEditor.value?.addText("\n### 新增内容");
+}
+function addImage() {
+  markdownEditor.value?.addImage(
+    "\n![](http://qingqingxuan.gitee.io/img/logo.png)"
+  );
+}
+function getHTML() {
+  priviewContent.value = (SimpleMDE.prototype as any).markdown(
+    editorText.value
+  );
+}
 </script>
 
 <style lang="scss" scoped>

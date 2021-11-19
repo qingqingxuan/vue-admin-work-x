@@ -61,53 +61,46 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import printJS from "print-js";
 import imagePath from "@/assets/work_logo.png";
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
-export default defineComponent({
-  name: "Print",
-  mixins: [TableMixin],
-  data() {
-    return {
-      imagePath,
-      dataList: [
-        {
-          name: "张三",
-          age: 10,
-          gender: "男",
-        },
-        {
-          name: "李四",
-          age: 40,
-          gender: "男",
-        },
-        {
-          name: "王五",
-          age: 30,
-          gender: "女",
-        },
-      ],
-    };
+import { shallowReactive } from "vue";
+import { useDataTable } from "@/hooks";
+
+const { tableConfig } = useDataTable();
+
+const dataList = shallowReactive([
+  {
+    name: "张三",
+    age: 10,
+    gender: "男",
   },
-  methods: {
-    printImage() {
-      printJS({
-        printable: imagePath,
-        type: "image",
-        showModal: false,
-      });
-    },
-    printHtml() {
-      printJS({
-        printable: "htmlWrapper",
-        type: "html",
-        targetStyles: ["*"],
-      });
-    },
+  {
+    name: "李四",
+    age: 40,
+    gender: "男",
   },
-});
+  {
+    name: "王五",
+    age: 30,
+    gender: "女",
+  },
+]);
+
+function printImage() {
+  printJS({
+    printable: imagePath,
+    type: "image",
+    showModal: false,
+  });
+}
+function printHtml() {
+  printJS({
+    printable: "htmlWrapper",
+    type: "html",
+    targetStyles: ["*"],
+  });
+}
 </script>
 
 <style lang="scss" scoped>

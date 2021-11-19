@@ -5,7 +5,7 @@
         <el-button
           type="danger"
           size="mini"
-          icon="el-icon-delete"
+          :icon="Delete"
           @click="onDeleteItem(null)"
         >删除
         </el-button>
@@ -31,7 +31,7 @@
               <el-button
                 circle
                 type="success"
-                icon="el-icon-refresh"
+                :icon="RefreshIcon"
                 size="mini"
                 @click="doRefresh"
               />
@@ -118,95 +118,103 @@
         </el-table>
       </template>
     </TableBody>
-    <TableFooter ref="tableFooter" />
+    <TableFooter
+      ref="tableFooter"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
+<script lang="ts" setup>
+import { onMounted, reactive, ref } from "vue";
 import { showConfirmBox, showErrorMessage } from "@/components/types";
-export default defineComponent({
-  name: "TableCustom",
-  mixins: [TableMixin],
-  data() {
-    return {
-      tableProps: [
-        {
-          title: "姓名",
-          prop: "nickName",
-          checked: true,
-        },
-        {
-          title: "头像",
-          prop: "vip",
-          checked: true,
-        },
-        {
-          title: "性别",
-          prop: "gender",
-          checked: true,
-        },
-        {
-          title: "地址",
-          prop: "address",
-          checked: true,
-        },
-      ],
-      userModel: {
-        address: "",
-        avatar: "",
-        gender: 1,
-        id: 1,
-        lastLoginIp: "",
-        lastLoginTime: "",
-        nickName: "",
-        status: 0,
-        vip: 1,
-      },
-    };
+import { useDataTable, usePost } from "@/hooks";
+import { getTableList } from "@/api/url";
+import type { TableFooter } from "@/components/types";
+import _ from "lodash";
+import { Delete, Refresh as RefreshIcon } from "@element-plus/icons";
+
+const {
+  handleSuccess,
+  selectRows,
+  dataList,
+  tableConfig,
+  tableLoading,
+  handleSelectionChange,
+} = useDataTable();
+const post = usePost();
+
+const tableProps = reactive([
+  {
+    title: "姓名",
+    prop: "nickName",
+    checked: true,
   },
-  mounted() {
-    this.doRefresh();
+  {
+    title: "头像",
+    prop: "vip",
+    checked: true,
   },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getTableList,
-        data: () => {
-          return {
-            ...this.getPageInfo(),
-          };
-        },
-      })
-        .then(this.handleSuccess)
-        .catch(console.log);
-    },
-    onDeleteItem(item: any) {
-      if (item) {
-        showConfirmBox("是否要删除此数据，删除后不恢复？").then(() => {
-          showConfirmBox("模拟删除成功，参数为：" + item.id);
-        });
-      } else {
-        if (!this.$_.isEmpty(this.selectRows)) {
-          showConfirmBox("是否要删除此数据项，删除后不恢复？").then(() => {
-            showConfirmBox(
-              "模拟删除成功，参数为：" +
-                JSON.stringify({
-                  ids: this.selectRows.map((it) => it.id).join(","),
-                })
-            );
-          });
-        } else {
-          showErrorMessage("请选择要删除的数据项");
-        }
-      }
-    },
-    onUpdateTable(tableProps: Array<TablePropsType>) {
-      this.tableProps = tableProps.filter((it: TablePropsType) => it.checked);
-    },
+  {
+    title: "性别",
+    prop: "gender",
+    checked: true,
   },
+  {
+    title: "地址",
+    prop: "address",
+    checked: true,
+  },
+]);
+const userModel = reactive({
+  address: "",
+  avatar: "",
+  gender: 1,
+  id: 1,
+  lastLoginIp: "",
+  lastLoginTime: "",
+  nickName: "",
+  status: 0,
+  vip: 1,
 });
+const tableFooter = ref<TableFooter>();
+function doRefresh() {
+  post({
+    url: getTableList,
+    data: tableFooter.value?.withPageInfoData(),
+  })
+    .then(handleSuccess)
+    .then((res: any) => {
+      tableFooter.value?.setTotalSize(res.totalSize);
+    })
+    .catch(console.log);
+}
+function onDeleteItem(item: any) {
+  if (item) {
+    showConfirmBox("是否要删除此数据，删除后不恢复？").then(() => {
+      showConfirmBox("模拟删除成功，参数为：" + item.id);
+    });
+  } else {
+    if (!_.isEmpty(selectRows)) {
+      showConfirmBox("是否要删除此数据项，删除后不恢复？").then(() => {
+        showConfirmBox(
+          "模拟删除成功，参数为：" +
+            JSON.stringify({
+              ids: selectRows.map((it: any) => it.id).join(","),
+            })
+        );
+      });
+    } else {
+      showErrorMessage("请选择要删除的数据项");
+    }
+  }
+}
+function onUpdateTable(temp: Array<TablePropsType>) {
+  tableProps.length = 0;
+  tableProps.push(...temp.filter((it: TablePropsType) => it.checked));
+}
+onMounted(doRefresh);
 </script>
 
 <style lang="scss" scoped>

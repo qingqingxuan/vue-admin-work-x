@@ -110,6 +110,9 @@ export default {
     padding-top: $logoHeight;
   }
 }
+.footer-wrapper {
+  margin-top: 6px;
+}
 .is-mobile {
   .main-layout-open-status,
   .main-layout-close-status {

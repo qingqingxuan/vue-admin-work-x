@@ -79,7 +79,7 @@ export default defineComponent({
     const loading = ref(true);
     setTimeout(() => {
       loading.value = false;
-    }, 3000);
+    }, 1000);
     return {
       loading,
     };
@@ -88,6 +88,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+:deep(.el-card__header) {
+  padding: 10px;
+}
 .divide {
   margin: 10px 0;
   border-bottom: 1px solid #f5f5f5;

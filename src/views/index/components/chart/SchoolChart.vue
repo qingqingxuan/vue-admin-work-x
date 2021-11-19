@@ -75,14 +75,14 @@
 <script lang="ts">
 import chinaData from "@/assets/data/china.json";
 import { convertData } from "@/assets/data/map.js";
-import useEcharts from "@/mixins/useEcharts";
+import { useEcharts } from "@/hooks";
 import {
   defineComponent,
   nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
-} from "@vue/runtime-core";
+} from "vue";
 import { dispose, registerMap } from "echarts";
 export default defineComponent({
   name: "SchoolChart",

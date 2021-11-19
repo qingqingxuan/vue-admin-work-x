@@ -147,13 +147,13 @@
                 <el-button
                   type="success"
                   size="mini"
-                  icon="el-icon-refresh"
+                  :icon="RefreshIcon"
                   @click="doResetSearch"
                 >重置</el-button>
                 <el-button
                   type="primary"
                   size="mini"
-                  icon="el-icon-search"
+                  :icon="SearchIcon"
                   @click="doSearch"
                 >搜索</el-button>
               </div>
@@ -166,10 +166,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { TinyEmitter } from "tiny-emitter";
+import {
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  ref,
+  defineComponent,
+  PropType,
+} from "vue";
+import {
+  Search as SearchIcon,
+  Refresh as RefreshIcon,
+} from "@element-plus/icons";
 
 export default defineComponent({
-  name: "TableHeader",
   props: {
     title: {
       type: String,
@@ -180,7 +192,7 @@ export default defineComponent({
       default: false,
     },
     searchModel: {
-      type: Array,
+      type: Array as PropType<Array<FormItem>>,
       default: null,
     },
     defaultCollapsedState: {
@@ -188,25 +200,26 @@ export default defineComponent({
       default: true,
     },
   },
-  inject: ["mEmit"],
-  data() {
-    return {
-      showSearchContent: this.defaultCollapsedState,
-    };
-  },
-  computed: {
-    showArrow(): boolean {
+  emits: ["doSearch", "resetSearch"],
+  setup(props, { emit }) {
+    const showSearchContent = ref(props.defaultCollapsedState);
+
+    const showArrow = computed(() => {
       return (
-        this.canCollapsed && !!this.searchModel && this.searchModel.length !== 0
+        props.canCollapsed &&
+        !!props.searchModel &&
+        props.searchModel.length !== 0
       );
-    },
-    collapsedState(): boolean {
-      return this.showSearchContent && this.showArrow;
-    },
-    filterSearchModel() {
-      if (!this.searchModel) return [];
+    });
+
+    const collapsedState = computed(() => {
+      return showSearchContent.value && showArrow.value;
+    });
+
+    const filterSearchModel = computed(() => {
+      if (!props.searchModel) return [];
       const tmp: Array<any> = [];
-      this.searchModel.forEach((it, index) => {
+      props.searchModel.forEach((it, index) => {
         const tmpIndex = Math.floor(index / 3);
         if (!tmp[tmpIndex]) {
           tmp[tmpIndex] = [];
@@ -225,26 +238,30 @@ export default defineComponent({
         }
       }
       return tmp;
-    },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.mEmit.emit(
-        "tableHeightChanged",
-        document.getElementById("tableHeaderContainer")?.offsetHeight
-      );
     });
-  },
-  methods: {
-    collapsed() {
-      this.showSearchContent = !this.showSearchContent;
-    },
-    doSearch() {
-      this.$emit("doSearch");
-    },
-    doResetSearch() {
-      this.$emit("resetSearch");
-    },
+    function collapsed() {
+      showSearchContent.value = !showSearchContent.value;
+    }
+    function doSearch() {
+      emit("doSearch");
+    }
+    function doResetSearch() {
+      props.searchModel.forEach((it) => {
+        it.value = "";
+      });
+      emit("resetSearch");
+    }
+    return {
+      showSearchContent,
+      showArrow,
+      collapsedState,
+      filterSearchModel,
+      collapsed,
+      doSearch,
+      doResetSearch,
+      SearchIcon,
+      RefreshIcon,
+    };
   },
 });
 </script>

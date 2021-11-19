@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   created() {

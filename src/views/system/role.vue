@@ -5,7 +5,7 @@
         <el-button
           type="primary"
           size="mini"
-          icon="el-icon-plus"
+          :icon="Plus"
           @click="onAddItem"
         >添加
         </el-button>
@@ -80,16 +80,16 @@
         </el-table>
       </template>
     </TableBody>
-    <Dialog ref="dialog">
+    <Dialog ref="dialogRef">
       <template #content>
         <BaseForm
-          ref="baseForm"
+          ref="baseFormRef"
           :form-items="formItems"
         />
       </template>
     </Dialog>
     <Dialog
-      ref="menuDialog"
+      ref="menuDialogRef"
       title="菜单权限"
     >
       <template #content>
@@ -106,184 +106,176 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import type { BaseForm, DialogType } from "@/components/types";
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
+import { onMounted, reactive, ref, shallowReactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { usePost } from "@/hooks";
+import { getAllMenuByRoleId, getRoleList } from "@/api/url";
+import { useDataTable } from "@/hooks";
+import { Plus } from "@element-plus/icons";
 const ROLE_CODE_FLAG = "ROLE_";
-export default defineComponent({
-  name: "Role",
-  mixins: [TableMixin],
-  data() {
-    return {
-      roleModel: {
-        id: 0,
-        name: "",
-        roleCode: "",
-        description: "",
-        createTime: "",
-      },
-      menuData: [] as Array<any>,
-      defaultProps: {
-        children: "children",
-        label: "menuName",
-      },
-      defaultCheckedKeys: [] as Array<any>,
-      defaultExpandedKeys: [] as Array<any>,
-      formItems: [
-        {
-          label: "角色名称",
-          type: "input",
-          name: "name",
-          value: "",
-          maxLength: 50,
-          inputType: "text",
-          placeholder: "请输入角色名称",
-          validator: (item: any) => {
-            if (!item.value) {
-              ElMessage.error(item.placeholder);
-              return false;
-            }
-            return true;
-          },
-          reset() {
-            this.value = "";
-          },
-        },
-        {
-          label: "角色编号",
-          type: "input",
-          name: "roleCode",
-          value: "",
-          maxLength: 20,
-          inputType: "text",
-          placeholder: "请输入角色编号",
-          validator: (item: any) => {
-            if (!item.value) {
-              ElMessage.error(item.placeholder);
-              return false;
-            }
-            return true;
-          },
-          reset() {
-            this.value = "";
-          },
-        },
-        {
-          label: "角色描述",
-          type: "input",
-          name: "description",
-          value: "",
-          maxLength: 50,
-          inputType: "text",
-          placeholder: "请输入角色描述",
-          validator: (item: any) => {
-            if (!item.value) {
-              ElMessage.error(item.placeholder);
-              return false;
-            }
-            return true;
-          },
-          reset() {
-            this.value = "";
-          },
-        },
-      ],
-    };
-  },
-  mounted() {
-    this.doRefresh();
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getRoleList,
-        data: {},
-      })
-        .then(this.handleSuccess)
-        .catch(console.log);
-    },
-    showMenu(item: RoleModel) {
-      this.$post({
-        url: this.$urlPath.getAllMenuByRoleId,
-        data: {
-          roleId: item.id,
-        },
-      })
-        .then((res) => {
-          this.menuData = res.data;
-          this.defaultCheckedKeys = [];
-          this.defaultExpandedKeys = [];
-          this.handleRoleMenusSelected(this.menuData);
-          (this.$refs.menuDialog as DialogType)
-            .show()
-            .then((component: DialogType) => {
-              ElMessage.success("模拟菜单修改成功");
-              component.close();
-            });
-        })
-        .catch(console.log);
-    },
-    onAddItem() {
-      this.formItems.forEach((it: FormItem) => it.reset && it.reset());
-      (this.$refs.dialog as any)
-        .show({ showSubmitLoading: true })
-        .then((component: DialogType) => {
-          ElMessageBox.confirm(
-            "角色模拟添加成功，参数为：" +
-              JSON.stringify(
-                (this.$refs.baseForm as BaseForm).generatorParams(),
-              ),
-          );
-          component.close();
-        });
-    },
-    onUpdateItem(item: RoleModel) {
-      this.formItems.forEach((it: FormItem) => {
-        const typeName = it.name;
-        if (typeName) {
-          const typeValue = item[typeName];
-          if (typeValue) {
-            it.value = item[typeName];
-          }
-        }
-      });
-      (this.$refs.dialog as any)
-        .show({ showSubmitLoading: true })
-        .then((component: DialogType) => {
-          ElMessageBox.confirm(
-            "角色模拟修改成功，参数为：" +
-              JSON.stringify(
-                (this.$refs.baseForm as BaseForm).generatorParams(),
-              ),
-          );
-          component.close();
-        });
-    },
-    onDeleteItem(item: RoleModel) {
-      ElMessageBox.confirm("是否要删除此信息，删除后不可恢复？", "提示").then(
-        () => {
-          ElMessageBox.confirm(
-            "角色模拟删除成功，参数为：" +
-              JSON.stringify({
-                id: item.id,
-              }),
-          );
-        },
-      );
-    },
-    handleRoleMenusSelected(menus: Array<any>) {
-      menus.forEach((it: any) => {
-        if (it.isSelect) {
-          this.defaultCheckedKeys.push(it.menuUrl);
-        }
-        if (it.children) {
-          this.defaultExpandedKeys.push(it.menuUrl);
-          this.handleRoleMenusSelected(it.children);
-        }
-      });
-    },
-  },
+const roleModel = reactive({
+  id: 0,
+  name: "",
+  roleCode: "",
+  description: "",
+  createTime: "",
 });
+const menuData = [] as Array<any>;
+const defaultProps = {
+  children: "children",
+  label: "menuName",
+};
+const defaultCheckedKeys = shallowReactive([]) as Array<any>;
+const defaultExpandedKeys = shallowReactive([]) as Array<any>;
+const formItems = [
+  {
+    label: "角色名称",
+    type: "input",
+    name: "name",
+    value: "",
+    maxLength: 50,
+    inputType: "text",
+    placeholder: "请输入角色名称",
+    validator: (item: any) => {
+      if (!item.value) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+    reset() {
+      this.value = "";
+    },
+  },
+  {
+    label: "角色编号",
+    type: "input",
+    name: "roleCode",
+    value: "",
+    maxLength: 20,
+    inputType: "text",
+    placeholder: "请输入角色编号",
+    validator: (item: any) => {
+      if (!item.value) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+    reset() {
+      this.value = "";
+    },
+  },
+  {
+    label: "角色描述",
+    type: "input",
+    name: "description",
+    value: "",
+    maxLength: 50,
+    inputType: "text",
+    placeholder: "请输入角色描述",
+    validator: (item: any) => {
+      if (!item.value) {
+        ElMessage.error(item.placeholder);
+        return false;
+      }
+      return true;
+    },
+    reset() {
+      this.value = "";
+    },
+  },
+];
+const menuDialogRef = ref<DialogType>();
+const dialogRef = ref<DialogType>();
+const baseFormRef = ref<BaseForm>();
+const post = usePost();
+const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();
+function doRefresh() {
+  post({
+    url: getRoleList,
+    data: {},
+  })
+    .then(handleSuccess)
+    .catch(console.log);
+}
+function showMenu(item: RoleModel) {
+  console.log(item);
+  post({
+    url: getAllMenuByRoleId,
+    data: {
+      roleId: item.id,
+    },
+  })
+    .then((res) => {
+      menuData.length = 0;
+      defaultCheckedKeys.length = 0;
+      defaultExpandedKeys.length = 0;
+      menuData.push(...res.data);
+      handleRoleMenusSelected(menuData);
+      menuDialogRef.value?.show().then((component: DialogType) => {
+        ElMessage.success("模拟菜单修改成功");
+        component.close();
+      });
+    })
+    .catch(console.log);
+}
+function onAddItem() {
+  formItems.forEach((it: FormItem) => it.reset && it.reset());
+  dialogRef.value
+    ?.show({ showSubmitLoading: true })
+    .then((component: DialogType) => {
+      ElMessageBox.confirm(
+        "角色模拟添加成功，参数为：" +
+          JSON.stringify(baseFormRef.value?.generatorParams())
+      );
+      component.close();
+    });
+}
+function onUpdateItem(item: RoleModel) {
+  formItems.forEach((it: FormItem) => {
+    const typeName = it.name;
+    if (typeName) {
+      const typeValue = item[typeName];
+      if (typeValue) {
+        it.value = item[typeName];
+      }
+    }
+  });
+  dialogRef.value
+    ?.show({ showSubmitLoading: true })
+    .then((component: DialogType) => {
+      ElMessageBox.confirm(
+        "角色模拟修改成功，参数为：" +
+          JSON.stringify(baseFormRef.value?.generatorParams())
+      );
+      component.close();
+    });
+}
+function onDeleteItem(item: RoleModel) {
+  ElMessageBox.confirm("是否要删除此信息，删除后不可恢复？", "提示").then(
+    () => {
+      ElMessageBox.confirm(
+        "角色模拟删除成功，参数为：" +
+          JSON.stringify({
+            id: item.id,
+          })
+      );
+    }
+  );
+}
+function handleRoleMenusSelected(menus: Array<any>) {
+  menus.forEach((it: any) => {
+    if (it.isSelect) {
+      defaultCheckedKeys.push(it.menuUrl);
+    }
+    if (it.children) {
+      defaultExpandedKeys.push(it.menuUrl);
+      handleRoleMenusSelected(it.children);
+    }
+  });
+}
+onMounted(doRefresh);
 </script>

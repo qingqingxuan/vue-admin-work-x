@@ -54,7 +54,11 @@
     color: $activeTextColor !important;
     z-index: 1;
   }
+  .el-menu-item.is-active .el-sub-menu__title{
+    color: var(--el-color-primary) !important;
+  }
   .el-sub-menu__title:hover {
+    color: var(--el-color-primary) !important;
     background-color: transparent !important;
   }
   .el-menu-item:hover {
@@ -150,7 +154,7 @@
   }
   .footer-container {
     background: $mainCardBgColor;
-    border-top: 1px dashed #848484;
+    border-top: 1px dashed #d9d9d9;
     color: $mainTextColor;
   }
   .el-card {

@@ -62,34 +62,32 @@
   </div>
 </template>
 
-<script>
-import TableMixin from '@/mixins/TableMixin'
-import { defineComponent } from '@vue/runtime-core'
-import XLSX from 'xlsx'
-export default defineComponent({
-  name: 'ExportExcel',
-  mixins: [TableMixin],
-  mounted() {
-    this.doRefresh()
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getTableList,
-        data: {
-          page: 1,
-          pageSize: 20
-        }
-      }).then(this.handleSuccess).catch(console.log)
+<script lang="ts" setup>
+import { getTableList } from "@/api/url";
+import { useDataTable, usePost } from "@/hooks";
+import { onMounted, ref } from "vue";
+import XLSX from "xlsx";
+const post = usePost();
+const { handleSuccess, dataList } = useDataTable();
+const tableBody = ref();
+function doRefresh() {
+  post({
+    url: getTableList,
+    data: {
+      page: 1,
+      pageSize: 20,
     },
-    exportExcel() {
-      const workSheet = XLSX.utils.table_to_sheet(this.$refs.table.$el)
-      const workBook = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(workBook, workSheet, '数据报表')
-      XLSX.writeFile(workBook, 'tale-list.xlsx')
-    }
-  }
-})
+  })
+    .then(handleSuccess)
+    .catch(console.log);
+}
+function exportExcel() {
+  const workSheet = XLSX.utils.table_to_sheet(tableBody.value.$el);
+  const workBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workBook, workSheet, "数据报表");
+  XLSX.writeFile(workBook, "tale-list.xlsx");
+}
+onMounted(doRefresh);
 </script>
 
 <style lang="scss" scoped>

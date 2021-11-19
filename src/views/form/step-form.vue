@@ -46,29 +46,32 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+<script lang="ts" setup>
+import { reactive, ref } from "vue";
 import AccountInfo from "./components/AccountInfo.vue";
 import PasswordInfo from "./components/PasswordInfo.vue";
 import ResultInfo from "./components/ResultInfo.vue";
-export default defineComponent({
-  name: "StepForm",
-  components: { AccountInfo, PasswordInfo, ResultInfo },
-  data() {
-    return {
-      activeStep: 1,
-      accountInfo: {},
-    };
-  },
-  methods: {
-    next(accountInfo: any) {
-      if (this.activeStep === 1) {
-        this.accountInfo = accountInfo;
-        this.activeStep += 1;
-      }
-    },
-  },
+
+const activeStep = ref(1);
+const accountInfo = reactive({
+  account: "",
+  otherAccount: "",
+  receiveName: "",
+  money: 0,
+  type: 0,
 });
+
+function next(temp: any) {
+  console.log(temp);
+  if (activeStep.value === 1) {
+    accountInfo.account = temp.account;
+    accountInfo.otherAccount = temp.otherAccount;
+    accountInfo.receiveName = temp.receiveName;
+    accountInfo.money = temp.money;
+    accountInfo.type = temp.type;
+    activeStep.value += 1;
+  }
+}
 </script>
 
 <style lang="scss" scoped>

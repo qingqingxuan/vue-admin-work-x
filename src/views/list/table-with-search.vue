@@ -100,78 +100,71 @@
         </el-table>
       </template>
     </TableBody>
-    <TableFooter ref="tableFooter" />
+    <TableFooter
+      ref="tableFooter"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import TableFooter from "@/components/table/TableFooter.vue";
-import TableMixin, { LikeSearchSetup } from "@/mixins/TableMixin";
-import { defineComponent, reactive, ref } from "@vue/runtime-core";
+<script lang="ts" setup>
+import { getTableList } from "@/api/url";
+import { useDataTable, useLikeSearch, usePost } from "@/hooks";
+import { onMounted, reactive, ref } from "vue";
 import { ElMessageBox } from "element-plus";
-export default defineComponent({
-  name: "TableWithSearch",
-  mixins: [TableMixin],
-  mounted() {
-    this.doRefresh();
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getTableList,
-        data: this.getPageInfo(),
-      })
-        .then(this.handleSuccess)
-        .catch(console.log);
-    },
-  },
-  setup() {
-    const tableFooter = ref<InstanceType<typeof TableFooter>>();
-    const likeSearchModule = LikeSearchSetup();
-    likeSearchModule.likeSearchModel.extraParams = () => ({
-      ...tableFooter.value?.withPageInfoData(),
-    });
-    likeSearchModule.likeSearchModel.conditionItems = reactive([
-      {
-        name: "name",
-        label: "用户姓名",
-        value: "",
-        type: "input",
-        placeholder: "请输入用户姓名",
-        span: 8,
-      },
-      {
-        name: "sex",
-        label: "用户姓别",
-        value: "",
-        type: "select",
-        placeholder: "请选择用户姓别",
-        selectOptions: [
-          {
-            label: "男",
-            value: 0,
-          },
-          {
-            label: "女",
-            value: 1,
-          },
-        ],
-        span: 8,
-      },
-    ]);
-    const doSearch = () => {
-      const params = likeSearchModule.getSearchParams();
-      ElMessageBox.alert(
-        `模拟模糊搜索成功，搜索参数为：${JSON.stringify(params)}`
-      );
-    };
-    return {
-      tableFooter,
-      ...likeSearchModule,
-      doSearch,
-    };
-  },
+import type { TableFooter } from "@/components/types";
+const tableFooter = ref<TableFooter>();
+const { likeSearchModel, getSearchParams, resetSearch } = useLikeSearch();
+const { handleSuccess, dataList, tableConfig, tableLoading } = useDataTable();
+const post = usePost();
+likeSearchModel.extraParams = () => ({
+  ...tableFooter.value?.withPageInfoData(),
 });
+likeSearchModel.conditionItems = reactive([
+  {
+    name: "name",
+    label: "用户姓名",
+    value: "",
+    type: "input",
+    placeholder: "请输入用户姓名",
+    span: 8,
+  },
+  {
+    name: "sex",
+    label: "用户姓别",
+    value: "",
+    type: "select",
+    placeholder: "请选择用户姓别",
+    selectOptions: [
+      {
+        label: "男",
+        value: 0,
+      },
+      {
+        label: "女",
+        value: 1,
+      },
+    ],
+    span: 8,
+  },
+]);
+const doSearch = () => {
+  const params = getSearchParams();
+  ElMessageBox.alert(`模拟模糊搜索成功，搜索参数为：${JSON.stringify(params)}`);
+};
+function doRefresh() {
+  post({
+    url: getTableList,
+    data: tableFooter.value?.withPageInfoData(),
+  })
+    .then(handleSuccess)
+    .then((res: any) => {
+      tableFooter.value?.setTotalSize(res.totalSize);
+    })
+    .catch(console.log);
+}
+onMounted(doRefresh);
 </script>
 
 <style lang="scss" scoped>

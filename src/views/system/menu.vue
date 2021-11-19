@@ -5,7 +5,7 @@
         <el-button
           type="primary"
           size="mini"
-          icon="el-icon-plus"
+          :icon="Plus"
           @click="onAddItem"
         >添加
         </el-button>
@@ -29,7 +29,7 @@
             align="center"
             label="序号"
             fixed="left"
-            width="100"
+            width="150"
           >
             <template v-slot="scope">
               {{ scope.$index + 1 }}
@@ -104,7 +104,7 @@
         </el-table>
       </template>
     </TableBody>
-    <Dialog ref="dialog">
+    <Dialog ref="dialogRef">
       <template #content>
         <el-form
           ref="baseForm"
@@ -221,142 +221,123 @@
   </div>
 </template>
 
-<script lang="ts">
-import { DialogType } from "@/components/types";
-import TableMixin from "@/mixins/TableMixin";
+<script lang="ts" setup>
+import type { DialogType } from "@/components/types";
 import { uuid } from "@/utils";
-import { defineComponent, ref, shallowReactive } from "@vue/runtime-core";
+import { onMounted, reactive, ref, shallowReactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import Icons from "@/icons/iconfont/iconfont.json";
-export default defineComponent({
-  name: "Menu",
-  mixins: [TableMixin],
-  data() {
-    return {
-      menuModel: {
-        id: uuid(),
-        parentPath: "",
-        path: "",
-        name: "",
-        redirect: "",
-        badge: "",
-        badgeNum: 1,
-        cacheable: false,
-        hidden: false,
-        icon: "",
-        affix: false,
-      } as MenuModel,
-      formRules: {
-        name: [{ required: true, message: "请输入菜单名称", trigger: "blur" }],
-        path: [{ required: true, message: "请输入菜单地址", trigger: "blur" }],
-      },
-    };
-  },
-  mounted() {
-    this.doRefresh();
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getMenuList,
-        data: {},
-      })
-        .then(this.handleSuccess)
-        .catch(console.log);
-    },
-    onAddItem() {
-      this.menuModel = {
-        id: uuid(),
-        parentPath: "",
-        path: "",
-        name: "",
-        redirect: "",
-        badge: "",
-        badgeNum: 1,
-        cacheable: false,
-        hidden: false,
-        icon: "",
-        affix: false,
-      } as MenuModel;
-      (this.$refs.dialog as DialogType)
-        .show({
-          showSubmitLoading: true,
-          validator: () => {
-            if (!this.menuModel.name) {
-              ElMessage.error("请输入菜单名称");
-              return false;
-            }
-            if (!this.menuModel.path) {
-              ElMessage.error("请输入菜单地址");
-              return false;
-            }
-            return true;
-          },
-        })
-        .then((component: DialogType) => {
-          ElMessageBox.confirm(
-            "模拟数据添加成功，参数为：\n" + JSON.stringify(this.menuModel)
-          );
-          component.close();
-        });
-    },
-    onUpdateItem(item: any) {
-      this.menuModel.id = uuid();
-      this.menuModel.parentPath = item.parentPath;
-      this.menuModel.path = item.menuUrl;
-      this.menuModel.name = item.menuName;
-      this.menuModel.badge = parseInt(item.tip) ? "number" : item.tip;
-      this.menuModel.badgeNum = parseInt(item.tip);
-      this.menuModel.icon = item.icon || "";
-      (this.$refs.dialog as DialogType)
-        .show({
-          showSubmitLoading: true,
-          validator: () => {
-            if (!this.menuModel.name) {
-              ElMessage.error("请输入菜单名称");
-              return false;
-            }
-            if (!this.menuModel.path) {
-              ElMessage.error("请输入菜单地址");
-              return false;
-            }
-            return true;
-          },
-        })
-        .then((component: DialogType) => {
-          ElMessageBox.confirm(
-            "模拟数据修改成功，参数为：" + JSON.stringify(this.menuModel)
-          );
-          component.close();
-        });
-    },
-    onDeleteItem(item: any) {
-      ElMessageBox.confirm("是否要删除此数据？").then(() => {
-        ElMessageBox.confirm("模拟删除成功，参数为：" + JSON.stringify(item));
-      });
-    },
-    selectIcon(item: any) {
-      this.menuModel.icon = item.font_class;
-    },
-  },
-  setup() {
-    const count = ref(100);
-    const icons = shallowReactive(Icons.glyphs.slice(0, count.value));
-    const disableLoad = ref(false);
-    const loadIcon = () => {
-      setTimeout(() => {
-        const tempIcons = Icons.glyphs.slice(count.value, (count.value += 100));
-        icons.push(...tempIcons);
-        disableLoad.value = icons.length === Icons.glyphs.length;
-      }, 500);
-    };
-    return {
-      icons,
-      loadIcon,
-      disableLoad,
-    };
-  },
+import { usePost, useDataTable } from "@/hooks";
+import { getMenuList } from "@/api/url";
+import { Plus } from "@element-plus/icons";
+
+const menuModel = reactive<MenuModel>({
+  id: uuid(),
+  parentPath: "",
+  path: "",
+  name: "",
+  redirect: "",
+  badge: "",
+  badgeNum: 1,
+  cacheable: false,
+  hidden: false,
+  icon: "",
+  affix: false,
 });
+const { tableLoading, tableConfig, dataList, handleSuccess } = useDataTable();
+const count = ref(100);
+const icons = shallowReactive(Icons.glyphs.slice(0, count.value));
+const disableLoad = ref(false);
+const dialogRef = ref<DialogType>();
+const loadIcon = () => {
+  setTimeout(() => {
+    const tempIcons = Icons.glyphs.slice(count.value, (count.value += 100));
+    icons.push(...tempIcons);
+    disableLoad.value = icons.length === Icons.glyphs.length;
+  }, 500);
+};
+const post = usePost();
+function doRefresh() {
+  post({
+    url: getMenuList,
+    data: {},
+  })
+    .then(handleSuccess)
+    .catch(console.log);
+}
+function onAddItem() {
+  menuModel.id = uuid();
+  menuModel.parentPath = "";
+  menuModel.path = "";
+  menuModel.name = "";
+  menuModel.redirect = "";
+  menuModel.badge = "";
+  menuModel.badgeNum = 1;
+  menuModel.cacheable = false;
+  menuModel.hidden = false;
+  menuModel.icon = "";
+  menuModel.affix = false;
+  dialogRef.value
+    ?.show({
+      showSubmitLoading: true,
+      validator: () => {
+        if (!menuModel.name) {
+          ElMessage.error("请输入菜单名称");
+          return false;
+        }
+        if (!menuModel.path) {
+          ElMessage.error("请输入菜单地址");
+          return false;
+        }
+        return true;
+      },
+    })
+    .then((component: DialogType) => {
+      ElMessageBox.confirm(
+        "模拟数据添加成功，参数为：\n" + JSON.stringify(menuModel)
+      );
+      component.close();
+    });
+}
+function onUpdateItem(item: any) {
+  menuModel.id = uuid();
+  menuModel.parentPath = item.parentPath;
+  menuModel.path = item.menuUrl;
+  menuModel.name = item.menuName;
+  menuModel.badge = parseInt(item.tip) ? "number" : item.tip;
+  menuModel.badgeNum = parseInt(item.tip);
+  menuModel.icon = item.icon || "";
+  dialogRef.value
+    ?.show({
+      showSubmitLoading: true,
+      validator: () => {
+        if (!menuModel.name) {
+          ElMessage.error("请输入菜单名称");
+          return false;
+        }
+        if (!menuModel.path) {
+          ElMessage.error("请输入菜单地址");
+          return false;
+        }
+        return true;
+      },
+    })
+    .then((component: DialogType) => {
+      ElMessageBox.confirm(
+        "模拟数据修改成功，参数为：" + JSON.stringify(menuModel)
+      );
+      component.close();
+    });
+}
+function onDeleteItem(item: any) {
+  ElMessageBox.confirm("是否要删除此数据？").then(() => {
+    ElMessageBox.confirm("模拟删除成功，参数为：" + JSON.stringify(item));
+  });
+}
+function selectIcon(item: any) {
+  menuModel.icon = item.font_class;
+}
+onMounted(doRefresh);
 </script>
 <style lang="scss" scoped>
 .icon-wrapper {

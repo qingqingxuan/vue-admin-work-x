@@ -29,7 +29,7 @@
     "screenfull": "^5.1.0",
     "simplemde": "^1.11.2",
     "tiny-emitter": "^2.1.0",
-    "vue": "^3.2.0",
+    "vue": "^3.2.22",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
     "vuedraggable": "^4.0.3",

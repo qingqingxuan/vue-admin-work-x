@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "@vue/runtime-core";
-import useCreateScript from "@/mixins/useCreateScript";
+import { useCreateScript } from "@/hooks";
 
 const SCRIPT_URL =
   "http://api.map.baidu.com/getscript?v=3.0&ak=WxbQmaOc3bvSGSaKWcyeFSf8fnYCWpKd&services=&t=" +

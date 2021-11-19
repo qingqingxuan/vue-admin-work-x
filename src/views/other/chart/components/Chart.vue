@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import useEcharts from "@/mixins/useEcharts";
+import useEcharts from "@/hooks/Echarts";
 import { defineComponent, onMounted, ref, toRef } from "@vue/runtime-core";
 import { EChartsCoreOption } from "echarts";
 

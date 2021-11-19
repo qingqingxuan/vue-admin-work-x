@@ -5,7 +5,7 @@
         <el-button
           type="danger"
           size="mini"
-          icon="el-icon-delete"
+          :icon="Delete"
           @click="onDeleteItems"
         >删除
         </el-button>
@@ -118,53 +118,56 @@
         </el-table>
       </template>
     </TableBody>
-    <TableFooter ref="tableFooter" />
+    <TableFooter
+      ref="tableFooter"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
+<script lang="ts" setup>
+import { useDataTable, usePost } from "@/hooks";
+import { onMounted, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-export default defineComponent({
-  name: "Table",
-  mixins: [TableMixin],
-  mounted() {
-    this.doRefresh();
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getTableList,
-        data: () => {
-          return {
-            ...this.getPageInfo(),
-          };
-        },
-      })
-        .then((res) => {
-          this.handleSuccess(res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    onDeleteItems() {
-      ElMessageBox.confirm("确定要删除这些数据吗？", "提示")
-        .then(() => {
-          ElMessage.success("数据模拟删除成功");
-        })
-        .catch(console.log);
-    },
-    onDeleteItem(item: any) {
-      ElMessageBox.confirm("确定要删除此数据吗？", "提示")
-        .then(() => {
-          this.dataList.splice(this.dataList.indexOf(item), 1);
-        })
-        .catch(console.log);
-    },
-  },
-});
+import { getTableList } from "@/api/url";
+import type { TableFooter } from "@/components/types";
+import { Delete } from "@element-plus/icons";
+
+const post = usePost();
+const { dataList, tableLoading, tableConfig, handleSuccess } = useDataTable();
+const tableFooter = ref<TableFooter>();
+onMounted(doRefresh);
+
+function doRefresh() {
+  post({
+    url: getTableList,
+    data: tableFooter.value?.withPageInfoData(),
+  })
+    .then((res) => {
+      return handleSuccess(res);
+    })
+    .then((res: any) => {
+      tableFooter.value?.setTotalSize(res.totalSize);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+function onDeleteItems() {
+  ElMessageBox.confirm("确定要删除这些数据吗？", "提示")
+    .then(() => {
+      ElMessage.success("数据模拟删除成功");
+    })
+    .catch(console.log);
+}
+function onDeleteItem(item: any) {
+  ElMessageBox.confirm("确定要删除此数据吗？", "提示")
+    .then(() => {
+      dataList.splice(dataList.indexOf(item), 1);
+    })
+    .catch(console.log);
+}
 </script>
 
 <style lang="scss" scoped>

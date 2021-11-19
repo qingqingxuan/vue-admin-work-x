@@ -46,10 +46,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "ResultInfo",
   props: {
     accountInfo: {
       type: Object,
@@ -58,10 +57,14 @@ export default defineComponent({
       },
     },
   },
-  methods: {
-    preStep() {
-      this.$emit("pre-step");
-    },
+  emits: ["pre-step"],
+  setup(props, { emit }) {
+    function preStep() {
+      emit("pre-step");
+    }
+    return {
+      preStep,
+    };
   },
 });
 </script>

@@ -130,15 +130,14 @@
 </template>
 
 <script lang="ts">
-import FormMixin from "@/mixins/FormMixin";
-import { defineComponent } from "@vue/runtime-core";
+import { useForm } from "@/hooks";
+import { defineComponent, onMounted, PropType } from "vue";
 export default defineComponent({
   name: "BaseForm",
-  mixins: [FormMixin],
   props: {
     config: {
       type: Object,
-      default: function () {
+      default: () => {
         return {
           size: "small",
           labelWidth: "80",
@@ -147,22 +146,31 @@ export default defineComponent({
       },
     },
     formItems: {
-      type: Array,
-      default: function () {
+      type: Array as PropType<Array<FormItem>>,
+      default: () => {
         return [];
       },
     },
   },
-  // watch: {
-  //   formItems: {
-  //     handler() {
-  //       this.refreshItems();
-  //     },
-  //     deep: true,
-  //   },
-  // },
-  mounted() {
-    this.refreshItems();
+  setup(props, { expose }) {
+    const {
+      innerFormItems,
+      refreshItems,
+      checkParams,
+      resetParams,
+      generatorParams,
+    } = useForm();
+    onMounted(() => {
+      refreshItems(props.formItems);
+    });
+    expose({
+      checkParams,
+      resetParams,
+      generatorParams,
+    });
+    return {
+      innerFormItems,
+    };
   },
 });
 </script>

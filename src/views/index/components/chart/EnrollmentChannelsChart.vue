@@ -48,14 +48,14 @@
 </template>
 
 <script lang="ts">
-import useEcharts from "@/mixins/useEcharts";
+import { useEcharts } from "@/hooks";
 import {
   defineComponent,
   nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
-} from "@vue/runtime-core";
+} from "vue";
 import { dispose } from "echarts";
 export default defineComponent({
   name: "EnrollmentChannelsChart",

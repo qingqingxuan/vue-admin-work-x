@@ -120,13 +120,6 @@ export default {
           themeId: 'light'
         },
         {
-          leftBg: '#047fff',
-          rightTopBg: '#ffffff',
-          rightBottomBg: '#f5f5f5',
-          checked: false,
-          themeId: 'blue-side'
-        },
-        {
           leftBg: '#000000',
           rightTopBg: '#333333',
           rightBottomBg: '#555555',

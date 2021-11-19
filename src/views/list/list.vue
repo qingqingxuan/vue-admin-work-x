@@ -65,35 +65,36 @@
         </el-col>
       </el-row>
     </el-card>
-    <TableFooter ref="tableFooter" />
+    <TableFooter
+      ref="tableFooter"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import TableMixin from "@/mixins/TableMixin";
-import { defineComponent } from "@vue/runtime-core";
+<script lang="ts" setup>
+import { getCommentList } from "@/api/url";
+import type { TableFooter } from "@/components/types";
+import { useDataTable, usePost } from "@/hooks";
+import { onMounted, ref } from "vue";
 
-export default defineComponent({
-  name: "List",
-  mixins: [TableMixin],
-  mounted() {
-    this.doRefresh();
-  },
-  methods: {
-    doRefresh() {
-      this.$post({
-        url: this.$urlPath.getCommentList,
-        data: () => {
-          return {
-            ...this.getPageInfo(),
-          };
-        },
-      })
-        .then(this.handleSuccess)
-        .catch(console.log);
-    },
-  },
-});
+const post = usePost();
+const { handleSuccess, dataList } = useDataTable();
+const tableFooter = ref<TableFooter>();
+
+function doRefresh() {
+  post({
+    url: getCommentList,
+    data: tableFooter.value?.withPageInfoData(),
+  })
+    .then(handleSuccess)
+    .then((res: any) => {
+      tableFooter.value?.setTotalSize(res.totalSize);
+    })
+    .catch(console.log);
+}
+onMounted(doRefresh);
 </script>
 
 <style lang="scss" scoped>

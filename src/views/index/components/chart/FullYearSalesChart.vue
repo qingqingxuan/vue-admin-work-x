@@ -47,14 +47,14 @@
   </el-skeleton>
 </template>
 <script lang="ts">
-import useEcharts from "@/mixins/useEcharts";
+import { useEcharts } from "@/hooks";
 import {
   defineComponent,
   nextTick,
   onBeforeUnmount,
   onMounted,
   ref,
-} from "@vue/runtime-core";
+} from "vue";
 import { dispose, graphic } from "echarts";
 import { random } from "lodash";
 function getData() {
@@ -200,7 +200,7 @@ export default defineComponent({
             option
           );
         }, 5000);
-      }, 3000);
+      }, 1000);
     };
     const updateChart = () => {
       useEcharts(fullYearSalesChart.value as HTMLDivElement).resize();
