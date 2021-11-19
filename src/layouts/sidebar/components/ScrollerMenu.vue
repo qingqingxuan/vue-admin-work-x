@@ -15,9 +15,10 @@
   </el-scrollbar>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import store from '../../store'
-export default {
+export default defineComponent({
   name: 'ScrollerMenu',
   props: {
     routes: {
@@ -32,12 +33,12 @@ export default {
       default: null
     }
   },
-  data() {
+  setup() {
     return {
       state: store.state
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

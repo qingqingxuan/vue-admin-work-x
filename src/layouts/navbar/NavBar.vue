@@ -13,20 +13,21 @@
   </div>
 </template>
 
-<script>
+<script lang='ts'>
+import { defineComponent } from 'vue'
 import store from '../store'
-export default {
+export default defineComponent({
   name: 'NavBar',
-  data() {
+  setup() {
     return {
       state: store.state
     }
   }
-}
+})
 </script>
 
 <style scoped lang="scss">
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .vaw-nav-bar-wrapper {
   height: $logoHeight;
   max-height: $logoHeight;

@@ -14,10 +14,12 @@
   </el-menu-item>
 </template>
 
-<script>
+<script lang="ts">
 import { isExternal } from '../../utils'
 import path from 'path'
-export default {
+import { defineComponent } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+export default defineComponent({
   name: 'MenuItem',
   props: {
     fullPath: {
@@ -37,29 +39,35 @@ export default {
       }
     }
   },
-  methods: {
-    generatorPath() {
-      if (isExternal(this.fullPath)) {
-        return this.fullPath
+  setup(props) {
+    const router = useRouter()
+    const route = useRoute()
+    function generatorPath() {
+      if (isExternal(props.fullPath)) {
+        return props.fullPath
       }
-      if (isExternal(this.showRoute.path)) {
-        return this.showRoute.path
+      if (isExternal(props.showRoute.path)) {
+        return props.showRoute.path
       }
-      return path.resolve(this.fullPath, this.showRoute.path)
-    },
-    handleClick() {
-      if (isExternal(this.showRoute.path)) {
-        window.open(this.showRoute.path)
-      } else if (isExternal(this.fullPath)) {
-        window.open(this.fullPath)
+      return path.resolve(props.fullPath, props.showRoute.path)
+    }
+    function handleClick() {
+      if (isExternal(props.showRoute.path)) {
+        window.open(props.showRoute.path)
+      } else if (isExternal(props.fullPath)) {
+        window.open(props.fullPath)
       } else if (
-        this.$route.path !== path.resolve(this.fullPath, this.showRoute.path)
+        route.path !== path.resolve(props.fullPath, props.showRoute.path)
       ) {
-        this.$router.push({
-          path: path.resolve(this.fullPath, this.showRoute.path)
+        router.push({
+          path: path.resolve(props.fullPath, props.showRoute.path)
         })
       }
     }
+    return {
+      generatorPath,
+      handleClick
+    }
   }
-}
+})
 </script>

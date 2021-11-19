@@ -12,12 +12,12 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item
-            icon="el-icon-user"
-            @click="personalCenter"
+            :icon="UserIcon"
+            @click="onPersonalCenter"
           >个人中心</el-dropdown-item>
           <el-dropdown-item
-            icon="el-icon-switch-button"
-            @click="logout"
+            :icon="SwitchButton"
+            @click="onLogout"
           >退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -25,21 +25,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import store from '../store'
+import { defineComponent } from 'vue'
 import { ElMessageBox } from 'element-plus'
-export default {
+import { User as UserIcon, SwitchButton } from '@element-plus/icons'
+export default defineComponent({
   name: 'VAWAvatar',
-  data() {
-    return {
-      state: store.state
-    }
-  },
-  methods: {
-    personalCenter() {
+  setup() {
+    const state = store.state
+    function onPersonalCenter() {
       store.onPersonalCenter && store.onPersonalCenter()
-    },
-    logout() {
+    }
+    function onLogout() {
       ElMessageBox({
         title: '提示',
         message: '是否要退出登录？',
@@ -47,18 +45,27 @@ export default {
         confirmButtonText: '退出',
         cancelButtonText: '取消',
         showCancelButton: true
-      }).then(() => {
-        store.onLogout && store.onLogout()
-      }).catch(() => {
-        store.cancelLogout && store.cancelLogout()
       })
+        .then(() => {
+          store.onLogout && store.onLogout()
+        })
+        .catch(() => {
+          store.cancelLogout && store.cancelLogout()
+        })
+    }
+    return {
+      state,
+      onPersonalCenter,
+      onLogout,
+      UserIcon,
+      SwitchButton
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .vaw-avatar-container {
   .action-wrapper {
     display: flex;

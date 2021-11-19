@@ -11,11 +11,12 @@
   </el-sub-menu>
 </template>
 
-<script>
+<script lang="ts">
 import { isExternal } from '../../utils'
 import path from 'path'
 import store from '../../store'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'SubMenuItem',
   props: {
     fullPath: {
@@ -29,21 +30,20 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      state: store.state
-    }
-  },
-  methods: {
-    generatorPath(childPath) {
-      if (isExternal(this.fullPath)) {
-        return this.fullPath
+  setup(props) {
+    function generatorPath(childPath: string) {
+      if (isExternal(props.fullPath)) {
+        return props.fullPath
       }
       if (isExternal(childPath)) {
         return childPath
       }
-      return path.resolve(this.fullPath, this.item.path)
+      return path.resolve(props.fullPath, props.item.path)
+    }
+    return {
+      state: store.state,
+      generatorPath
     }
   }
-}
+})
 </script>

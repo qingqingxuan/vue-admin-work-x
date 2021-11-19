@@ -17,9 +17,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import store from '../store'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'Logo',
   props: {
     showTitle: {
@@ -35,15 +36,15 @@ export default {
       default: false
     }
   },
-  data() {
+  setup() {
     return {
       state: store.state
     }
   }
-}
+})
 </script>
 <style lang="scss" scoped>
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .logo-wrapper {
   height: $logoHeight;
   display: flex;

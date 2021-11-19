@@ -6,13 +6,12 @@
       @click="onShowSearch"
     >
       <el-icon :size="16">
-        <search />
+        <Search />
       </el-icon>
     </span>
     <el-popover
       v-if="state.actionItem.showMessage"
       trigger="click"
-      @after-enter="onPopoverAfterEnter"
     >
       <template #reference>
         <el-badge
@@ -56,74 +55,96 @@
       </el-icon>
     </span>
     <div
-      v-if="state.actionItem.showFullScreen && state.device !== 'mobile'"
+      v-if="state.actionItem.showSearch && state.device !== 'mobile'"
       class="input-wrapper"
       :class="{'is-active': showSearchContent}"
     >
       <el-input
-        ref="searchContent"
+        ref="searchContentRef"
         v-model="searchContent"
         placeholder="请输入内容"
         clearable
         @change="onChange"
       />
     </div>
-    <Setting ref="appSetting" />
+    <Setting ref="appSettingRef" />
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import screenfull from 'screenfull'
 import store from '../store'
-import { Search, Bell, Refresh, FullScreen, Setting as SettingIcon } from '@element-plus/icons'
-export default {
+import { defineComponent, ref } from 'vue'
+import {
+  Search,
+  Bell,
+  Refresh,
+  FullScreen,
+  Setting as SettingIcon
+} from '@element-plus/icons'
+import { useRouter, useRoute } from 'vue-router'
+import { ElMessage } from 'element-plus'
+
+export default defineComponent({
   name: 'ActionItems',
-  components: { Search, Bell, Refresh, FullScreen, SettingIcon },
-  data() {
-    return {
-      showSearchContent: false,
-      searchContent: '',
-      nums: 3,
-      state: store.state
-    }
+  components: {
+    Search,
+    Bell,
+    Refresh,
+    FullScreen,
+    SettingIcon
   },
-  methods: {
-    onShowSearch() {
-      this.showSearchContent = !this.showSearchContent
-      this.searchContent = ''
-      if (this.showSearchContent) {
-        this.$refs.searchContent.focus()
+  setup() {
+    const searchContentRef = ref()
+    const appSettingRef = ref()
+    const showSearchContent = ref(false)
+    const searchContent = ref('')
+    const state = store.state
+    const router = useRouter()
+    const route = useRoute()
+
+    function onShowSearch() {
+      showSearchContent.value = !showSearchContent.value
+      searchContent.value = ''
+      if (showSearchContent.value) {
+        searchContentRef.value?.focus()
       } else {
-        this.$refs.searchContent.blur()
+        searchContentRef.value?.blur()
       }
-    },
-    onChange(content) {
+    }
+    function onChange(content: string) {
       if (!content) {
         return
       }
       window.open('https://www.baidu.com/s?wd=' + content)
-    },
-    onScreenFull() {
+    }
+    function onScreenFull() {
       if (!screenfull.isEnabled) {
-        this.$errorMsg('当前浏览器不支持全屏操作')
+        ElMessage.error('当前浏览器不支持全屏操作')
         return false
       }
       screenfull.toggle()
-    },
-    onRefrehRoute() {
-      this.$router.replace({ path: '/redirect' + this.$route.path })
-    },
-    onPopoverAfterEnter() {
-      this.$refs.messageContent.update()
-    },
-    clearNum(num) {
-      this.nums = Math.max(0, this.nums - num)
-    },
-    onShowSetting() {
-      this.$refs.appSetting.openDrawer()
+    }
+    function onRefrehRoute() {
+      router.replace({ path: '/redirect' + route.path })
+    }
+    function onShowSetting() {
+      appSettingRef.value.openDrawer()
+    }
+    return {
+      searchContentRef,
+      appSettingRef,
+      showSearchContent,
+      searchContent,
+      state,
+      onShowSearch,
+      onShowSetting,
+      onRefrehRoute,
+      onScreenFull,
+      onChange
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -20,9 +20,10 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import store from '../store'
-export default {
+import { defineComponent, computed } from 'vue'
+export default defineComponent({
   name: 'SideBar',
   props: {
     showLogo: {
@@ -30,21 +31,21 @@ export default {
       default: true
     }
   },
-  data() {
+  setup() {
+    const state = store.state
+    const routes = computed(() => {
+      return state.permissionRoutes.filter((it) => !!it.name)
+    })
     return {
-      state: store.state
-    }
-  },
-  computed: {
-    routes() {
-      return this.state.permissionRoutes.filter(it => !!it.name)
+      state,
+      routes
     }
   }
-}
+})
 </script>
 
 <style scoped lang="scss">
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .open-status {
   width: $menuWidth;
   box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.12);
@@ -86,7 +87,7 @@ export default {
 }
 </style>
 <style lang="scss">
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .scrollbar-wrap-class {
   overflow-x: hidden !important;
 }

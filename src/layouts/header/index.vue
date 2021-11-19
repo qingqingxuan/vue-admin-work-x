@@ -16,20 +16,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import store from '../store'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'VAWHeader',
-  data() {
+  setup() {
     return {
       state: store.state
     }
   }
-}
+})
 </script>
 
 <style scoped lang="scss">
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .vaw-header-layout {
   height: $logoHeight;
   position: fixed;

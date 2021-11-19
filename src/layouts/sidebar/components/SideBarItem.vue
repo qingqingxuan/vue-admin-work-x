@@ -17,12 +17,13 @@
   </component>
 </template>
 
-<script>
+<script lang="ts">
 import path from 'path'
-import MenuItem from './MenuItem'
-import SubMenuItem from './SubMenuItem'
+import MenuItem from './MenuItem.vue'
+import SubMenuItem from './SubMenuItem.vue'
 import { isExternal } from '../../utils'
-export default {
+import { defineComponent, computed, reactive, ref } from 'vue'
+export default defineComponent({
   name: 'SideBarItem',
   components: { MenuItem, SubMenuItem },
   props: {
@@ -37,51 +38,53 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      showRoute: {}
-    }
-  },
-  computed: {
-    sideBarComponent() {
-      if (this.isSubMenu()) {
-        return 'SubMenuItem'
-      }
-      return 'MenuItem'
-    }
-  },
-  methods: {
-    isSubMenu() {
-      const showRoutes = this.item.children ? this.item.children.filter((it) => {
-        if (it.hidden) {
-          return false
-        } else {
-          this.showRoute = it
-          return true
-        }
-      }) : []
-      if (showRoutes.length === 1) {
+  setup(props) {
+    const showRoute = ref({})
+    function isSubMenu() {
+      const tempShowRoutes = props.item.children
+        ? props.item.children.filter((it: any) => {
+            if (it.hidden) {
+              return false
+            } else {
+              showRoute.value = it
+              return true
+            }
+          })
+        : []
+      if (tempShowRoutes.length === 1) {
         return false
       }
-      if (showRoutes.length === 0) {
-        this.showRoute = {
-          ...this.item,
+      if (tempShowRoutes.length === 0) {
+        showRoute.value = {
+          ...props.item,
           path: '',
           noChildren: true
         }
         return false
       }
       return true
-    },
-    generatorPath(childPath) {
+    }
+    function generatorPath(childPath: string) {
       if (isExternal(childPath)) {
         return childPath
       }
-      if (isExternal(this.fullPath)) {
+      if (isExternal(props.fullPath)) {
         return childPath
       }
-      return path.resolve(this.fullPath, childPath)
+      return path.resolve(props.fullPath, childPath)
+    }
+    const sideBarComponent = computed(() => {
+      if (isSubMenu()) {
+        return 'SubMenuItem'
+      }
+      return 'MenuItem'
+    })
+    return {
+      showRoute,
+      generatorPath,
+      isSubMenu,
+      sideBarComponent
     }
   }
-}
+})
 </script>

@@ -1,3 +1,4 @@
+
 <template>
   <div class="footer-container">
     Copyright <i
@@ -7,14 +8,15 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'Footer'
-}
+})
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .footer-container {
   height: $footerHeight;
   display: flex;

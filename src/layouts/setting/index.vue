@@ -86,11 +86,12 @@
   </el-drawer>
 </template>
 
-<script>
-import StyleExample from './components/StyleExample'
+<script lang="ts">
+import StyleExample from './components/StyleExample.vue'
 import { toggleThemeClass, toggleThemeColorClass } from '../utils'
 import store from '../store'
-export default {
+import { defineComponent, onMounted, ref } from 'vue'
+export default defineComponent({
   name: 'Setting',
   components: {
     StyleExample
@@ -101,127 +102,130 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      opened: this.show,
-      styleExampleList: [
-        {
-          leftBg: '#000000',
-          rightTopBg: '#ffffff',
-          rightBottomBg: '#f5f5f5',
-          checked: false,
-          themeId: 'dark-side'
-        },
-        {
-          leftBg: '#ffffff',
-          rightTopBg: '#ffffff',
-          rightBottomBg: '#d4d4d4',
-          checked: false,
-          themeId: 'light'
-        },
-        {
-          leftBg: '#000000',
-          rightTopBg: '#333333',
-          rightBottomBg: '#555555',
-          checked: false,
-          themeId: 'dark'
-        }
-      ],
-      layoutExampleList: [
-        {
-          leftBg: '#000000',
-          rightTopBg: '#d4d4d4',
-          rightBottomBg: '#d4d4d4',
-          checked: true,
-          layoutId: 'ltr',
-          tipText: '左右'
-        },
-        {
-          leftBg: '#d4d4d4',
-          rightTopBg: '#ffffff',
-          rightBottomBg: '#d4d4d4',
-          checked: false,
-          layoutId: 'ttb',
-          class: 'extra-class',
-          tipText: '上下'
-        },
-        {
-          leftBg: '#000000',
-          rightTopBg: '#d4d4d4',
-          rightBottomBg: '#d4d4d4',
-          checked: false,
-          layoutId: 'lcr',
-          class: 'extra-class-1',
-          tipText: '分栏'
-        }
-      ],
-      primartyColorList: [
-        {
-          name: 'blue',
-          value: '#409eff',
-          checked: true
-        },
-        {
-          name: 'cyan',
-          value: '#13C2C2',
-          checked: false
-        },
-        {
-          name: 'red',
-          value: '#F5222D',
-          checked: false
-        },
-        {
-          name: 'purple',
-          value: '#722ED1',
-          checked: false
-        }
-      ],
-      state: store.state
+  setup(props, { expose }) {
+    const opened = ref(props.show)
+    const styleExampleList = [
+      {
+        leftBg: '#000000',
+        rightTopBg: '#ffffff',
+        rightBottomBg: '#f5f5f5',
+        checked: false,
+        themeId: 'dark-side'
+      },
+      {
+        leftBg: '#ffffff',
+        rightTopBg: '#ffffff',
+        rightBottomBg: '#d4d4d4',
+        checked: false,
+        themeId: 'light'
+      },
+      {
+        leftBg: '#000000',
+        rightTopBg: '#333333',
+        rightBottomBg: '#555555',
+        checked: false,
+        themeId: 'dark'
+      }
+    ]
+    const layoutExampleList = [
+      {
+        leftBg: '#000000',
+        rightTopBg: '#d4d4d4',
+        rightBottomBg: '#d4d4d4',
+        checked: true,
+        layoutId: 'ltr',
+        tipText: '左右'
+      },
+      {
+        leftBg: '#d4d4d4',
+        rightTopBg: '#ffffff',
+        rightBottomBg: '#d4d4d4',
+        checked: false,
+        layoutId: 'ttb',
+        class: 'extra-class',
+        tipText: '上下'
+      },
+      {
+        leftBg: '#000000',
+        rightTopBg: '#d4d4d4',
+        rightBottomBg: '#d4d4d4',
+        checked: false,
+        layoutId: 'lcr',
+        class: 'extra-class-1',
+        tipText: '分栏'
+      }
+    ]
+    const primartyColorList = [
+      {
+        name: 'blue',
+        value: '#409eff',
+        checked: true
+      },
+      {
+        name: 'cyan',
+        value: '#13C2C2',
+        checked: false
+      },
+      {
+        name: 'red',
+        value: '#F5222D',
+        checked: false
+      },
+      {
+        name: 'purple',
+        value: '#722ED1',
+        checked: false
+      }
+    ]
+    const state = store.state
+    onMounted(() => {
+      styleExampleList.forEach((it) => {
+        it.checked = state.theme === it.themeId
+      })
+      layoutExampleList.forEach((it) => {
+        it.checked = state.layoutMode === it.layoutId
+      })
+      primartyColorList.forEach((it) => {
+        it.checked = state.themeColor === 'theme_color_' + it.name
+      })
+    })
+    function openDrawer() {
+      opened.value = !opened.value
     }
-  },
-  mounted() {
-    this.styleExampleList.forEach((it) => {
-      it.checked = this.state.theme === it.themeId
-    })
-    this.layoutExampleList.forEach((it) => {
-      it.checked = this.state.layoutMode === it.layoutId
-    })
-    this.primartyColorList.forEach((it) => {
-      it.checked = this.state.themeColor === 'theme_color_' + it.name
-    })
-  },
-  watch: {
-    show(newVal) {
-      console.log(newVal)
-      this.opened = newVal
-    }
-  },
-  methods: {
-    openDrawer() {
-      this.opened = !this.opened
-    },
-    exampleClick(item) {
-      this.styleExampleList.forEach((it) => {
+    function exampleClick(item: any) {
+      styleExampleList.forEach((it) => {
         it.checked = it === item
       })
       store.changeTheme(item.themeId)
-      toggleThemeClass(document.body, this.state.theme)
-    },
-    layoutExampleClick(item) {
-      this.layoutExampleList.forEach((it) => {
+      toggleThemeClass(document.body, state.theme)
+    }
+    function layoutExampleClick(item: any) {
+      layoutExampleList.forEach((it) => {
         it.checked = it === item
       })
       store.changeLayoutMode(item.layoutId)
-    },
-    colorClick(item) {
-      this.primartyColorList.forEach((it) => {
+    }
+    function colorClick(item: any) {
+      primartyColorList.forEach((it) => {
         it.checked = it === item
       })
       toggleThemeColorClass(document.body, 'theme_color_' + item.name)
     }
+    expose({
+      openDrawer
+    })
+    return {
+      opened,
+      styleExampleList,
+      layoutExampleList,
+      primartyColorList,
+      state,
+      exampleClick,
+      layoutExampleClick,
+      colorClick
+    }
   }
-}
+})
 </script>
 
 <style lang="scss">
@@ -263,7 +267,7 @@ $width: 60px;
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     }
     .circle::after {
-      content: "";
+      content: '';
       display: block;
       margin: 0 auto;
       margin-top: 25px;

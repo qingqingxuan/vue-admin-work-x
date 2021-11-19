@@ -8,8 +8,9 @@
   </component>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+export default defineComponent({
   name: 'SvgIcon',
   props: {
     iconClass: {
@@ -21,25 +22,30 @@ export default {
       default: ''
     }
   },
-  computed: {
-    component() {
-      return this.iconClass.startsWith('el-') ? 'i' : 'svg'
-    },
-    iconName() {
-      return `#icon-${this.iconClass}`
-    },
-    svgClass() {
-      if (this.iconClass.startsWith('el-')) {
-        return this.iconClass
+  setup(props) {
+    const component = computed(() => {
+      return props.iconClass.startsWith('el-') ? 'i' : 'svg'
+    })
+    const iconName = computed(() => {
+      return `#icon-${props.iconClass}`
+    })
+    const svgClass = computed(() => {
+      if (props.iconClass.startsWith('el-')) {
+        return props.iconClass
       }
-      if (this.className) {
-        return 'svg-icon ' + this.className
+      if (props.className) {
+        return 'svg-icon ' + props.className
       } else {
         return 'svg-icon'
       }
+    })
+    return {
+      component,
+      iconName,
+      svgClass
     }
   }
-}
+})
 </script>
 
 <style scoped>

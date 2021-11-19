@@ -24,8 +24,9 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'StyleExample',
   props: {
     leftBg: {
@@ -49,7 +50,7 @@ export default {
       default: null
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
@@ -85,7 +86,7 @@ $border-radius: 4px;
   }
 }
 .circle-tip::after {
-  content: "";
+  content: '';
   display: block;
   margin: 0 auto;
   margin-top: 5px;
@@ -120,7 +121,7 @@ $border-radius: 4px;
     background-color: #828282;
     top: 0;
     left: 5px;
-    content: "";
+    content: '';
     display: inline-block;
     width: 10px;
     height: 100%;

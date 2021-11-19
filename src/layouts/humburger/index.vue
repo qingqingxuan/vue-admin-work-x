@@ -6,25 +6,25 @@
   >&#xe6fd;</span>
 </template>
 
-<script>
+<script lang="ts">
 import store from '../store'
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
   name: 'Humburger',
-  data() {
-    return {
-      state: store.state
-    }
-  },
-  methods: {
-    toggleFold() {
+  setup() {
+    function toggleFold() {
       store.toggleCollapse(!store.state.isCollapse)
     }
+    return {
+      state: store.state,
+      toggleFold
+    }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/variables.scss";
+@import '../styles/variables.scss';
 .fold-open-status {
   transform: rotate(180deg);
 }

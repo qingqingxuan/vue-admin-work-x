@@ -5,8 +5,10 @@
   />
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'MenuItemTip',
   props: {
     isDot: {
@@ -18,7 +20,7 @@ export default {
       default: ''
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

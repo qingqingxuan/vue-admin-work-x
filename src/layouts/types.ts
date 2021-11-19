@@ -56,4 +56,10 @@ export interface LocalLayoutStore {
   closeAllVisitedView: () => Promise<void>
   persistentVisitedView: () => void
   restoreVisitedView: () => void
+  toggleCollapse: (isCollapse: boolean) => void
+  changeTheme: (themeId: any) => void
+  changeLayoutMode: (layoutId: any) => void
+  onLogout?: () => void
+  onPersonalCenter?: () => void
+  cancelLogout?: () => void
 }
