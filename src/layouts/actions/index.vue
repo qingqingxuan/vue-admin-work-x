@@ -29,7 +29,7 @@
     </el-popover>
     <span
       v-if="state.actionItem.showRefresh"
-      class="iconfont action-item"
+      class="action-item"
       @click="onRefrehRoute"
     >
       <el-icon :size="16">
@@ -38,7 +38,7 @@
     </span>
     <span
       v-if="state.actionItem.showFullScreen && state.device !== 'mobile'"
-      class="iconfont action-item"
+      class="action-item"
       @click="onScreenFull"
     >
       <el-icon :size="16">
@@ -157,6 +157,9 @@ export default defineComponent({
   z-index: 999;
   .action-item {
     min-width: 40px;
+  }
+  .action-item:hover {
+    color: var(--el-color-primary);
   }
   .badge-action-item {
     margin-right: 30px;

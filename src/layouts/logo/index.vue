@@ -53,6 +53,8 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--el-color-white);
+  border-bottom: 1px dashed var(--el-border-color-light);
   .logo-img {
     width: 30px;
   }

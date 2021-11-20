@@ -6,7 +6,7 @@ export const adminRoutes = [
   {
     menuUrl: "/system",
     menuName: "系统管理",
-    icon: "setting-fill",
+    icon: "SettingIcon",
     tip: "new",
     parentPath: '',
     children: [
@@ -40,7 +40,7 @@ export const adminRoutes = [
   {
     menuUrl: "/list",
     menuName: "列表页面",
-    icon: "detail-fill",
+    icon: "OperationIcon",
     parentPath: '',
     children: [
       {
@@ -69,7 +69,7 @@ export const adminRoutes = [
     menuUrl: "/form",
     menuName: "表单页面",
     tip: "dot",
-    icon: "file-text-fill",
+    icon: "PostcardIcon",
     parentPath: '',
     children: [
       {
@@ -99,7 +99,7 @@ export const adminRoutes = [
   {
     menuUrl: "/other",
     menuName: "功能/组件",
-    icon: "appstore-fill",
+    icon: "GridIcon",
     parentPath: '',
     children: [
       {
@@ -176,7 +176,7 @@ export const adminRoutes = [
   {
     menuUrl: "/result",
     menuName: "结果页面",
-    icon: "file-unknown-fill",
+    icon: "TakeawayBoxIcon",
     parentPath: '',
     children: [
       {
@@ -194,7 +194,7 @@ export const adminRoutes = [
   {
     menuUrl: "/exception",
     menuName: "异常页面",
-    icon: "error-fill",
+    icon: "WarningIcon",
     parentPath: '',
     children: [
       {
@@ -218,7 +218,7 @@ export const adminRoutes = [
     menuUrl: "/editor",
     menuName: "编辑器",
     tip: "12",
-    icon: "edit-fill",
+    icon: "EditIcon",
     parentPath: '',
     children: [
       {
@@ -236,7 +236,7 @@ export const adminRoutes = [
   {
     menuUrl: "/excel",
     menuName: "Excel",
-    icon: "file-excel-fill",
+    icon: "NotebookIcon",
     parentPath: '',
     children: [
       {
@@ -254,7 +254,7 @@ export const adminRoutes = [
   {
     menuUrl: "/draggable",
     menuName: "拖拽",
-    icon: "interation-fill",
+    icon: "PointerIcon",
     parentPath: '',
     children: [
       {
@@ -273,7 +273,7 @@ export const adminRoutes = [
   {
     menuUrl: "/next",
     menuName: "多级菜单",
-    icon: "golden-fill",
+    icon: "ShareIcon",
     parentPath: '',
     children: [
       {
@@ -318,7 +318,7 @@ export const adminRoutes = [
   {
     menuUrl: "/map",
     menuName: "地图",
-    icon: "medium-square-fill",
+    icon: "MapLocationIcon",
     children: [
       {
         parentPath: '/map',

@@ -20,7 +20,9 @@
             :class="{'vaw-tab-split-item-is-active' : item.active}"
             @click="changeTab(item)"
           >
-            <SvgIcon :icon-class="item.meta ? item.meta.icon || 'el-icon-date' : 'el-icon-date'" />
+            <el-icon>
+              <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon"/>
+            </el-icon>
             <span>{{ item.meta ? item.meta.title : item.name }}</span>
           </div>
         </div>
@@ -50,6 +52,7 @@
 import store from '../store'
 import path from 'path'
 import { isExternal } from '../utils'
+import { Menu as MenuIcon } from '@element-plus/icons'
 export default {
   name: 'TabSplitSideBar',
   props: {
@@ -64,7 +67,8 @@ export default {
       currentTab: null,
       basePath: null,
       tabs: null,
-      routes: []
+      routes: [],
+      MenuIcon
     }
   },
   watch: {
@@ -164,7 +168,7 @@ export default {
   overflow-x: hidden;
   height: 100%;
   box-sizing: border-box;
-  z-index: 999;
+  z-index: 99;
   .tab-split-tab-wrapper {
     position: relative;
     top: 0;
@@ -189,6 +193,7 @@ export default {
         bottom: 5px;
         border-radius: 3px;
         z-index: -1;
+        background-color: var(--el-color-primary-light-2);
       }
       .label-item-wrapper {
         position: relative;
@@ -212,9 +217,9 @@ export default {
         &:hover {
           cursor: pointer;
         }
-        &::after {
-          @include after;
-        }
+      }
+      .vaw-tab-split-item-is-active{
+        color: var(--el-color-white);
       }
       .vaw-tab-split-item-is-active::after {
         @include after;

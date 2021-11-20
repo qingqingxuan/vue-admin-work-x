@@ -264,6 +264,7 @@ export default {
   line-height: $tabHeight;
   box-sizing: border-box;
   white-space: nowrap;
+  background-color: var(--el-color-white);
   .contex-menu-wrapper {
     position: absolute;
     width: 130px;
@@ -312,12 +313,30 @@ export default {
       border: none !important;
     }
     .el-tabs__item {
-      border-left: none !important;
-      border-bottom: none !important;
       height: calc(#{$tabHeight} - 10px);
       line-height: calc(#{$tabHeight} - 10px);
       border-radius: 2px;
       font-size: 12px;
+      border: 1px solid var(--el-border-color-light);
+      background-color: var(--el-color-white);
+      padding: 0 10px !important;
+    }
+    .el-tabs__item.is-active{
+      color: var(--el-color-white);
+      border: 1px solid var(--el-color-primary) !important;
+      background-color: var(--el-color-primary);
+    }
+    .el-tabs__item.is-active::before{
+      content: '';
+      width: 8px;
+      height: 8px;
+      display: inline-block;
+      background-color: var(--el-color-white);
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .el-tabs__item:hover{
+      border: 1px solid var(--el-color-primary) !important;
     }
     .is-focus {
       box-shadow: none !important;
@@ -326,7 +345,7 @@ export default {
   }
 
   .el-tabs__item + .el-tabs__item {
-    margin-left: 5px;
+    margin-left: 10px;
   }
 }
 </style>

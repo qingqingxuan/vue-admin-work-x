@@ -44,6 +44,7 @@ export default defineComponent({
 @import "../../styles/variables.scss";
 .scrollbar {
   height: calc(100% - #{$logoHeight}) !important;
+  background-color: var(--el-color-white);
 }
 .scrollbar-wrap-class {
   overflow-x: hidden !important;

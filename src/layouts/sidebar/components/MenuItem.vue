@@ -3,7 +3,10 @@
     :index="generatorPath()"
     @click="handleClick"
   >
-    <SvgIcon :icon-class="showRoute.meta ? showRoute.meta.icon || 'el-icon-menu' : 'el-icon-menu'" />
+    <!-- <SvgIcon :icon-class="showRoute.meta ? showRoute.meta.icon || 'el-icon-menu' : 'el-icon-menu'" /> -->
+    <el-icon>
+      <component :is="showRoute.meta ? showRoute.meta.icon || MenuIcon : MenuIcon"/>
+    </el-icon>
     <template #title>
       <span>{{ showRoute.meta ? showRoute.meta.title : showRoute.name }}</span>
       <MenuItemTip
@@ -19,6 +22,7 @@ import { isExternal } from '../../utils'
 import path from 'path'
 import { defineComponent } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { Menu as MenuIcon } from '@element-plus/icons'
 export default defineComponent({
   name: 'MenuItem',
   props: {
@@ -66,7 +70,8 @@ export default defineComponent({
     }
     return {
       generatorPath,
-      handleClick
+      handleClick,
+      MenuIcon
     }
   }
 })

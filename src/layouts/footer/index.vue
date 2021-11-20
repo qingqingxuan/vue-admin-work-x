@@ -29,5 +29,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  background-color: var(--el-color-white);
+  border-top: 1px dashed var(--el-border-color-light);
 }
 </style>

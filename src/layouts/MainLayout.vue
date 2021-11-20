@@ -15,15 +15,9 @@
         <Footer />
       </section>
       <el-backtop target=".main-base-style">
-        <div>
-          <i class="el-icon-caret-top"></i>
-        </div>
       </el-backtop>
     </div>
     <el-backtop target=".vaw-main-layout-container">
-      <div>
-        <i class="el-icon-caret-top"></i>
-      </div>
     </el-backtop>
   </div>
 </template>

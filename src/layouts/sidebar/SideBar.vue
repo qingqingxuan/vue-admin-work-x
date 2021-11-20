@@ -94,6 +94,7 @@ export default defineComponent({
 .el-menu {
   border-right: none !important;
   overflow: hidden;
+  background-color: transparent;
 }
 ::deep(.el-menu--collapse .el-sub-menu__title span) {
   display: none !important;

@@ -1,16 +1,20 @@
 <template>
-  <span
-    class="fold-wrapper iconfont"
-    :class="[state.isCollapse ? 'fold-open-status' : 'fold-close-status']"
+  <el-icon
+    class="fold-wrapper"
+    :class="[state.isCollapse ? 'fold-close-status' : 'fold-open-status']"
     @click="toggleFold"
-  >&#xe6fd;</span>
+  >
+  <Fold />
+  </el-icon>
 </template>
 
 <script lang="ts">
 import store from '../store'
 import { defineComponent } from 'vue'
+import { Fold } from '@element-plus/icons'
 export default defineComponent({
   name: 'Humburger',
+  components: {Fold},
   setup() {
     function toggleFold() {
       store.toggleCollapse(!store.state.isCollapse)
@@ -34,15 +38,13 @@ export default defineComponent({
 .fold-wrapper {
   box-sizing: border-box;
   display: inline-block;
-  line-height: $logoHeight;
   text-align: center;
-  padding: 0 15px;
-  height: 100%;
+  margin: 0 10px;
   font-size: 20px;
   transition: transform $transitionTime;
 }
 .fold-wrapper:hover {
-  color: #999999;
+  color: var(--el-color-primary);
   cursor: pointer;
 }
 </style>

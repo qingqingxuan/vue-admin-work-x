@@ -17,3 +17,6 @@ body,
 .el-menu-item.is-active {
   background-color: var(--el-menu-hover-background-color) !important;
 }
+.el-menu-item *{
+  vertical-align: middle !important;
+}

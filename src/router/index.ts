@@ -52,7 +52,7 @@ export const routes = [
     component: Layout,
     meta: {
       title: "Dashboard",
-      icon: 'dashboard-fill'
+      icon: 'HouseIcon'
     },
     children: [
       {

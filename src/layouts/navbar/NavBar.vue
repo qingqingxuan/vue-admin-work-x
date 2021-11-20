@@ -36,6 +36,8 @@ export default defineComponent({
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  background-color: var(--el-color-white);
+  border-bottom: 1px solid var(--el-border-color-light);
   .avatar-wrapper {
     padding-right: 15px;
   }

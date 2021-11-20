@@ -41,6 +41,8 @@ export default defineComponent({
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  background-color: var(--el-color-white);
+  border-bottom: 1px solid var(--el-border-color-light);
   .logo-wrapper {
     width: $menuWidth;
   }

@@ -29,6 +29,8 @@ import {
 import store from './store'
 import { inject, App } from 'vue'
 import { LocalLayoutStore } from './types'
+import * as ElIcons from '@element-plus/icons'
+
 
 function registerElement(app: App) {
   app.use(ElScrollbar)
@@ -79,9 +81,25 @@ export function registerComponents(app: App) {
   })
 }
 
+const aliasIcons = ['Menu', 'Setting']
+
+// function getIconName(it:string) {
+//   if (aliasIcons.includes(it)) {
+//     return it + 'Icon'
+//   }
+//   return it
+// }
+
+export function registerIcons(app: App) {
+  Object.keys(ElIcons).forEach((it: string) => {
+    app.component(it + 'Icon', (ElIcons as any)[it])
+  })
+}
+
 const key = Symbol('layout_store')
 
 function install(Vue: App, options: any) {
+  registerIcons(Vue)
   registerComponents(Vue)
   if (options && options.registerElement === false) {
     console.warn('element-plus components not be registed, please check `registerElement` is `false`')
