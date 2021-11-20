@@ -87,133 +87,135 @@
 </template>
 
 <script lang="ts">
-import StyleExample from './components/StyleExample.vue'
-import { toggleThemeClass, toggleThemeColorClass } from '../utils'
-import store from '../store'
-import { defineComponent, onMounted, ref } from 'vue'
+import StyleExample from "./components/StyleExample.vue";
+import { toggleThemeClass, toggleThemeColorClass } from "../utils";
+import store from "../store";
+import { defineComponent, onMounted, reactive, ref } from "vue";
+import { usePrimaryColor } from "../hooks";
 export default defineComponent({
-  name: 'Setting',
+  name: "Setting",
   components: {
-    StyleExample
+    StyleExample,
   },
   props: {
     show: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props, { expose }) {
-    const opened = ref(props.show)
-    const styleExampleList = [
+    const opened = ref(props.show);
+    const styleExampleList = reactive([
       {
-        leftBg: '#000000',
-        rightTopBg: '#ffffff',
-        rightBottomBg: '#f5f5f5',
+        leftBg: "#000000",
+        rightTopBg: "#ffffff",
+        rightBottomBg: "#f5f5f5",
         checked: false,
-        themeId: 'dark-side'
+        themeId: "dark-side",
       },
       {
-        leftBg: '#ffffff',
-        rightTopBg: '#ffffff',
-        rightBottomBg: '#d4d4d4',
+        leftBg: "#ffffff",
+        rightTopBg: "#ffffff",
+        rightBottomBg: "#d4d4d4",
         checked: false,
-        themeId: 'light'
+        themeId: "light",
       },
       {
-        leftBg: '#000000',
-        rightTopBg: '#333333',
-        rightBottomBg: '#555555',
+        leftBg: "#000000",
+        rightTopBg: "#333333",
+        rightBottomBg: "#555555",
         checked: false,
-        themeId: 'dark'
-      }
-    ]
-    const layoutExampleList = [
+        themeId: "dark",
+      },
+    ]);
+    const layoutExampleList = reactive([
       {
-        leftBg: '#000000',
-        rightTopBg: '#d4d4d4',
-        rightBottomBg: '#d4d4d4',
+        leftBg: "#000000",
+        rightTopBg: "#d4d4d4",
+        rightBottomBg: "#d4d4d4",
         checked: true,
-        layoutId: 'ltr',
-        tipText: '左右'
+        layoutId: "ltr",
+        tipText: "左右",
       },
       {
-        leftBg: '#d4d4d4',
-        rightTopBg: '#ffffff',
-        rightBottomBg: '#d4d4d4',
+        leftBg: "#d4d4d4",
+        rightTopBg: "#ffffff",
+        rightBottomBg: "#d4d4d4",
         checked: false,
-        layoutId: 'ttb',
-        class: 'extra-class',
-        tipText: '上下'
+        layoutId: "ttb",
+        class: "extra-class",
+        tipText: "上下",
       },
       {
-        leftBg: '#000000',
-        rightTopBg: '#d4d4d4',
-        rightBottomBg: '#d4d4d4',
+        leftBg: "#000000",
+        rightTopBg: "#d4d4d4",
+        rightBottomBg: "#d4d4d4",
         checked: false,
-        layoutId: 'lcr',
-        class: 'extra-class-1',
-        tipText: '分栏'
-      }
-    ]
-    const primartyColorList = [
+        layoutId: "lcr",
+        class: "extra-class-1",
+        tipText: "分栏",
+      },
+    ]);
+    const primartyColorList = reactive([
       {
-        name: 'blue',
-        value: '#409eff',
-        checked: true
+        name: "blue",
+        value: "#409eff",
+        checked: true,
       },
       {
-        name: 'cyan',
-        value: '#13C2C2',
-        checked: false
+        name: "cyan",
+        value: "#13C2C2",
+        checked: false,
       },
       {
-        name: 'red',
-        value: '#F5222D',
-        checked: false
+        name: "red",
+        value: "#F5222D",
+        checked: false,
       },
       {
-        name: 'purple',
-        value: '#722ED1',
-        checked: false
-      }
-    ]
-    const state = store.state
+        name: "purple",
+        value: "#722ED1",
+        checked: false,
+      },
+    ]);
+    const state = store.state;
     onMounted(() => {
       styleExampleList.forEach((it) => {
-        it.checked = state.theme === it.themeId
-      })
+        it.checked = state.theme === it.themeId;
+      });
       layoutExampleList.forEach((it) => {
-        it.checked = state.layoutMode === it.layoutId
-      })
+        it.checked = state.layoutMode === it.layoutId;
+      });
       primartyColorList.forEach((it) => {
-        it.checked = state.themeColor === 'theme_color_' + it.name
-      })
-    })
+        it.checked = state.themeColor === "theme_color_" + it.name;
+      });
+    });
     function openDrawer() {
-      opened.value = !opened.value
+      opened.value = !opened.value;
     }
     function exampleClick(item: any) {
       styleExampleList.forEach((it) => {
-        it.checked = it === item
-      })
-      store.changeTheme(item.themeId)
-      toggleThemeClass(document.body, state.theme)
+        it.checked = it === item;
+      });
+      store.changeTheme(item.themeId);
+      toggleThemeClass(document.body, state.theme);
     }
     function layoutExampleClick(item: any) {
       layoutExampleList.forEach((it) => {
-        it.checked = it === item
-      })
-      store.changeLayoutMode(item.layoutId)
+        it.checked = it === item;
+      });
+      store.changeLayoutMode(item.layoutId);
     }
     function colorClick(item: any) {
       primartyColorList.forEach((it) => {
-        it.checked = it === item
-      })
-      toggleThemeColorClass(document.body, 'theme_color_' + item.name)
+        it.checked = it === item;
+      });
+      usePrimaryColor(item.value);
+      // toggleThemeColorClass(document.body, "theme_color_" + item.name);
     }
     expose({
-      openDrawer
-    })
+      openDrawer,
+    });
     return {
       opened,
       styleExampleList,
@@ -222,10 +224,10 @@ export default defineComponent({
       state,
       exampleClick,
       layoutExampleClick,
-      colorClick
-    }
-  }
-})
+      colorClick,
+    };
+  },
+});
 </script>
 
 <style lang="scss">
@@ -267,7 +269,7 @@ $width: 60px;
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     }
     .circle::after {
-      content: '';
+      content: "";
       display: block;
       margin: 0 auto;
       margin-top: 25px;

@@ -4,6 +4,11 @@ import likeSearch from './LikeSearch'
 import baseForm from './Form'
 import createScript from './CreateScript'
 import ecahrts from './Echarts'
+import setting from '../setting'
+
+export function useSetting() {
+  return setting
+}
 
 export function usePost() {
   return post

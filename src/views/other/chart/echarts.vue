@@ -118,7 +118,7 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import Chart from "./components/Chart.vue";
 
 export default defineComponent({

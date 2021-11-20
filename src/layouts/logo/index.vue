@@ -12,39 +12,42 @@
       <span
         v-show="!state.isCollapse || alwaysShow"
         class="logo-title"
-      >Vue Admin Work X</span>
+      >{{setting.projectName}}</span>
     </transition>
   </div>
 </template>
 
 <script lang="ts">
-import store from '../store'
-import { defineComponent } from 'vue'
+import store from "../store";
+import { defineComponent } from "vue";
+import { useSetting } from "@/hooks";
 export default defineComponent({
-  name: 'Logo',
+  name: "Logo",
   props: {
     showTitle: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showLogo: {
       type: Boolean,
-      default: true
+      default: true,
     },
     alwaysShow: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup() {
+    const setting = useSetting();
     return {
-      state: store.state
-    }
-  }
-})
+      state: store.state,
+      setting,
+    };
+  },
+});
 </script>
 <style lang="scss" scoped>
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 .logo-wrapper {
   height: $logoHeight;
   display: flex;

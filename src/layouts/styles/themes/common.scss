@@ -44,9 +44,8 @@
     height: 48px;
     line-height: 48px;
   }
-  .el-menu-item i,
-  .el-sub-menu__title i {
-    color: $textColor;
+  .el-sub-menu__title .el-icon.el-sub-menu__icon-arrow {
+    color: currentColor
   }
   .el-menu-item.is-active,
   .el-menu-item.is-active i {
@@ -62,10 +61,14 @@
     background-color: transparent !important;
   }
   .el-menu-item:hover {
-    background-color: $menuActiveBgColor !important;
+    background-color: transparent;
+    color: var(--el-color-primary) !important;
   }
   .el-menu-item.is-active {
     background-color: $menuActiveBgColor !important;
+  }
+  .el-menu-item.is-active:hover {
+    color: #fff !important;
   }
   .el-badge__content {
     background-color: $badgeColor;

@@ -1,5 +1,4 @@
 import './styles/main.css'
-import './styles/iconfont/iconfont.css'
 import {
   ElScrollbar,
   ElMenu,

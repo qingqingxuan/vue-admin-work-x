@@ -7,8 +7,7 @@
       :default-active="$route.fullPath"
       mode="vertical"
       :collapse="state.isCollapse"
-      :background-color="state.themeVariables[state.theme].menuColor"
-      :text-color="state.themeVariables[state.theme].menuTextColor"
+      active-text-color="var(--el-color-primary)"
     >
       <slot></slot>
     </el-menu>
@@ -16,29 +15,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import store from '../../store'
+import { defineComponent } from "vue";
+import store from "../../store";
 export default defineComponent({
-  name: 'ScrollerMenu',
+  name: "ScrollerMenu",
   props: {
     routes: {
       type: Array,
       require: true,
       default: () => {
-        return []
-      }
+        return [];
+      },
     },
     fullPath: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   setup() {
     return {
-      state: store.state
-    }
-  }
-})
+      state: store.state,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>

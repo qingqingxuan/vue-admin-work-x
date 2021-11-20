@@ -1,3 +1,8 @@
+interface Setting{
+  projectName: string
+  version: string
+}
+
 interface HeaderCellStyle {
   backgroundColor?: string,
   color: string

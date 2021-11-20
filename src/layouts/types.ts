@@ -30,7 +30,6 @@ export interface StoreState {
   themeColor: ThemeColor,
   userInfo: UserInfo,
   actionItem: ActionItem,
-  themeVariables: any
   permissionRoutes: Array<RouteRecordRawWithHidden>,
   visitedView: Array<RouteRecordRaw>,
   cachedView: Array<string>,

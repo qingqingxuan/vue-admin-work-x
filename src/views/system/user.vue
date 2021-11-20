@@ -135,7 +135,13 @@ import type { TableFooter } from "@/components/types";
 import { Delete } from "@element-plus/icons";
 
 const post = usePost();
-const { dataList, tableLoading, tableConfig, handleSuccess } = useDataTable();
+const {
+  dataList,
+  tableLoading,
+  tableConfig,
+  handleSuccess,
+  handleSelectionChange,
+} = useDataTable();
 const tableFooter = ref<TableFooter>();
 onMounted(doRefresh);
 

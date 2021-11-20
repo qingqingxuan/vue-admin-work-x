@@ -72,64 +72,64 @@
 </template>
 
 <script lang="ts">
-import screenfull from 'screenfull'
-import store from '../store'
-import { defineComponent, ref } from 'vue'
+import screenfull from "screenfull";
+import store from "../store";
+import { defineComponent, ref } from "vue";
 import {
   Search,
   Bell,
   Refresh,
   FullScreen,
-  Setting as SettingIcon
-} from '@element-plus/icons'
-import { useRouter, useRoute } from 'vue-router'
-import { ElMessage } from 'element-plus'
+  Setting as SettingIcon,
+} from "@element-plus/icons";
+import { useRouter, useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
-  name: 'ActionItems',
+  name: "ActionItems",
   components: {
     Search,
     Bell,
     Refresh,
     FullScreen,
-    SettingIcon
+    SettingIcon,
   },
   setup() {
-    const searchContentRef = ref()
-    const appSettingRef = ref()
-    const showSearchContent = ref(false)
-    const searchContent = ref('')
-    const state = store.state
-    const router = useRouter()
-    const route = useRoute()
+    const searchContentRef = ref();
+    const appSettingRef = ref();
+    const showSearchContent = ref(false);
+    const searchContent = ref("");
+    const state = store.state;
+    const router = useRouter();
+    const route = useRoute();
 
     function onShowSearch() {
-      showSearchContent.value = !showSearchContent.value
-      searchContent.value = ''
+      showSearchContent.value = !showSearchContent.value;
+      searchContent.value = "";
       if (showSearchContent.value) {
-        searchContentRef.value?.focus()
+        searchContentRef.value?.focus();
       } else {
-        searchContentRef.value?.blur()
+        searchContentRef.value?.blur();
       }
     }
     function onChange(content: string) {
       if (!content) {
-        return
+        return;
       }
-      window.open('https://www.baidu.com/s?wd=' + content)
+      window.open("https://www.baidu.com/s?wd=" + content);
     }
     function onScreenFull() {
       if (!screenfull.isEnabled) {
-        ElMessage.error('当前浏览器不支持全屏操作')
-        return false
+        ElMessage.error("当前浏览器不支持全屏操作");
+        return false;
       }
-      screenfull.toggle()
+      screenfull.toggle();
     }
     function onRefrehRoute() {
-      router.replace({ path: '/redirect' + route.path })
+      router.replace({ path: "/redirect" + route.path });
     }
     function onShowSetting() {
-      appSettingRef.value.openDrawer()
+      appSettingRef.value.openDrawer();
     }
     return {
       searchContentRef,
@@ -141,10 +141,10 @@ export default defineComponent({
       onShowSetting,
       onRefrehRoute,
       onScreenFull,
-      onChange
-    }
-  }
-})
+      onChange,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -154,7 +154,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   color: currentColor;
-  z-index: 1;
+  z-index: 999;
   .action-item {
     min-width: 40px;
   }

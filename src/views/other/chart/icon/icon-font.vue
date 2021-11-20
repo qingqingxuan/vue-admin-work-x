@@ -29,22 +29,18 @@
       :show-refresh="false"
       ref="tableFooter"
       :pageSizes="[100]"
+      @refresh="doRefresh"
+      @pageChanged="doRefresh"
     />
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  provide,
-  reactive,
-  ref,
-} from "@vue/runtime-core";
+import { defineComponent, onMounted, provide, reactive, ref } from "vue";
 import Iconfonts from "@/icons/iconfont/iconfont.json";
-import { showConfirmBox, TableFooter } from "@/components/types";
+import { showConfirmBox } from "@/components/types";
+import type { TableFooter } from "@/components/types";
 import { TinyEmitter } from "tiny-emitter";
-import { PageModel } from "@/mixins/TableMixin";
 interface IconItem {
   font_class: string;
   icon_id: string;
@@ -56,17 +52,18 @@ interface IconItem {
 export default defineComponent({
   name: "IconFont",
   setup() {
-    const mEmit = new TinyEmitter();
     const icons = reactive([] as Array<IconItem>);
-    mEmit.on("pageChanged", (pageModel: PageModel) => {
-      icons.length = 0;
-      const start = (pageModel.currentPage - 1) * pageModel.pageSize;
-      icons.push(...Iconfonts.glyphs.slice(start, 100 + start));
-    });
-    provide("mEmit", mEmit);
     const tableFooter = ref<TableFooter>();
+    function doRefresh() {
+      const { page = 10, pageSize = 100 } =
+        tableFooter.value!.withPageInfoData();
+      icons.length = 0;
+      const start = (page - 1) * pageSize;
+      icons.push(...Iconfonts.glyphs.slice(start, 100 + start));
+    }
     icons.push(...Iconfonts.glyphs.slice(0, 100));
     onMounted(() => {
+      doRefresh();
       tableFooter.value?.setTotalSize(Iconfonts.glyphs.length);
       tableFooter.value?.setPageSize(100);
     });
@@ -77,6 +74,7 @@ export default defineComponent({
       tableFooter,
       icons,
       onCopy,
+      doRefresh,
     };
   },
 });

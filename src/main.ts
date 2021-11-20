@@ -21,6 +21,8 @@ import * as echarts from 'echarts'
 
 import "../mock/index.ts";
 
+import './setting'
+
 const app = createApp(App);
 app.config.globalProperties.$urlPath = urlPath;
 app.config.globalProperties.$isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)

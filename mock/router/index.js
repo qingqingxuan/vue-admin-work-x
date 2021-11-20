@@ -111,6 +111,18 @@ export const adminRoutes = [
             parentPath: '/other/chart',
             menuUrl: "/other/chart/icon",
             menuName: "图标",
+            children: [
+              {
+                parentPath: '/other/chart',
+                menuUrl: "/other/chart/icon/icon-font",
+                menuName: "IconFont",
+              },
+              {
+                parentPath: '/other/chart',
+                menuUrl: "/other/chart/icon/element-plus",
+                menuName: "ElementPlus",
+              },
+            ]
           },
           {
             parentPath: '/other/chart',

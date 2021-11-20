@@ -1,6 +1,5 @@
 import { LocalLayoutStore } from './../types';
 import { reactive } from 'vue'
-import themeVariables from '../styles/themes/index.js'
 import { toggleThemeColorClass, toggleThemeClass, toHump } from '../utils'
 import { Device, LayoutMode, RouteRecordRawWithHidden, StoreState, Theme, UserInfo } from '../types.js';
 import { RouteRecordRaw } from 'vue-router';
@@ -14,7 +13,6 @@ export default {
     device: 'pc',
     theme: 'light',
     themeColor: 'theme_color_blue',
-    themeVariables,
     permissionRoutes: [],
     visitedView: [],
     cachedView: [],
@@ -32,8 +30,10 @@ export default {
   start(options: any) {
     options.state && (this.state = Object.assign(this.state, options.state))
     this.restoreVisitedView()
-    toggleThemeColorClass(document.body, this.state.themeColor)
-    toggleThemeClass(document.body, this.state.theme)
+    this.onLogout = options.actions.onLogout
+    this.onPersonalCenter = options.actions.onPersonalCenter
+    // toggleThemeColorClass(document.body, this.state.themeColor)
+    // toggleThemeClass(document.body, this.state.theme)
   },
   randomLayouMode() {
     return layoutModes[Math.floor(Math.random() * layoutModes.length)]
@@ -79,7 +79,6 @@ export default {
       device: 'pc',
       theme: 'light',
       themeColor: 'theme_color_blue',
-      themeVariables,
       permissionRoutes: [],
       visitedView: [],
       cachedView: [],

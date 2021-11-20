@@ -4,19 +4,25 @@
     Copyright <i
       class="iconfont"
       style="margin: 0 5px"
-    >&#xe619;</i> Vue-Admin-Work 2021
+    >©</i> {{setting.projectName}} 2021
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { useSetting } from "@/hooks";
+import { defineComponent } from "vue";
 export default defineComponent({
-  name: 'Footer'
-})
+  name: "Footer",
+  setup() {
+    return {
+      setting: useSetting(),
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 .footer-container {
   height: $footerHeight;
   display: flex;
