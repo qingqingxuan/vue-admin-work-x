@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    ref="dialog"
+    ref="dialogRef"
     :title="innerTitle"
     v-model="dialogVisible"
     :close-on-click-modal="closeOnClickModal"
@@ -35,7 +35,7 @@ import {
   computed,
   defineComponent,
   getCurrentInstance,
-} from "@vue/runtime-core";
+} from "vue";
 import { DialogConfig } from "../types";
 import VDraggable from "@/directive/draggable/draggable";
 import { useLayoutStore } from "@/layouts/hooks";
@@ -56,88 +56,49 @@ export default defineComponent({
       default: true,
     },
   },
-  setup(props) {
-    const dialog = ref();
+  setup(props, {expose}) {
+    const innerTitle = ref(props.title || '提示')
+    const dialogRef = ref()
     const dialogVisible = ref(false);
-    const innerTitle = ref(props.title);
-    const autoClose = ref(false);
-    const showSubmitLoading = ref(false);
     const loading = ref(false);
     const store = useLayoutStore();
-    let resolve = null;
+    const _resolve = ref()
     const isMobileScreen = computed(() => {
       return store.state.device === "mobile";
     });
-    function show(config?: DialogConfig): Promise<any> {
-      config?.beforeShowAction && config.beforeShowAction();
-      autoClose.value = config?.autoClose || false;
-      showSubmitLoading.value = config?.showSubmitLoading || false;
-      innerTitle.value = config?.innerTitle || props.title || "提示";
+    function show(): Promise<any> {
       dialogVisible.value = true;
       loading.value = false;
       nextTick(() => {
         const contentElement = document.querySelector(".content-wrapper");
         contentElement?.scrollTo({ top: 0 });
       });
-      return new Promise((res) => {
-        resolve = res;
-      });
+      return new Promise((resolve) => {
+        _resolve.value = resolve
+      })
     }
     function onVnodeMounted() {
-      VDraggable.mounted(dialog.value?.$el.nextElementSibling);
+      VDraggable.mounted(dialogRef.value?.$el.nextElementSibling);
     }
-    function close(afterAction?: () => void | null) {
+    function close() {
       dialogVisible.value = false;
-      afterAction && afterAction();
-    }
-    function closeSubmitLoading() {
-      loading.value = false;
-    }
-    function toggle() {
-      dialogVisible.value = !dialogVisible.value;
+      loading.value = false
     }
     function onConfirm() {
-      if (autoClose.value) {
-        dialogVisible.value = false;
-      }
-      const slotItems = dialog.value.$slots.content
-        ? dialog.value.$slots.content()
-        : null;
-      if (slotItems) {
-        for (let index = 0; index < slotItems.length; index++) {
-          const it = slotItems[index];
-          if (it && it.props) {
-            const formItems = it.props["form-items"];
-            if (formItems) {
-              const validate = formItems.every((it: any) => {
-                return it.validator
-                  ? it.validator(
-                      it,
-                      formItems.find(
-                        (item: any) => it.associatedOption === item.name
-                      )
-                    )
-                  : true;
-              });
-              if (!validate) {
-                return;
-              }
-            }
-          }
-        }
-      }
+      _resolve.value(dialogRef.value)
     }
+    expose({
+      show,
+      close,
+      loading
+    })
     return {
-      dialog,
+      dialogRef,
       dialogVisible,
-      innerTitle,
-      autoClose,
-      showSubmitLoading,
       loading,
       isMobileScreen,
+      innerTitle,
       onConfirm,
-      toggle,
-      closeSubmitLoading,
       close,
       show,
       onVnodeMounted,

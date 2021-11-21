@@ -5,7 +5,7 @@
         <el-button
           type="primary"
           size="mini"
-          :icon="Plus"
+          icon="PlusIcon"
           @click="onAddItem"
         >添加
         </el-button>
@@ -82,10 +82,9 @@
 <script lang="ts" setup>
 import { post } from "@/api/http";
 import { getDepartmentList } from "@/api/url";
-import type { BaseForm, DialogType } from "@/components/types";
+import type { BaseFormType, DialogType } from "@/components/types";
 import { computed, onMounted, reactive, ref } from "@vue/runtime-core";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { Plus } from "@element-plus/icons";
 import _ from "lodash";
 import { useDataTable } from "@/hooks";
 interface Department {
@@ -121,7 +120,7 @@ const tableColumns = reactive([
   },
 ]);
 const dialog = ref<DialogType>();
-const baseForm = ref<BaseForm>();
+const baseForm = ref<BaseFormType>();
 const { tableConfig, tableLoading, dataList, handleSuccess } = useDataTable();
 const parentFormItem = {
   label: "上级部门",
@@ -210,7 +209,7 @@ const onUpdateItem = (item: any) => {
   });
   depCodeFormItem.disabled = true;
   dialog.value
-    ?.show({ showSubmitLoading: true })
+    ?.show()
     .then((component: DialogType) => {
       formItems.forEach((it) => {
         const propName = item[it.name];
@@ -256,13 +255,18 @@ const onDeleteItem = (item: any) => {
 };
 const onAddItem = () => {
   formItems.forEach((it: any) => it.reset());
-  dialog.value?.show({ showSubmitLoading: true }).then(() => {
-    ElMessage.success(
-      "模拟添加成功，添加参数为：" +
-        JSON.stringify(baseForm.value?.generatorParams())
-    );
-    dialog.value?.closeSubmitLoading();
-    dialog.value?.close();
+  dialog.value!.show().then(() => {
+    if (!baseForm.value!.checkParams()) {
+      return
+    }
+    dialog.value!.loading = true
+    setTimeout(() => {
+      ElMessage.success(
+        "模拟添加成功，添加参数为：" +
+          JSON.stringify(baseForm.value?.generatorParams())
+      );
+      dialog.value?.close()
+    }, 30)
   });
 };
 parentFormItem.selectOptions = computed(() => {

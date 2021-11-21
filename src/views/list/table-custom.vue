@@ -13,7 +13,7 @@
     </TableHeader>
     <TableBody ref="tableBody">
       <template #tableConfig>
-        <div class="flex justify-between padding">
+        <div class="flex justify-between padding" style="border-bottom: 1px dashed var(--el-border-color-light)">
           <el-link :underline="false">表格设置</el-link>
           <div>
             <span class="margin-right">

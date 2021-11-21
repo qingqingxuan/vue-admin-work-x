@@ -30,7 +30,7 @@
     >
       <li>
         <el-button
-          icon="el-icon-refresh"
+          icon="RefreshIcon"
           :underline="false"
           type="text"
           @click="refreshRoute"
@@ -39,7 +39,7 @@
       <li :disabled="showLeftMenu">
         <el-button
           :disabled="showLeftMenu"
-          icon="el-icon-back"
+          icon="BackIcon"
           type="text"
           @click="closeLeft"
         >关闭左侧</el-button>
@@ -47,14 +47,14 @@
       <li :disabled="showRightMenu">
         <el-button
           :disabled="showRightMenu"
-          icon="el-icon-right"
+          icon="RightIcon"
           type="text"
           @click="closeRight"
         >关闭右侧</el-button>
       </li>
       <li>
         <el-button
-          icon="el-icon-close"
+          icon="CircleCloseIcon"
           type="text"
           @click="closeAll"
         >关闭所有</el-button>
@@ -265,6 +265,7 @@ export default {
   box-sizing: border-box;
   white-space: nowrap;
   background-color: var(--el-color-white);
+  box-shadow: 0px 5px 5px #f5f5f5;
   .contex-menu-wrapper {
     position: absolute;
     width: 130px;

@@ -1,11 +1,11 @@
 import { useLayoutStore } from "@/layouts";
-import { ref, shallowReactive } from "vue";
+import { reactive, ref, shallowReactive } from "vue";
 
 export default function (): Record<string, any> {
   const dataList = shallowReactive([]) as Array<any>;
   const selectRows = shallowReactive([]) as Array<any>;
   const layoutStore = useLayoutStore()
-  const tableConfig = {
+  const tableConfig = reactive({
     stripe: layoutStore.state.theme !== 'dark',
     border: false,
     size: 'small',
@@ -16,7 +16,7 @@ export default function (): Record<string, any> {
       color: '#333333'
     },
     height: '100%'
-  } as TableConfig;
+  });
   const tableLoading = ref(true);
   const handleSuccess = ({ data = [], totalSize = 10 }) => {
     dataList.length = 0

@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { BaseForm, DialogType } from "@/components/types";
+import type { BaseFormType, DialogType } from "@/components/types";
 import { onMounted, reactive, ref, shallowReactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { usePost } from "@/hooks";
@@ -190,7 +190,7 @@ const formItems = [
 ];
 const menuDialogRef = ref<DialogType>();
 const dialogRef = ref<DialogType>();
-const baseFormRef = ref<BaseForm>();
+const baseFormRef = ref<BaseFormType>();
 const post = usePost();
 const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();
 function doRefresh() {

@@ -170,6 +170,9 @@ export default defineComponent({
     });
     return {
       innerFormItems,
+      checkParams,
+      resetParams,
+      generatorParams,
     };
   },
 });

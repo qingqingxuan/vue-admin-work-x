@@ -6,7 +6,10 @@
           <img :src="state.userInfo.avatar" />
         </div>
         <span class="nick-name el-dropdown-link">
-          <span>{{ state.userInfo.nickName }}</span> <i class="el-icon-arrow-down tip"></i>
+          <span>{{ state.userInfo.nickName }}</span>
+          <el-icon>
+            <CaretBottomIcon/>
+          </el-icon>
         </span>
       </div>
       <template #dropdown>

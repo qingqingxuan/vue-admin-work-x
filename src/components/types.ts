@@ -15,7 +15,7 @@ export interface DialogConfig {
 
 export type DialogType = InstanceType<typeof Dialog>;
 
-export type BaseForm = InstanceType<typeof BaseForm>;
+export type BaseFormType = InstanceType<typeof BaseForm>;
 
 export type TableHeader = InstanceType<typeof TableHeader>;
 
