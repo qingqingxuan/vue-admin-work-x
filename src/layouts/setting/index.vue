@@ -14,7 +14,7 @@
         <el-col
           v-for="(item, index) of styleExampleList"
           :key="index"
-          :span="8"
+          :span="12"
           class="example-wrapper"
         >
           <StyleExample
@@ -119,14 +119,7 @@ export default defineComponent({
         rightBottomBg: "#d4d4d4",
         checked: false,
         themeId: "light",
-      },
-      {
-        leftBg: "#000000",
-        rightTopBg: "#333333",
-        rightBottomBg: "#555555",
-        checked: false,
-        themeId: "dark",
-      },
+      }
     ]);
     const layoutExampleList = reactive([
       {
@@ -211,6 +204,7 @@ export default defineComponent({
         it.checked = it === item;
       });
       usePrimaryColor(item.value);
+      store.saveSetting({ primaryColor: item.value })
       // toggleThemeColorClass(document.body, "theme_color_" + item.name);
     }
     expose({

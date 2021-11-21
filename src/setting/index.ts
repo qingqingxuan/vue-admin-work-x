@@ -2,7 +2,10 @@ import packageInfo from '../../package.json'
 const projectName = packageInfo.name
 const version = packageInfo.version
 
-export default {
+const defaultSetting = JSON.parse(localStorage.getItem('sys_setting') || '{}')
+
+export default Object.assign({
   projectName,
-  version
-} as Setting
+  version,
+  primaryColor: '#409eff'
+}, defaultSetting) as Setting

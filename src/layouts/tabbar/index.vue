@@ -338,10 +338,6 @@ export default {
     .el-tabs__item:hover{
       border: 1px solid var(--el-color-primary) !important;
     }
-    .is-focus {
-      box-shadow: none !important;
-      border: none !important;
-    }
   }
 
   .el-tabs__item + .el-tabs__item {

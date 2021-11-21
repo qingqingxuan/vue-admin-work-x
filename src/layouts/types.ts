@@ -60,5 +60,6 @@ export interface LocalLayoutStore {
   changeLayoutMode: (layoutId: any) => void
   onLogout?: () => void
   onPersonalCenter?: () => void
-  cancelLogout?: () => void
+  cancelLogout?: () => void,
+  saveSetting: (setting: any) => void
 }

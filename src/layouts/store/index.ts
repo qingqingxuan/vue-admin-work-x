@@ -1,8 +1,10 @@
 import { LocalLayoutStore } from './../types';
 import { reactive } from 'vue'
-import { toggleThemeColorClass, toggleThemeClass, toHump } from '../utils'
+import { toHump } from '../utils'
 import { Device, LayoutMode, RouteRecordRawWithHidden, StoreState, Theme, UserInfo } from '../types.js';
 import { RouteRecordRaw } from 'vue-router';
+import { usePrimaryColor } from '../hooks';
+import defaultSetting from '../../setting'
 const layoutModes = ['ltr', 'lcr', 'ttb']
 
 export default {
@@ -28,10 +30,12 @@ export default {
     }
   }),
   start(options: any) {
+    this.saveSetting(defaultSetting)
     options.state && (this.state = Object.assign(this.state, options.state))
     this.restoreVisitedView()
     this.onLogout = options.actions.onLogout
     this.onPersonalCenter = options.actions.onPersonalCenter
+    usePrimaryColor(defaultSetting.primaryColor)
     // toggleThemeColorClass(document.body, this.state.themeColor)
     // toggleThemeClass(document.body, this.state.theme)
   },
@@ -70,6 +74,9 @@ export default {
   setUserInfo(userInfo: UserInfo) {
     this.state.userInfo.nickName = userInfo ? userInfo.nickName || '' : ''
     this.state.userInfo.avatar = userInfo ? userInfo.avatar || '' : ''
+  },
+  saveSetting(setting: any) {
+    localStorage.setItem('sys_setting', JSON.stringify(Object.assign(defaultSetting, {...setting})))
   },
   reset() {
     this.state = reactive<StoreState>({

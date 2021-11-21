@@ -1,6 +1,7 @@
 interface Setting{
   projectName: string
-  version: string
+  version: string,
+  primaryColor: string,
 }
 
 interface HeaderCellStyle {

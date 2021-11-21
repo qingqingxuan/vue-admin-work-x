@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import store from "../store";
-import { defineComponent } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { useSetting } from "@/hooks";
 export default defineComponent({
   name: "Logo",
@@ -39,9 +39,18 @@ export default defineComponent({
   },
   setup() {
     const setting = useSetting();
+    const state = store.state
+    const bgColor = ref(state.theme === 'light' ? 'var(--el-color-white)' : 'var(--el-color-black)')
+    const textColor = ref(state.theme === 'light' ? 'var(--el-color-black)' : 'var(--el-color-white)')
+    watch(() => state.theme, (newVal) => {
+      bgColor.value = newVal === 'light' ? 'var(--el-color-white)' : 'var(--el-color-black)'
+      textColor.value = state.theme === 'light' ? 'var(--el-color-black)' : 'var(--el-color-white)'
+    })
     return {
-      state: store.state,
+      state,
       setting,
+      bgColor,
+      textColor
     };
   },
 });
@@ -53,7 +62,8 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--el-color-white);
+  background-color: v-bind(bgColor);
+  color: v-bind(textColor);
   border-bottom: 1px dashed var(--el-border-color-light);
   .logo-img {
     width: 30px;

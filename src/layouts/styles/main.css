@@ -1,6 +1,5 @@
 @import "~normalize.css/normalize.css";
 @import "./transition.css";
-/* @import './themes/common.scss'; */
 html,
 body,
 #app {
@@ -13,10 +12,4 @@ body,
 .el-button--primary{
   --el-button-background-color: var(--el-color-primary) !important;
   --el-button-border-color: var(--el-color-primary) !important;
-}
-.el-menu-item.is-active {
-  background-color: var(--el-menu-hover-background-color) !important;
-}
-.el-menu-item *{
-  vertical-align: middle !important;
 }
