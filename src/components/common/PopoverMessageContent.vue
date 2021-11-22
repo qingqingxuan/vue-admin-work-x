@@ -5,7 +5,11 @@
       :key="index"
       class="message-item flex"
     >
-      <div class="el-icon-message icon"></div>
+      <div class="icon">
+        <el-icon>
+          <MessageIcon />
+        </el-icon>
+      </div>
       <div class="flex flex-direction content">
         <div class="title">{{ item.title }}</div>
         <div class="sub-title">{{ item.subTitle }}</div>

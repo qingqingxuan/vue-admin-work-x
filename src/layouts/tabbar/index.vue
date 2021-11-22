@@ -265,7 +265,7 @@ export default {
   box-sizing: border-box;
   white-space: nowrap;
   background-color: var(--el-color-white);
-  box-shadow: 0px 5px 5px #f5f5f5;
+  box-shadow: 0px 5px 2px #f5f5f5;
   .contex-menu-wrapper {
     position: absolute;
     width: 130px;
@@ -291,8 +291,7 @@ export default {
     overflow: hidden;
     :deep {
       .fold-wrapper {
-        height: $tabHeight;
-        line-height: $tabHeight;
+        margin-top: calc(50% - 10px);
       }
     }
   }
@@ -322,13 +321,13 @@ export default {
       background-color: var(--el-color-white);
       padding: 0 10px !important;
     }
-    .el-tabs__item.is-active{
+    .el-tabs__item.is-active {
       color: var(--el-color-white);
       border: 1px solid var(--el-color-primary) !important;
       background-color: var(--el-color-primary);
     }
-    .el-tabs__item.is-active::before{
-      content: '';
+    .el-tabs__item.is-active::before {
+      content: "";
       width: 8px;
       height: 8px;
       display: inline-block;
@@ -336,7 +335,7 @@ export default {
       border-radius: 50%;
       margin-right: 5px;
     }
-    .el-tabs__item:hover{
+    .el-tabs__item:hover {
       border: 1px solid var(--el-color-primary) !important;
     }
   }

@@ -57,13 +57,6 @@ import {
 } from "vue";
 import { dispose, graphic } from "echarts";
 import { random } from "lodash";
-function getData() {
-  const data: number[] = [];
-  while (data.length < 12) {
-    data.push(random(20, 150));
-  }
-  return data;
-}
 const months = [
   "一月",
   "二月",
@@ -78,6 +71,13 @@ const months = [
   "十一月",
   "十二月",
 ];
+function getData() {
+  const data: number[] = [];
+  while (data.length < months.length) {
+    data.push(random(100, 150));
+  }
+  return data;
+}
 export default defineComponent({
   name: "FullYearSalesChart",
   setup() {
@@ -86,7 +86,7 @@ export default defineComponent({
     let interval: any = null;
     const init = () => {
       const option = {
-        color: ["rgba(64, 58, 255)", "rgba(136, 188, 241)"],
+        color: ["rgba(64, 58, 255)"],
         grid: {
           top: "10%",
           left: "2%",
@@ -95,7 +95,7 @@ export default defineComponent({
           containLabel: true,
         },
         legend: {
-          data: ["2019全年销售额", "2020全年销售额"],
+          data: ["2020全年销售额"],
         },
         tooltip: {
           trigger: "axis",
@@ -103,76 +103,27 @@ export default defineComponent({
         xAxis: {
           type: "category",
           data: months,
-          boundaryGap: false,
-          splitLine: { show: false },
         },
         yAxis: {
           type: "value",
         },
         series: [
           {
-            type: "line",
-            name: "2019全年销售额",
-            stack: "总量",
-            data: getData(),
-            smooth: true,
-            lineStyle: {
-              color: "rgba(110, 199, 205)",
-            },
-            label: {
-              show: true,
-              formatter(val: any) {
-                if (val.dataIndex === 0) {
-                  return "";
-                } else {
-                  return val.data;
-                }
-              },
-            },
-            areaStyle: {
-              opacity: 0.8,
-              color: new graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "rgba(234, 228, 201)",
-                },
-                {
-                  offset: 1,
-                  color: "rgba(110, 199, 205)",
-                },
-              ]),
-            },
-          },
-          {
-            type: "line",
+            type: "bar",
             name: "2020全年销售额",
             stack: "总量",
             data: getData(),
-            smooth: true,
-            lineStyle: {
-              color: "rgba(211, 58, 192)",
-            },
             label: {
               show: true,
               formatter(val: any) {
-                if (val.dataIndex === 0) {
-                  return "";
-                } else {
-                  return val.data;
-                }
+                return val.data + "万";
               },
             },
-            areaStyle: {
-              opacity: 0.8,
+            itemStyle: {
               color: new graphic.LinearGradient(0, 0, 0, 1, [
-                {
-                  offset: 0,
-                  color: "rgba(64, 158, 255)",
-                },
-                {
-                  offset: 1,
-                  color: "rgba(136, 188, 241)",
-                },
+                { offset: 0, color: "#83bff6" },
+                { offset: 0.5, color: "#188df0" },
+                { offset: 1, color: "#188df0" },
               ]),
             },
           },
@@ -188,9 +139,6 @@ export default defineComponent({
         interval = setInterval(() => {
           const option = {
             series: [
-              {
-                data: getData(),
-              },
               {
                 data: getData(),
               },

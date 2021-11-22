@@ -208,21 +208,19 @@ const onUpdateItem = (item: any) => {
     }
   });
   depCodeFormItem.disabled = true;
-  dialog.value
-    ?.show()
-    .then((component: DialogType) => {
-      formItems.forEach((it) => {
-        const propName = item[it.name];
-        if (propName) {
-          if (it.name === "depCode") {
-            item[it.name] = DP_CODE_FLAG + it.value;
-          } else {
-            item[it.name] = it.value;
-          }
-        }
-      });
-      component.close();
-    });
+  dialog.value?.show(() => {
+    if (!baseForm.value?.checkParams()) {
+      return;
+    }
+    (dialog.value as any).loading = true;
+    setTimeout(() => {
+      ElMessage.success(
+        "模拟修改成功，添加参数为：" +
+          JSON.stringify(baseForm.value?.generatorParams())
+      );
+      dialog.value?.close();
+    }, 3000);
+  });
 };
 const doRefresh = () => {
   post({
@@ -255,18 +253,18 @@ const onDeleteItem = (item: any) => {
 };
 const onAddItem = () => {
   formItems.forEach((it: any) => it.reset());
-  dialog.value!.show().then(() => {
-    if (!baseForm.value!.checkParams()) {
-      return
+  dialog.value?.show(() => {
+    if (!baseForm.value?.checkParams()) {
+      return;
     }
-    dialog.value!.loading = true
+    (dialog.value as any).loading = true;
     setTimeout(() => {
       ElMessage.success(
         "模拟添加成功，添加参数为：" +
           JSON.stringify(baseForm.value?.generatorParams())
       );
-      dialog.value?.close()
-    }, 30)
+      dialog.value?.close();
+    }, 3000);
   });
 };
 parentFormItem.selectOptions = computed(() => {

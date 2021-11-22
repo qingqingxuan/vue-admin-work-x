@@ -88,10 +88,10 @@
 
 <script lang="ts">
 import StyleExample from "./components/StyleExample.vue";
-import { toggleThemeClass, toggleThemeColorClass } from "../utils";
 import store from "../store";
 import { defineComponent, onMounted, reactive, ref } from "vue";
 import { usePrimaryColor } from "../hooks";
+import { primaryColors } from "../../setting";
 export default defineComponent({
   name: "Setting",
   components: {
@@ -119,7 +119,7 @@ export default defineComponent({
         rightBottomBg: "#d4d4d4",
         checked: false,
         themeId: "light",
-      }
+      },
     ]);
     const layoutExampleList = reactive([
       {
@@ -149,28 +149,15 @@ export default defineComponent({
         tipText: "分栏",
       },
     ]);
-    const primartyColorList = reactive([
-      {
-        name: "blue",
-        value: "#409eff",
-        checked: true,
-      },
-      {
-        name: "cyan",
-        value: "#13C2C2",
-        checked: false,
-      },
-      {
-        name: "red",
-        value: "#F5222D",
-        checked: false,
-      },
-      {
-        name: "purple",
-        value: "#722ED1",
-        checked: false,
-      },
-    ]);
+    const primartyColorList = reactive(
+      primaryColors.map((it) => {
+        return {
+          name: it,
+          value: it,
+          checked: false,
+        };
+      })
+    );
     const state = store.state;
     onMounted(() => {
       styleExampleList.forEach((it) => {
@@ -180,7 +167,7 @@ export default defineComponent({
         it.checked = state.layoutMode === it.layoutId;
       });
       primartyColorList.forEach((it) => {
-        it.checked = state.themeColor === "theme_color_" + it.name;
+        it.checked = state.primaryColor === it.value;
       });
     });
     function openDrawer() {
@@ -191,21 +178,21 @@ export default defineComponent({
         it.checked = it === item;
       });
       store.changeTheme(item.themeId);
-      toggleThemeClass(document.body, state.theme);
+      store.saveSetting({ theme: item.themeId });
     }
     function layoutExampleClick(item: any) {
       layoutExampleList.forEach((it) => {
         it.checked = it === item;
       });
       store.changeLayoutMode(item.layoutId);
+      store.saveSetting({ layoutMode: item.layoutId });
     }
     function colorClick(item: any) {
       primartyColorList.forEach((it) => {
         it.checked = it === item;
       });
       usePrimaryColor(item.value);
-      store.saveSetting({ primaryColor: item.value })
-      // toggleThemeColorClass(document.body, "theme_color_" + item.name);
+      store.saveSetting({ primaryColor: item.value });
     }
     expose({
       openDrawer,
@@ -255,12 +242,14 @@ $width: 60px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
     .color-wrapper {
       width: 20px;
       height: 20px;
       border-radius: 5px;
       border: 1px solid #c1c1c1;
       box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+      margin: 10px 8px;
     }
     .circle::after {
       content: "";

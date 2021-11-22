@@ -1,16 +1,18 @@
-import LayoutStore from '@/layouts';
-import Cookies from 'js-cookie';
-import { Module } from "vuex";
-import { UserState, RootState } from "../types";
+import LayoutStore from '@/layouts'
+import Cookies from 'js-cookie'
+import { Module } from 'vuex'
+import { UserState, RootState } from '../types'
 
 import Avatar from '@/assets/img_avatar.gif'
 
 const defaultAvatar = Avatar
 
-const userInfo: UserState = JSON.parse(localStorage.getItem('x-user-info') || '{}')
+const userInfo: UserState = JSON.parse(
+  localStorage.getItem('x-user-info') || '{}'
+)
 LayoutStore.setUserInfo({
   nickName: userInfo.nickName || 'admin',
-  avatar: userInfo.avatar || defaultAvatar
+  avatar: userInfo.avatar || defaultAvatar,
 })
 
 export const userModule: Module<UserState, RootState> = {
@@ -22,7 +24,7 @@ export const userModule: Module<UserState, RootState> = {
     token: userInfo.token || '',
     userName: userInfo.userName || '',
     nickName: userInfo.nickName || '',
-    avatar: userInfo.avatar || defaultAvatar
+    avatar: userInfo.avatar || defaultAvatar,
   },
   getters: {
     userId(state) {
@@ -30,25 +32,25 @@ export const userModule: Module<UserState, RootState> = {
     },
     roleId(state) {
       return state.roleId
-    }
+    },
   },
   actions: {
     saveUser({ commit }, userInfo: UserState) {
       return new Promise<void>((res) => {
-        commit('SAVE_USER', userInfo);
+        commit('SAVE_USER', userInfo)
         res()
       })
     },
     changeNickName({ commit }, newNickName) {
-      commit("CHANGE_NICKNAME", newNickName);
+      commit('CHANGE_NICKNAME', newNickName)
     },
     logout({ commit }) {
       commit('LOGOUT')
-    }
+    },
   },
   mutations: {
     CHANGE_NICKNAME(state, newNickName) {
-      state.nickName = newNickName;
+      state.nickName = newNickName
     },
     SAVE_USER(state, userInfo: UserState) {
       state.userId = userInfo.userId
@@ -63,7 +65,7 @@ export const userModule: Module<UserState, RootState> = {
       localStorage.setItem('x-user-info', JSON.stringify(userInfo))
       LayoutStore.setUserInfo({
         nickName: userInfo.nickName,
-        avatar: userInfo.avatar || defaultAvatar
+        avatar: userInfo.avatar || defaultAvatar,
       })
     },
     LOGOUT(state) {
@@ -77,6 +79,7 @@ export const userModule: Module<UserState, RootState> = {
       Cookies.remove('x-admin-token')
       localStorage.clear()
       LayoutStore.reset()
-    }
+      window.location.reload()
+    },
   },
-};
+}

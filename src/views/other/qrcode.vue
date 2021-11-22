@@ -73,7 +73,7 @@
 import { showErrorMessage } from "@/components/types";
 import { defineComponent, onMounted, reactive, ref } from "@vue/runtime-core";
 import Qrcode from "qrcode";
-import logo from "@/assets/work_logo.png";
+import logo from "@/assets/logo.png";
 interface QrcodeItem {
   title: string;
   url: string;

@@ -31,12 +31,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  getCurrentInstance,
-} from "vue";
-import { DialogConfig } from "../types";
+import { computed, defineComponent } from "vue";
 import VDraggable from "@/directive/draggable/draggable";
 import { useLayoutStore } from "@/layouts/hooks";
 import { nextTick, ref } from "vue";
@@ -56,42 +51,44 @@ export default defineComponent({
       default: true,
     },
   },
-  setup(props, {expose}) {
-    const innerTitle = ref(props.title || '提示')
-    const dialogRef = ref()
+  setup(props, { expose }) {
+    const innerTitle = ref(props.title || "提示");
+    const dialogRef = ref();
     const dialogVisible = ref(false);
     const loading = ref(false);
     const store = useLayoutStore();
-    const _resolve = ref()
+    const _callback = ref();
     const isMobileScreen = computed(() => {
       return store.state.device === "mobile";
     });
-    function show(): Promise<any> {
+    function show(callback: () => void) {
       dialogVisible.value = true;
       loading.value = false;
       nextTick(() => {
         const contentElement = document.querySelector(".content-wrapper");
         contentElement?.scrollTo({ top: 0 });
       });
-      return new Promise((resolve) => {
-        _resolve.value = resolve
-      })
+      _callback.value = callback;
     }
     function onVnodeMounted() {
       VDraggable.mounted(dialogRef.value?.$el.nextElementSibling);
     }
     function close() {
       dialogVisible.value = false;
-      loading.value = false
+      loading.value = false;
     }
     function onConfirm() {
-      _resolve.value(dialogRef.value)
+      if (_callback.value) {
+        _callback.value(dialogRef.value);
+      } else {
+        close();
+      }
     }
     expose({
       show,
       close,
-      loading
-    })
+      loading,
+    });
     return {
       dialogRef,
       dialogVisible,

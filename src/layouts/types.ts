@@ -1,65 +1,63 @@
-import { UnwrapNestedRefs } from '@vue/reactivity';
-import { RouteRecordRaw } from 'vue-router';
+import { UnwrapNestedRefs } from '@vue/reactivity'
+import { RouteRecordRaw } from 'vue-router'
 export type LayoutMode = 'ltr' | 'lcr' | 'ttb'
 
 export type Device = 'pc' | 'mobile' | 'pad'
 
-export type Theme = 'dark' | 'light' | 'blue-side' | 'dark_side'
-
-export type ThemeColor = 'theme_color_blue' | 'theme_color_red' | 'theme_color_purple' | 'theme_color_cyan'
-
 export declare interface UserInfo {
-  nickName: string;
-  avatar: string;
+  nickName: string
+  avatar: string
   [propsName: string]: any
 }
 
 export declare interface ActionItem {
-  showSearch?: boolean;
-  showMessage?: boolean;
-  showFullScreen?: boolean;
+  showSearch?: boolean
+  showMessage?: boolean
+  showFullScreen?: boolean
   showRefresh?: boolean
 }
 
 export interface StoreState {
-  isCollapse: boolean,
-  isFixedNavBar: boolean,
-  layoutMode: LayoutMode,
-  device: Device,
-  theme: Theme,
-  themeColor: ThemeColor,
-  userInfo: UserInfo,
-  actionItem: ActionItem,
-  permissionRoutes: Array<RouteRecordRawWithHidden>,
-  visitedView: Array<RouteRecordRaw>,
-  cachedView: Array<string>,
+  isCollapse: boolean
+  isFixedNavBar: boolean
+  layoutMode: string
+  device: Device
+  theme: string
+  primaryColor: string
+  userInfo: UserInfo
+  actionItem: ActionItem
+  permissionRoutes: Array<RouteRecordRawWithHidden>
+  visitedView: Array<RouteRecordRaw>
+  cachedView: Array<string>
 }
 
 export type RouteRecordRawWithHidden = RouteRecordRaw & { hidden: boolean }
 
-
 export interface LocalLayoutStore {
-  state: UnwrapNestedRefs<StoreState>;
-  initPermissionRoute(routes: any): void;
-  setUserInfo(userInfo: any): void;
-  reset: () => void;
-  isEmptyPermissionRoute: () => boolean;
-  start(option: any): void;
-  addCachedView: (route: RouteRecordRaw) => void,
+  state: UnwrapNestedRefs<StoreState>
+  initPermissionRoute(routes: any): void
+  setUserInfo(userInfo: any): void
+  reset: () => void
+  isEmptyPermissionRoute: () => boolean
+  start(option: any): void
+  addCachedView: (route: RouteRecordRaw) => void
   removeCachedView: (route: RouteRecordRaw) => void
   resetCachedView: () => void
-  addVisitedView: (route: any) => Promise<any>,
-  removeVisitedView: (route: RouteRecordRaw) => Promise<RouteRecordRaw>,
+  addVisitedView: (route: any) => Promise<any>
+  removeVisitedView: (route: RouteRecordRaw) => Promise<RouteRecordRaw>
   closeLeftVisitedView: (selectRoute: RouteRecordRaw) => void
   closeRightVisitedView: (selectRoute: RouteRecordRaw) => void
   closeAllVisitedView: () => Promise<void>
   persistentVisitedView: () => void
   restoreVisitedView: () => void
   toggleCollapse: (isCollapse: boolean) => void
+  toggleFixedNavBar: (isFixedNavBar: boolean) => void
   changeTheme: (themeId: any) => void
   changeLayoutMode: (layoutId: any) => void
+  changeDevice: (device: string) => void
+  isShowHeader: () => boolean
   onLogout?: () => void
   onPersonalCenter?: () => void
-  cancelLogout?: () => void,
+  cancelLogout?: () => void
   saveSetting: (setting: any) => void
 }

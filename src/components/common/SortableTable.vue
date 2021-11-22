@@ -30,7 +30,11 @@
           :body-style="{padding: 0}"
           shadow="hover"
         >
-          <span class="el-icon-sort padding-right-sm"></span>
+          <span class="padding-right-sm">
+            <el-icon>
+              <SortIcon />
+            </el-icon>
+          </span>
           <el-checkbox
             v-model="element.checked"
             :label="element.prop"
@@ -85,10 +89,12 @@ export default defineComponent({
       emit("update", innerTableProps);
     };
     const onChange = () => {
+      const temp = [...innerTableProps];
       const checkedItems = innerTableProps.filter(
         (it: TablePropsType) => it.checked
       );
-      console.log(checkedItems);
+      innerTableProps.length = 0;
+      innerTableProps.push(...temp);
       allChecked.value = checkedItems.length === innerTableProps.length;
       isIndeterminate.value =
         checkedItems.length > 0 &&
@@ -102,12 +108,11 @@ export default defineComponent({
           return { ...it };
         })
       );
-      console.log(originTableProps);
       onChange();
     };
     function onDraggableEnd(temp: Array<TablePropsType>) {
-      // innerTableProps.length = 0;
-      // innerTableProps.push(...temp);
+      innerTableProps.length = 0;
+      innerTableProps.push(...temp);
       emit("update", temp);
     }
     return {

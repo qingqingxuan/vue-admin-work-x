@@ -63,7 +63,7 @@
 
 <script lang="ts" setup>
 import printJS from "print-js";
-import imagePath from "@/assets/work_logo.png";
+import imagePath from "@/assets/logo.png";
 import { shallowReactive } from "vue";
 import { useDataTable } from "@/hooks";
 

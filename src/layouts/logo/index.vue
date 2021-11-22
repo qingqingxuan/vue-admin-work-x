@@ -3,7 +3,7 @@
     <img
       v-if="showLogo"
       class="logo-img"
-      :src="require('@/assets/work_logo.png')"
+      :src="require('@/assets/logo.png')"
     />
     <transition
       v-if="showTitle"
@@ -39,18 +39,35 @@ export default defineComponent({
   },
   setup() {
     const setting = useSetting();
-    const state = store.state
-    const bgColor = ref(state.theme === 'light' ? 'var(--el-color-white)' : 'var(--el-color-black)')
-    const textColor = ref(state.theme === 'light' ? 'var(--el-color-black)' : 'var(--el-color-white)')
-    watch(() => state.theme, (newVal) => {
-      bgColor.value = newVal === 'light' ? 'var(--el-color-white)' : 'var(--el-color-black)'
-      textColor.value = state.theme === 'light' ? 'var(--el-color-black)' : 'var(--el-color-white)'
-    })
+    const state = store.state;
+    const bgColor = ref(
+      state.theme === "light"
+        ? "var(--el-color-white)"
+        : "var(--el-color-black)"
+    );
+    const textColor = ref(
+      state.theme === "light"
+        ? "var(--el-color-black)"
+        : "var(--el-color-white)"
+    );
+    watch(
+      () => state.theme,
+      (newVal) => {
+        bgColor.value =
+          newVal === "light"
+            ? "var(--el-color-white)"
+            : "var(--el-color-black)";
+        textColor.value =
+          state.theme === "light"
+            ? "var(--el-color-black)"
+            : "var(--el-color-white)";
+      }
+    );
     return {
       state,
       setting,
       bgColor,
-      textColor
+      textColor,
     };
   },
 });

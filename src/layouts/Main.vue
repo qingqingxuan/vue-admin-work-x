@@ -12,19 +12,20 @@
   </router-view>
 </template>
 
-<script>
-import store from './store'
-export default {
-  name: 'Main',
-  data() {
+<script lang="ts">
+import { computed, defineComponent } from "vue";
+import store from "./store";
+export default defineComponent({
+  name: "Main",
+  setup() {
+    const state = store.state;
+    const cachedViews = computed(() => {
+      return state.cachedView.map((it) => it);
+    });
     return {
-      state: store.state
-    }
+      state,
+      cachedViews,
+    };
   },
-  computed: {
-    cachedViews() {
-      return this.state.cachedView.map((it) => it)
-    }
-  }
-}
+});
 </script>

@@ -154,7 +154,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   color: currentColor;
-  z-index: 999;
+  z-index: 9999;
   .action-item {
     min-width: 40px;
   }

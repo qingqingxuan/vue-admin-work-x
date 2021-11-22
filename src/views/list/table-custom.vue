@@ -13,7 +13,10 @@
     </TableHeader>
     <TableBody ref="tableBody">
       <template #tableConfig>
-        <div class="flex justify-between padding" style="border-bottom: 1px dashed var(--el-border-color-light)">
+        <div
+          class="flex justify-between padding"
+          style="border-bottom: 1px dashed var(--el-border-color-light)"
+        >
           <el-link :underline="false">表格设置</el-link>
           <div>
             <span class="margin-right">
@@ -23,7 +26,6 @@
               <el-checkbox v-model="tableConfig.stripe">斑马纹</el-checkbox>
             </span>
             <el-tooltip
-              class="item"
               effect="dark"
               content="刷新页面"
               placement="top"

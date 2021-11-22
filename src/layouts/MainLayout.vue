@@ -22,36 +22,38 @@
   </div>
 </template>
 
-<script>
-import NavBar from './navbar/NavBar'
-import TabBar from './tabbar'
-import Main from './Main'
-import store from './store'
-export default {
-  name: 'MainLayout',
+<script lang="ts">
+import NavBar from "./navbar/NavBar.vue";
+import TabBar from "./tabbar/index.vue";
+import Main from "./Main.vue";
+import store from "./store";
+import { computed, defineComponent } from "vue";
+export default defineComponent({
+  name: "MainLayout",
   components: { NavBar, Main, TabBar },
   props: {
     showNavBar: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
-  data() {
+  setup() {
+    const state = store.state;
+    function onFixedHeader() {
+      store.toggleFixedNavBar(!state.isFixedNavBar);
+    }
+    const isShowHeader = computed(() => {
+      return store.isShowHeader();
+    });
     return {
-      state: store.state
-    }
+      state,
+      isShowHeader,
+      onFixedHeader,
+    };
   },
-  computed: {
-    isShowHeader() {
-      return store.isShowHeader()
-    }
-  },
-  methods: {
-    onFixedHeader() {
-      store.toggleFixedNavBar(!this.state.isFixedNavBar)
-    }
-  }
-}
+  computed: {},
+  methods: {},
+});
 </script>
 
 <style lang="scss" scoped>
@@ -98,7 +100,7 @@ export default {
     position: fixed;
     top: 0;
     transition: width $transitionTime;
-    z-index: 99;
+    z-index: 96;
   }
   .tab-bar-top {
     padding-top: $logoHeight;

@@ -1,52 +1,57 @@
 <template>
   <div class="login-container">
-    <div
-      ref="loginWrapper"
-      class="login-bg-wrapper"
-    >
-      <img :src="$isMobile ? ImageMobileBg1 : ImageBg1" />
-    </div>
-    <div class="flex form-wrapper">
-      <div class="left"></div>
-      <div class="right">
-        <div class="my-width flex-sub flex justify-center align-center">
-          <div class="logo-wrapper">
-            <img :src="require('@/assets/work_logo.png')" />
-          </div>
-          <div class="title margin-left">Vue Admin Work</div>
+    <div class="left">
+      <img :src="ImageBg1">
+      <div class="content">
+        <img :src="logo" />
+        <div class="proj-name">{{ projectName }}</div>
+        <div class="desc">Vue3 + Webpack + Typescript + Element Plus</div>
+        <div class="ttiipp">
+          重"心"出发，从"质"启程
         </div>
-        <div class="form-container">
-          <div class="item-wrapper">
-            <el-input
-              v-model="username"
-              placeholder="请输入用户名/手机号"
-              prefix-icon="el-icon-user"
-              clearable
-            />
-          </div>
-          <div class="item-wrapper margin-top-lg">
-            <el-input
-              v-model="password"
-              placeholder="请输入密码"
-              type="password"
-              clearable
-              prefix-icon="el-icon-lock"
-            />
-          </div>
-          <!-- <div class="item-wrapper">
-            <VawVerify class="margin-top-lg" @verify-success="onVerifySuccess" />
-          </div> -->
-          <div class="flex-sub"></div>
-          <div class="margin-top-lg">
-            <el-button
-              type="primary"
-              class="login"
-              :loading="loading"
-              @click="onLogin"
-            >
-              登录
-            </el-button>
-          </div>
+        <div class="bottom">{{ projectName + '    ' +version }} · Made by qingqingxuan</div>
+      </div>
+    </div>
+    <div class="right">
+      <el-card class="form-wrapper">
+        <div class="title">账号登录</div>
+        <div class="item-wrapper">
+          <el-input
+            v-model="username"
+            placeholder="请输入用户名/手机号"
+            clearable
+          >
+            <template #prefix>
+              <el-icon class="el-input__icon">
+                <IphoneIcon />
+              </el-icon>
+            </template>
+          </el-input>
+        </div>
+        <div class="item-wrapper margin-top-lg">
+          <el-input
+            v-model="password"
+            placeholder="请输入密码"
+            type="password"
+            clearable
+          >
+            <template #prefix>
+              <el-icon class="el-input__icon">
+                <LockIcon />
+              </el-icon>
+            </template>
+          </el-input>
+        </div>
+        <div class="flex-sub"></div>
+        <div class="margin-top-lg">
+          <el-button
+            type="primary"
+            class="login"
+            :loading="loading"
+            @click="onLogin"
+          >
+            登录
+          </el-button>
         </div>
         <div class="my-width flex-sub margin-top">
           <div class="flex justify-between">
@@ -57,7 +62,7 @@
             >忘记密码？</el-link>
           </div>
         </div>
-      </div>
+      </el-card>
     </div>
   </div>
 </template>
@@ -66,15 +71,18 @@
 import { defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ImageBg1 from "@/assets/img_login_bg_01.jpg";
-import ImageMobileBg1 from "@/assets/img_login_mobile_bg_01.jpg";
+import logo from "@/assets/logo.png";
 import { post, Response } from "@/api/http";
 import { login } from "@/api/url";
 import { ElMessage } from "element-plus";
 import { UserState } from "@/store/types";
 import { useStore } from "@/store";
+import setting from "../../setting";
 export default defineComponent({
   name: "Login",
   setup() {
+    const projectName = setting.projectName;
+    const version = setting.version;
     const username = ref("admin");
     const password = ref("123456");
     const autoLogin = ref(true);
@@ -110,170 +118,137 @@ export default defineComponent({
         });
     };
     return {
+      projectName,
+      version,
       username,
       password,
       autoLogin,
       loading,
       onLogin,
       ImageBg1,
-      ImageMobileBg1,
+      logo,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
+@keyframes scale-to {
+  0% {
+    transform: scale(0.2, 0.2);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+$leftWith: 35%;
 .login-container {
-  position: relative;
   overflow: hidden;
-  height: 100%;
-  width: 100%;
-  .login-bg-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  .left {
+    position: relative;
+    width: $leftWith;
+    min-width: $leftWith;
+    max-width: $leftWith;
+    overflow: hidden;
     & > img {
-      width: 100%;
       height: 100%;
-      object-fit: cover;
+      width: 100%;
+      object-fit: fill;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
     }
-  }
-  .logo-wrapper {
-    & img {
-      width: 50px;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      background-color: rgba(0, 0, 0, 0.5);
     }
-    & img::after {
-      content: "欢迎来到vue-admin-work-x";
-    }
-  }
-  .login-footer-wrapper {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    ::v-deep {
-      .el-card {
-        background-color: transparent;
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      & > img {
+        width: 100px;
+        height: 100px;
+        margin-top: 20%;
       }
-    }
-  }
-  .form-wrapper {
-    position: absolute;
-    top: 18.5%;
-    left: 0;
-    right: 0;
-    bottom: 15.8%;
-    @media screen and (max-width: 768px) {
-      .left {
-        display: none;
+      .proj-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: #fff;
+        margin-top: 10px;
       }
-      .right {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        .my-width {
-          width: 80%;
-        }
-        .title {
-          display: block;
-          text-align: center;
-          font-size: 20px;
-          font-weight: bold;
-          color: #34495e;
-          text-shadow: 0 0 0.2em #41b883, -0 -0 0.2em #41b883;
-        }
-        .form-container {
-          width: 80%;
-          min-height: 60%;
-          text-align: center;
-          background: rgba(183, 183, 183, 0.2);
-          padding: 5%;
-          border-radius: 5px;
-          border: 2px solid #fff;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .item-wrapper {
-            width: 100%;
-          }
-          .login {
-            width: 100%;
-          }
-        }
+      .desc {
+        font-size: 14px;
+        color: #fff;
+        margin-top: 10px;
       }
-    }
-    @media screen and (min-width: 768px) and (max-width: 992px) {
-      .left {
-        display: none;
-      }
-      .right {
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        .my-width {
-          width: 48%;
-        }
-        .title {
-          display: block;
-          text-align: center;
-          font-size: 20px;
-          font-weight: bold;
-          color: #5497ff;
-        }
-        .form-container {
-          width: 50%;
-          height: 60%;
-          margin-bottom: 10%;
-          text-align: center;
-          background: rgba(183, 183, 183, 0.2);
-          padding: 5%;
-          border-radius: 5px;
-          border: 2px solid #fff;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .item-wrapper {
-            width: 100%;
-          }
-          .login {
-            width: 100%;
-          }
-        }
-      }
-    }
-    @media screen and (min-width: 992px) {
-      .left {
-        display: block;
-        flex: 1;
-      }
-      .right {
-        margin-left: 10%;
+      .ttiipp {
         flex: 1;
         display: flex;
         justify-content: center;
-        flex-direction: column;
-        .my-width {
-          width: 48%;
-        }
-        .title {
-          display: block;
-          font-size: 24px;
-          font-weight: bold;
-          color: #5497ff;
-        }
-        .item-wrapper {
-          width: 48%;
-        }
-        .login {
-          width: 48%;
-        }
+        align-items: center;
+        color: #fff;
+        font-weight: 500;
+        font-size: 30px;
+        text-shadow: 0 0 5px var(--el-color-primary),
+          0 0 15px var(--el-color-primary), 0 0 50px var(--el-color-primary),
+          0 0 150px var(--el-color-primary);
+        animation: scale-to 0.5s linear 1s;
       }
+      .bottom {
+        color: silver;
+        margin-bottom: 5%;
+        font-size: 16px;
+      }
+    }
+  }
+  .right {
+    flex: 1;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .form-wrapper {
+      width: 50%;
+      .title {
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .login {
+        width: 100%;
+      }
+    }
+  }
+}
+@media screen and(max-width: 966px) {
+  .left {
+    display: none;
+  }
+  .right {
+    background-image: url("../../assets/img_login_mobile_bg_01.jpg");
+    background-size: cover;
+    .form-wrapper {
+      width: 80% !important;
     }
   }
 }

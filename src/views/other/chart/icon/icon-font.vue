@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <el-card>
     <el-row class="icon-parent">
       <el-col
         :xs="6"
@@ -13,7 +13,7 @@
         <div class="icon-wrapper flex flex-direction justify-center align-center">
           <SvgIcon
             :icon-class="item.font_class"
-            style="font-size: 30px"
+            style="font-size: 20px"
           />
           <div class=" text-xs margin-top">{{item.font_class}}</div>
           <div
@@ -32,15 +32,14 @@
       @refresh="doRefresh"
       @pageChanged="doRefresh"
     />
-  </div>
+  </el-card>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, provide, reactive, ref } from "vue";
+import { defineComponent, onMounted, reactive, ref } from "vue";
 import Iconfonts from "@/icons/iconfont/iconfont.json";
-import { showConfirmBox } from "@/components/types";
 import type { TableFooter } from "@/components/types";
-import { TinyEmitter } from "tiny-emitter";
+import { ElMessage } from "element-plus";
 interface IconItem {
   font_class: string;
   icon_id: string;
@@ -56,7 +55,7 @@ export default defineComponent({
     const tableFooter = ref<TableFooter>();
     function doRefresh() {
       const { page = 10, pageSize = 100 } =
-        tableFooter.value!.withPageInfoData();
+        tableFooter.value?.withPageInfoData() as any;
       icons.length = 0;
       const start = (page - 1) * pageSize;
       icons.push(...Iconfonts.glyphs.slice(start, 100 + start));
@@ -68,7 +67,7 @@ export default defineComponent({
       tableFooter.value?.setPageSize(100);
     });
     const onCopy = (item: IconItem) => {
-      showConfirmBox("复制成功:" + JSON.stringify(item));
+      ElMessage.success("已选择:" + JSON.stringify(item));
     };
     return {
       tableFooter,

@@ -337,14 +337,27 @@ export const editorRoutes = [
   {
     menuUrl: "/list",
     menuName: "列表页面",
-    icon: "list",
+    icon: "OperationIcon",
+    parentPath: '',
     children: [
       {
+        parentPath: '/list',
         menuUrl: "/list/table-with-search",
         menuName: "表格搜索",
       },
       {
-        menuUrl: "/list/grid-list",
+        parentPath: '/list',
+        menuUrl: "/list/table-custom",
+        menuName: "自定义表格",
+      },
+      {
+        parentPath: '/list',
+        menuUrl: "/list/list",
+        menuName: "普通列表",
+      },
+      {
+        parentPath: '/list',
+        menuUrl: "/list/card-list",
         menuName: "卡片列表",
       },
     ],
@@ -352,26 +365,72 @@ export const editorRoutes = [
   {
     menuUrl: "/form",
     menuName: "表单页面",
-    tip: "new",
-    icon: "form",
+    tip: "dot",
+    icon: "PostcardIcon",
+    parentPath: '',
     children: [
       {
+        parentPath: '/form',
         menuUrl: "/form/base-form-view",
         menuName: "基本表单",
         cacheable: true,
       },
       {
+        parentPath: '/form',
         menuUrl: "/form/advance-form",
         menuName: "高级表单",
         cacheable: true,
       },
       {
+        parentPath: '/form',
         menuUrl: "/form/step-form",
         menuName: "分步表单",
       },
       {
-        menuUrl: "/form/tip",
-        menuName: "通知提示",
+        parentPath: '/form',
+        menuUrl: "/form/form-component",
+        menuName: "表单组件",
+      },
+    ],
+  },
+  {
+    menuUrl: "/result",
+    menuName: "结果页面",
+    icon: "TakeawayBoxIcon",
+    parentPath: '',
+    children: [
+      {
+        parentPath: '/result',
+        menuUrl: "/result/success",
+        menuName: "成功页面",
+      },
+      {
+        parentPath: '/result',
+        menuUrl: "/result/fail",
+        menuName: "失败页面",
+      },
+    ],
+  },
+  {
+    menuUrl: "/exception",
+    menuName: "异常页面",
+    icon: "WarningIcon",
+    parentPath: '',
+    children: [
+      {
+        parentPath: '/exception',
+        menuUrl: "/exception/404",
+        menuName: "404页面",
+      },
+      {
+        parentPath: '/exception',
+        menuUrl: "/exception/403",
+        menuName: "403页面",
+      },
+      {
+        parentPath: '/exception',
+        menuUrl: "/exception/500",
+        menuName: "500页面",
       },
     ],
   },
@@ -379,37 +438,36 @@ export const editorRoutes = [
     menuUrl: "/editor",
     menuName: "编辑器",
     tip: "12",
-    icon: "editor",
+    icon: "EditIcon",
+    parentPath: '',
     children: [
       {
+        parentPath: '/editor',
         menuUrl: "/editor/rich-text",
         menuName: "富文本",
       },
       {
+        parentPath: '/editor',
         menuUrl: "/editor/markdown",
         menuName: "markdown",
       },
     ],
   },
   {
-    menuUrl: "/other",
-    menuName: "其它功能",
+    menuUrl: "/excel",
+    menuName: "Excel",
+    icon: "NotebookIcon",
+    parentPath: '',
     children: [
       {
-        menuUrl: "/other/print",
-        menuName: "打印",
+        parentPath: '/excel',
+        menuUrl: "/excel/export-excel",
+        menuName: "导出Excel",
       },
       {
-        menuUrl: "http://www.baidu.com",
-        menuName: "外链",
-      },
-      {
-        menuUrl: "/other/qrcode",
-        menuName: "二维码",
-      },
-      {
-        menuUrl: "/other/css-animation",
-        menuName: "Css动画",
+        parentPath: '/excel',
+        menuUrl: "/excel/export-rows-excel",
+        menuName: "导出选中行",
       },
     ],
   },

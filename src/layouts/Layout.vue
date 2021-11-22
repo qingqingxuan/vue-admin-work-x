@@ -31,49 +31,48 @@
   </div>
 </template>
 
-<script>
-import store from './store'
-export default {
-  name: 'Layout',
-  data() {
-    return {
-      state: store.state
-    }
-  },
-  computed: {
-    isShowHeader() {
-      return store.isShowHeader()
-    }
-  },
-  mounted() {
-    this.handleScreenResize()
-    window.addEventListener('resize', this.handleScreenResize)
-  },
-  unmounted() {
-    window.removeEventListener('resize', this.handleScreenResize)
-  },
-  methods: {
-    handleScreenResize() {
-      const width = document.body.clientWidth
+<script lang="ts">
+import { computed, defineComponent, onBeforeUnmount, onMounted } from "vue";
+import store from "./store";
+export default defineComponent({
+  name: "Layout",
+  setup() {
+    const isShowHeader = computed(() => {
+      return store.isShowHeader();
+    });
+    function handleScreenResize() {
+      const width = document.body.clientWidth;
       if (width <= 768) {
-        store.changeDevice('mobile')
-        store.toggleCollapse(true)
+        store.changeDevice("mobile");
+        store.toggleCollapse(true);
       } else if (width < 992 && width > 768) {
-        store.changeDevice('pad')
-        store.toggleCollapse(true)
+        store.changeDevice("pad");
+        store.toggleCollapse(true);
       } else if (width < 1200 && width >= 992) {
-        store.changeDevice('pc')
-        store.toggleCollapse(false)
+        store.changeDevice("pc");
+        store.toggleCollapse(false);
       } else {
-        store.changeDevice('pc')
-        store.toggleCollapse(false)
+        store.changeDevice("pc");
+        store.toggleCollapse(false);
       }
-    },
-    closeMenu() {
-      store.toggleCollapse(true)
     }
-  }
-}
+    function closeMenu() {
+      store.toggleCollapse(true);
+    }
+    onMounted(() => {
+      handleScreenResize();
+      window.addEventListener("resize", handleScreenResize);
+    });
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", handleScreenResize);
+    });
+    return {
+      state: store.state,
+      isShowHeader,
+      closeMenu,
+    };
+  },
+});
 </script>
 
 <style scoped lang="scss">
@@ -98,7 +97,7 @@ export default {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 997;
+    z-index: 98;
   }
   .close-shadow {
     display: none;

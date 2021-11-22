@@ -277,27 +277,12 @@ function onAddItem() {
   menuModel.hidden = false;
   menuModel.icon = "";
   menuModel.affix = false;
-  dialogRef.value
-    ?.show({
-      showSubmitLoading: true,
-      validator: () => {
-        if (!menuModel.name) {
-          ElMessage.error("请输入菜单名称");
-          return false;
-        }
-        if (!menuModel.path) {
-          ElMessage.error("请输入菜单地址");
-          return false;
-        }
-        return true;
-      },
-    })
-    .then((component: DialogType) => {
-      ElMessageBox.confirm(
-        "模拟数据添加成功，参数为：\n" + JSON.stringify(menuModel)
-      );
-      component.close();
-    });
+  dialogRef.value?.show(() => {
+    ElMessageBox.confirm(
+      "模拟数据添加成功，参数为：\n" + JSON.stringify(menuModel)
+    );
+    dialogRef.value?.close();
+  });
 }
 function onUpdateItem(item: any) {
   menuModel.id = uuid();
@@ -307,27 +292,12 @@ function onUpdateItem(item: any) {
   menuModel.badge = parseInt(item.tip) ? "number" : item.tip;
   menuModel.badgeNum = parseInt(item.tip);
   menuModel.icon = item.icon || "";
-  dialogRef.value
-    ?.show({
-      showSubmitLoading: true,
-      validator: () => {
-        if (!menuModel.name) {
-          ElMessage.error("请输入菜单名称");
-          return false;
-        }
-        if (!menuModel.path) {
-          ElMessage.error("请输入菜单地址");
-          return false;
-        }
-        return true;
-      },
-    })
-    .then((component: DialogType) => {
-      ElMessageBox.confirm(
-        "模拟数据修改成功，参数为：" + JSON.stringify(menuModel)
-      );
-      component.close();
-    });
+  dialogRef.value?.show(() => {
+    ElMessageBox.confirm(
+      "模拟数据修改成功，参数为：" + JSON.stringify(menuModel)
+    );
+    dialogRef.value?.close();
+  });
 }
 function onDeleteItem(item: any) {
   ElMessageBox.confirm("是否要删除此数据？").then(() => {

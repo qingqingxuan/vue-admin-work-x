@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-infinite-scroll="onLoad"
-    :infinite-scroll-disabled="disabled"
-  >
+  <el-card>
     <el-row class="icon-parent">
       <el-col
         :xs="6"
@@ -10,14 +7,13 @@
         :sm="3"
         :lg="3"
         :xl="3"
-        v-for="item of icons"
+        v-for="item of iconArray"
         :key="item"
       >
         <div class="icon-wrapper flex flex-direction justify-center align-center">
-          <i
-            :class="item"
-            style="font-size: 30px"
-          />
+          <el-icon size="20">
+            <component :is="item + 'Icon'" />
+          </el-icon>
           <div class="text-xs margin-top text-center">{{item}}</div>
           <div
             class="copy text-center"
@@ -28,47 +24,26 @@
         </div>
       </el-col>
     </el-row>
-    <div class="text-center  padding-tb">{{loading ? '加载中…' : '加载完成'}}</div>
-  </div>
+  </el-card>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  nextTick,
-  onMounted,
-  reactive,
-  ref,
-} from "@vue/runtime-core";
-import { showConfirmBox } from "@/components/types";
-import { ElementIcons } from "@/assets/data/element-plus-icon";
+import { defineComponent, ref } from "vue";
+import * as ElIcons from "@element-plus/icons";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "ElementPlus",
   setup() {
     const loading = ref(false);
-    const icons = reactive([] as Array<string>);
-    const iconArray = ElementIcons.split(" ");
-    const disabled = computed(() => icons.length == iconArray.length);
+    const iconArray = Object.keys(ElIcons);
     const onCopy = (item: string) => {
-      showConfirmBox("复制成功:" + item);
-    };
-    const onLoad = () => {
-      loading.value = true;
-      setTimeout(() => {
-        icons.push(...iconArray.slice(icons.length, icons.length - 1 + 100));
-        nextTick(() => {
-          loading.value = icons.length != iconArray.length;
-        });
-      }, 2000);
+      ElMessage.success("已选择: " + item + "Icon");
     };
     return {
       loading,
-      icons,
-      disabled,
+      iconArray,
       onCopy,
-      onLoad,
     };
   },
 });
@@ -87,7 +62,7 @@ export default defineComponent({
     padding-bottom: 0;
     transition: padding-bottom 0.2s ease-in-out;
     &:hover {
-      color: #409eff;
+      color: var(--el-color-primary);
       box-shadow: 0 0 10px #f0f0f0;
       padding-bottom: 22px;
       transition: padding-bottom 0.2s ease-in-out;

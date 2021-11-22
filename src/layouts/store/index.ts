@@ -1,9 +1,14 @@
-import { LocalLayoutStore } from './../types';
+import { LocalLayoutStore } from './../types'
 import { reactive } from 'vue'
 import { toHump } from '../utils'
-import { Device, LayoutMode, RouteRecordRawWithHidden, StoreState, Theme, UserInfo } from '../types.js';
-import { RouteRecordRaw } from 'vue-router';
-import { usePrimaryColor } from '../hooks';
+import {
+  Device,
+  RouteRecordRawWithHidden,
+  StoreState,
+  UserInfo,
+} from '../types.js'
+import { RouteRecordRaw } from 'vue-router'
+import { usePrimaryColor } from '../hooks'
 import defaultSetting from '../../setting'
 const layoutModes = ['ltr', 'lcr', 'ttb']
 
@@ -11,23 +16,23 @@ export default {
   state: reactive<StoreState>({
     isCollapse: false,
     isFixedNavBar: true,
-    layoutMode: 'lcr',
+    layoutMode: defaultSetting.layoutMode,
     device: 'pc',
-    theme: 'light',
-    themeColor: 'theme_color_blue',
+    theme: defaultSetting.theme,
+    primaryColor: defaultSetting.primaryColor,
     permissionRoutes: [],
     visitedView: [],
     cachedView: [],
     userInfo: {
       nickName: '',
-      avatar: ''
+      avatar: '',
     },
     actionItem: {
       showSearch: true,
       showMessage: true,
       showFullScreen: true,
-      showRefresh: true
-    }
+      showRefresh: true,
+    },
   }),
   start(options: any) {
     this.saveSetting(defaultSetting)
@@ -36,8 +41,8 @@ export default {
     this.onLogout = options.actions.onLogout
     this.onPersonalCenter = options.actions.onPersonalCenter
     usePrimaryColor(defaultSetting.primaryColor)
-    // toggleThemeColorClass(document.body, this.state.themeColor)
-    // toggleThemeClass(document.body, this.state.theme)
+    this.changeLayoutMode(defaultSetting.layoutMode)
+    this.changeTheme(defaultSetting.theme)
   },
   randomLayouMode() {
     return layoutModes[Math.floor(Math.random() * layoutModes.length)]
@@ -48,20 +53,20 @@ export default {
   toggleFixedNavBar(newStatus: boolean) {
     this.state.isFixedNavBar = newStatus
   },
-  changeLayoutMode(mode: LayoutMode = 'ltr') {
+  changeLayoutMode(mode = 'ltr') {
     this.state.layoutMode = mode
   },
   changeDevice(device: Device = 'pc') {
     this.state.device = device
   },
-  changeTheme(theme: Theme = 'dark') {
+  changeTheme(theme = 'dark') {
     this.state.theme = theme
   },
   isShowHeader() {
     return this.state.device === 'pc' && this.state.layoutMode === 'ttb'
   },
   getSplitTabs() {
-    return this.state.permissionRoutes.filter(it => {
+    return this.state.permissionRoutes.filter((it) => {
       return it.path && !it.hidden && it.children && it.children.length > 0
     })
   },
@@ -69,36 +74,41 @@ export default {
     this.state.permissionRoutes = routes
   },
   isEmptyPermissionRoute() {
-    return !this.state.permissionRoutes || this.state.permissionRoutes.length === 0
+    return (
+      !this.state.permissionRoutes || this.state.permissionRoutes.length === 0
+    )
   },
   setUserInfo(userInfo: UserInfo) {
     this.state.userInfo.nickName = userInfo ? userInfo.nickName || '' : ''
     this.state.userInfo.avatar = userInfo ? userInfo.avatar || '' : ''
   },
   saveSetting(setting: any) {
-    localStorage.setItem('sys_setting', JSON.stringify(Object.assign(defaultSetting, {...setting})))
+    localStorage.setItem(
+      'sys_setting',
+      JSON.stringify(Object.assign(defaultSetting, { ...setting }))
+    )
   },
   reset() {
     this.state = reactive<StoreState>({
       isCollapse: false,
       isFixedNavBar: true,
-      layoutMode: 'lcr',
+      layoutMode: defaultSetting.layoutMode,
       device: 'pc',
-      theme: 'light',
-      themeColor: 'theme_color_blue',
+      theme: defaultSetting.theme,
+      primaryColor: defaultSetting.primaryColor,
       permissionRoutes: [],
       visitedView: [],
       cachedView: [],
       userInfo: {
         nickName: '',
-        avatar: ''
+        avatar: '',
       },
       actionItem: {
         showSearch: true,
         showMessage: true,
         showFullScreen: true,
-        showRefresh: true
-      }
+        showRefresh: true,
+      },
     })
   },
   addCachedView(route: RouteRecordRaw) {
@@ -118,13 +128,19 @@ export default {
   },
   resetCachedView() {
     // 从已经访问过的页面的数组中过滤可缓存的页面
-    this.state.cachedView = this.state.visitedView.filter((it, _index) => {
-      return it.name && it.meta && it.meta.cacheable
-    }).map(it => toHump(it.name as string))
+    this.state.cachedView = this.state.visitedView
+      .filter((it, _index) => {
+        return it.name && it.meta && it.meta.cacheable
+      })
+      .map((it) => toHump(it.name as string))
   },
   addVisitedView(route: any) {
-    return new Promise<any>(resolve => {
-      if (!this.state.visitedView.find((it: any) => it.fullPath === route.fullPath)) {
+    return new Promise<any>((resolve) => {
+      if (
+        !this.state.visitedView.find(
+          (it: any) => it.fullPath === route.fullPath
+        )
+      ) {
         this.state.visitedView.push(route)
         this.persistentVisitedView()
       }
@@ -133,7 +149,7 @@ export default {
     })
   },
   removeVisitedView(route: RouteRecordRaw) {
-    return new Promise<RouteRecordRaw>(resolve => {
+    return new Promise<RouteRecordRaw>((resolve) => {
       this.state.visitedView.splice(this.state.visitedView.indexOf(route), 1)
       this.persistentVisitedView()
       this.removeCachedView && this.removeCachedView(route)
@@ -141,7 +157,7 @@ export default {
     })
   },
   closeLeftVisitedView(selectRoute: RouteRecordRaw) {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve) => {
       const selectIndex = this.state.visitedView.indexOf(selectRoute)
       if (selectIndex !== -1) {
         this.state.visitedView = this.state.visitedView.filter((it, index) => {
@@ -154,7 +170,7 @@ export default {
     })
   },
   closeRightVisitedView(selectRoute: RouteRecordRaw) {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve) => {
       const selectIndex = this.state.visitedView.indexOf(selectRoute)
       if (selectIndex !== -1) {
         this.state.visitedView = this.state.visitedView.filter((it, index) => {
@@ -167,12 +183,14 @@ export default {
     })
   },
   closeAllVisitedView() {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve) => {
       this.state.visitedView = this.state.visitedView.filter((it, _index) => {
-        return (it.meta && it.meta.affix)
+        return it.meta && it.meta.affix
       })
       this.persistentVisitedView()
-      this.state.cachedView = this.state.visitedView.filter(route => route.name && route.meta && route.meta.cacheable).map(it => toHump(it.name as string))
+      this.state.cachedView = this.state.visitedView
+        .filter((route) => route.name && route.meta && route.meta.cacheable)
+        .map((it) => toHump(it.name as string))
       resolve()
     })
   },
@@ -184,7 +202,7 @@ export default {
         name: it.name,
         params: it.params,
         path: it.path,
-        query: it.query
+        query: it.query,
       }
     })
     localStorage.setItem('visited', JSON.stringify(tempPersistendRoutes))
@@ -194,9 +212,14 @@ export default {
     const originRouteString = localStorage.getItem('visited')
     const persistentVisitedRoutes = JSON.parse(originRouteString || '[]')
     persistentVisitedRoutes.forEach((originRoute: any) => {
-      if (!this.state.visitedView.find((it: any) => it.fullPath === originRoute.fullPath && it.name === originRoute.name)) {
+      if (
+        !this.state.visitedView.find(
+          (it: any) =>
+            it.fullPath === originRoute.fullPath && it.name === originRoute.name
+        )
+      ) {
         this.state.visitedView.push(originRoute)
       }
     })
-  }
+  },
 } as LocalLayoutStore

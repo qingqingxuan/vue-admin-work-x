@@ -34,14 +34,24 @@ export default defineComponent({
     },
   },
   setup() {
-    const state = store.state
-    const bgColor = ref(state.theme === 'light' ? 'var(--el-color-white)' : 'var(--el-color-black)')
-    watch(() => state.theme, (newVal) => {
-      bgColor.value = newVal === 'light' ? 'var(--el-color-white)' : 'var(--el-color-black)'
-    })
+    const state = store.state;
+    const bgColor = ref(
+      state.theme === "light"
+        ? "var(--el-color-white)"
+        : "var(--el-color-black)"
+    );
+    watch(
+      () => state.theme,
+      (newVal) => {
+        bgColor.value =
+          newVal === "light"
+            ? "var(--el-color-white)"
+            : "var(--el-color-black)";
+      }
+    );
     return {
       state,
-      bgColor
+      bgColor,
     };
   },
 });
@@ -49,27 +59,28 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "../../styles/variables.scss";
-:deep(.el-menu){
+:deep(.el-menu) {
   --el-menu-hover-text-color: var(--el-color-primary) !important;
   --el-menu-hover-background-color: var(--el-color-primary-light-8) !important;
 }
-:deep(.el-menu-item:hover){
+:deep(.el-menu-item) {
+  display: flex;
+  align-items: center;
+}
+:deep(.el-menu-item:hover) {
   background-color: transparent;
   color: var(--el-menu-hover-text-color) !important;
 }
-:deep(.el-sub-menu__title:hover){
+:deep(.el-sub-menu__title:hover) {
   background-color: transparent;
   color: var(--el-menu-hover-text-color) !important;
 }
 :deep(.el-sub-menu .el-menu-item) {
   height: 45px;
-  line-height: 45px;
+  line-height: 0;
 }
 :deep(.el-menu-item.is-active) {
   background-color: var(--el-menu-hover-background-color) !important;
-}
-:deep(.el-menu-item *){
-  vertical-align: middle !important;
 }
 .scrollbar {
   height: calc(100% - #{$logoHeight}) !important;

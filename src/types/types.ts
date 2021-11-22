@@ -2,6 +2,8 @@ interface Setting{
   projectName: string
   version: string,
   primaryColor: string,
+  theme: string,
+  layoutMode: string,
 }
 
 interface HeaderCellStyle {
