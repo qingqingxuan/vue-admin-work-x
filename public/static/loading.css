@@ -34,5 +34,5 @@
 
 .first-loading-wrp .loading-wrp .splash__item {
   animation: loading__scale-to-up 0.5s linear infinite alternate-reverse;
-  animation-delay: calc(var(--i) + 0.2s);
+  animation-delay: calc(var(--i) + 0s);
 }
