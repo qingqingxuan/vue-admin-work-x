@@ -19,6 +19,7 @@
     </div>
     <el-backtop target=".vaw-main-layout-container">
     </el-backtop>
+    <Setting style="z-index: 100" ref="appSettingRef" />
   </div>
 </template>
 
@@ -27,7 +28,8 @@ import NavBar from "./navbar/NavBar.vue";
 import TabBar from "./tabbar/index.vue";
 import Main from "./Main.vue";
 import store from "./store";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
+import useEmit from "@/hooks/Emit";
 export default defineComponent({
   name: "MainLayout",
   components: { NavBar, Main, TabBar },
@@ -39,6 +41,11 @@ export default defineComponent({
   },
   setup() {
     const state = store.state;
+    const emit =  useEmit()
+    const appSettingRef = ref()
+    emit?.on('show_setting', () => {
+      appSettingRef.value.openDrawer()
+    })
     function onFixedHeader() {
       store.toggleFixedNavBar(!state.isFixedNavBar);
     }
@@ -46,13 +53,12 @@ export default defineComponent({
       return store.isShowHeader();
     });
     return {
+      appSettingRef,
       state,
       isShowHeader,
       onFixedHeader,
     };
-  },
-  computed: {},
-  methods: {},
+  }
 });
 </script>
 

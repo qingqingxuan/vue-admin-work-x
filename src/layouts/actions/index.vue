@@ -5,7 +5,7 @@
       class="action-item"
       @click="onShowSearch"
     >
-      <el-icon :size="16">
+      <el-icon :size="18">
         <Search />
       </el-icon>
     </span>
@@ -19,7 +19,7 @@
           class="badge-action-item"
         >
           <span>
-            <el-icon :size="16">
+            <el-icon :size="18">
               <bell />
             </el-icon>
           </span>
@@ -32,7 +32,7 @@
       class="action-item"
       @click="onRefrehRoute"
     >
-      <el-icon :size="16">
+      <el-icon :size="18">
         <Refresh />
       </el-icon>
     </span>
@@ -41,7 +41,7 @@
       class="action-item"
       @click="onScreenFull"
     >
-      <el-icon :size="16">
+      <el-icon :size="18">
         <FullScreen />
       </el-icon>
     </span>
@@ -50,7 +50,7 @@
       class="action-item"
       @click="onShowSetting"
     >
-      <el-icon :size="16">
+      <el-icon :size="18">
         <SettingIcon />
       </el-icon>
     </span>
@@ -67,7 +67,6 @@
         @change="onChange"
       />
     </div>
-    <Setting ref="appSettingRef" />
   </div>
 </template>
 
@@ -84,6 +83,7 @@ import {
 } from "@element-plus/icons";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
+import useEmit from "@/hooks/Emit";
 
 export default defineComponent({
   name: "ActionItems",
@@ -96,12 +96,12 @@ export default defineComponent({
   },
   setup() {
     const searchContentRef = ref();
-    const appSettingRef = ref();
     const showSearchContent = ref(false);
     const searchContent = ref("");
     const state = store.state;
     const router = useRouter();
     const route = useRoute();
+    const emit = useEmit()
 
     function onShowSearch() {
       showSearchContent.value = !showSearchContent.value;
@@ -129,11 +129,10 @@ export default defineComponent({
       router.replace({ path: "/redirect" + route.path });
     }
     function onShowSetting() {
-      appSettingRef.value.openDrawer();
+      emit?.emit('show_setting')
     }
     return {
       searchContentRef,
-      appSettingRef,
       showSearchContent,
       searchContent,
       state,
@@ -182,11 +181,11 @@ export default defineComponent({
 }
 </style>
 <style lang="scss" scoped>
-::v-deep(.el-input) {
+:deep(.el-input) {
   border: none;
   border-bottom: 1px solid currentColor;
 }
-::v-deep(.el-input__inner) {
+:deep(.el-input__inner) {
   border: none !important;
   height: 35px;
   line-height: 35px;

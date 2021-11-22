@@ -40,6 +40,10 @@ body .el-table__fixed::before {
   box-sizing: border-box;
 }
 
+#nprogress .bar{
+  background-color: var(--el-color-primary) !important;
+}
+
 .container {
   position: relative;
   border-radius: 5px;

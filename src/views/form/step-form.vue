@@ -75,7 +75,7 @@ function next(temp: any) {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-step__title {
+:deep(.el-step__title) {
   font-size: 14px;
 }
 @media screen and (max-width: 768px) {

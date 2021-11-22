@@ -1,3 +1,4 @@
+import { TinyEmitter } from 'tiny-emitter';
 import './styles/main.css'
 import {
   ElScrollbar,
@@ -97,6 +98,7 @@ export function registerIcons(app: App) {
 }
 
 const key = Symbol('layout_store')
+export const emitKey = Symbol('tiny_emit')
 
 function install(Vue: App, options: any) {
   registerIcons(Vue)
@@ -108,8 +110,10 @@ function install(Vue: App, options: any) {
   }
   delete options.registerElement
   store.start(options)
-  Vue.config.globalProperties.$layoutStore = store
+  Vue.config.globalProperties.$isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+  Vue.config.globalProperties.$isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1
   Vue.provide(key, store)
+  Vue.provide(emitKey, new TinyEmitter())
 }
 
 export function useLayoutStore() {

@@ -78,6 +78,8 @@ export default defineComponent({
       height: calc(#{$logoHeight} - 15px);
       display: flex;
       align-items: center;
+      border: 1px solid var(--el-color-primary-light-7);
+      border-radius: 50%;
       & > img {
         border: 1px solid #f6f6f6;
         width: 100%;

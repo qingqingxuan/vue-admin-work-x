@@ -30,8 +30,3 @@ export const getCardList = "/getCardList";
 
 export const getCommentList = "/getCommentList";
 
-declare module "@vue/runtime-core" {
-  interface ComponentCustomProperties {
-    $urlPath: Record<string, string>;
-  }
-}

@@ -5,6 +5,7 @@ import baseForm from './Form'
 import createScript from './CreateScript'
 import ecahrts from './Echarts'
 import setting from '../setting'
+import Emit from './Emit'
 
 export function useSetting() {
   return setting
@@ -36,4 +37,8 @@ export function useCreateScript(src: string) {
 
 export function useEcharts(dom: HTMLElement, theme?: string) {
   return ecahrts(dom, theme)
+}
+
+export function useEmit() {
+  return Emit()
 }
