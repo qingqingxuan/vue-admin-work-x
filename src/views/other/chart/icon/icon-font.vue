@@ -17,7 +17,9 @@
           />
           <div class=" text-xs margin-top">{{item.font_class}}</div>
           <div
+            :id="item.font_class"
             class="copy text-center"
+            :data-clipboard-text="getClipboardText(item)"
             @click="onCopy(item)"
           >
             复制
@@ -40,6 +42,7 @@ import { defineComponent, onMounted, reactive, ref } from "vue";
 import Iconfonts from "@/icons/iconfont/iconfont.json";
 import type { TableFooter } from "@/components/types";
 import { ElMessage } from "element-plus";
+import clipboard from 'clipboard'
 interface IconItem {
   font_class: string;
   icon_id: string;
@@ -67,13 +70,20 @@ export default defineComponent({
       tableFooter.value?.setPageSize(100);
     });
     const onCopy = (item: IconItem) => {
-      ElMessage.success("已选择:" + JSON.stringify(item));
+      const clip = new clipboard('#' + item.font_class)
+      clip.on('success', () => {
+        ElMessage.success("已复制");
+      })
     };
+    function getClipboardText(item: IconItem) {
+      return `<SvgIcon icon-class="${item.font_class}"></SvgIcon>`
+    }
     return {
       tableFooter,
       icons,
       onCopy,
       doRefresh,
+      getClipboardText
     };
   },
 });
@@ -92,7 +102,7 @@ export default defineComponent({
     padding-bottom: 0;
     transition: padding-bottom 0.2s ease-in-out;
     &:hover {
-      color: #409eff;
+      color: var(--el-color-primary);
       box-shadow: 0 0 10px #f0f0f0;
       padding-bottom: 22px;
       transition: padding-bottom 0.2s ease-in-out;
@@ -104,7 +114,7 @@ export default defineComponent({
     }
     .copy {
       position: absolute;
-      background-color: #409eff;
+      background-color: var(--el-color-primary);
       padding: 5px 0;
       color: #fff;
       font-size: 12px;

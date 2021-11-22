@@ -16,7 +16,9 @@
           </el-icon>
           <div class="text-xs margin-top text-center">{{item}}</div>
           <div
+            :id="item"
             class="copy text-center"
+            :data-clipboard-text="getClipboardText(item)"
             @click="onCopy(item)"
           >
             复制
@@ -31,6 +33,7 @@
 import { defineComponent, ref } from "vue";
 import * as ElIcons from "@element-plus/icons";
 import { ElMessage } from "element-plus";
+import clipboard from "clipboard";
 
 export default defineComponent({
   name: "ElementPlus",
@@ -38,12 +41,19 @@ export default defineComponent({
     const loading = ref(false);
     const iconArray = Object.keys(ElIcons);
     const onCopy = (item: string) => {
-      ElMessage.success("已选择: " + item + "Icon");
+      const clip = new clipboard('#' + item)
+      clip.on('success', () => {
+        ElMessage.success("复制成功");
+      })
     };
+    function getClipboardText(item: string) {
+      return `<el-icon><${item}Icon/></el-icon>`
+    }
     return {
       loading,
       iconArray,
       onCopy,
+      getClipboardText
     };
   },
 });
@@ -74,7 +84,7 @@ export default defineComponent({
     }
     .copy {
       position: absolute;
-      background-color: #409eff;
+      background-color: var(--el-color-primary);
       padding: 5px 0;
       color: #fff;
       font-size: 12px;

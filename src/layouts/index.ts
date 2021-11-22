@@ -1,65 +1,10 @@
 import { TinyEmitter } from 'tiny-emitter';
 import './styles/main.css'
-import {
-  ElScrollbar,
-  ElMenu,
-  ElMenuItem,
-  ElSubMenu,
-  ElBreadcrumb,
-  ElBreadcrumbItem,
-  ElTabs,
-  ElTabPane,
-  ElButton,
-  ElDropdown,
-  ElDropdownMenu,
-  ElDropdownItem,
-  ElBadge,
-  ElDrawer,
-  ElDivider,
-  ElRow,
-  ElCol,
-  ElSwitch,
-  ElCard,
-  ElPopover,
-  ElInput,
-  ElMessageBox,
-  ElBacktop,
-  ElTable,
-  ElTableColumn
-} from 'element-plus'
 import store from './store'
 import { inject, App } from 'vue'
 import { LocalLayoutStore } from './types'
 import * as ElIcons from '@element-plus/icons'
 
-
-function registerElement(app: App) {
-  app.use(ElScrollbar)
-    .use(ElMenu)
-    .use(ElMenuItem)
-    .use(ElSubMenu)
-    .use(ElBreadcrumb)
-    .use(ElBreadcrumbItem)
-    .use(ElTabs)
-    .use(ElTabPane)
-    .use(ElButton)
-    .use(ElDropdown)
-    .use(ElDropdownMenu)
-    .use(ElDropdownItem)
-    .use(ElCard)
-    .use(ElBadge)
-    .use(ElPopover)
-    .use(ElDrawer)
-    .use(ElDivider)
-    .use(ElRow)
-    .use(ElCol)
-    .use(ElSwitch)
-    .use(ElInput)
-    .use(ElMessageBox)
-    .use(ElBacktop)
-    .use(ElTable)
-    .use(ElTableColumn)
-}
 
 function getComponentName(key: string) {
   if (!key) {
@@ -82,15 +27,6 @@ export function registerComponents(app: App) {
   })
 }
 
-const aliasIcons = ['Menu', 'Setting']
-
-// function getIconName(it:string) {
-//   if (aliasIcons.includes(it)) {
-//     return it + 'Icon'
-//   }
-//   return it
-// }
-
 export function registerIcons(app: App) {
   Object.keys(ElIcons).forEach((it: string) => {
     app.component(it + 'Icon', (ElIcons as any)[it])
@@ -103,11 +39,6 @@ export const emitKey = Symbol('tiny_emit')
 function install(Vue: App, options: any) {
   registerIcons(Vue)
   registerComponents(Vue)
-  if (options && options.registerElement === false) {
-    console.warn('element-plus components not be registed, please check `registerElement` is `false`')
-  } else {
-    registerElement(Vue)
-  }
   delete options.registerElement
   store.start(options)
   Vue.config.globalProperties.$isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)

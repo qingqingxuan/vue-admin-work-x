@@ -28,15 +28,22 @@
       :class="[state.isCollapse ? 'close-shadow' : 'show-shadow']"
       @click="closeMenu"
     ></div>
+    <Setting ref="appSettingRef" />
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onBeforeUnmount, onMounted } from "vue";
+import { useEmit } from "@/hooks";
+import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from "vue";
 import store from "./store";
 export default defineComponent({
   name: "Layout",
   setup() {
+    const emit =  useEmit()
+    const appSettingRef = ref()
+    emit?.on('show_setting', () => {
+      appSettingRef.value.openDrawer()
+    })
     const isShowHeader = computed(() => {
       return store.isShowHeader();
     });
@@ -67,6 +74,7 @@ export default defineComponent({
       window.removeEventListener("resize", handleScreenResize);
     });
     return {
+      appSettingRef,
       state: store.state,
       isShowHeader,
       closeMenu,

@@ -51,12 +51,14 @@
             prop="menuUrl"
           >
             <template #default="scope">
-              <SvgIcon
+              <el-icon
                 v-if="scope.row.icon"
-                :icon-class="scope.row.icon"
-                style="width: 20px; height: 20px"
-              ></SvgIcon>
-              <div v-else>无</div>
+                size="20"
+                color="var(--el-color-primary)"
+              >
+              <component :is="scope.row.icon"/>
+              </el-icon>
+              <div v-else>--</div>
             </template>
           </el-table-column>
           <el-table-column

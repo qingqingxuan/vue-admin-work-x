@@ -214,7 +214,11 @@ export default {
           line-height: 14px;
           margin-top: 5px;
         }
-        &:hover {
+        &:hover:not(.vaw-tab-split-item-is-active) {
+          cursor: pointer;
+          color: var(--el-color-primary);
+        }
+        &:hover{
           cursor: pointer;
         }
       }

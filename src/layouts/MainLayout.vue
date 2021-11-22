@@ -19,7 +19,6 @@
     </div>
     <el-backtop target=".vaw-main-layout-container">
     </el-backtop>
-    <Setting style="z-index: 100" ref="appSettingRef" />
   </div>
 </template>
 
@@ -41,11 +40,6 @@ export default defineComponent({
   },
   setup() {
     const state = store.state;
-    const emit =  useEmit()
-    const appSettingRef = ref()
-    emit?.on('show_setting', () => {
-      appSettingRef.value.openDrawer()
-    })
     function onFixedHeader() {
       store.toggleFixedNavBar(!state.isFixedNavBar);
     }
@@ -53,7 +47,6 @@ export default defineComponent({
       return store.isShowHeader();
     });
     return {
-      appSettingRef,
       state,
       isShowHeader,
       onFixedHeader,

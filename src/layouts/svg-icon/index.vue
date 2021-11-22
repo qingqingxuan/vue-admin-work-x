@@ -1,11 +1,10 @@
 <template>
-  <component
-    :is="component"
+  <svg
     :class="svgClass"
     aria-hidden="true"
   >
     <use :href="iconName" />
-  </component>
+  </svg>
 </template>
 
 <script lang="ts">
@@ -23,16 +22,10 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const component = computed(() => {
-      return props.iconClass.startsWith('el-') ? 'i' : 'svg'
-    })
     const iconName = computed(() => {
       return `#icon-${props.iconClass}`
     })
     const svgClass = computed(() => {
-      if (props.iconClass.startsWith('el-')) {
-        return props.iconClass
-      }
       if (props.className) {
         return 'svg-icon ' + props.className
       } else {
@@ -40,7 +33,6 @@ export default defineComponent({
       }
     })
     return {
-      component,
       iconName,
       svgClass
     }
