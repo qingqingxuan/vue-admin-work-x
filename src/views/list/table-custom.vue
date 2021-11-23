@@ -11,7 +11,7 @@
         </el-button>
       </template>
     </TableHeader>
-    <TableBody ref="tableBody">
+    <TableBody>
       <template #tableConfig>
         <div
           class="flex justify-between padding"
@@ -48,7 +48,6 @@
       </template>
       <template #default>
         <el-table
-          ref="table"
           v-loading="tableLoading"
           :data="dataList"
           :header-cell-style="tableConfig.headerCellStyle"

@@ -37,10 +37,6 @@ export default defineComponent({
           avatar: require("@/assets/img_avatar_02.jpeg"),
           name: "唐僧",
         },
-        {
-          avatar: require("@/assets/img_avatar_example.gif"),
-          name: "哈哈",
-        },
       ],
     },
   },

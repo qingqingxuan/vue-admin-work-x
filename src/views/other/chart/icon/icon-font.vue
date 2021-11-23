@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-row class="icon-parent">
+    <!-- <el-row class="icon-parent">
       <el-col
         :xs="6"
         :md="3"
@@ -33,16 +33,16 @@
       :pageSizes="[100]"
       @refresh="doRefresh"
       @pageChanged="doRefresh"
-    />
+    /> -->
   </el-card>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref } from "vue";
-import Iconfonts from "@/icons/iconfont/iconfont.json";
-import type { TableFooter } from "@/components/types";
-import { ElMessage } from "element-plus";
-import clipboard from 'clipboard'
+// import Iconfonts from "@/icons/iconfont/iconfont.json";
+// import type { TableFooter } from "@/components/types";
+// import { ElMessage } from "element-plus";
+// import clipboard from 'clipboard'
 interface IconItem {
   font_class: string;
   icon_id: string;
@@ -54,37 +54,37 @@ interface IconItem {
 export default defineComponent({
   name: "IconFont",
   setup() {
-    const icons = reactive([] as Array<IconItem>);
-    const tableFooter = ref<TableFooter>();
-    function doRefresh() {
-      const { page = 10, pageSize = 100 } =
-        tableFooter.value?.withPageInfoData() as any;
-      icons.length = 0;
-      const start = (page - 1) * pageSize;
-      icons.push(...Iconfonts.glyphs.slice(start, 100 + start));
-    }
-    icons.push(...Iconfonts.glyphs.slice(0, 100));
-    onMounted(() => {
-      doRefresh();
-      tableFooter.value?.setTotalSize(Iconfonts.glyphs.length);
-      tableFooter.value?.setPageSize(100);
-    });
-    const onCopy = (item: IconItem) => {
-      const clip = new clipboard('#' + item.font_class)
-      clip.on('success', () => {
-        ElMessage.success("已复制");
-      })
-    };
-    function getClipboardText(item: IconItem) {
-      return `<SvgIcon icon-class="${item.font_class}"></SvgIcon>`
-    }
-    return {
-      tableFooter,
-      icons,
-      onCopy,
-      doRefresh,
-      getClipboardText
-    };
+    // const icons = reactive([] as Array<IconItem>);
+    // const tableFooter = ref<TableFooter>();
+    // function doRefresh() {
+    //   const { page = 10, pageSize = 100 } =
+    //     tableFooter.value?.withPageInfoData() as any;
+    //   icons.length = 0;
+    //   const start = (page - 1) * pageSize;
+    //   icons.push(...Iconfonts.glyphs.slice(start, 100 + start));
+    // }
+    // icons.push(...Iconfonts.glyphs.slice(0, 100));
+    // onMounted(() => {
+    //   doRefresh();
+    //   tableFooter.value?.setTotalSize(Iconfonts.glyphs.length);
+    //   tableFooter.value?.setPageSize(100);
+    // });
+    // const onCopy = (item: IconItem) => {
+    //   const clip = new clipboard('#' + item.font_class)
+    //   clip.on('success', () => {
+    //     ElMessage.success("已复制");
+    //   })
+    // };
+    // function getClipboardText(item: IconItem) {
+    //   return `<SvgIcon icon-class="${item.font_class}"></SvgIcon>`
+    // }
+    // return {
+    //   tableFooter,
+    //   icons,
+    //   onCopy,
+    //   doRefresh,
+    //   getClipboardText
+    // };
   },
 });
 </script>

@@ -1,7 +1,6 @@
 <template>
   <div class="main-container">
     <TableHeader
-      ref="tableHeader"
       :can-collapsed="likeSearchModel.conditionItems && likeSearchModel.conditionItems.length !== 0"
       :search-model="likeSearchModel.conditionItems"
       :default-collapsed-state="true"
@@ -9,10 +8,9 @@
       @doSearch="doSearch"
       @resetSearch="resetSearch"
     />
-    <TableBody ref="tableBody">
+    <TableBody>
       <template #default>
         <el-table
-          ref="table"
           v-loading="tableLoading"
           :data="dataList"
           :header-cell-style="tableConfig.headerCellStyle"

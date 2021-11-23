@@ -11,10 +11,9 @@
         </el-button>
       </template>
     </TableHeader>
-    <TableBody ref="tableBody">
+    <TableBody>
       <template #default>
         <el-table
-          ref="table"
           v-loading="tableLoading"
           :data="dataList"
           :header-cell-style="tableConfig.headerCellStyle"

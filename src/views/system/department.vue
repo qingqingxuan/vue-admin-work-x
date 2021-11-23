@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <TableHeader ref="tableHeader">
+    <TableHeader>
       <template #right>
         <el-button
           type="primary"
@@ -11,7 +11,7 @@
         </el-button>
       </template>
     </TableHeader>
-    <TableBody ref="tableBody">
+    <TableBody>
       <template #default>
         <el-table
           ref="table"
