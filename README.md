@@ -91,7 +91,7 @@ vue-admin-work 有如下优势:
 
 ## 效果图
 
-| <img src="http://qingqingxuan.gitee.io/img/demo-x-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-2.jpg" style="zoom:20%;" />        |
+| <img src="http://qingqingxuan.gitee.io/img/demo-x-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-2.png" style="zoom:20%;" />        |
 | :---------------------------------------------------------------------------: | ------------------------------------------------------------------------------------ |
 | <img src="http://qingqingxuan.gitee.io/img/demo-x-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-4.png" style="zoom:20%;" />        |
 | <img src="http://qingqingxuan.gitee.io/img/demo-x-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-6.png" style="zoom:20%;" />        |
