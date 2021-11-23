@@ -106,6 +106,7 @@ export default defineComponent({
         },
         yAxis: {
           type: "value",
+          max: 200,
         },
         series: [
           {

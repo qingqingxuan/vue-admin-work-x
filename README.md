@@ -91,11 +91,11 @@ vue-admin-work 有如下优势:
 
 ## 效果图
 
-| <img src="http://qingqingxuan.gitee.io/img/project-image-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-2.jpg" style="zoom:20%;" /> |
-| :----------------------------------------------------------------------------------: | ------------------------------------------------------------------------------------ |
-| <img src="http://qingqingxuan.gitee.io/img/project-image-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-4.png" style="zoom:20%;" /> |
-| <img src="http://qingqingxuan.gitee.io/img/project-image-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-6.png" style="zoom:20%;" /> |
-| <img src="http://qingqingxuan.gitee.io/img/project-image-7.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-8.png" style="zoom:20%;" /> |
+| <img src="http://qingqingxuan.gitee.io/img/demo-x-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-2.jpg" style="zoom:20%;" />        |
+| :---------------------------------------------------------------------------: | ------------------------------------------------------------------------------------ |
+| <img src="http://qingqingxuan.gitee.io/img/demo-x-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-4.png" style="zoom:20%;" />        |
+| <img src="http://qingqingxuan.gitee.io/img/demo-x-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-6.png" style="zoom:20%;" />        |
+| <img src="http://qingqingxuan.gitee.io/img/demo-x-7.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-8.png" style="zoom:20%;" /> |
 
 ## 捐赠
 
