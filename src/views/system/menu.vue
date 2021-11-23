@@ -226,7 +226,7 @@ import type { DialogType } from "@/components/types";
 import { uuid } from "@/utils";
 import { onMounted, reactive, ref, shallowReactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-// import Icons from "@/icons/iconfont/iconfont.json";
+import Icons from "@/icons/iconfont/iconfont.json";
 import { usePost, useDataTable } from "@/hooks";
 import { getMenuList } from "@/api/url";
 import { Plus } from "@element-plus/icons";
@@ -246,14 +246,14 @@ const menuModel = reactive<MenuModel>({
 });
 const { tableLoading, tableConfig, dataList, handleSuccess } = useDataTable();
 const count = ref(100);
-const icons = shallowReactive([]);
+const icons = shallowReactive(Icons.glyphs.slice(0, count.value));
 const disableLoad = ref(false);
 const dialogRef = ref<DialogType>();
 const loadIcon = () => {
   setTimeout(() => {
-    // const tempIcons = Icons.glyphs.slice(count.value, (count.value += 100));
-    // icons.push(...tempIcons);
-    // disableLoad.value = icons.length === Icons.glyphs.length;
+    const tempIcons = Icons.glyphs.slice(count.value, (count.value += 100));
+    icons.push(...tempIcons);
+    disableLoad.value = icons.length === Icons.glyphs.length;
   }, 500);
 };
 const post = usePost();
