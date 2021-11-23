@@ -31,7 +31,7 @@ app.use(LayoutStore, {
     },
     onLogout() {
       store.dispatch('user/logout').then(() => {
-        router.replace('/login')
+        window.location.href = '/login'
       })
     },
   },

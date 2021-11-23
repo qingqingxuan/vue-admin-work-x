@@ -79,7 +79,6 @@ export const userModule: Module<UserState, RootState> = {
       Cookies.remove('x-admin-token')
       localStorage.clear()
       LayoutStore.reset()
-      window.location.reload()
     },
   },
 }
