@@ -1,29 +1,29 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import "./utils/router";
-import store, { key } from "./store";
-import ElementPlus from "element-plus";
-import "element-plus/dist/index.css";
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import './utils/router'
+import store, { key } from './store'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import 'dayjs/locale/zh-cn'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import "@/styles/main.css"
-import "@/icons/iconfont/iconfont.css"
-import "@/icons/iconfont/iconfont.js"
-import LayoutStore from "@/layouts";
-import http from "@/api/http";
-import { registerComponents } from "./components";
-import dragger from "./directive/draggable/index";
+import '@/styles/main.css'
+import '@/icons/iconfont/iconfont.css'
+import '@/icons/iconfont/iconfont.js'
+import LayoutStore from '@/layouts'
+import http from '@/api/http'
+import { registerComponents } from './components'
+import dragger from './directive/draggable/index'
 
-import "../mock/index.ts";
+import '../mock/index.ts'
 
 import './setting'
 
-const app = createApp(App);
-registerComponents(app);
+const app = createApp(App)
+registerComponents(app)
 app.use(LayoutStore, {
   state: {
-    layoutMode: 'ltr'
+    layoutMode: 'ltr',
   },
   actions: {
     onPersonalCenter() {
@@ -33,14 +33,13 @@ app.use(LayoutStore, {
       store.dispatch('user/logout').then(() => {
         router.replace('/login')
       })
-    }
+    },
   },
-  registerElement: false,
-});
-app.use(store, key).use(router);
+})
+app.use(store, key).use(router)
 app.use(ElementPlus, {
   locale: zhCn,
-});
-app.use(http);
+})
+app.use(http)
 app.use(dragger)
-app.mount("#app");
+app.mount('#app')

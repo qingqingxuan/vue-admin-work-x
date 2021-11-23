@@ -4,22 +4,15 @@
 
 ## 重要升级
 
-Vue Admin Work X 是 Vue Admin Work 系列中唯一一款主体框架和实际项目分离的版本，当初设计的初衷是为了把主体独立抽取成一个项目。
+经过一段时间的升级改造，全新 Vue Admin Work X 测试版终于和大家见面了，此次升级改造可以说是非常大的，对整体的框架做了调整。
 
-#### 好处是：
+之前的 VueAdminWorkX 做为 Vue2 到 Vue3 的过渡版本，因此保留了大量的 Vue2 的写法和大量的 Javascript 的语法，随着 Vue3 的不断完善，对 Typescript 的支持也日益强大，所以此次升级，把 Vue2 的写法基本上都转成了 Vue3 的写法，有大量的`setup` 和 `setup`语法糖语法，尽情享受 Vue3 带来的便捷吧，原来的 Javascript 代码也基本转成了 Typescript 语法。
 
-- 快速形成新的项目，只需要像其它框架一样，通过 package.json 引入，便可以立即形成一个项目
+同时，也为了更好适配到真实的项目，删除了很多不太实用的功能，一定程度上减少了包的体积和后期维护的成本。
 
-- 一定程度上减少包的体积
+此次升级目前保留在 `layout` 分支上，在 clone 代码的时候，一定要选对分支。`master`分支会在一段时间之后彻底被废弃。
 
-  #### 坏处是：
-
-* 扩展性不好，不够灵活
-
-  为了满足在实际的开发中，很多人的习惯，直接用 Vue Admin Work X 做为基础项目进行二次开发，
-  Vue Admin Work X 做了一次重要升级，把 `vaw-layouts-x`也合并到了 Vue Admin Work X 项目中，这样就可以根据自己的需求灵活配置和修改。
-  新的项目在`layout`分支下，原来的 `master` 分支还会继续保留原来的模式一段时间。
-  大家可以根据自己的需求，根据不同的分支进行下载。
+`git clone -b layout https://github.com/qingqingxuan/vue-admin-work-x.git`
 
 tip: 本次升级也升级了 Element Plus 版本，由于 Elment Plus 版本和之前的差别比较大，可能在某些情况下会有 bug，如遇到请提交一个 issue，再次感谢大家的支持
 
@@ -58,9 +51,9 @@ Vue Admin Work X，是 Vue Admini Work 系列中基于 Vue3 开发的中后台�
 
 ```shell
 # 克隆项目，如果github打开速度比较慢，可以使用gitee地址
-git clone -b master https://github.com/qingqingxuan/vue-admin-work-x.git
+git clone -b layout https://github.com/qingqingxuan/vue-admin-work-x.git
 # or
-git clone -b master https://gitee.com/qingqingxuan/vue-admin-work-x.git
+git clone -b layout https://github.com/qingqingxuan/vue-admin-work-x.git
 
 # 进入项目目录
 cd vue-admin-work-x

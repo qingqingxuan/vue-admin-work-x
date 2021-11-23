@@ -92,9 +92,18 @@ export default defineComponent({
   overflow-x: hidden !important;
 }
 .el-menu {
+  --el-menu-hover-text-color: var(--el-color-primary) !important;
+  --el-menu-hover-background-color: var(--el-color-primary-light-8) !important;
   border-right: none !important;
   overflow: hidden;
+}
+.el-menu-item:hover {
+  color: var(--el-menu-active-color);
   background-color: transparent;
+}
+.el-menu-item.is-active {
+  color: var(--el-menu-active-color);
+  background-color: var(--el-color-primary-light-8);
 }
 ::deep(.el-menu--collapse .el-sub-menu__title span) {
   display: none !important;

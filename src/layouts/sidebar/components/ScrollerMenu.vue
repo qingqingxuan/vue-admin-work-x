@@ -9,6 +9,7 @@
       :collapse="state.isCollapse"
       active-text-color="var(--el-color-primary)"
       :text-color="state.theme === 'light' ? '#303133' : '#ffffff'"
+      :background-color="bgColor"
     >
       <slot></slot>
     </el-menu>
@@ -59,10 +60,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "../../styles/variables.scss";
-:deep(.el-menu) {
-  --el-menu-hover-text-color: var(--el-color-primary) !important;
-  --el-menu-hover-background-color: var(--el-color-primary-light-8) !important;
-}
 :deep(.el-menu-item) {
   display: flex;
   align-items: center;

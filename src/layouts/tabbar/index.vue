@@ -328,10 +328,11 @@ export default {
     }
     .el-tabs__item.is-active::before {
       content: "";
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       display: inline-block;
       background-color: var(--el-color-white);
+      border: 1px solid var(--el-color-primary-light-6);
       border-radius: 50%;
       margin-right: 5px;
     }

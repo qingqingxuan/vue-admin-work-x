@@ -212,7 +212,7 @@ $leftWith: 35%;
         text-shadow: 0 0 5px var(--el-color-primary),
           0 0 15px var(--el-color-primary), 0 0 50px var(--el-color-primary),
           0 0 150px var(--el-color-primary);
-        animation: scale-to 0.5s linear 1s;
+        animation: scale-to 1s linear;
       }
       .bottom {
         color: silver;
