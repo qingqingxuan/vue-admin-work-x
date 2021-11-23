@@ -1,10 +1,9 @@
-import { TinyEmitter } from 'tiny-emitter';
+import { TinyEmitter } from 'tiny-emitter'
 import './styles/main.css'
 import store from './store'
 import { inject, App } from 'vue'
 import { LocalLayoutStore } from './types'
 import * as ElIcons from '@element-plus/icons'
-
 
 function getComponentName(key: string) {
   if (!key) {
@@ -21,9 +20,12 @@ function getComponentName(key: string) {
 
 export function registerComponents(app: App) {
   const components = require.context('./', true, /\.vue$/)
-  components.keys().forEach(it => {
+  components.keys().forEach((it) => {
     const component = components(it)
-    app.component(component.default.name || getComponentName(it), component.default)
+    app.component(
+      component.default.name || getComponentName(it),
+      component.default
+    )
   })
 }
 
@@ -41,14 +43,18 @@ function install(Vue: App, options: any) {
   registerComponents(Vue)
   delete options.registerElement
   store.start(options)
-  Vue.config.globalProperties.$isMobile = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
-  Vue.config.globalProperties.$isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1
+  Vue.config.globalProperties.$isMobile = navigator.userAgent.match(
+    /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+  )
+  Vue.config.globalProperties.$isAndroid =
+    navigator.userAgent.indexOf('Android') > -1 ||
+    navigator.userAgent.indexOf('Adr') > -1
   Vue.provide(key, store)
   Vue.provide(emitKey, new TinyEmitter())
 }
 
 export function useLayoutStore() {
-  return inject<LocalLayoutStore>(key, store)
+  return inject<LocalLayoutStore>(key, store as LocalLayoutStore)
 }
 
 export { default as Layout } from './Layout.vue'
@@ -61,5 +67,5 @@ export default {
   setUserInfo: store.setUserInfo,
   reset: store.reset,
   isEmptyPermissionRoute: store.isEmptyPermissionRoute,
-  install
+  install,
 }

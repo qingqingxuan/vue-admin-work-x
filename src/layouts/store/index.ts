@@ -1,19 +1,13 @@
-import { LocalLayoutStore } from './../types'
-import { reactive } from 'vue'
+import { reactive, ref, shallowReactive } from 'vue'
 import { toHump } from '../utils'
-import {
-  Device,
-  RouteRecordRawWithHidden,
-  StoreState,
-  UserInfo,
-} from '../types.js'
+import { Device, StoreState, UserInfo } from '../types.js'
 import { RouteRecordRaw } from 'vue-router'
 import { usePrimaryColor } from '../hooks'
 import defaultSetting from '../../setting'
 const layoutModes = ['ltr', 'lcr', 'ttb']
 
 export default {
-  state: reactive<StoreState>({
+  state: shallowReactive<StoreState>({
     isCollapse: false,
     isFixedNavBar: true,
     layoutMode: defaultSetting.layoutMode,
@@ -27,19 +21,19 @@ export default {
       nickName: '',
       avatar: '',
     },
-    actionItem: {
+    actionItem: reactive({
       showSearch: true,
       showMessage: true,
       showFullScreen: true,
       showRefresh: true,
-    },
+    }),
   }),
   start(options: any) {
     this.saveSetting(defaultSetting)
     options.state && (this.state = Object.assign(this.state, options.state))
     this.restoreVisitedView()
-    this.onLogout = options.actions.onLogout
-    this.onPersonalCenter = options.actions.onPersonalCenter
+    ;(this as any).onLogout = options.actions.onLogout
+    ;(this as any).onPersonalCenter = options.actions.onPersonalCenter
     usePrimaryColor(defaultSetting.primaryColor)
     this.changeLayoutMode(defaultSetting.layoutMode)
     this.changeTheme(defaultSetting.theme)
@@ -67,10 +61,12 @@ export default {
   },
   getSplitTabs() {
     return this.state.permissionRoutes.filter((it) => {
-      return it.path && !it.hidden && it.children && it.children.length > 0
+      return (
+        it.path && !(it as any).hidden && it.children && it.children.length > 0
+      )
     })
   },
-  initPermissionRoute(routes: Array<RouteRecordRawWithHidden>) {
+  initPermissionRoute(routes: Array<RouteRecordRaw>) {
     this.state.permissionRoutes = routes
   },
   isEmptyPermissionRoute() {
@@ -89,26 +85,26 @@ export default {
     )
   },
   reset() {
-    this.state = reactive<StoreState>({
+    this.state = shallowReactive<StoreState>({
       isCollapse: false,
       isFixedNavBar: true,
       layoutMode: defaultSetting.layoutMode,
       device: 'pc',
       theme: defaultSetting.theme,
       primaryColor: defaultSetting.primaryColor,
-      permissionRoutes: [],
-      visitedView: [],
-      cachedView: [],
+      permissionRoutes: [] as Array<any>,
+      visitedView: [] as Array<any>,
+      cachedView: [] as Array<any>,
       userInfo: {
         nickName: '',
         avatar: '',
       },
-      actionItem: {
+      actionItem: reactive({
         showSearch: true,
         showMessage: true,
         showFullScreen: true,
         showRefresh: true,
-      },
+      }),
     })
   },
   addCachedView(route: RouteRecordRaw) {
@@ -222,4 +218,4 @@ export default {
       }
     })
   },
-} as LocalLayoutStore
+}

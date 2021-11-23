@@ -8,7 +8,7 @@
         <span class="nick-name el-dropdown-link">
           <span>{{ state.userInfo.nickName }}</span>
           <el-icon>
-            <CaretBottomIcon/>
+            <CaretBottomIcon />
           </el-icon>
         </span>
       </div>
@@ -29,46 +29,46 @@
 </template>
 
 <script lang="ts">
-import store from '../store'
-import { defineComponent } from 'vue'
-import { ElMessageBox } from 'element-plus'
-import { User as UserIcon, SwitchButton } from '@element-plus/icons'
+import store from "../store";
+import { defineComponent } from "vue";
+import { ElMessageBox } from "element-plus";
+import { User as UserIcon, SwitchButton } from "@element-plus/icons";
 export default defineComponent({
-  name: 'VAWAvatar',
+  name: "VAWAvatar",
   setup() {
-    const state = store.state
+    const state = store.state;
     function onPersonalCenter() {
-      store.onPersonalCenter && store.onPersonalCenter()
+      (store as any).onPersonalCenter && (store as any).onPersonalCenter();
     }
     function onLogout() {
       ElMessageBox({
-        title: '提示',
-        message: '是否要退出登录？',
-        type: 'warning',
-        confirmButtonText: '退出',
-        cancelButtonText: '取消',
-        showCancelButton: true
+        title: "提示",
+        message: "是否要退出登录？",
+        type: "warning",
+        confirmButtonText: "退出",
+        cancelButtonText: "取消",
+        showCancelButton: true,
       })
         .then(() => {
-          store.onLogout && store.onLogout()
+          (store as any).onLogout && (store as any).onLogout();
         })
         .catch(() => {
-          store.cancelLogout && store.cancelLogout()
-        })
+          (store as any).cancelLogout && (store as any).cancelLogout();
+        });
     }
     return {
       state,
       onPersonalCenter,
       onLogout,
       UserIcon,
-      SwitchButton
-    }
-  }
-})
+      SwitchButton,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables.scss';
+@import "../styles/variables.scss";
 .vaw-avatar-container {
   .action-wrapper {
     display: flex;

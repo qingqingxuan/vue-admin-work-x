@@ -30,7 +30,7 @@ module.exports = {
           filename: '[path].gz[query]',
           algorithm: 'gzip',
           test: /\.js$|\.html$|\.css/,
-          threshold: 10240,
+          threshold: 50240,
           deleteOriginalAssets: false
         }))
     }

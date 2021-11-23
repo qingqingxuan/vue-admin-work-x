@@ -35,9 +35,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx", 
-    "src/icons/iconfont/iconfont.js", 
-    "src/layouts/styles/themes/index.js"
+    "tests/**/*.tsx",
   ],
   "exclude": [
     "node_modules"

@@ -11,10 +11,10 @@ export declare interface UserInfo {
 }
 
 export declare interface ActionItem {
-  showSearch?: boolean
-  showMessage?: boolean
-  showFullScreen?: boolean
-  showRefresh?: boolean
+  showSearch: boolean
+  showMessage: boolean
+  showFullScreen: boolean
+  showRefresh: boolean
 }
 
 export interface StoreState {
@@ -25,8 +25,8 @@ export interface StoreState {
   theme: string
   primaryColor: string
   userInfo: UserInfo
-  actionItem: ActionItem
-  permissionRoutes: Array<RouteRecordRawWithHidden>
+  actionItem: UnwrapNestedRefs<ActionItem>
+  permissionRoutes: Array<RouteRecordRaw>
   visitedView: Array<RouteRecordRaw>
   cachedView: Array<string>
 }
