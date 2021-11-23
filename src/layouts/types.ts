@@ -27,7 +27,7 @@ export interface StoreState {
   userInfo: UserInfo
   actionItem: UnwrapNestedRefs<ActionItem>
   permissionRoutes: Array<RouteRecordRaw>
-  visitedView: Array<RouteRecordRaw>
+  visitedView: UnwrapNestedRefs<Array<RouteRecordRaw>>
   cachedView: Array<string>
 }
 

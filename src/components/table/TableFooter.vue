@@ -78,7 +78,6 @@ export default defineComponent({
     };
     const setPageSize = (pageSize: number) => {
       pageModel.pageSize = pageSize;
-      console.log(pageModel);
     };
     const onRefresh = () => {
       emit("refresh");

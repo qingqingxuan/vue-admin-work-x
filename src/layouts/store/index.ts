@@ -1,4 +1,4 @@
-import { reactive, ref, shallowReactive } from 'vue'
+import { reactive, shallowReactive } from 'vue'
 import { toHump } from '../utils'
 import { Device, StoreState, UserInfo } from '../types.js'
 import { RouteRecordRaw } from 'vue-router'
@@ -14,9 +14,9 @@ export default {
     device: 'pc',
     theme: defaultSetting.theme,
     primaryColor: defaultSetting.primaryColor,
-    permissionRoutes: [],
-    visitedView: [],
-    cachedView: [],
+    permissionRoutes: shallowReactive([]) as Array<any>,
+    visitedView: shallowReactive([]) as Array<any>,
+    cachedView: shallowReactive([]) as Array<any>,
     userInfo: {
       nickName: '',
       avatar: '',
@@ -67,7 +67,8 @@ export default {
     })
   },
   initPermissionRoute(routes: Array<RouteRecordRaw>) {
-    this.state.permissionRoutes = routes
+    this.state.permissionRoutes.length = 0
+    this.state.permissionRoutes.push(...routes)
   },
   isEmptyPermissionRoute() {
     return (
@@ -92,9 +93,9 @@ export default {
       device: 'pc',
       theme: defaultSetting.theme,
       primaryColor: defaultSetting.primaryColor,
-      permissionRoutes: [] as Array<any>,
-      visitedView: [] as Array<any>,
-      cachedView: [] as Array<any>,
+      permissionRoutes: shallowReactive([]) as Array<any>,
+      visitedView: shallowReactive([]) as Array<any>,
+      cachedView: shallowReactive([]) as Array<any>,
       userInfo: {
         nickName: '',
         avatar: '',
@@ -124,11 +125,13 @@ export default {
   },
   resetCachedView() {
     // 从已经访问过的页面的数组中过滤可缓存的页面
-    this.state.cachedView = this.state.visitedView
+    this.state.cachedView.length = 0
+    this.state.cachedView.push(...this.state.visitedView
       .filter((it, _index) => {
         return it.name && it.meta && it.meta.cacheable
       })
       .map((it) => toHump(it.name as string))
+    )
   },
   addVisitedView(route: any) {
     return new Promise<any>((resolve) => {
@@ -156,9 +159,11 @@ export default {
     return new Promise<void>((resolve) => {
       const selectIndex = this.state.visitedView.indexOf(selectRoute)
       if (selectIndex !== -1) {
-        this.state.visitedView = this.state.visitedView.filter((it, index) => {
+        const tempList = this.state.visitedView.filter((it, index) => {
           return (it.meta && it.meta.affix) || index >= selectIndex
         })
+        this.state.visitedView.length = 0
+        this.state.visitedView.push(...tempList)
         this.persistentVisitedView()
       }
       this.removeCachedView && this.removeCachedView(selectRoute)
@@ -169,9 +174,11 @@ export default {
     return new Promise<void>((resolve) => {
       const selectIndex = this.state.visitedView.indexOf(selectRoute)
       if (selectIndex !== -1) {
-        this.state.visitedView = this.state.visitedView.filter((it, index) => {
+        const tempList = this.state.visitedView.filter((it, index) => {
           return (it.meta && it.meta.affix) || index <= selectIndex
         })
+        this.state.visitedView.length = 0
+        this.state.visitedView.push(...tempList)
         this.persistentVisitedView()
       }
       this.removeCachedView && this.removeCachedView(selectRoute)
@@ -180,13 +187,16 @@ export default {
   },
   closeAllVisitedView() {
     return new Promise<void>((resolve) => {
-      this.state.visitedView = this.state.visitedView.filter((it, _index) => {
+      const tempList = this.state.visitedView.filter((it, _index) => {
         return it.meta && it.meta.affix
       })
+      this.state.visitedView.length = 0
+      this.state.visitedView.push(...tempList)
       this.persistentVisitedView()
-      this.state.cachedView = this.state.visitedView
+      this.state.cachedView.length = 0
+      this.state.cachedView.push(...this.state.visitedView
         .filter((route) => route.name && route.meta && route.meta.cacheable)
-        .map((it) => toHump(it.name as string))
+        .map((it) => toHump(it.name as string)))
       resolve()
     })
   },
@@ -204,7 +214,7 @@ export default {
     localStorage.setItem('visited', JSON.stringify(tempPersistendRoutes))
   },
   restoreVisitedView() {
-    this.state.visitedView = [...this.state.visitedView]
+    this.state.visitedView.splice(0, this.state.visitedView.length)
     const originRouteString = localStorage.getItem('visited')
     const persistentVisitedRoutes = JSON.parse(originRouteString || '[]')
     persistentVisitedRoutes.forEach((originRoute: any) => {
