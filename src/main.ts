@@ -31,7 +31,7 @@ app.use(LayoutStore, {
     },
     onLogout() {
       store.dispatch('user/logout').then(() => {
-        window.location.href = '/login'
+        window.location.href = window.location.pathname + '/login'
       })
     },
   },
