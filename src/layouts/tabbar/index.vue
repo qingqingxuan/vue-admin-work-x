@@ -136,7 +136,6 @@ export default {
       store.addVisitedView(this.$route).then((route) => {
         this.currentTab = route.fullPath
       })
-      console.log(this.state.visitedView)
     },
     findAffixedRoutes(routes, basePath) {
       const temp = []
