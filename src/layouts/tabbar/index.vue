@@ -66,6 +66,7 @@
 <script>
 import store from '../store'
 import path from 'path'
+import qs from 'qs'
 export default {
   name: 'TabBar',
   props: {
@@ -135,6 +136,7 @@ export default {
       store.addVisitedView(this.$route).then((route) => {
         this.currentTab = route.fullPath
       })
+      console.log(this.state.visitedView)
     },
     findAffixedRoutes(routes, basePath) {
       const temp = []
@@ -196,7 +198,8 @@ export default {
       }
     },
     clickTab(route) {
-      this.$router.push({ path: route.props.name })
+      const query = route.props.name.split('?')[1]
+      this.$router.push({ path: route.props.name, query: qs.parse(query) })
     },
     removeTab(name) {
       const findItem = this.state.visitedView.find((it) => it.fullPath === name)

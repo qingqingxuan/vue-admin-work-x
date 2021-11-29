@@ -27,7 +27,7 @@ app.use(LayoutStore, {
   },
   actions: {
     onPersonalCenter() {
-      router.push('/personal')
+      router.push('/personal?a=1')
     },
     onLogout() {
       store.dispatch('user/logout').then(() => {
