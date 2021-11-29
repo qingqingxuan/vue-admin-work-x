@@ -1,26 +1,8 @@
+## 客户留步
+尊敬的小主，为了更好的开源，让开源走的更长久，请动一下可爱的小手指，点一下 star 吧~~在这里感谢您的支持与鼓励。我们将带着您的支持继续前行，为祖国的前端事业奉献一点点微薄之力~
 <img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
 
 <h1 align = "center">Vue Admin Work X</h1>
-
-## 重要升级
-
-经过一段时间的升级改造，全新 Vue Admin Work X 测试版终于和大家见面了，此次升级改造可以说是非常大的，对整体的框架做了调整。
-
-之前的 VueAdminWorkX 做为 Vue2 到 Vue3 的过渡版本，因此保留了大量的 Vue2 的写法和大量的 Javascript 的语法，随着 Vue3 的不断完善，对 Typescript 的支持也日益强大，所以此次升级，把 Vue2 的写法基本上都转成了 Vue3 的写法，有大量的`setup` 和 `setup`语法糖语法，尽情享受 Vue3 带来的便捷吧，原来的 Javascript 代码也基本转成了 Typescript 语法。
-
-同时，也为了更好适配到真实的项目，删除了很多不太实用的功能，一定程度上减少了包的体积和后期维护的成本。
-
-此次升级目前保留在 `layout` 分支上，在 clone 代码的时候，一定要选对分支。`master`分支会在一段时间之后彻底被废弃。
-
-`git clone -b layout https://github.com/qingqingxuan/vue-admin-work-x.git`
-
-tip: 本次升级也升级了 Element Plus 版本，由于 Elment Plus 版本和之前的差别比较大，可能在某些情况下会有 bug，如遇到请提交一个 issue，再次感谢大家的支持
-
-## 简介：
-
-Vue Admin Work X，是 Vue Admini Work 系列中基于 Vue3 开发的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下比较流行的 Vue3 UI 库--Element Plus
-
-使用了当今流行的技术框架： `Vue3 + Webpack + Typescript + Element Plus`
 
 ## 项目地址：
 
