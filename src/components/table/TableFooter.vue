@@ -17,8 +17,6 @@
         :total="pageModel.totalSize"
         @size-change="pageSizeChanged"
         @current-change="currentChanged"
-        @prev-click="currentChanged"
-        @next-click="currentChanged"
       />
       <el-button
         v-if="showRefresh"
