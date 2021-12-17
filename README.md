@@ -1,8 +1,12 @@
 ## 客户留步
-尊敬的小主，为了更好的开源，让开源走的更长久，请动一下可爱的小手指，点一下 star 吧~~在这里感谢您的支持与鼓励。我们将带着您的支持继续前行，为祖国的前端事业奉献一点点微薄之力~
-<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
 
-<h1 align = "center">Vue Admin Work X</h1>
+尊敬的小主，为了更好的开源，让开源走的更长久，请动一下可爱的小手指，点一下 star 吧~~在这里感谢您的支持与鼓励。我们将带着您的支持继续前行，为祖国的前端事业奉献一点点微薄之力~
+
+<div align="center">
+<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
+</div>
+
+<h1 align = "center">Admin Work X</h1>
 
 ## 项目地址：
 
@@ -11,13 +15,15 @@
 
 ## Vue Admin Work 授权客服
 
-| <img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" /> |
-| :---------------------------------------------------------------------------------: |
+<div align="center">
+<img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" /> 
+</div>
 
-## vue-admin-work 前端讨论群及 QQ 客服
+## vue-admin-work 前端讨论 QQ 群
 
-| <img src="http://qingqingxuan.gitee.io/img/qq-custom.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/qq-vip-group.png" style="zoom:20%;" /> |
-| :----------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+<div align="center"> 
+<img src="http://qingqingxuan.gitee.io/img/qq-vip-group.png" style="zoom:20%;" /> 
+</div>
 
 ## 关注微信公众号 `知码前端` 方便以后更新、升级
 
@@ -33,9 +39,9 @@
 
 ```shell
 # 克隆项目，如果github打开速度比较慢，可以使用gitee地址
-git clone -b layout https://github.com/qingqingxuan/vue-admin-work-x.git
+git clone https://github.com/qingqingxuan/vue-admin-work-x.git
 # or
-git clone -b layout https://github.com/qingqingxuan/vue-admin-work-x.git
+git clone https://gitee.com/qingqingxuan/vue-admin-work-x.git
 
 # 进入项目目录
 cd vue-admin-work-x
@@ -77,7 +83,7 @@ vue-admin-work 有如下优势:
 | :---------------------------------------------------------------------------: | ------------------------------------------------------------------------------------ |
 | <img src="http://qingqingxuan.gitee.io/img/demo-x-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-4.png" style="zoom:20%;" />        |
 | <img src="http://qingqingxuan.gitee.io/img/demo-x-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-6.png" style="zoom:20%;" />        |
-| <img src="http://qingqingxuan.gitee.io/img/demo-x-7.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-8.png" style="zoom:20%;" /> |
+| <img src="http://qingqingxuan.gitee.io/img/demo-x-6.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-8.png" style="zoom:20%;" /> |
 
 ## 捐赠
 
