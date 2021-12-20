@@ -8,7 +8,7 @@
       mode="vertical"
       :collapse="state.isCollapse"
       active-text-color="var(--el-color-primary)"
-      :text-color="state.theme === 'light' ? '#303133' : '#ffffff'"
+      :text-color="state.theme === 'light' ? '#303133' : '#bbbbbb'"
       :background-color="bgColor"
     >
       <slot></slot>
@@ -37,17 +37,13 @@ export default defineComponent({
   setup() {
     const state = store.state;
     const bgColor = ref(
-      state.theme === "light"
-        ? "var(--el-color-white)"
-        : "var(--el-color-black)"
+      state.theme === "light" ? "var(--el-color-white)" : "#001428"
     );
     watch(
       () => state.theme,
       (newVal) => {
         bgColor.value =
-          newVal === "light"
-            ? "var(--el-color-white)"
-            : "var(--el-color-black)";
+          newVal === "light" ? "var(--el-color-white)" : "#001428";
       }
     );
     return {
@@ -71,6 +67,10 @@ export default defineComponent({
 :deep(.el-sub-menu__title:hover) {
   background-color: transparent;
   color: var(--el-menu-hover-text-color) !important;
+}
+:deep(.el-menu .el-menu-item) {
+  height: 45px;
+  line-height: 0;
 }
 :deep(.el-sub-menu .el-menu-item) {
   height: 45px;

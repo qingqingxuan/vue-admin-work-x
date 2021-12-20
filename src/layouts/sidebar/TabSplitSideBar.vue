@@ -21,9 +21,9 @@
             @click="changeTab(item)"
           >
             <el-icon>
-              <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon"/>
+              <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon" />
             </el-icon>
-            <span>{{ item.meta ? item.meta.title : item.name }}</span>
+            <span class="label">{{ item.meta ? item.meta.title : item.name }}</span>
           </div>
         </div>
       </el-scrollbar>
@@ -44,7 +44,6 @@
         </template>
       </ScrollerMenu>
     </div>
-    <div class="mobile-shadow"></div>
   </div>
 </template>
 
@@ -68,7 +67,9 @@ export default {
       basePath: null,
       tabs: null,
       routes: [],
-      MenuIcon
+      MenuIcon,
+      bgColor: store.state.theme === "light" ? "var(--el-color-white)" : "#021a32",
+      labelColor: store.state.theme === "light" ? "#333333" : "#bbbbbb"
     }
   },
   watch: {
@@ -83,6 +84,10 @@ export default {
         return
       }
       this.doChangeTab(newVal)
+    },
+    'state.theme'(newVal) {
+      this.bgColor = newVal === "light" ? "var(--el-color-white)" : "#021a32"
+      this.labelColor = newVal === "light" ? "#333333" : "#bbbbbb"
     }
   },
   mounted() {
@@ -160,6 +165,7 @@ export default {
 }
 .scrollbar {
   height: calc(100% - #{$logoHeight}) !important;
+  background-color: v-bind(bgColor);
 }
 .vaw-tab-split-side-bar-wrapper {
   position: fixed;
@@ -206,23 +212,30 @@ export default {
         justify-content: center;
         box-sizing: border-box;
         z-index: 1;
+        color: v-bind(labelColor);
         & > i {
           font-size: 16px;
         }
         & > span {
           font-size: 12px;
           line-height: 14px;
+          width: 80%;
+          margin: 0 auto;
           margin-top: 5px;
+          text-align: center;
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         &:hover:not(.vaw-tab-split-item-is-active) {
           cursor: pointer;
           color: var(--el-color-primary);
         }
-        &:hover{
+        &:hover {
           cursor: pointer;
         }
       }
-      .vaw-tab-split-item-is-active{
+      .vaw-tab-split-item-is-active {
         color: var(--el-color-white);
       }
       .vaw-tab-split-item-is-active::after {

@@ -6,25 +6,38 @@
       appear
     >
       <keep-alive :include="cachedViews">
-        <component :is="Component" />
+        <component
+          :is="Component"
+          :key="routeKey"
+        />
       </keep-alive>
     </transition>
   </router-view>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref, watch } from "vue";
+import { useRoute } from "vue-router";
 import store from "./store";
 export default defineComponent({
   name: "Main",
   setup() {
     const state = store.state;
+    const route = useRoute();
+    const routeKey = ref(route.fullPath);
     const cachedViews = computed(() => {
       return state.cachedView.map((it) => it);
     });
+    watch(
+      () => route.fullPath,
+      () => {
+        routeKey.value = route.fullPath;
+      }
+    );
     return {
       state,
       cachedViews,
+      routeKey,
     };
   },
 });

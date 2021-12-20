@@ -16,11 +16,17 @@
           <div class="text-xl">早上好，Andy，青春只有一次，别让自己过得不精彩</div>
           <div class="text-grey text-sm"><i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~</div>
         </div>
-        <div class="flex flex-direction justify-around align-end item-action">
+        <div
+          class="flex flex-direction justify-around align-end item-action"
+          @click="onTestClick('张三')"
+        >
           <div class="text-gray">项目数</div>
           <div class="text-xl">12</div>
         </div>
-        <div class="flex flex-direction justify-around align-end item-action">
+        <div
+          class="flex flex-direction justify-around align-end item-action"
+          @click="onTestClick('李四')"
+        >
           <div class="text-gray">待办项</div>
           <div class="text-xl">3/20</div>
         </div>
@@ -378,11 +384,20 @@ export default defineComponent({
         ...(waitingItmes.length > 4 ? waitingItmes.slice(0, 4) : waitingItmes)
       );
     });
+    function onTestClick(name: string) {
+      router.push({
+        path: "/query/query",
+        query: {
+          name,
+        },
+      });
+    }
     return {
       isShowMore,
       isMobileScreen,
       tempWaitingItems,
       avatar,
+      onTestClick,
       currentDate:
         date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),
       dataItems: [

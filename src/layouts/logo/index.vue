@@ -41,26 +41,18 @@ export default defineComponent({
     const setting = useSetting();
     const state = store.state;
     const bgColor = ref(
-      state.theme === "light"
-        ? "var(--el-color-white)"
-        : "var(--el-color-black)"
+      state.theme === "light" ? "var(--el-color-white)" : "#001428"
     );
     const textColor = ref(
-      state.theme === "light"
-        ? "var(--el-color-black)"
-        : "var(--el-color-white)"
+      state.theme === "light" ? "#001428" : "var(--el-color-white)"
     );
     watch(
       () => state.theme,
       (newVal) => {
         bgColor.value =
-          newVal === "light"
-            ? "var(--el-color-white)"
-            : "var(--el-color-black)";
+          newVal === "light" ? "var(--el-color-white)" : "#001428";
         textColor.value =
-          state.theme === "light"
-            ? "var(--el-color-black)"
-            : "var(--el-color-white)";
+          state.theme === "light" ? "#001428" : "var(--el-color-white)";
       }
     );
     return {
