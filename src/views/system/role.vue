@@ -93,6 +93,7 @@
     >
       <template #content>
         <el-tree
+          ref="tree"
           :data="menuData"
           show-checkbox
           node-key="menuUrl"
@@ -190,6 +191,7 @@ const formItems = [
 const menuDialogRef = ref<DialogType>();
 const dialogRef = ref<DialogType>();
 const baseFormRef = ref<BaseFormType>();
+const tree = ref()
 const post = usePost();
 const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();
 function doRefresh() {
@@ -211,11 +213,10 @@ function showMenu(item: RoleModel) {
     },
   })
     .then((res) => {
-      console.log(res);
       menuData.push(...res.data);
       handleRoleMenusSelected(menuData);
       menuDialogRef.value?.show(() => {
-        ElMessage.success("模拟菜单修改成功");
+        ElMessage.success("模拟菜单修改成功，数据为：" + JSON.stringify(tree.value.getCheckedKeys()));
         menuDialogRef.value?.close();
       });
     })
