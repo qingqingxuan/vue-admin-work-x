@@ -30,7 +30,7 @@
     "vue": "^3.2.22",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
-    "vuedraggable": "^4.0.3",
+    "vuedraggable": "^4.1.0",
     "vuex": "^4.0.0-0",
     "xlsx": "^0.17.0"
   },

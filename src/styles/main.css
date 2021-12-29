@@ -40,7 +40,7 @@ body .el-table__fixed::before {
   box-sizing: border-box;
 }
 
-#nprogress .bar{
+#nprogress .bar {
   background-color: var(--el-color-primary) !important;
 }
 
@@ -65,7 +65,7 @@ body .el-table__fixed::before {
   right: 0px;
 }
 
-.table-container .el-button{
+.table-container .el-button {
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -76,6 +76,10 @@ body .el-table__fixed::before {
   background-color: #fff;
   padding: 10px 20px;
   padding-top: 20px;
+}
+
+.table-header-container + .table-body-container {
+  margin-top: 5px;
 }
 
 .el-dialog {
@@ -109,7 +113,7 @@ body .el-table__fixed::before {
   border-top: 1px solid #ececec;
 }
 
-.el-menu [class^=svg-icon] {
+.el-menu [class^="svg-icon"] {
   width: 24px !important;
   font-size: 18px !important;
   margin-right: 5px !important;

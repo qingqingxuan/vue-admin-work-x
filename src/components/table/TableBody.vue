@@ -1,7 +1,8 @@
 <template>
   <el-card
+    id="tableBody"
     :body-style="{padding: 0}"
-    class="table-container"
+    class="table-body-container table-container"
     shadow="never"
   >
     <slot name="tableConfig"></slot>

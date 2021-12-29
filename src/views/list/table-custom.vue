@@ -2,7 +2,21 @@
   <div class="main-container">
     <TableBody>
       <template #tableConfig>
-        <TableConfig />
+        <TableConfig
+          v-model:border="tableConfig.border"
+          v-model:stripe="tableConfig.stripe"
+          v-model:tableColumns="tableProps"
+          @refresh="doRefresh"
+        >
+          <template #actions>
+            <el-button type="primary" size="mini" icon="PlusIcon"
+              >添加
+            </el-button>
+            <el-button type="danger" size="mini" icon="DeleteIcon"
+              >删除
+            </el-button>
+          </template>
+        </TableConfig>
       </template>
       <template #default>
         <el-table
@@ -14,15 +28,8 @@
           :border="tableConfig.border"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            width="45"
-          />
-          <el-table-column
-            align="center"
-            label="序号"
-            width="80"
-          >
+          <el-table-column type="selection" width="45" />
+          <el-table-column align="center" label="序号" width="80">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
@@ -41,18 +48,19 @@
               >
                 <img
                   class="gender-icon"
-                  :src="scope.row.gender === 0 ? require('@/assets/icon_sex_man.png') : require('@/assets/icon_sex_woman.png')"
+                  :src="
+                    scope.row.gender === 0
+                      ? require('@/assets/icon_sex_man.png')
+                      : require('@/assets/icon_sex_woman.png')
+                  "
                 />
-                <span>{{ scope.row.gender === 0 ? '男' : '女' }}</span>
+                <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
               </div>
-              <div
-                v-else-if="item.prop === 'vip'"
-                class="avatar-container"
-              >
+              <div v-else-if="item.prop === 'vip'" class="avatar-container">
                 <el-image
                   :src="require('@/assets/img_avatar_default.png')"
                   class="avatar"
-                  :class="{'avatar-vip' : scope.row.vip === 1}"
+                  :class="{ 'avatar-vip': scope.row.vip === 1 }"
                 />
                 <img
                   v-if="scope.row.vip === 1"
@@ -63,15 +71,11 @@
               <div v-else>{{ scope.row[item.prop] }}</div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="操作"
-          >
+          <el-table-column align="center" label="操作">
             <template v-slot="scope">
-              <el-button
-                type="text"
-                @click="onDeleteItem(scope.row)"
-              >删除</el-button>
+              <el-button type="text" @click="onDeleteItem(scope.row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -88,7 +92,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import { showConfirmBox, showErrorMessage } from "@/components/types";
 import { useDataTable, usePost } from "@/hooks";
 import { getTableList } from "@/api/url";
@@ -105,7 +109,7 @@ const {
 } = useDataTable();
 const post = usePost();
 
-const tableProps = reactive([
+const tableProps = ref([
   {
     title: "姓名",
     prop: "nickName",
@@ -169,10 +173,6 @@ function onDeleteItem(item: any) {
       showErrorMessage("请选择要删除的数据项");
     }
   }
-}
-function onUpdateTable(temp: Array<TablePropsType>) {
-  tableProps.length = 0;
-  tableProps.push(...temp.filter((it: TablePropsType) => it.checked));
 }
 onMounted(doRefresh);
 </script>
