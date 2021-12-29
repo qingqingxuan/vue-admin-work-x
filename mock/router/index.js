@@ -14,20 +14,17 @@ export const adminRoutes = [
         parentPath: '/system',
         menuUrl: "/system/department",
         menuName: "部门管理",
-        tip: "new",
         cacheable: true
       },
       {
         parentPath: '/system',
         menuUrl: "/system/user",
         menuName: "用户管理",
-        tip: "dot",
       },
       {
         parentPath: '/system',
         menuUrl: "/system/role",
         menuName: "角色管理",
-        tip: "12",
       },
       {
         parentPath: '/system',

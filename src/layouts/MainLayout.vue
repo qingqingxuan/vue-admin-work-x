@@ -51,7 +51,7 @@ export default defineComponent({
       isShowHeader,
       onFixedHeader,
     };
-  }
+  },
 });
 </script>
 
@@ -92,7 +92,7 @@ export default defineComponent({
     padding: 10px;
   }
   .main-section {
-    min-height: calc(100% - #{$footerHeight});
+    min-height: calc(100% - #{$footerHeight} - 6px);
     overflow-x: hidden;
   }
   .fixed-nav-bar {

@@ -1,50 +1,8 @@
 <template>
   <div class="main-container">
-    <TableHeader :can-collapsed="false">
-      <template v-slot:right>
-        <el-button
-          type="danger"
-          size="mini"
-          :icon="Delete"
-          @click="onDeleteItem(null)"
-        >删除
-        </el-button>
-      </template>
-    </TableHeader>
     <TableBody>
       <template #tableConfig>
-        <div
-          class="flex justify-between padding"
-          style="border-bottom: 1px dashed var(--el-border-color-light)"
-        >
-          <el-link :underline="false">表格设置</el-link>
-          <div>
-            <span class="margin-right">
-              <el-checkbox v-model="tableConfig.border">表格边框</el-checkbox>
-            </span>
-            <span class="margin-right">
-              <el-checkbox v-model="tableConfig.stripe">斑马纹</el-checkbox>
-            </span>
-            <el-tooltip
-              effect="dark"
-              content="刷新页面"
-              placement="top"
-            >
-              <el-button
-                circle
-                type="success"
-                :icon="RefreshIcon"
-                size="mini"
-                @click="doRefresh"
-              />
-            </el-tooltip>
-            <SortableTable
-              class="margin-left"
-              :table-props="tableProps"
-              @update="onUpdateTable"
-            />
-          </div>
-        </div>
+        <TableConfig />
       </template>
       <template #default>
         <el-table
@@ -71,7 +29,7 @@
           </el-table-column>
           <el-table-column
             v-for="item of tableProps"
-            :key="item.props"
+            :key="item.prop"
             align="center"
             :prop="item.prop"
             :label="item.title"
@@ -118,12 +76,14 @@
           </el-table-column>
         </el-table>
       </template>
+      <template #footer>
+        <TableFooter
+          ref="tableFooter"
+          @refresh="doRefresh"
+          @pageChanged="doRefresh"
+        />
+      </template>
     </TableBody>
-    <TableFooter
-      ref="tableFooter"
-      @refresh="doRefresh"
-      @pageChanged="doRefresh"
-    />
   </div>
 </template>
 
@@ -134,7 +94,6 @@ import { useDataTable, usePost } from "@/hooks";
 import { getTableList } from "@/api/url";
 import type { TableFooter } from "@/components/types";
 import _ from "lodash";
-import { Delete, Refresh as RefreshIcon } from "@element-plus/icons";
 
 const {
   handleSuccess,

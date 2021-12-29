@@ -166,16 +166,7 @@
 </template>
 
 <script lang="ts">
-import { TinyEmitter } from "tiny-emitter";
-import {
-  computed,
-  inject,
-  nextTick,
-  onMounted,
-  ref,
-  defineComponent,
-  PropType,
-} from "vue";
+import { computed, ref, defineComponent, PropType } from "vue";
 import {
   Search as SearchIcon,
   Refresh as RefreshIcon,

@@ -6,6 +6,7 @@
   >
     <slot name="tableConfig"></slot>
     <slot name="default"></slot>
+    <slot name="footer"></slot>
   </el-card>
 </template>
 
@@ -17,7 +18,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .table-container {
-  margin: 10px 0;
   padding: 5px;
 }
 </style>

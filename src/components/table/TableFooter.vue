@@ -20,9 +20,9 @@
       />
       <el-button
         v-if="showRefresh"
-        style="margin-left: 15px"
+        style="margin-left: 15px; width: 30px; height: 30px;"
         circle
-        size="small"
+        size="mini"
         :icon="RefreshIcon"
         type="primary"
         @click="onRefresh"
@@ -33,13 +33,15 @@
 
 <script lang="ts">
 import { Refresh as RefreshIcon } from "@element-plus/icons";
-import { defineComponent, reactive } from "vue";
+import { computed, defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({
+  name: "TableFooter",
+  emits: ["pageChanged", "refresh"],
   props: {
     pageSizes: {
-      type: Array,
-      default: function () {
+      type: Array as PropType<Array<number>>,
+      default: () => {
         return [10, 20, 30, 40];
       },
     },
@@ -48,7 +50,6 @@ export default defineComponent({
       default: true,
     },
   },
-  emits: ["pageChanged", "refresh"],
   setup(props, { emit }) {
     const pageModel = reactive({
       currentPage: 1,
@@ -95,10 +96,11 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .table-footer-container {
-  height: 45px;
+  padding: 5px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  border: none;
 }
 </style>
