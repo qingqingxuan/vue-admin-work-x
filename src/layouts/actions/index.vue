@@ -12,12 +12,10 @@
     <el-popover
       v-if="state.actionItem.showMessage"
       trigger="click"
+      :width="300"
     >
       <template #reference>
-        <el-badge
-          :value="12"
-          class="badge-action-item"
-        >
+        <el-badge :value="12" class="badge-action-item">
           <span>
             <el-icon :size="18">
               <bell />
@@ -57,7 +55,7 @@
     <div
       v-if="state.actionItem.showSearch && state.device !== 'mobile'"
       class="input-wrapper"
-      :class="{'is-active': showSearchContent}"
+      :class="{ 'is-active': showSearchContent }"
     >
       <el-input
         ref="searchContentRef"
@@ -101,7 +99,7 @@ export default defineComponent({
     const state = store.state;
     const router = useRouter();
     const route = useRoute();
-    const emit = useEmit()
+    const emit = useEmit();
 
     function onShowSearch() {
       showSearchContent.value = !showSearchContent.value;
@@ -129,7 +127,7 @@ export default defineComponent({
       router.replace({ path: "/redirect" + route.path });
     }
     function onShowSetting() {
-      emit?.emit('show_setting')
+      emit?.emit("show_setting");
     }
     return {
       searchContentRef,

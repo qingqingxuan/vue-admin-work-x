@@ -1,17 +1,23 @@
 <template>
   <div class="main-container">
-    <TableHeader>
-      <template #right>
-        <el-button
-          type="primary"
-          size="mini"
-          icon="PlusIcon"
-          @click="onAddItem"
-        >添加
-        </el-button>
-      </template>
-    </TableHeader>
     <TableBody>
+      <template #tableConfig>
+        <TableConfig
+          v-model:border="tableConfig.border"
+          v-model:stripe="tableConfig.stripe"
+          @refresh="doRefresh"
+        >
+          <template #actions>
+            <el-button
+              type="primary"
+              size="mini"
+              icon="PlusIcon"
+              @click="onAddItem"
+              >添加
+            </el-button>
+          </template>
+        </TableConfig>
+      </template>
       <template #default>
         <el-table
           v-loading="tableLoading"
@@ -21,14 +27,9 @@
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
           row-key="id"
-          :tree-props="{children: 'children'}"
+          :tree-props="{ children: 'children' }"
         >
-          <el-table-column
-            align="center"
-            label="序号"
-            fixed="left"
-            width="80"
-          >
+          <el-table-column align="center" label="序号" fixed="left" width="80">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
@@ -40,28 +41,20 @@
             :prop="item.prop"
             align="center"
           >
-            <template
-              v-if="item.prop === 'status'"
-              v-slot="scope"
-            >
+            <template v-if="item.prop === 'status'" v-slot="scope">
               <el-switch
                 v-model="scope.row.status"
                 :active-value="1"
                 :inactive-value="0"
               />
             </template>
-            <template
-              v-else-if="item.prop === 'actions'"
-              v-slot="scope"
-            >
-              <el-button
-                type="text"
-                @click="onUpdateItem(scope.row)"
-              >编辑</el-button>
-              <el-button
-                type="text"
-                @click="onDeleteItem(scope.row)"
-              >删除</el-button>
+            <template v-else-if="item.prop === 'actions'" v-slot="scope">
+              <el-button type="text" @click="onUpdateItem(scope.row)"
+                >编辑</el-button
+              >
+              <el-button type="text" @click="onDeleteItem(scope.row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -70,9 +63,24 @@
     <Dialog ref="dialog">
       <template #content>
         <BaseForm
+          class="padding-left padding-right"
           ref="baseForm"
           :form-items="formItems"
-        ></BaseForm>
+        >
+          <template #prefix>
+            <el-form-item :label="parentFormItem.label">
+              <TreeSelector
+                v-model:value="parentFormItem.value"
+                placeholder="请选择上级部门"
+                :data="dataList"
+                :dataFields="{
+                  label: 'name',
+                  value: 'id',
+                }"
+              />
+            </el-form-item>
+          </template>
+        </BaseForm>
       </template>
     </Dialog>
   </div>
@@ -82,7 +90,7 @@
 import { post } from "@/api/http";
 import { getDepartmentList } from "@/api/url";
 import type { BaseFormType, DialogType } from "@/components/types";
-import { computed, onMounted, reactive, ref } from "@vue/runtime-core";
+import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import _ from "lodash";
 import { useDataTable } from "@/hooks";
@@ -96,6 +104,7 @@ interface Department {
   children: Array<Department>;
 }
 const DP_CODE_FLAG = "dp_code_";
+
 const tableColumns = reactive([
   {
     label: "部门名称",
@@ -119,11 +128,10 @@ const tableColumns = reactive([
   },
 ]);
 const dialog = ref<DialogType>();
-const baseForm = ref<BaseFormType>();
+const baseForm = ref();
 const { tableConfig, tableLoading, dataList, handleSuccess } = useDataTable();
-const parentFormItem = {
+const parentFormItem = reactive({
   label: "上级部门",
-  type: "select",
   name: "parentId",
   value: "",
   placeholder: "请选择上级部门",
@@ -131,7 +139,7 @@ const parentFormItem = {
   reset() {
     this.value = "";
   },
-};
+});
 const depCodeFormItem = {
   label: "部门编号",
   type: "input",
@@ -154,7 +162,6 @@ const depCodeFormItem = {
   },
 };
 const formItems = reactive([
-  parentFormItem,
   {
     label: "部门名称",
     type: "input",
@@ -206,6 +213,8 @@ const onUpdateItem = (item: any) => {
       }
     }
   });
+  parentFormItem.value = item.parentId;
+
   depCodeFormItem.disabled = true;
   dialog.value?.show(() => {
     if (!baseForm.value?.checkParams()) {
@@ -252,18 +261,20 @@ const onDeleteItem = (item: any) => {
 };
 const onAddItem = () => {
   formItems.forEach((it: any) => it.reset());
+  parentFormItem.value = "";
   dialog.value?.show(() => {
     if (!baseForm.value?.checkParams()) {
       return;
     }
     (dialog.value as any).loading = true;
+    const formParams = baseForm.value?.generatorParams();
+    formParams.parentId = parentFormItem.value;
     setTimeout(() => {
       ElMessage.success(
-        "模拟添加成功，添加参数为：" +
-          JSON.stringify(baseForm.value?.generatorParams())
+        "模拟添加成功，添加参数为：" + JSON.stringify(formParams)
       );
       dialog.value?.close();
-    }, 3000);
+    }, 1000);
   });
 };
 parentFormItem.selectOptions = computed(() => {

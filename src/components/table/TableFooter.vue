@@ -1,10 +1,10 @@
 <template>
   <el-card
-    :body-style="{ padding: 0 }"
+    :body-style="{ padding: 0, width: '100%' }"
     class="table-footer-container"
     shadow="never"
   >
-    <div class="flex">
+    <div class="flex align-center" :class="[placement]">
       <el-pagination
         :current-page="pageModel.currentPage"
         :page-sizes="pageSizes"
@@ -20,7 +20,7 @@
       />
       <el-button
         v-if="showRefresh"
-        style="margin-left: 15px; width: 30px; height: 30px;"
+        style="margin-left: 15px; width: 30px; height: 30px"
         circle
         size="mini"
         :icon="RefreshIcon"
@@ -48,6 +48,10 @@ export default defineComponent({
     showRefresh: {
       type: Boolean,
       default: true,
+    },
+    position: {
+      type: String as PropType<"left" | "center" | "right">,
+      default: "center",
     },
   },
   setup(props, { emit }) {
@@ -78,11 +82,24 @@ export default defineComponent({
     const setPageSize = (pageSize: number) => {
       pageModel.pageSize = pageSize;
     };
+    const placement = computed(() => {
+      switch (props.position) {
+        case "left":
+          return "justify-start";
+        case "center":
+          return "justify-center";
+        case "right":
+          return "justify-end";
+        default:
+          return "";
+      }
+    });
     const onRefresh = () => {
       emit("refresh");
     };
     return {
       pageModel,
+      placement,
       pageSizeChanged,
       currentChanged,
       withPageInfoData,

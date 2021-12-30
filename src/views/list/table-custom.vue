@@ -35,8 +35,8 @@
             </template>
           </el-table-column>
           <el-table-column
-            v-for="item of tableProps"
-            :key="item.prop"
+            v-for="(item, index) of tableProps"
+            :key="index"
             align="center"
             :prop="item.prop"
             :label="item.title"

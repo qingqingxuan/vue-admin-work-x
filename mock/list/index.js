@@ -40,6 +40,7 @@ Mock.mock(RegExp(getDepartmentList), function ({ body }) {
         children: [
           {
             id: 3,
+            parentId: 2,
             name: "市场一部",
             depCode: "dp_code_marketing_1", // 0男 1女
             "order|+1": 1, // 0不是 1是
@@ -49,6 +50,7 @@ Mock.mock(RegExp(getDepartmentList), function ({ body }) {
           {
             id: 4,
             name: "市场二部",
+            parentId: 2,
             depCode: "dp_code_marketing_2", // 0男 1女
             "order|+1": 1, // 0不是 1是
             createTime: Random.now("yyyy-MM-dd HH:mm:ss"),

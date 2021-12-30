@@ -11,7 +11,7 @@ declare interface MenuModel {
   parentPath: string;
   path: string;
   name: string;
-  redirect?: string;
+  outLink?: string;
   badge?: string | number;
   badgeNum?: number;
   cacheable?: boolean;

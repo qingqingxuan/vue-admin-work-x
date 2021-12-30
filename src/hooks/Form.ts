@@ -1,17 +1,12 @@
-import { reactive } from 'vue';
+import { ref } from 'vue';
 export default function() {
-  const innerFormItems = reactive([]) as Array<FormItem>
-  function refreshItems(formItems: Array<FormItem>) {
-    innerFormItems.length = 0
-    innerFormItems.push(...formItems.map((it: FormItem) => ({ ...it })))
-  }
-  function checkParams() {
+  function checkParams(innerFormItems: Array<FormItem>) {
     return innerFormItems.every(it => {
       return it.validator ? it.validator(it,
         innerFormItems.find((item: FormItem) => it.associatedOption === item.name)) : true
     })
   }
-  function generatorParams() {
+  function generatorParams(innerFormItems: Array<FormItem>) {
     if (innerFormItems && innerFormItems.length !== 0) {
       return innerFormItems.reduce((pre, cur) => {
         pre[cur.name] = cur.value
@@ -20,14 +15,12 @@ export default function() {
     }
     return {}
   }
-  function resetParams() {
+  function resetParams(innerFormItems: Array<FormItem>) {
     innerFormItems.forEach(it => {
       it.reset ? it.reset() : (it.value = '')
     })
   }
   return {
-    innerFormItems,
-    refreshItems,
     checkParams,
     generatorParams,
     resetParams

@@ -54,3 +54,9 @@ interface LikeSearchModel {
   conditionItems: Array<TableSearchItem> | null,
   extraParams?: (() => Record<string, any>) | Record<string, any>
 }
+
+interface TreeDataType {
+  label: string,
+  value: string | number,
+  children?: TreeDataType[]
+}

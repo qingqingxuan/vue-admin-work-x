@@ -7,13 +7,14 @@
     <div class="flex-sub"></div>
     <div>
       <SortableTable
+        v-if="tableColumns && tableColumns.length > 0"
         class="margin-left"
         :table-props="tableColumns"
         @update="onUpdateTable"
       />
       <span class="margin-left-sm" />
       <el-tooltip effect="dark" content="刷新页面" placement="top">
-        <el-icon class="icon-wrapper">
+        <el-icon class="icon-wrapper" @click="doRefresh">
           <RefreshIcon />
         </el-icon>
       </el-tooltip>
@@ -81,7 +82,7 @@ export default defineComponent({
     function doRefresh() {
       emit("refresh");
     }
-    function onUpdateTable(newVal: any) {
+    function onUpdateTable(newVal: Array<TablePropsType>) {
       emit("update:tableColumns", newVal);
     }
     function onFullScreen() {

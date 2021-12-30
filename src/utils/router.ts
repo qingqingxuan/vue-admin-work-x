@@ -1,5 +1,5 @@
 import LayoutStore, { Layout } from '@/layouts';
-import { mapTwoLevelRouter } from '@/layouts/utils';
+import { isExternal, mapTwoLevelRouter } from '@/layouts/utils';
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import router, { routes as constantRoutes } from "../router";
@@ -20,7 +20,7 @@ interface OriginRoute {
   menuUrl: string,
   menuName?: string,
   hidden?: boolean,
-  redirect?: string,
+  outLink?: string,
   affix?: boolean,
   cacheable?: boolean,
   icon?: string,
@@ -66,10 +66,9 @@ function generatorRoutes(res: Array<OriginRoute>) {
   const tempRoutes: Array<RouteRecordRawWithHidden> = []
   res.forEach(it => {
     const route: RouteRecordRawWithHidden = {
-      path: it.menuUrl,
+      path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
       name: getNameByUrl(it.menuUrl),
       hidden: !!it.hidden,
-      redirect: it.redirect || '',
       component: isMenu(it.menuUrl) ? Layout : getComponent(it),
       meta: {
         title: it.menuName,

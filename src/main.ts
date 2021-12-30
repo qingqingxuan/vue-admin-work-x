@@ -14,12 +14,16 @@ import LayoutStore from '@/layouts'
 import http from '@/api/http'
 import { registerComponents } from './components'
 import dragger from './directive/draggable/index'
+import * as Icons from '@element-plus/icons'
 
 import '../mock/index.ts'
 
 import './setting'
 
 const app = createApp(App)
+Object.keys(Icons).forEach(it => {
+  app.component(it, (Icons as any)[it])
+})
 registerComponents(app)
 app.use(LayoutStore, {
   state: {

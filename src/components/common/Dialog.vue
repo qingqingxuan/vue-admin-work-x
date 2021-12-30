@@ -12,19 +12,17 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <slot name="footer-button">
-        </slot>
-        <el-button
-          v-if="showCancel"
-          size="mini"
-          @click="dialogVisible = false"
-        >取 消</el-button>
+        <slot name="footer-button"> </slot>
+        <el-button v-if="showCancel" size="mini" @click="dialogVisible = false"
+          >取 消</el-button
+        >
         <el-button
           :loading="loading"
           type="primary"
           size="mini"
           @click="onConfirm"
-        >确 定</el-button>
+          >确 定</el-button
+        >
       </span>
     </template>
   </el-dialog>
@@ -107,7 +105,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .content-wrapper {
   max-height: 50vh;
-  padding: 5px;
+  padding: 20px 5px;
   margin: -10px;
   overflow: auto;
 }

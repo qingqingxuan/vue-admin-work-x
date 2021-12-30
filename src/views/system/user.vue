@@ -1,17 +1,19 @@
 <template>
   <div class="main-container">
-    <TableHeader :can-collapsed="false">
-      <template v-slot:right>
-        <el-button
-          type="danger"
-          size="mini"
-          :icon="Delete"
-          @click="onDeleteItems"
-        >删除
-        </el-button>
-      </template>
-    </TableHeader>
     <TableBody>
+      <template #tableConfig>
+        <TableConfig
+          v-model:border="tableConfig.border"
+          v-model:stripe="tableConfig.stripe"
+          @refresh="doRefresh"
+        >
+          <template #actions>
+            <el-button type="primary" size="mini" icon="PlusIcon"
+              >添加
+            </el-button>
+          </template>
+        </TableConfig>
+      </template>
       <template #default>
         <el-table
           v-loading="tableLoading"
@@ -22,34 +24,20 @@
           :border="tableConfig.border"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column
-            type="selection"
-            width="45"
-          />
-          <el-table-column
-            align="center"
-            label="序号"
-            width="80"
-          >
+          <el-table-column type="selection" width="45" />
+          <el-table-column align="center" label="序号" width="80">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="名称"
-            prop="nickName"
-          />
-          <el-table-column
-            align="center"
-            label="头像"
-          >
+          <el-table-column align="center" label="名称" prop="nickName" />
+          <el-table-column align="center" label="头像">
             <template v-slot="scope">
               <div class="avatar-container">
                 <el-image
                   :src="require('@/assets/img_avatar_01.jpeg')"
                   class="avatar"
-                  :class="{'avatar-vip' : scope.row.vip === 1}"
+                  :class="{ 'avatar-vip': scope.row.vip === 1 }"
                 />
                 <img
                   v-if="scope.row.vip === 1"
@@ -59,26 +47,22 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="性别"
-            prop="gender"
-          >
+          <el-table-column align="center" label="性别" prop="gender">
             <template v-slot="scope">
               <div class="gender-container flex justify-center align-center">
                 <img
                   class="gender-icon"
-                  :src="scope.row.gender === 0 ? require('@/assets/icon_sex_man.png') : require('@/assets/icon_sex_woman.png')"
+                  :src="
+                    scope.row.gender === 0
+                      ? require('@/assets/icon_sex_man.png')
+                      : require('@/assets/icon_sex_woman.png')
+                  "
                 />
-                <span>{{ scope.row.gender === 0 ? '男' : '女' }}</span>
+                <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="地址"
-            prop="address"
-          />
+          <el-table-column align="center" label="地址" prop="address" />
           <el-table-column
             align="center"
             label="上次登录时间"
@@ -91,10 +75,7 @@
             prop="lastLoginIp"
             width="130px"
           />
-          <el-table-column
-            align="center"
-            label="状态"
-          >
+          <el-table-column align="center" label="状态">
             <template v-slot="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -103,15 +84,11 @@
               />
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="操作"
-          >
+          <el-table-column align="center" label="操作">
             <template v-slot="scope">
-              <el-button
-                type="text"
-                @click="onDeleteItem(scope.row)"
-              >删除</el-button>
+              <el-button type="text" @click="onDeleteItem(scope.row)"
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>

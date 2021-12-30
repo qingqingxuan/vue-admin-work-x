@@ -1,17 +1,19 @@
 <template>
   <div class="main-container">
-    <TableHeader :can-collapsed="false">
-      <template v-slot:right>
-        <el-button
-          type="primary"
-          size="mini"
-          :icon="Plus"
-          @click="onAddItem"
-        >添加
-        </el-button>
-      </template>
-    </TableHeader>
     <TableBody>
+      <template #tableConfig>
+        <TableConfig
+          v-model:border="tableConfig.border"
+          v-model:stripe="tableConfig.stripe"
+          @refresh="doRefresh"
+        >
+          <template #actions>
+            <el-button type="primary" size="mini" icon="PlusIcon"
+              >添加
+            </el-button>
+          </template>
+        </TableConfig>
+      </template>
       <template #default>
         <el-table
           v-loading="tableLoading"
@@ -21,59 +23,39 @@
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
         >
-          <el-table-column
-            align="center"
-            label="序号"
-            fixed="left"
-            width="80"
-          >
+          <el-table-column align="center" label="序号" fixed="left" width="80">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="角色名称"
-            prop="name"
-          />
-          <el-table-column
-            align="center"
-            label="角色编号"
-            prop="roleCode"
-          />
-          <el-table-column
-            align="center"
-            label="角色描述"
-            prop="description"
-          />
+          <el-table-column align="center" label="角色名称" prop="name" />
+          <el-table-column align="center" label="角色编号" prop="roleCode" />
+          <el-table-column align="center" label="角色描述" prop="description" />
           <el-table-column
             align="center"
             label="创建时间"
             prop="createTime"
             width="160px"
           />
-          <el-table-column
-            align="center"
-            label="操作"
-          >
+          <el-table-column align="center" label="操作">
             <template v-slot="scope">
               <el-button
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
                 type="text"
                 size="mini"
                 @click="onUpdateItem(scope.row)"
-              >编辑</el-button>
+                >编辑</el-button
+              >
               <el-button
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
                 type="text"
                 size="mini"
                 @click="onDeleteItem(scope.row)"
-              >删除</el-button>
-              <el-button
-                type="text"
-                size="mini"
-                @click="showMenu(scope.row)"
-              >菜单权限</el-button>
+                >删除</el-button
+              >
+              <el-button type="text" size="mini" @click="showMenu(scope.row)"
+                >菜单权限</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -81,16 +63,10 @@
     </TableBody>
     <Dialog ref="dialogRef">
       <template #content>
-        <BaseForm
-          ref="baseFormRef"
-          :form-items="formItems"
-        />
+        <BaseForm ref="baseFormRef" :form-items="formItems" />
       </template>
     </Dialog>
-    <Dialog
-      ref="menuDialogRef"
-      title="菜单权限"
-    >
+    <Dialog ref="menuDialogRef" title="菜单权限">
       <template #content>
         <el-tree
           ref="tree"
@@ -191,7 +167,7 @@ const formItems = [
 const menuDialogRef = ref<DialogType>();
 const dialogRef = ref<DialogType>();
 const baseFormRef = ref<BaseFormType>();
-const tree = ref()
+const tree = ref();
 const post = usePost();
 const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();
 function doRefresh() {
@@ -216,7 +192,10 @@ function showMenu(item: RoleModel) {
       menuData.push(...res.data);
       handleRoleMenusSelected(menuData);
       menuDialogRef.value?.show(() => {
-        ElMessage.success("模拟菜单修改成功，数据为：" + JSON.stringify(tree.value.getCheckedKeys()));
+        ElMessage.success(
+          "模拟菜单修改成功，数据为：" +
+            JSON.stringify(tree.value.getCheckedKeys())
+        );
         menuDialogRef.value?.close();
       });
     })

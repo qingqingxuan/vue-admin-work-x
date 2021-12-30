@@ -1,17 +1,18 @@
 <template>
   <el-form
     ref="form"
-    :label-position="config.labelPosition || 'right' "
+    :label-position="config.labelPosition || 'right'"
     :label-width="(config.labelWidth || 80) + 'px'"
     :size="config.size || 'small'"
   >
+    <slot name="prefix"></slot>
     <el-form-item
       v-for="(item, i) of innerFormItems"
       :key="i"
       :label="item.label"
     >
       <el-row>
-        <el-col :span="item.span || 22">
+        <el-col :span="item.span || 24">
           <el-input
             v-if="item.type === 'input' && !item.hidden"
             v-model="item.value"
@@ -34,7 +35,11 @@
             :disabled="item.disabled || false"
             style="width: 100%"
             class="form-item"
-            @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
+            @change="
+              item.onChange
+                ? item.onChange(item.value, item.associatedOption || '')
+                : () => {}
+            "
           >
             <el-option
               v-for="optionItem in item.selectOptions"
@@ -79,7 +84,7 @@
             v-model="item.value"
             arrow-control
             :picker-options="{
-              selectableRange: '00:00:00 - 23:59:59'
+              selectableRange: '00:00:00 - 23:59:59',
             }"
             :disabled="item.disabled || false"
             :placeholder="item.placeholder || '请选择时间'"
@@ -91,35 +96,51 @@
             v-model="item.value"
             :disabled="item.disabled || false"
             :size="config.size || 'small'"
-            @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
+            @change="
+              item.onChange
+                ? item.onChange(item.value, item.associatedOption || '')
+                : () => {}
+            "
           >
             <component
               :is="item.style === 'button' ? 'el-radio-button' : 'el-radio'"
               v-for="optionItem of item.radioOptions"
               :key="optionItem.value"
               :label="optionItem.value"
-            >{{ optionItem.label }}</component>
+              >{{ optionItem.label }}</component
+            >
           </el-radio-group>
           <el-checkbox-group
             v-if="item.type === 'check-group' && !item.hidden"
             v-model="item.value"
             :disabled="item.disabled || false"
             :size="config.size || 'small'"
-            @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
+            @change="
+              item.onChange
+                ? item.onChange(item.value, item.associatedOption || '')
+                : () => {}
+            "
           >
             <component
-              :is="item.style === 'button' ? 'el-checkbox-button' : 'el-checkbox'"
+              :is="
+                item.style === 'button' ? 'el-checkbox-button' : 'el-checkbox'
+              "
               v-for="optionItem of item.checkOptions"
               :key="optionItem.value"
               :label="optionItem.value"
-            >{{ optionItem.label }}</component>
+              >{{ optionItem.label }}</component
+            >
           </el-checkbox-group>
           <el-switch
             v-if="item.type === 'switch' && !item.hidden"
             v-model="item.value"
             :disabled="item.disabled || false"
             :size="config.size || 'small'"
-            @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
+            @change="
+              item.onChange
+                ? item.onChange(item.value, item.associatedOption || '')
+                : () => {}
+            "
           >
           </el-switch>
         </el-col>
@@ -131,7 +152,14 @@
 
 <script lang="ts">
 import { useForm } from "@/hooks";
-import { defineComponent, onMounted, PropType } from "vue";
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  onMounted,
+  PropType,
+  watch,
+} from "vue";
 export default defineComponent({
   name: "BaseForm",
   props: {
@@ -153,26 +181,26 @@ export default defineComponent({
     },
   },
   setup(props, { expose }) {
-    const {
-      innerFormItems,
-      refreshItems,
-      checkParams,
-      resetParams,
-      generatorParams,
-    } = useForm();
-    onMounted(() => {
-      refreshItems(props.formItems);
+    const { checkParams, resetParams, generatorParams } = useForm();
+    const innerFormItems = computed(() => {
+      return props.formItems;
     });
+    function mCheckParams() {
+      return checkParams(innerFormItems.value);
+    }
+    function mResetParams() {
+      return resetParams(innerFormItems.value);
+    }
+    function mGeneratorParams() {
+      return generatorParams(innerFormItems.value);
+    }
     expose({
-      checkParams,
-      resetParams,
-      generatorParams,
+      checkParams: mCheckParams,
+      resetParams: mResetParams,
+      generatorParams: mGeneratorParams,
     });
     return {
       innerFormItems,
-      checkParams,
-      resetParams,
-      generatorParams,
     };
   },
 });

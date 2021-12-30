@@ -1,14 +1,33 @@
 <template>
   <div class="main-container">
     <TableHeader
-      :can-collapsed="likeSearchModel.conditionItems && likeSearchModel.conditionItems.length !== 0"
+      :can-collapsed="
+        likeSearchModel.conditionItems &&
+        likeSearchModel.conditionItems.length !== 0
+      "
       :search-model="likeSearchModel.conditionItems"
       :default-collapsed-state="true"
-      title="查询条件"
+      title="数据筛选"
       @doSearch="doSearch"
       @resetSearch="resetSearch"
     />
     <TableBody>
+      <template #tableConfig>
+        <TableConfig
+          v-model:border="tableConfig.border"
+          v-model:stripe="tableConfig.stripe"
+          @refresh="doRefresh"
+        >
+          <template #actions>
+            <el-button type="primary" size="mini" icon="PlusIcon"
+              >添加
+            </el-button>
+            <el-button type="danger" size="mini" icon="DeleteIcon"
+              >删除
+            </el-button>
+          </template>
+        </TableConfig>
+      </template>
       <template #default>
         <el-table
           v-loading="tableLoading"
@@ -18,30 +37,19 @@
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
         >
-          <el-table-column
-            align="center"
-            label="序号"
-            width="80"
-          >
+          <el-table-column align="center" label="序号" width="80">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="名称"
-            prop="nickName"
-          />
-          <el-table-column
-            align="center"
-            label="头像"
-          >
+          <el-table-column align="center" label="名称" prop="nickName" />
+          <el-table-column align="center" label="头像">
             <template v-slot="scope">
               <div class="avatar-container">
                 <el-image
                   :src="require('@/assets/img_avatar_default.png')"
                   class="avatar"
-                  :class="{'avatar-vip' : scope.row.vip === 1}"
+                  :class="{ 'avatar-vip': scope.row.vip === 1 }"
                 />
                 <img
                   v-if="scope.row.vip === 1"
@@ -51,25 +59,22 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="性别"
-            prop="gender"
-          >
+          <el-table-column align="center" label="性别" prop="gender">
             <template v-slot="scope">
               <div class="gender-container flex justify-center align-center">
                 <img
                   class="gender-icon"
-                  :src="scope.row.gender === 0 ? require('@/assets/icon_sex_man.png') : require('@/assets/icon_sex_woman.png')"
+                  :src="
+                    scope.row.gender === 0
+                      ? require('@/assets/icon_sex_man.png')
+                      : require('@/assets/icon_sex_woman.png')
+                  "
                 />
-                <span>{{ scope.row.gender === 0 ? '男' : '女' }}</span>
+                <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="状态"
-          >
+          <el-table-column align="center" label="状态">
             <template v-slot="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -78,11 +83,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="地址"
-            prop="address"
-          />
+          <el-table-column align="center" label="地址" prop="address" />
           <el-table-column
             align="center"
             label="上次登录时间"
@@ -97,12 +98,14 @@
           />
         </el-table>
       </template>
+      <template #footer>
+        <TableFooter
+          ref="tableFooter"
+          @refresh="doRefresh"
+          @pageChanged="doRefresh"
+        />
+      </template>
     </TableBody>
-    <TableFooter
-      ref="tableFooter"
-      @refresh="doRefresh"
-      @pageChanged="doRefresh"
-    />
   </div>
 </template>
 

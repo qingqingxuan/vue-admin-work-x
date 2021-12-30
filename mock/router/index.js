@@ -119,6 +119,11 @@ export const adminRoutes = [
                 menuUrl: "/other/chart/icon/element-plus",
                 menuName: "ElementPlus",
               },
+              {
+                parentPath: '/other/chart',
+                menuUrl: "/other/chart/icon/icon-select",
+                menuName: "图标选择器",
+              },
             ]
           },
           {

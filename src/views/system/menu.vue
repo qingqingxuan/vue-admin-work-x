@@ -1,17 +1,23 @@
 <template>
   <div class="main-container">
-    <TableHeader :can-collapsed="false">
-      <template v-slot:right>
-        <el-button
-          type="primary"
-          size="mini"
-          :icon="Plus"
-          @click="onAddItem"
-        >添加
-        </el-button>
-      </template>
-    </TableHeader>
     <TableBody>
+      <template #tableConfig>
+        <TableConfig
+          v-model:border="tableConfig.border"
+          v-model:stripe="tableConfig.stripe"
+          @refresh="doRefresh"
+        >
+          <template #actions>
+            <el-button
+              type="primary"
+              size="mini"
+              icon="PlusIcon"
+              @click="onAddItem"
+              >添加
+            </el-button>
+          </template>
+        </TableConfig>
+      </template>
       <template #default>
         <el-table
           v-loading="tableLoading"
@@ -22,33 +28,16 @@
           :border="tableConfig.border"
           row-key="menuUrl"
           :default-expand-all="true"
-          :tree-props="{children: 'children'}"
+          :tree-props="{ children: 'children' }"
         >
-          <el-table-column
-            align="center"
-            label="序号"
-            fixed="left"
-            width="150"
-          >
+          <el-table-column align="center" label="序号" fixed="left" width="150">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="菜单名称"
-            prop="menuName"
-          />
-          <el-table-column
-            align="center"
-            label="菜单地址"
-            prop="menuUrl"
-          />
-          <el-table-column
-            align="center"
-            label="图标"
-            prop="menuUrl"
-          >
+          <el-table-column align="center" label="菜单名称" prop="menuName" />
+          <el-table-column align="center" label="菜单地址" prop="menuUrl" />
+          <el-table-column align="center" label="图标" prop="menuUrl">
             <template #default="scope">
               <el-icon
                 v-if="scope.row.icon"
@@ -60,46 +49,35 @@
               <div v-else>--</div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="是否缓存"
-          >
+          <el-table-column align="center" label="是否缓存">
             <template #default="scope">
-              {{ scope.row.cacheable ? '是' : '否' }}
+              {{ scope.row.cacheable ? "是" : "否" }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="是否固定"
-          >
+          <el-table-column align="center" label="是否固定">
             <template #default="scope">
-              {{ scope.row.affix ? '是' : '否' }}
+              {{ scope.row.affix ? "是" : "否" }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="badge提示"
-          >
+          <el-table-column align="center" label="badge提示">
             <template #default="scope">
-              {{ parseInt(scope.row.tip) ? 'number' : scope.row.tip || '无' }}
+              {{ parseInt(scope.row.tip) ? "number" : scope.row.tip || "无" }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="操作"
-            fixed="right"
-          >
+          <el-table-column align="center" label="操作" fixed="right">
             <template v-slot="scope">
               <el-button
                 type="text"
                 size="mini"
                 @click="onUpdateItem(scope.row)"
-              >编辑</el-button>
+                >编辑</el-button
+              >
               <el-button
                 type="text"
                 size="mini"
                 @click="onDeleteItem(scope.row)"
-              >删除</el-button>
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -109,40 +87,30 @@
       <template #content>
         <el-form
           :model="menuModel"
-          :rules="formRules"
           label-width="80px"
           label-position="right"
           class="padding"
         >
           <el-form-item label="上级菜单">
-            <el-select
-              v-model="menuModel.parentPath"
-              size="small"
-              placeholder="请输入菜单名称"
-              style="width: 100%"
-            >
-              <el-option
-                v-for="(item, index) of dataList"
-                :key="index"
-                :label="item.menuName"
-                :value="item.menuUrl"
-              />
-            </el-select>
+            <TreeSelector
+              v-model:value="menuModel.parentPath"
+              placeholder="请选择上级菜单"
+              :data="dataList"
+              :dataFields="{
+                label: 'menuName',
+                value: 'menuUrl',
+                children: 'children',
+              }"
+            />
           </el-form-item>
-          <el-form-item
-            label="菜单名称"
-            prop="name"
-          >
+          <el-form-item label="菜单名称" prop="name">
             <el-input
               v-model="menuModel.name"
               size="small"
               placeholder="请输入菜单名称"
             />
           </el-form-item>
-          <el-form-item
-            label="菜单地址"
-            prop="path"
-          >
+          <el-form-item label="菜单地址" prop="path">
             <el-input
               v-model="menuModel.path"
               size="small"
@@ -150,19 +118,16 @@
             >
             </el-input>
           </el-form-item>
-          <el-form-item label="重定向">
+          <el-form-item label="外链地址">
             <el-input
-              v-model="menuModel.redirect"
+              v-model="menuModel.outLink"
               size="small"
-              placeholder="请输入重定向地址"
+              placeholder="请输入外链地址"
             >
             </el-input>
           </el-form-item>
           <el-form-item label="badge提示">
-            <el-radio-group
-              v-model="menuModel.badge"
-              size="mini"
-            >
+            <el-radio-group v-model="menuModel.badge" size="mini">
               <el-radio-button label="">无</el-radio-button>
               <el-radio-button label="dot">圆点</el-radio-button>
               <el-radio-button label="new">new</el-radio-button>
@@ -178,6 +143,9 @@
               :min="1"
             />
           </el-form-item>
+          <el-form-item label="菜单图标">
+            <IconSelector />
+          </el-form-item>
           <el-form-item label="是否缓存">
             <el-switch v-model="menuModel.cacheable" />
           </el-form-item>
@@ -186,34 +154,6 @@
           </el-form-item>
           <el-form-item label="是否固定">
             <el-switch v-model="menuModel.affix" />
-          </el-form-item>
-          <el-form-item label="菜单图标">
-            <ul
-              class="icon-wrapper"
-              v-infinite-scroll="loadIcon"
-              :infinite-scroll-disabled="disableLoad"
-            >
-              <li
-                v-for="item of icons"
-                :key="item.name"
-                class="icon-item"
-                @click="selectIcon(item)"
-              >
-                <SvgIcon
-                  :style="{'color': menuModel.icon === item.font_class ? 'red' : '#333'}"
-                  :icon-class="item.font_class"
-                ></SvgIcon>
-                <div :style="{'color': menuModel.icon === item.font_class ? 'red' : '#333'}">{{ menuModel.icon === item.font_class ? '已选' : '选择' }}</div>
-              </li>
-              <p
-                class="text-center"
-                v-if="!disableLoad"
-              >加载中...</p>
-              <p
-                class="text-center"
-                v-else
-              >没有更多了</p>
-            </ul>
           </el-form-item>
         </el-form>
       </template>
@@ -226,7 +166,6 @@ import type { DialogType } from "@/components/types";
 import { uuid } from "@/utils";
 import { onMounted, reactive, ref, shallowReactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import Icons from "@/icons/iconfont/iconfont.json";
 import { usePost, useDataTable } from "@/hooks";
 import { getMenuList } from "@/api/url";
 import { Plus } from "@element-plus/icons";
@@ -236,7 +175,7 @@ const menuModel = reactive<MenuModel>({
   parentPath: "",
   path: "",
   name: "",
-  redirect: "",
+  outLink: "",
   badge: "",
   badgeNum: 1,
   cacheable: false,
@@ -245,17 +184,9 @@ const menuModel = reactive<MenuModel>({
   affix: false,
 });
 const { tableLoading, tableConfig, dataList, handleSuccess } = useDataTable();
-const count = ref(100);
-const icons = shallowReactive(Icons.glyphs.slice(0, count.value));
 const disableLoad = ref(false);
 const dialogRef = ref<DialogType>();
-const loadIcon = () => {
-  setTimeout(() => {
-    const tempIcons = Icons.glyphs.slice(count.value, (count.value += 100));
-    icons.push(...tempIcons);
-    disableLoad.value = icons.length === Icons.glyphs.length;
-  }, 500);
-};
+const menuList = ref([]);
 const post = usePost();
 function doRefresh() {
   post({
@@ -270,7 +201,7 @@ function onAddItem() {
   menuModel.parentPath = "";
   menuModel.path = "";
   menuModel.name = "";
-  menuModel.redirect = "";
+  menuModel.outLink = "";
   menuModel.badge = "";
   menuModel.badgeNum = 1;
   menuModel.cacheable = false;
@@ -303,9 +234,6 @@ function onDeleteItem(item: any) {
   ElMessageBox.confirm("是否要删除此数据？").then(() => {
     ElMessageBox.confirm("模拟删除成功，参数为：" + JSON.stringify(item));
   });
-}
-function selectIcon(item: any) {
-  menuModel.icon = item.font_class;
 }
 onMounted(doRefresh);
 </script>

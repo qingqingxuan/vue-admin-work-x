@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="(item,index) of tempData"
+      v-for="(item, index) of tempData"
       :key="index"
       class="message-item flex"
     >
@@ -56,11 +56,6 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-.el-popover.el-popper {
-  width: 300px !important;
-}
-</style>
 <style lang="scss" scoped>
 .message-item {
   padding: 10px 5px;
