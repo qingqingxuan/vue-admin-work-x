@@ -10,8 +10,8 @@
 
 ## 项目地址：
 
-- [🎉 官网地址](http://qingqingxuan.gitee.io/work-p-site)
-- [🎉Vue Admin Work X **gitee** 演示地址](http://qingqingxuan.gitee.io/vue-admin-work-x)
+- [🎉 官网地址](http://www.vueadminwork.com)
+- [🎉Vue Admin Work X **gitee** 演示地址](http://x.vueadminwork.com)
 
 ## Vue Admin Work 授权客服
 
