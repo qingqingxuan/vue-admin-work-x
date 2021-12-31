@@ -30,7 +30,7 @@ export default Object.assign(
   {
     projectName,
     version,
-    primaryColor: '#13C2C2',
+    primaryColor: '#409eff',
     layoutMode: 'ltr',
     theme: 'light',
   },

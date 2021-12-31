@@ -2,6 +2,7 @@
   <el-card
     :body-style="{ padding: 0, width: '100%' }"
     class="table-footer-container"
+    id="tableFooterContainer"
     shadow="never"
   >
     <div class="flex align-center" :class="[placement]">

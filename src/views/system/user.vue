@@ -30,12 +30,14 @@
       </template>
       <template #default>
         <el-table
+          ref="tableRef"
           v-loading="tableLoading"
           :data="dataList"
           :header-cell-style="tableConfig.headerCellStyle"
           :size="tableConfig.size"
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
+          :height="tableConfig.height"
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="45" fixed="left" />
@@ -248,7 +250,7 @@
 
 <script lang="ts" setup>
 import { useDataTable, usePost } from "@/hooks";
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getDepartmentList, getRoleList, getUserList } from "@/api/url";
 import type { DialogType, TableFooter } from "@/components/types";
@@ -256,6 +258,7 @@ import type { DialogType, TableFooter } from "@/components/types";
 const post = usePost();
 const dialogRef = ref<DialogType>();
 const tableFooter = ref<TableFooter>();
+const tableRef = ref();
 const {
   dataList,
   tableLoading,
@@ -263,9 +266,14 @@ const {
   handleSuccess,
   handleSelectionChange,
   selectRows,
+  useHeight,
 } = useDataTable();
 const departmentList = ref([]);
 const roleList = ref([]);
+
+const tableHeight = computed(() => {
+  return tableConfig.height;
+});
 
 const userModel = reactive({
   nickName: "",
@@ -411,7 +419,11 @@ function onEnableItem(item: any) {
     .catch(console.log);
 }
 
-onMounted(doRefresh);
+onMounted(() => {
+  // console.log(tableConfig.height);
+  doRefresh();
+  useHeight();
+});
 </script>
 
 <style lang="scss" scoped>

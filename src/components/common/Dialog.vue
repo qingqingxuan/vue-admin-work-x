@@ -50,7 +50,7 @@ export default defineComponent({
     },
   },
   setup(props, { expose }) {
-    const innerTitle = ref(props.title || "提示");
+    const innerTitle = computed(() => props.title || "提示");
     const dialogRef = ref();
     const dialogVisible = ref(false);
     const loading = ref(false);

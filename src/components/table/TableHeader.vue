@@ -1,12 +1,6 @@
 <template>
-  <div
-    id="tableHeaderContainer"
-    class="table-header-container"
-  >
-    <el-card
-      :body-style="{padding: '0px'}"
-      shadow="never"
-    >
+  <div id="tableHeaderContainer" class="table-header-container">
+    <el-card :body-style="{ padding: '0px' }" shadow="never">
       <template #header>
         <div class="wrapper">
           <el-tooltip
@@ -15,14 +9,17 @@
             :content="showArrow ? '点击展开/收起查询条件' : title"
             placement="top"
           >
-            <el-button
-              type="text"
-              @click="collapsed"
-            >
-              {{ title }}<i
+            <el-button type="text" @click="collapsed">
+              {{ title
+              }}<i
                 v-if="showArrow"
-                :class="showSearchContent ? 'el-icon-caret-bottom' : 'el-icon-caret-top'"
-              ></i></el-button>
+                :class="
+                  showSearchContent
+                    ? 'el-icon-caret-bottom'
+                    : 'el-icon-caret-top'
+                "
+              ></i
+            ></el-button>
           </el-tooltip>
           <div class="left-wrapper">
             <slot name="left"></slot>
@@ -39,13 +36,19 @@
             v-for="(row, i) of filterSearchModel"
             :key="i"
             :gutter="20"
-            :class="{'margin-top' : i !== 0}"
+            :class="{ 'margin-top': i !== 0 }"
             class="search-content-wrapper"
           >
             <el-col
               v-for="(item, index) of row"
               :key="index"
-              :span=" $isMobile ? 24 : (row.length === 1 && item.type === 'action') ? 24 : item.span || 8"
+              :span="
+                $isMobile
+                  ? 24
+                  : row.length === 1 && item.type === 'action'
+                  ? 24
+                  : item.span || 8
+              "
             >
               <div
                 v-if="item.type === 'input'"
@@ -72,7 +75,11 @@
                   :filterable="item.filterable ? true : false"
                   clearable
                   class="form-item"
-                  @change="item.onChange ? item.onChange(item.value, item.associatedOption || '') : (() => {})"
+                  @change="
+                    item.onChange
+                      ? item.onChange(item.value, item.associatedOption || '')
+                      : () => {}
+                  "
                 >
                   <el-option
                     v-for="optionItem in item.selectOptions"
@@ -133,29 +140,28 @@
                   v-model="item.value"
                   arrow-control
                   :picker-options="{
-                    selectableRange: '00:00:00 - 23:59:59'
+                    selectableRange: '00:00:00 - 23:59:59',
                   }"
                   :placeholder="item.placeholder || '请选择时间'"
                   class="form-item"
                   size="small"
                 />
               </div>
-              <div
-                v-else-if="item.type === 'action'"
-                class="flex justify-end"
-              >
+              <div v-else-if="item.type === 'action'" class="flex justify-end">
                 <el-button
                   type="success"
                   size="mini"
                   :icon="RefreshIcon"
                   @click="doResetSearch"
-                >重置</el-button>
+                  >重置</el-button
+                >
                 <el-button
                   type="primary"
                   size="mini"
                   :icon="SearchIcon"
                   @click="doSearch"
-                >搜索</el-button>
+                  >搜索</el-button
+                >
               </div>
             </el-col>
           </el-row>
@@ -166,11 +172,12 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, defineComponent, PropType } from "vue";
+import { computed, ref, defineComponent, PropType, watch, nextTick } from "vue";
 import {
   Search as SearchIcon,
   Refresh as RefreshIcon,
 } from "@element-plus/icons";
+import useEmit from "@/hooks/Emit";
 
 export default defineComponent({
   props: {
@@ -206,6 +213,15 @@ export default defineComponent({
     const collapsedState = computed(() => {
       return showSearchContent.value && showArrow.value;
     });
+    const emitter = useEmit();
+    watch(
+      () => collapsedState.value,
+      (newVal) => {
+        nextTick(() => {
+          emitter?.emit("table-collapse-transition", newVal);
+        });
+      }
+    );
 
     const filterSearchModel = computed(() => {
       if (!props.searchModel) return [];

@@ -36,6 +36,7 @@
           :size="tableConfig.size"
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
+          :height="tableConfig.height"
         >
           <el-table-column align="center" label="序号" width="80">
             <template v-slot="scope">
@@ -112,12 +113,19 @@
 <script lang="ts" setup>
 import { getTableList } from "@/api/url";
 import { useDataTable, useLikeSearch, usePost } from "@/hooks";
-import { onMounted, reactive, ref } from "vue";
+import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import { ElMessageBox } from "element-plus";
 import type { TableFooter } from "@/components/types";
 const tableFooter = ref<TableFooter>();
 const { likeSearchModel, getSearchParams, resetSearch } = useLikeSearch();
-const { handleSuccess, dataList, tableConfig, tableLoading } = useDataTable();
+const {
+  handleSuccess,
+  dataList,
+  tableConfig,
+  tableLoading,
+  useHeight,
+  offTableCollapseTransition,
+} = useDataTable();
 const post = usePost();
 likeSearchModel.extraParams = () => ({
   ...tableFooter.value?.withPageInfoData(),
@@ -165,7 +173,11 @@ function doRefresh() {
     })
     .catch(console.log);
 }
-onMounted(doRefresh);
+onMounted(() => {
+  doRefresh();
+  useHeight();
+});
+onBeforeMount(offTableCollapseTransition);
 </script>
 
 <style lang="scss" scoped>

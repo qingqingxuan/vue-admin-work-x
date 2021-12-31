@@ -4,6 +4,12 @@
 
 - 优化显示 `table` 表格页面
 
+- 新增：新增 `IconSelector.vue` 组件
+
+- 新增：新增 `TreeSelector.vue` 组件
+
+- 新增：新增 `table` 中 `useHeight` 功能
+
 ### 2021-12-29(2.0.0-alpha.5)
 
 - 修复：修复 `路由` 地址相同，参数不一样时，参数覆盖的 bug

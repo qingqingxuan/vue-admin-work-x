@@ -61,7 +61,7 @@
         </el-table>
       </template>
     </TableBody>
-    <Dialog ref="dialog">
+    <Dialog ref="dialog" :title="dialogTitle">
       <template #content>
         <BaseForm
           class="padding-left padding-right"
@@ -126,6 +126,7 @@ const tableColumns = reactive([
 ]);
 const dialog = ref<DialogType>();
 const baseForm = ref();
+const dialogTitle = ref("添加部门");
 const { tableConfig, tableLoading, dataList, handleSuccess } = useDataTable();
 const parentFormItem = reactive({
   label: "上级部门",
@@ -181,6 +182,7 @@ const formItems = reactive([
   depCodeFormItem,
 ]);
 const onUpdateItem = (item: any) => {
+  dialogTitle.value = "编辑部门";
   formItems.forEach((it) => {
     const propName = item[it.name];
     if (propName) {
@@ -238,6 +240,7 @@ const onDeleteItem = (item: any) => {
     .catch(console.log);
 };
 const onAddItem = () => {
+  dialogTitle.value = "添加部门";
   formItems.forEach((it: any) => it.reset());
   parentFormItem.value = "";
   dialog.value?.show(() => {

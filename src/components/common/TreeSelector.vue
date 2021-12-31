@@ -3,8 +3,7 @@
     v-model:visible="visible"
     placement="bottom"
     :width="popWidth"
-    popper-class="poper-wrapper"
-    trigger="focus"
+    trigger="click"
   >
     <template #reference>
       <el-input
@@ -22,13 +21,15 @@
         </template>
       </el-input>
     </template>
-    <el-tree
-      :data="innerData"
-      default-expand-all
-      :expand-on-click-node="false"
-      @node-click="onNodeClick"
-    >
-    </el-tree>
+    <div class="poper-wrapper">
+      <el-tree
+        :data="innerData"
+        default-expand-all
+        :expand-on-click-node="false"
+        @node-click="onNodeClick"
+      >
+      </el-tree>
+    </div>
   </el-popover>
 </template>
 
@@ -117,6 +118,64 @@ onMounted(() => {
     popWidth.value = unref(inputRef).$el.clientWidth;
   });
 });
+
+const data = [
+  {
+    label: "Level one 1",
+    children: [
+      {
+        label: "Level two 1-1",
+        children: [
+          {
+            label: "Level three 1-1-1",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Level one 2",
+    children: [
+      {
+        label: "Level two 2-1",
+        children: [
+          {
+            label: "Level three 2-1-1",
+          },
+        ],
+      },
+      {
+        label: "Level two 2-2",
+        children: [
+          {
+            label: "Level three 2-2-1",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Level one 3",
+    children: [
+      {
+        label: "Level two 3-1",
+        children: [
+          {
+            label: "Level three 3-1-1",
+          },
+        ],
+      },
+      {
+        label: "Level two 3-2",
+        children: [
+          {
+            label: "Level three 3-2-1",
+          },
+        ],
+      },
+    ],
+  },
+];
 </script>
 <style lang="scss">
 .poper-wrapper {

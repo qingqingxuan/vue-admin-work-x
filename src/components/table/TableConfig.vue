@@ -1,5 +1,6 @@
 <template>
   <div
+    id="tableConfigContainer"
     class="flex padding-sm align-center"
     style="border-bottom: 1px dashed var(--el-border-color-light)"
   >
