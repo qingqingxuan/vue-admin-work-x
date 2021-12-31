@@ -27,7 +27,6 @@
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
           row-key="menuUrl"
-          :default-expand-all="true"
           :tree-props="{ children: 'children' }"
         >
           <el-table-column align="center" label="序号" fixed="left" width="150">
@@ -42,6 +41,7 @@
               <el-icon
                 v-if="scope.row.icon"
                 size="20"
+                style="font-size: 16px"
                 color="var(--el-color-primary)"
               >
                 <component :is="scope.row.icon" />
@@ -51,29 +51,47 @@
           </el-table-column>
           <el-table-column align="center" label="是否缓存">
             <template #default="scope">
-              {{ scope.row.cacheable ? "是" : "否" }}
+              <el-tag
+                :type="scope.row.cacheable ? 'primary' : 'danger'"
+                size="mini"
+                >{{ scope.row.cacheable ? "是" : "否" }}</el-tag
+              >
             </template>
           </el-table-column>
           <el-table-column align="center" label="是否固定">
             <template #default="scope">
-              {{ scope.row.affix ? "是" : "否" }}
+              <el-tag :type="scope.row.affix ? 'primary' : 'danger'" size="mini"
+                >{{ scope.row.affix ? "是" : "否" }}
+              </el-tag>
             </template>
           </el-table-column>
           <el-table-column align="center" label="badge提示">
             <template #default="scope">
-              {{ parseInt(scope.row.tip) ? "number" : scope.row.tip || "无" }}
+              <div class="menu-badge__wrapper">
+                <el-badge
+                  :value="
+                    parseInt(scope.row.tip)
+                      ? parseInt(scope.row.tip)
+                      : scope.row.tip
+                  "
+                  :is-dot="scope.row.tip === 'dot'"
+                >
+                </el-badge>
+              </div>
             </template>
           </el-table-column>
           <el-table-column align="center" label="操作" fixed="right">
             <template v-slot="scope">
               <el-button
-                type="text"
+                plain
+                type="primary"
                 size="mini"
                 @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
               <el-button
-                type="text"
+                plain
+                type="danger"
                 size="mini"
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
@@ -86,10 +104,10 @@
     <Dialog ref="dialogRef">
       <template #content>
         <el-form
+          class="base-form-container"
           :model="menuModel"
           label-width="80px"
           label-position="right"
-          class="padding"
         >
           <el-form-item label="上级菜单">
             <TreeSelector
@@ -237,6 +255,11 @@ function onDeleteItem(item: any) {
 }
 onMounted(doRefresh);
 </script>
+<style>
+.menu-badge__wrapper sup {
+  top: inherit;
+}
+</style>
 <style lang="scss" scoped>
 .icon-wrapper {
   list-style: none;

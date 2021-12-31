@@ -120,6 +120,12 @@ body .el-table__fixed::before {
   vertical-align: middle !important;
 }
 
+.form-item__require .el-form-item__label::before {
+  content: "*";
+  color: red;
+  margin-right: 5px;
+}
+
 .title {
   color: #333;
   font-size: 16px;

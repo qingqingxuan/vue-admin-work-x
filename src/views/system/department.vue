@@ -41,18 +41,19 @@
             :prop="item.prop"
             align="center"
           >
-            <template v-if="item.prop === 'status'" v-slot="scope">
-              <el-switch
-                v-model="scope.row.status"
-                :active-value="1"
-                :inactive-value="0"
-              />
-            </template>
-            <template v-else-if="item.prop === 'actions'" v-slot="scope">
-              <el-button type="text" @click="onUpdateItem(scope.row)"
+            <template v-if="item.prop === 'actions'" #default="scope">
+              <el-button
+                plain
+                type="primary"
+                size="mini"
+                @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
-              <el-button type="text" @click="onDeleteItem(scope.row)"
+              <el-button
+                plain
+                type="danger"
+                size="mini"
+                @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
             </template>
@@ -119,10 +120,6 @@ const tableColumns = reactive([
     prop: "order",
   },
   {
-    label: "状态",
-    prop: "status",
-  },
-  {
     label: "操作",
     prop: "actions",
   },
@@ -182,25 +179,6 @@ const formItems = reactive([
     },
   },
   depCodeFormItem,
-  {
-    label: "部门状态",
-    type: "radio-group",
-    name: "status",
-    value: 1,
-    radioOptions: [
-      {
-        label: "正常",
-        value: 1,
-      },
-      {
-        label: "禁用",
-        value: 0,
-      },
-    ],
-    reset() {
-      this.value = 1;
-    },
-  },
 ]);
 const onUpdateItem = (item: any) => {
   formItems.forEach((it) => {

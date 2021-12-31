@@ -8,7 +8,11 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="mini" icon="PlusIcon"
+            <el-button
+              type="primary"
+              size="mini"
+              icon="PlusIcon"
+              @click="onAddItem"
               >添加
             </el-button>
           </template>
@@ -24,36 +28,37 @@
           :border="tableConfig.border"
         >
           <el-table-column align="center" label="序号" fixed="left" width="80">
-            <template v-slot="scope">
+            <template #default="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
           <el-table-column align="center" label="角色名称" prop="name" />
           <el-table-column align="center" label="角色编号" prop="roleCode" />
           <el-table-column align="center" label="角色描述" prop="description" />
-          <el-table-column
-            align="center"
-            label="创建时间"
-            prop="createTime"
-            width="160px"
-          />
-          <el-table-column align="center" label="操作">
-            <template v-slot="scope">
+          <el-table-column align="center" label="创建时间" prop="createTime" />
+          <el-table-column align="center" label="操作" width="300px">
+            <template #default="scope">
               <el-button
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
-                type="text"
+                plain
+                type="primary"
                 size="mini"
                 @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
-                type="text"
+                plain
+                type="danger"
                 size="mini"
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
-              <el-button type="text" size="mini" @click="showMenu(scope.row)"
+              <el-button
+                plain
+                type="warning"
+                size="mini"
+                @click="showMenu(scope.row)"
                 >菜单权限</el-button
               >
             </template>
@@ -83,7 +88,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { BaseFormType, DialogType } from "@/components/types";
+import type { DialogType } from "@/components/types";
 import { onMounted, reactive, ref, shallowReactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { usePost } from "@/hooks";
@@ -105,7 +110,7 @@ const defaultProps = {
 };
 const defaultCheckedKeys = shallowReactive<Array<any>>([]);
 const defaultExpandedKeys = shallowReactive<Array<any>>([]);
-const formItems = [
+const formItems = reactive([
   {
     label: "角色名称",
     type: "input",
@@ -163,10 +168,10 @@ const formItems = [
       this.value = "";
     },
   },
-];
+]);
 const menuDialogRef = ref<DialogType>();
 const dialogRef = ref<DialogType>();
-const baseFormRef = ref<BaseFormType>();
+const baseFormRef = ref();
 const tree = ref();
 const post = usePost();
 const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();

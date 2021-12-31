@@ -7,7 +7,7 @@
     :width="isMobileScreen ? '85%' : '45%'"
     @vnodeMounted="onVnodeMounted"
   >
-    <div class="content-wrapper">
+    <div class="dialog__content-wrapper">
       <slot name="content"></slot>
     </div>
     <template #footer>
@@ -63,7 +63,9 @@ export default defineComponent({
       dialogVisible.value = true;
       loading.value = false;
       nextTick(() => {
-        const contentElement = document.querySelector(".content-wrapper");
+        const contentElement = document.querySelector(
+          ".dialog__content-wrapper"
+        );
         contentElement?.scrollTo({ top: 0 });
       });
       _callback.value = callback;
@@ -82,10 +84,17 @@ export default defineComponent({
         close();
       }
     }
+    function showLoading() {
+      loading.value = true;
+    }
+    function closeLoading() {
+      loading.value = false;
+    }
     expose({
       show,
       close,
-      loading,
+      showLoading,
+      closeLoading,
     });
     return {
       dialogRef,
@@ -97,22 +106,21 @@ export default defineComponent({
       close,
       show,
       onVnodeMounted,
+      showLoading,
+      closeLoading,
     };
   },
 });
 </script>
 
-<style lang="scss" scoped>
-.content-wrapper {
+<style lang="scss">
+.dialog__content-wrapper {
   max-height: 50vh;
-  padding: 20px 5px;
+  padding: 10px 5px;
   margin: -10px;
   overflow: auto;
-}
-.light {
-  .content-wrapper {
-    border-top: 1px solid #f5f5f5;
-    border-bottom: 1px solid #f5f5f5;
+  .base-form-container {
+    padding: 5px 20px;
   }
 }
 </style>

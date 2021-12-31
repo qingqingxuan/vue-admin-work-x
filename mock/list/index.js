@@ -7,6 +7,7 @@ import {
   getCommentList,
   addDepartment,
   getRoleList,
+  getUserList,
 } from "@/api/url";
 
 const totalSize = 30;
@@ -122,6 +123,36 @@ Mock.mock(RegExp(getTableList), function ({ body }) {
         address: function () {
           return Random.city(true);
         },
+        lastLoginTime: Random.now("yyyy-MM-dd HH:mm:ss"),
+        lastLoginIp: function () {
+          return Random.ip();
+        },
+        "status|0-1": 1, // 0 禁用 1正常
+      },
+    ],
+  });
+});
+
+Mock.mock(RegExp(getUserList), function ({ body }) {
+  const { page, pageSize = 10 } = JSON.parse(body);
+  const size = computePageSize(totalSize, page, pageSize);
+  return Mock.mock({
+    ...baseData,
+    totalSize,
+    [`data|${size}`]: [
+      {
+        "id|+1": 1,
+        nickName: function () {
+          return Random.name();
+        },
+        avatar: "@/assets/img_avatar_01.jpeg",
+        mobile: "18800000000",
+        email: "123456@163.com",
+        "gender|0-1": 0, // 0男 1女
+        "departmentName": '研发部',
+        "departmentId|1-6": 1,
+        "roleName": '超级管理员',
+        "roleId|1-2": 1,
         lastLoginTime: Random.now("yyyy-MM-dd HH:mm:ss"),
         lastLoginIp: function () {
           return Random.ip();

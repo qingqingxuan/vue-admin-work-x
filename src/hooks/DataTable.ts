@@ -1,19 +1,16 @@
 import { useLayoutStore } from "@/layouts";
-import { reactive, ref, shallowReactive } from "vue";
+import { reactive, ref, shallowReactive, unref } from "vue";
 
 export default function (): Record<string, any> {
   const dataList = shallowReactive([]) as Array<any>;
-  const selectRows = shallowReactive([]) as Array<any>;
+  const selectRows = ref<Array<any>>([]);
   const layoutStore = useLayoutStore()
   const tableConfig = reactive({
-    stripe: layoutStore.state.theme !== 'dark',
+    stripe: true,
     border: false,
     size: 'small',
-    headerCellStyle: layoutStore.state.theme === 'dark' ? {
-      color: '#ffffff'
-    } : {
-      backgroundColor: 'rgb(255, 255, 255)',
-      color: '#333333'
+    headerCellStyle: {
+      color: '#333'
     },
     height: '100%'
   });
@@ -25,8 +22,7 @@ export default function (): Record<string, any> {
     return Promise.resolve({ data, totalSize })
   }
   const handleSelectionChange = (tempSelectRows: Array<any>) => {
-    selectRows.length = 0
-    selectRows.push(...tempSelectRows)
+    selectRows.value = tempSelectRows
   }
   const pageChanged = () => {
     doRefresh()

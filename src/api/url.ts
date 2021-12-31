@@ -26,6 +26,8 @@ export const getParentMenuList = "/getParentMenuList";
 
 export const getTableList = "/getTableList";
 
+export const getUserList = "/getUserList";
+
 export const getCardList = "/getCardList";
 
 export const getCommentList = "/getCommentList";

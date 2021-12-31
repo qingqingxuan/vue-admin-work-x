@@ -1,5 +1,6 @@
 <template>
   <el-form
+    class="base-form-container"
     ref="form"
     :label-position="config.labelPosition || 'right'"
     :label-width="(config.labelWidth || 80) + 'px'"
