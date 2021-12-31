@@ -2,7 +2,8 @@
 const CompressionPlugin = require("compression-webpack-plugin")
 console.log(process.env.NODE_ENV)
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'development' ? '/' : "/vue-admin-work-x",
+  // publicPath: process.env.NODE_ENV === 'development' ? '/' : "/vue-admin-work-x",
+  publicPath: '/',
   outputDir: "dist",
   assetsDir: "static",
   lintOnSave: true,
