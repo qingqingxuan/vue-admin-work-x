@@ -13,13 +13,15 @@
 - [🎉 官网地址](http://www.vueadminwork.com)
 - [🎉Vue Admin Work X **gitee** 演示地址](http://x.vueadminwork.com)
 
-## Vue Admin Work 授权客服
+## Vue Admin Work 微信群
 
 <div align="center">
-<img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" /> 
+<img src="http://qingqingxuan.gitee.io/img/wechat-group.jpeg" style="zoom:20%;" /> 
 </div>
 
-## vue-admin-work 前端讨论 QQ 群
+如果微信群已经过期，请添加客服~~邀请进群
+
+## vue-admin-work QQ 群
 
 <div align="center"> 
 <img src="http://qingqingxuan.gitee.io/img/qq-vip-group.png" style="zoom:20%;" /> 
