@@ -3,10 +3,10 @@
     <el-dropdown>
       <div class="action-wrapper">
         <div class="avatar">
-          <img :src="state.userInfo.avatar" />
+          <img :src="useStore.avatar" />
         </div>
         <span class="nick-name el-dropdown-link">
-          <span>{{ state.userInfo.nickName }}</span>
+          <span>{{ useStore.nickName }}</span>
           <el-icon>
             <CaretBottomIcon />
           </el-icon>
@@ -14,14 +14,12 @@
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            :icon="UserIcon"
-            @click="onPersonalCenter"
-          >个人中心</el-dropdown-item>
-          <el-dropdown-item
-            :icon="SwitchButton"
-            @click="onLogout"
-          >退出登录</el-dropdown-item>
+          <el-dropdown-item :icon="UserIcon" @click="onPersonalCenter"
+            >个人中心</el-dropdown-item
+          >
+          <el-dropdown-item :icon="SwitchButton" @click="onLogout"
+            >退出登录</el-dropdown-item
+          >
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -29,16 +27,18 @@
 </template>
 
 <script lang="ts">
-import store from "../store";
 import { defineComponent } from "vue";
 import { ElMessageBox } from "element-plus";
 import { User as UserIcon, SwitchButton } from "@element-plus/icons";
+import useUserStore from "@/store/modules/user";
+import layoutStore from "../store";
 export default defineComponent({
   name: "VAWAvatar",
   setup() {
-    const state = store.state;
+    const useStore = useUserStore();
     function onPersonalCenter() {
-      (store as any).onPersonalCenter && (store as any).onPersonalCenter();
+      (layoutStore as any).onPersonalCenter &&
+        (layoutStore as any).onPersonalCenter();
     }
     function onLogout() {
       ElMessageBox({
@@ -48,16 +48,14 @@ export default defineComponent({
         confirmButtonText: "退出",
         cancelButtonText: "取消",
         showCancelButton: true,
-      })
-        .then(() => {
-          (store as any).onLogout && (store as any).onLogout();
-        })
-        .catch(() => {
-          (store as any).cancelLogout && (store as any).cancelLogout();
+      }).then(() => {
+        useStore.logout().then(() => {
+          (layoutStore as any).onLogout && (layoutStore as any).onLogout();
         });
+      });
     }
     return {
-      state,
+      useStore,
       onPersonalCenter,
       onLogout,
       UserIcon,

@@ -1,20 +1,18 @@
 <template>
   <div class="main-container">
-    <el-card
-      :body-style="{padding: '10px'}"
-      shadow="hover"
-    >
+    <el-card :body-style="{ padding: '10px' }" shadow="hover">
       <div class="text-bold text-xl">工作台</div>
-      <div
-        v-if="!isMobileScreen"
-        class="flex margin-top"
-      >
+      <div v-if="!isMobileScreen" class="flex margin-top">
         <div class="avatar-wrapper">
           <img :src="avatar" />
         </div>
         <div class="flex-sub flex flex-direction justify-around margin-left">
-          <div class="text-xl">早上好，Andy，青春只有一次，别让自己过得不精彩</div>
-          <div class="text-grey text-sm"><i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~</div>
+          <div class="text-xl">
+            早上好，Andy，青春只有一次，别让自己过得不精彩
+          </div>
+          <div class="text-grey text-sm">
+            <i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~
+          </div>
         </div>
         <div
           class="flex flex-direction justify-around align-end item-action"
@@ -41,8 +39,12 @@
             <img :src="avatar" />
           </div>
           <div class="flex-sub flex flex-direction justify-around margin-left">
-            <div class="text-xl">早上好，Andy，青春只有一次，别让自己过得不精彩</div>
-            <div class="text-grey text-sm"><i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~</div>
+            <div class="text-xl">
+              早上好，Andy，青春只有一次，别让自己过得不精彩
+            </div>
+            <div class="text-grey text-sm">
+              <i class="el-icon-heavy-rain"></i> 今日有小雨，出门别忘记带伞哦~
+            </div>
           </div>
         </div>
         <div class="flex margin-top">
@@ -61,12 +63,9 @@
         </div>
       </div>
     </el-card>
-    <div
-      v-if="!isMobileScreen"
-      class="flex margin-top-xs"
-    >
-      <div style="flex: 3;">
-        <el-card :body-style="{padding: '5px'}">
+    <div v-if="!isMobileScreen" class="flex margin-top-xs">
+      <div style="flex: 3">
+        <el-card :body-style="{ padding: '5px' }">
           <template #header>
             <div>
               <span class="text-bold text-sm">
@@ -76,19 +75,12 @@
             </div>
           </template>
           <el-row>
-            <el-col
-              v-for="(item, index) of dataItems"
-              :key="index"
-              :span="8"
-            >
+            <el-col v-for="(item, index) of dataItems" :key="index" :span="8">
               <ProjectItem :item="item" />
             </el-col>
           </el-row>
         </el-card>
-        <el-card
-          :body-style="{padding: '5px'}"
-          class="margin-top-xs"
-        >
+        <el-card :body-style="{ padding: '5px' }" class="margin-top-xs">
           <template #header>
             <div>
               <span class="text-bold text-sm">
@@ -97,12 +89,9 @@
               </span>
             </div>
           </template>
-          <el-row
-            v-for="(item, index) of trendsItems"
-            :key="index"
-          >
+          <el-row v-for="(item, index) of trendsItems" :key="index">
             <TrendsItem :item="item">
-              <template #title="{title}">
+              <template #title="{ title }">
                 <div v-html="title"></div>
               </template>
             </TrendsItem>
@@ -110,7 +99,7 @@
         </el-card>
       </div>
       <div style="flex: 2; margin-left: 5px">
-        <el-card :body-style="{padding: 0}">
+        <el-card :body-style="{ padding: 0 }">
           <template #header>
             <div class="flex justify-between">
               <span class="text-bold text-sm">
@@ -120,18 +109,19 @@
             </div>
           </template>
           <el-row>
-            <el-col
-              v-for="(item, index) of fastActions"
-              :key="index"
-              :span="8"
-            >
+            <el-col v-for="(item, index) of fastActions" :key="index" :span="8">
               <div
                 @click="fastActionClick(item)"
-                class="fast-item-wrapper flex flex-direction justify-center align-center"
+                class="
+                  fast-item-wrapper
+                  flex flex-direction
+                  justify-center
+                  align-center
+                "
               >
                 <div
                   :class="[item.icon, 'iconfont']"
-                  :style="{'color': item.color, 'font-size': '20px'}"
+                  :style="{ color: item.color, 'font-size': '20px' }"
                 ></div>
                 <div class="margin-top-xs">{{ item.title }}</div>
               </div>
@@ -152,17 +142,14 @@
             :key="index"
             :item="item"
           />
-          <div
-            v-if="isShowMore"
-            class="text-center"
-          >
-            <el-button
-              type="text"
-              @click="toggleMore"
-            >{{ showWatingMode ? '收起更多' : '显示更多' }}
+          <div v-if="isShowMore" class="text-center">
+            <el-button type="text" @click="toggleMore"
+              >{{ showWatingMode ? "收起更多" : "显示更多" }}
               <i
                 class="el-icon-view"
-                :class="[showWatingMode ? 'el-icon-caret-top': 'el-icon-caret-bottom']"
+                :class="[
+                  showWatingMode ? 'el-icon-caret-top' : 'el-icon-caret-bottom',
+                ]"
               >
               </i>
             </el-button>
@@ -170,14 +157,8 @@
         </el-card>
       </div>
     </div>
-    <div
-      v-else
-      class="margin-top-xs"
-    >
-      <el-card
-        shadow="never"
-        :body-style="{padding: '5px'}"
-      >
+    <div v-else class="margin-top-xs">
+      <el-card shadow="never" :body-style="{ padding: '5px' }">
         <template #header>
           <div>
             <span class="text-bold text-sm">
@@ -187,17 +168,13 @@
           </div>
         </template>
         <el-row>
-          <el-col
-            v-for="(item, index) of dataItems"
-            :key="index"
-            :span="8"
-          >
+          <el-col v-for="(item, index) of dataItems" :key="index" :span="8">
             <ProjectItem :item="item" />
           </el-col>
         </el-row>
       </el-card>
       <el-card
-        :body-style="{padding: '5px'}"
+        :body-style="{ padding: '5px' }"
         shadow="never"
         class="margin-top-xs"
       >
@@ -209,12 +186,9 @@
             </span>
           </div>
         </template>
-        <el-row
-          v-for="(item, index) of trendsItems"
-          :key="index"
-        >
+        <el-row v-for="(item, index) of trendsItems" :key="index">
           <TrendsItem :item="item">
-            <template #title="{title}">
+            <template #title="{ title }">
               <div v-html="title"></div>
             </template>
           </TrendsItem>
@@ -222,7 +196,7 @@
       </el-card>
       <el-card
         shadow="never"
-        :body-style="{padding: 0}"
+        :body-style="{ padding: 0 }"
         class="margin-top-xs"
       >
         <template #header>
@@ -234,28 +208,26 @@
           </div>
         </template>
         <el-row>
-          <el-col
-            v-for="(item, index) of fastActions"
-            :key="index"
-            :span="8"
-          >
+          <el-col v-for="(item, index) of fastActions" :key="index" :span="8">
             <div
               @click="fastActionClick(item)"
-              class="fast-item-wrapper flex flex-direction justify-center align-center"
+              class="
+                fast-item-wrapper
+                flex flex-direction
+                justify-center
+                align-center
+              "
             >
               <div
                 :class="[item.icon, 'iconfont']"
-                :style="{'color': item.color, 'font-size': '20px'}"
+                :style="{ color: item.color, 'font-size': '20px' }"
               ></div>
               <div class="margin-top-xs">{{ item.title }}</div>
             </div>
           </el-col>
         </el-row>
       </el-card>
-      <el-card
-        shadow="never"
-        class="margin-top-xs"
-      >
+      <el-card shadow="never" class="margin-top-xs">
         <template #header>
           <div class="flex justify-between">
             <span class="text-bold text-sm">
@@ -269,17 +241,14 @@
           :key="index"
           :item="item"
         />
-        <div
-          v-if="isShowMore"
-          class="text-center"
-        >
-          <el-button
-            type="text"
-            @click="toggleMore"
-          >{{ showWatingMode ? '收起更多' : '显示更多' }}
+        <div v-if="isShowMore" class="text-center">
+          <el-button type="text" @click="toggleMore"
+            >{{ showWatingMode ? "收起更多" : "显示更多" }}
             <i
               class="el-icon-view"
-              :class="[showWatingMode ? 'el-icon-caret-top': 'el-icon-caret-bottom']"
+              :class="[
+                showWatingMode ? 'el-icon-caret-top' : 'el-icon-caret-bottom',
+              ]"
             >
             </i>
           </el-button>
@@ -311,8 +280,8 @@ import {
 } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import { useLayoutStore } from "@/layouts/hooks";
-import { useStore } from "@/store";
 import { random } from "lodash";
+import useUserStore from "@/store/modules/user";
 const COLORS = ["#67C23A", "#E6A23C", "#F56C6C", "#409EFF"];
 const date = new Date();
 export default defineComponent({
@@ -362,8 +331,7 @@ export default defineComponent({
     const isMobileScreen = computed(() => {
       return useLayoutStore().state.device === "mobile";
     });
-    const store = useStore();
-    const avatar = computed(() => store.state.user.avatar);
+    const userStore = useUserStore();
     const tempWaitingItems = reactive([] as Array<any>);
     const showWatingMode = ref(false);
     const toggleMore = () => {
@@ -396,7 +364,7 @@ export default defineComponent({
       isShowMore,
       isMobileScreen,
       tempWaitingItems,
-      avatar,
+      avatar: userStore.avatar,
       onTestClick,
       currentDate:
         date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),

@@ -1,70 +1,68 @@
-import LayoutStore, { Layout } from '@/layouts';
-import { isExternal, mapTwoLevelRouter } from '@/layouts/utils';
+import LayoutStore, { Layout } from "@/layouts";
+import { isExternal, mapTwoLevelRouter } from "@/layouts/utils";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import router, { routes as constantRoutes } from "../router";
 import Cookies from "js-cookie";
-import { post } from '@/api/http';
-import store from '@/store';
-import { baseAddress, getMenuListByRoleId } from '@/api/url';
-import { RouteRecordRaw } from 'vue-router'
-import { toHump } from '.';
-import { RouteRecordRawWithHidden } from '@/layouts/types';
+import { post } from "@/api/http";
+import { baseAddress, getMenuListByRoleId } from "@/api/url";
+import { RouteRecordRaw } from "vue-router";
+import { toHump } from ".";
+import { RouteRecordRawWithHidden } from "@/layouts/types";
+import { ROLE_ID_KEY, USER_ID_KEY } from "@/store/keys";
 
 NProgress.configure({
   showSpinner: false,
 });
 
-
 interface OriginRoute {
-  menuUrl: string,
-  menuName?: string,
-  hidden?: boolean,
-  outLink?: string,
-  affix?: boolean,
-  cacheable?: boolean,
-  icon?: string,
-  tip?: string | number,
-  children: Array<OriginRoute>
+  menuUrl: string;
+  menuName?: string;
+  hidden?: boolean;
+  outLink?: string;
+  affix?: boolean;
+  cacheable?: boolean;
+  icon?: string;
+  tip?: string | number;
+  children: Array<OriginRoute>;
 }
-
 
 function getRoutes() {
   return post({
     url: baseAddress + getMenuListByRoleId,
-    method: 'POST',
+    method: "POST",
     data: {
-      userId: store.getters['user/userId'],
-      roleId: store.getters['user/roleId']
-    }
-  }).then(res => {
-    return generatorRoutes(res.data)
-  })
+      userId: localStorage.getItem(USER_ID_KEY),
+      roleId: localStorage.getItem(ROLE_ID_KEY),
+    },
+  }).then((res) => {
+    return generatorRoutes(res.data);
+  });
 }
 
 function getComponent(it: OriginRoute) {
-  return (): any => import('@/views' + it.menuUrl + '.vue')
+  return (): any => import("@/views" + it.menuUrl + ".vue");
 }
 
 function getCharCount(str: string, char: string) {
-  const regex = new RegExp(char, 'g')
-  const result = str.match(regex)
-  const count = !result ? 0 : result.length
-  return count
+  const regex = new RegExp(char, "g");
+  const result = str.match(regex);
+  const count = !result ? 0 : result.length;
+  return count;
 }
 
 function isMenu(path: string) {
-  return getCharCount(path, '/') === 1
+  return getCharCount(path, "/") === 1;
 }
 
 function getNameByUrl(menuUrl: string) {
-  const temp = menuUrl.split('/')
-  return toHump(temp[temp.length - 1])
+  const temp = menuUrl.split("/");
+  return toHump(temp[temp.length - 1]);
 }
 
 function generatorRoutes(res: Array<OriginRoute>) {
-  const tempRoutes: Array<RouteRecordRawWithHidden> = []
-  res.forEach(it => {
+  const tempRoutes: Array<RouteRecordRawWithHidden> = [];
+  res.forEach((it) => {
     const route: RouteRecordRawWithHidden = {
       path: it.outLink && isExternal(it.outLink) ? it.outLink : it.menuUrl,
       name: getNameByUrl(it.menuUrl),
@@ -74,16 +72,16 @@ function generatorRoutes(res: Array<OriginRoute>) {
         title: it.menuName,
         affix: !!it.affix,
         cacheable: !!it.cacheable,
-        icon: it.icon || '',
-        badge: it.tip
-      }
-    }
+        icon: it.icon || "",
+        badge: it.tip,
+      },
+    };
     if (it.children) {
-      route.children = generatorRoutes(it.children)
+      route.children = generatorRoutes(it.children);
     }
-    tempRoutes.push(route)
-  })
-  return tempRoutes
+    tempRoutes.push(route);
+  });
+  return tempRoutes;
 }
 
 const whiteRoutes: string[] = ["/login"];
@@ -105,23 +103,23 @@ router.beforeEach(async (to) => {
         query: { redirect: to.fullPath },
       };
     } else {
-      const isEmptyRoute = LayoutStore.isEmptyPermissionRoute()
+      const isEmptyRoute = LayoutStore.isEmptyPermissionRoute();
       if (isEmptyRoute) {
         // 加载路由
-        const accessRoutes: Array<RouteRecordRaw> = []
-        const tempRoutes = await getRoutes()
-        accessRoutes.push(...tempRoutes)
+        const accessRoutes: Array<RouteRecordRaw> = [];
+        const tempRoutes = await getRoutes();
+        accessRoutes.push(...tempRoutes);
         accessRoutes.push({
-          path: '/:pathMatch(.*)*',
-          redirect: '/404',
-          hidden: true
-        } as RouteRecordRaw)
-        const mapRoutes = mapTwoLevelRouter(accessRoutes)
+          path: "/:pathMatch(.*)*",
+          redirect: "/404",
+          hidden: true,
+        } as RouteRecordRaw);
+        const mapRoutes = mapTwoLevelRouter(accessRoutes);
         mapRoutes.forEach((it: any) => {
-          router.addRoute(it)
-        })
-        LayoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes])
-        return { ...to, replace: true }
+          router.addRoute(it);
+        });
+        LayoutStore.initPermissionRoute([...constantRoutes, ...accessRoutes]);
+        return { ...to, replace: true };
       } else {
         return true;
       }

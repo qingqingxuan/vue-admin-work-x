@@ -30,69 +30,29 @@
               冰冻三尺，非一日之寒，成大事者不拘小节。
             </div>
             <div class="text-wrapper">
-              <div class="label">
-                昵称：
-              </div>
-              <div class="value">
-                蝴蝶飞呀飞
-              </div>
+              <div class="label">昵称：</div>
+              <div class="value">蝴蝶飞呀飞</div>
             </div>
             <div class="text-wrapper">
-              <div class="label">
-                性别：
-              </div>
-              <div class="value">
-                男
-              </div>
+              <div class="label">性别：</div>
+              <div class="value">男</div>
             </div>
             <div class="text-wrapper">
-              <div class="label">
-                生日：
-              </div>
-              <div class="value">
-                2021-1-1
-              </div>
+              <div class="label">生日：</div>
+              <div class="value">2021-1-1</div>
             </div>
             <div class="text-wrapper">
-              <div class="label">
-                部门：
-              </div>
-              <div class="value">
-                研发部
-              </div>
+              <div class="label">部门：</div>
+              <div class="value">研发部</div>
             </div>
             <div>
-              <el-tag
-                effect="dark"
-                size="mini"
-              >技术控</el-tag>
-              <el-tag
-                effect="dark"
-                size="mini"
-              >爱学习</el-tag>
-              <el-tag
-                effect="dark"
-                size="mini"
-              >大嘴巴</el-tag>
-              <el-tag
-                effect="dark"
-                size="mini"
-              >宅男</el-tag>
-              <el-tag
-                type="info"
-                effect="dark"
-                size="mini"
-              >嘚嘚没完</el-tag>
-              <el-tag
-                type="info"
-                effect="dark"
-                size="mini"
-              >UP主</el-tag>
-              <el-tag
-                type="info"
-                effect="dark"
-                size="mini"
-              >手机控</el-tag>
+              <el-tag effect="dark" size="mini">技术控</el-tag>
+              <el-tag effect="dark" size="mini">爱学习</el-tag>
+              <el-tag effect="dark" size="mini">大嘴巴</el-tag>
+              <el-tag effect="dark" size="mini">宅男</el-tag>
+              <el-tag type="info" effect="dark" size="mini">嘚嘚没完</el-tag>
+              <el-tag type="info" effect="dark" size="mini">UP主</el-tag>
+              <el-tag type="info" effect="dark" size="mini">手机控</el-tag>
             </div>
           </div>
         </el-card>
@@ -118,24 +78,19 @@
                 :type="item.status === 0 ? 'danger' : 'success'"
                 size="mini"
               >
-                {{ item.status === 0 ? '未完成' : '已完成' }}
+                {{ item.status === 0 ? "未完成" : "已完成" }}
               </el-tag>
             </div>
           </div>
         </el-card>
       </div>
       <div class="margin-top">
-        <el-card
-          class="box-card flex-sub"
-          :body-style="{ padding: '10px' }"
-        >
+        <el-card class="box-card flex-sub" :body-style="{ padding: '10px' }">
           <template #header>
             <div class="flex justify-between align-center">
               <span class="text-sm">消息中心</span>
-              <el-button
-                style="padding: 3px 0"
-                type="text"
-              >查看更多
+              <el-button style="padding: 3px 0" type="text"
+                >查看更多
                 <i class="el-icon-d-arrow-right"></i>
               </el-button>
             </div>
@@ -147,7 +102,10 @@
           >
             <div
               class="notify"
-              :class="{'bg-red' : item.status === 0, 'bg-green' : item.status === 1}"
+              :class="{
+                'bg-red': item.status === 0,
+                'bg-green': item.status === 1,
+              }"
             ></div>
             <div class="flex-sub margin-left">
               <div class="message-title">
@@ -165,9 +123,8 @@
 </template>
 
 <script lang="ts">
-import { useStore } from "@/store";
-import { defineComponent, ref } from "@vue/runtime-core";
-import { mapGetters } from "vuex";
+import useUserStore from "@/store/modules/user";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   name: "Personal",
   setup() {
@@ -183,6 +140,7 @@ export default defineComponent({
         uploaded.value = false;
       }, 1000);
     };
+    const userStore = useUserStore();
     return {
       touched,
       uploaded,
@@ -260,8 +218,8 @@ export default defineComponent({
           status: 0, // 0未完成，1已完成
         },
       ],
-      avatar: useStore().state.user.avatar,
-      nickName: useStore().state.user.nickName,
+      avatar: userStore.avatar,
+      nickName: userStore.nickName,
       avatarTouchStart,
       uploadAvatar,
     };

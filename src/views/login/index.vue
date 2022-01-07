@@ -1,15 +1,15 @@
 <template>
   <div class="login-container">
     <div class="left">
-      <img :src="ImageBg1">
+      <img :src="ImageBg1" />
       <div class="content">
         <img :src="logo" />
         <div class="proj-name">{{ projectName }}</div>
         <div class="desc">Vue3 + Webpack + Typescript + Element Plus</div>
-        <div class="ttiipp">
-          重"心"出发，从"质"启程
+        <div class="ttiipp">重"心"出发，从"质"启程</div>
+        <div class="bottom">
+          {{ projectName + "    " + version }} · Made by qingqingxuan
         </div>
-        <div class="bottom">{{ projectName + '    ' +version }} · Made by qingqingxuan</div>
       </div>
     </div>
     <div class="right">
@@ -56,10 +56,7 @@
         <div class="my-width flex-sub margin-top">
           <div class="flex justify-between">
             <el-checkbox v-model="autoLogin">自动登录</el-checkbox>
-            <el-link
-              :underline="false"
-              type="primary"
-            >忘记密码？</el-link>
+            <el-link :underline="false" type="primary">忘记密码？</el-link>
           </div>
         </div>
       </el-card>
@@ -76,8 +73,8 @@ import { post, Response } from "@/api/http";
 import { login } from "@/api/url";
 import { ElMessage } from "element-plus";
 import { UserState } from "@/store/types";
-import { useStore } from "@/store";
 import setting from "../../setting";
+import useUserStore from "@/store/modules/user";
 export default defineComponent({
   name: "Login",
   setup() {
@@ -89,7 +86,7 @@ export default defineComponent({
     const loading = ref(false);
     const router = useRouter();
     const route = useRoute();
-    const store = useStore();
+    const userStore = useUserStore();
     const onLogin = () => {
       loading.value = true;
       post({
@@ -100,7 +97,7 @@ export default defineComponent({
         },
       })
         .then(({ data }: Response) => {
-          store.dispatch("user/saveUser", data as UserState).then(() => {
+          userStore.saveUser(data as UserState).then(() => {
             router
               .replace({
                 path: route.query.redirect

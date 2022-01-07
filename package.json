@@ -1,6 +1,6 @@
 {
   "name": "Admin-Work-X",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -22,17 +22,17 @@
     "mockjs": "^1.1.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
+    "pinia": "^2.0.9",
     "print-js": "^1.6.0",
     "qrcode": "^1.4.4",
     "quill": "^1.3.7",
     "screenfull": "^5.1.0",
     "simplemde": "^1.11.2",
     "tiny-emitter": "^2.1.0",
-    "vue": "^3.2.22",
+    "vue": "^3.2.25",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.0-0",
     "vuedraggable": "^4.1.0",
-    "vuex": "^4.0.0-0",
     "xlsx": "^0.17.0"
   },
   "devDependencies": {
@@ -62,7 +62,7 @@
     "prettier": "^2.2.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "typescript": "~4.1.5"
+    "typescript": "^4.4.4"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
