@@ -9,7 +9,10 @@ import { baseAddress, getMenuListByRoleId } from "@/api/url";
 import { RouteRecordRaw } from "vue-router";
 import { toHump } from ".";
 import { RouteRecordRawWithHidden } from "@/layouts/types";
-import { ROLE_ID_KEY, USER_ID_KEY } from "@/store/keys";
+import useUserStore from "@/store/modules/user";
+import pinia from "@/store/pinia";
+
+const userStore = useUserStore(pinia);
 
 NProgress.configure({
   showSpinner: false,
@@ -32,8 +35,8 @@ function getRoutes() {
     url: baseAddress + getMenuListByRoleId,
     method: "POST",
     data: {
-      userId: localStorage.getItem(USER_ID_KEY),
-      roleId: localStorage.getItem(ROLE_ID_KEY),
+      userId: userStore.getUserId,
+      roleId: userStore.getUserId,
     },
   }).then((res) => {
     return generatorRoutes(res.data);

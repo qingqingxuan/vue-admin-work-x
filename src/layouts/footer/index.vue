@@ -1,10 +1,7 @@
-
 <template>
   <div class="footer-container">
-    Copyright <i
-      class="iconfont"
-      style="margin: 0 5px"
-    >©</i> {{setting.projectName}} 2021
+    Copyright <i class="iconfont" style="margin: 0 5px">©</i>
+    {{ setting.projectName }} 2022
   </div>
 </template>
 

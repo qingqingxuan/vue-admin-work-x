@@ -6,7 +6,7 @@
         <img :src="logo" />
         <div class="proj-name">{{ projectName }}</div>
         <div class="desc">Vue3 + Webpack + Typescript + Element Plus</div>
-        <div class="ttiipp">重"心"出发，从"质"启程</div>
+        <div class="ttiipp">博观而约取 厚积而薄发</div>
         <div class="bottom">
           {{ projectName + "    " + version }} · Made by qingqingxuan
         </div>
@@ -87,6 +87,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const userStore = useUserStore();
+
     const onLogin = () => {
       loading.value = true;
       post({

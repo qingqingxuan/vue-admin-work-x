@@ -29,6 +29,14 @@ const useUserStore = defineStore("user", {
       avatar: userInfo.avatar || defaultAvatar,
     };
   },
+  getters: {
+    getUserId(): number {
+      return this.userId;
+    },
+    getRroleId(): number {
+      return this.roleId;
+    },
+  },
   actions: {
     saveUser(userInfo: UserState) {
       return new Promise<void>((res) => {
@@ -42,8 +50,6 @@ const useUserStore = defineStore("user", {
         this.avatar = userInfo.avatar || defaultAvatar;
         Cookies.set(USER_TOKEN_KEY, userInfo.token);
         localStorage.setItem(USER_INFO_KEY, JSON.stringify(userInfo));
-        localStorage.setItem(USER_ID_KEY, userInfo.userId + "");
-        localStorage.setItem(ROLE_ID_KEY, userInfo.roleId + "");
         res();
       });
     },
