@@ -1,10 +1,7 @@
 <template>
-  <el-scrollbar
-    class="scrollbar"
-    wrap-class="scrollbar-wrap-class"
-  >
+  <el-scrollbar class="scrollbar" wrap-class="scrollbar-wrap-class">
     <el-menu
-      :default-active="$route.fullPath"
+      :default-active="activePath"
       mode="vertical"
       :collapse="state.isCollapse"
       active-text-color="var(--el-color-primary)"
@@ -17,7 +14,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  ref,
+  watch,
+  watchEffect,
+} from "vue";
+import { useRoute } from "vue-router";
 import store from "../../store";
 export default defineComponent({
   name: "ScrollerMenu",
@@ -36,8 +41,18 @@ export default defineComponent({
   },
   setup() {
     const state = store.state;
+    const route = useRoute();
     const bgColor = ref(
       state.theme === "light" ? "var(--el-color-white)" : "#001428"
+    );
+    const activePath = ref(route.fullPath);
+    watch(
+      () => route.fullPath,
+      () => {
+        nextTick(() => {
+          activePath.value = route.fullPath;
+        });
+      }
     );
     watch(
       () => state.theme,
@@ -47,6 +62,7 @@ export default defineComponent({
       }
     );
     return {
+      activePath,
       state,
       bgColor,
     };

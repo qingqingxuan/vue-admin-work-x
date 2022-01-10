@@ -4,35 +4,30 @@
     :class="[!state.isCollapse ? 'open-status' : 'close-status']"
   >
     <div class="tab-split-tab-wrapper">
-      <Logo
-        class="tab-split-logo-wrapper"
-        :show-title="false"
-      />
-      <el-scrollbar
-        class="scrollbar"
-        wrap-class="scrollbar-wrap-class"
-      >
+      <Logo class="tab-split-logo-wrapper" :show-title="false" />
+      <el-scrollbar class="scrollbar" wrap-class="scrollbar-wrap-class">
         <div class="tab-split-content-wrapper">
           <div
             v-for="item of tabs"
             :key="item.path"
             class="label-item-wrapper"
-            :class="{'vaw-tab-split-item-is-active' : item.active}"
+            :class="{ 'vaw-tab-split-item-is-active': item.active }"
             @click="changeTab(item)"
           >
             <el-icon>
-              <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon" />
+              <component
+                :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon"
+              />
             </el-icon>
-            <span class="label">{{ item.meta ? item.meta.title : item.name }}</span>
+            <span class="label">{{
+              item.meta ? item.meta.title : item.name
+            }}</span>
           </div>
         </div>
       </el-scrollbar>
     </div>
     <div class="tab-split-menu-wrapper">
-      <Logo
-        class="tab-split-logo-wrapper"
-        :show-logo="false"
-      />
+      <Logo class="tab-split-logo-wrapper" :show-logo="false" />
       <ScrollerMenu>
         <template #default>
           <SideBarItem
@@ -48,17 +43,17 @@
 </template>
 
 <script>
-import store from '../store'
-import path from 'path'
-import { isExternal } from '../utils'
-import { Menu as MenuIcon } from '@element-plus/icons'
+import store from "../store";
+import path from "path";
+import { isExternal } from "../utils";
+import { Menu as MenuIcon } from "@element-plus/icons";
 export default {
-  name: 'TabSplitSideBar',
+  name: "TabSplitSideBar",
   props: {
     showLogo: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -68,87 +63,88 @@ export default {
       tabs: null,
       routes: [],
       MenuIcon,
-      bgColor: store.state.theme === "light" ? "var(--el-color-white)" : "#021a32",
-      labelColor: store.state.theme === "light" ? "#333333" : "#bbbbbb"
-    }
+      bgColor:
+        store.state.theme === "light" ? "var(--el-color-white)" : "#021a32",
+      labelColor: store.state.theme === "light" ? "#333333" : "#bbbbbb",
+    };
   },
   watch: {
     currentTab(newVal) {
-      this.routes = newVal.children
-      this.basePath = newVal.path
+      this.routes = newVal.children;
+      this.basePath = newVal.path;
     },
     // 监听路由，改变当前选择的 tab
     $route(newVal) {
       if (this.noChange) {
-        this.noChange = false
-        return
+        this.noChange = false;
+        return;
       }
-      this.doChangeTab(newVal)
+      this.doChangeTab(newVal);
     },
-    'state.theme'(newVal) {
-      this.bgColor = newVal === "light" ? "var(--el-color-white)" : "#021a32"
-      this.labelColor = newVal === "light" ? "#333333" : "#bbbbbb"
-    }
+    "state.theme"(newVal) {
+      this.bgColor = newVal === "light" ? "var(--el-color-white)" : "#021a32";
+      this.labelColor = newVal === "light" ? "#333333" : "#bbbbbb";
+    },
   },
   mounted() {
     this.tabs = store.getSplitTabs().map((it, index) => {
       return {
         ...it,
-        active: index === 0
-      }
-    })
-    this.doChangeTab(this.$route)
+        active: index === 0,
+      };
+    });
+    this.doChangeTab(this.$route);
   },
   methods: {
     getItem(item) {
-      item.children = item.children || []
-      return item
+      item.children = item.children || [];
+      return item;
     },
     getFullPath(item) {
-      if (isExternal(item.path)) return item.path
-      return path.resolve(this.basePath, item.path)
+      if (isExternal(item.path)) return item.path;
+      return path.resolve(this.basePath, item.path);
     },
     doChangeTab(route) {
-      const matchedRoutes = route.matched
+      const matchedRoutes = route.matched;
       if (matchedRoutes && matchedRoutes.length > 0) {
         this.tabs.forEach((it) => {
           if (it.path === matchedRoutes[0].path) {
-            it.active = true
-            this.basePath = it.path
+            it.active = true;
+            this.basePath = it.path;
             if (it.children) {
-              this.routes = it.children
+              this.routes = it.children;
             }
           } else {
-            it.active = false
+            it.active = false;
           }
-        })
+        });
       }
     },
     // inited 标志是否要查找第一个元素
     changeTab(item, inited = true) {
       this.tabs.forEach((it) => {
-        it.active = it.path === item.path
-      })
-      this.currentTab = item || null
+        it.active = it.path === item.path;
+      });
+      this.currentTab = item || null;
       if (inited) {
-        this.findPath(this.currentTab, this.currentTab.path)
+        this.findPath(this.currentTab, this.currentTab.path);
       }
     },
     findPath(tab, fullPath) {
-      const firstItem = tab.children[0]
+      const firstItem = tab.children[0];
       if (firstItem.children && firstItem.children.length > 0) {
-        this.findPath(firstItem, path.resolve(fullPath, firstItem.path))
+        this.findPath(firstItem, path.resolve(fullPath, firstItem.path));
       } else {
         if (isExternal(firstItem.path)) {
-          window.open(firstItem.path)
+          window.open(firstItem.path);
         } else {
-          this.noChange = true
-          this.$router.push({ path: path.resolve(fullPath, firstItem.path) })
+          this.noChange = true;
+          this.$router.push({ path: path.resolve(fullPath, firstItem.path) });
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">

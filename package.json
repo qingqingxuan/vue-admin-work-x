@@ -1,7 +1,6 @@
 {
   "name": "Admin-Work-X",
-  "version": "2.1.1",
-  "private": true,
+  "version": "2.1.2",
   "scripts": {
     "serve": "vue-cli-service serve",
     "dev": "npm run serve",

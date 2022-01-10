@@ -1,27 +1,17 @@
 <template>
   <div class="main-container flex flex-direction">
-    <el-card
-      :body-style="{padding: '15px'}"
-      shadow="hover"
-    >
+    <el-card :body-style="{ padding: '15px' }" shadow="hover">
       <el-link :underline="false">请填写会议基本信息</el-link>
     </el-card>
     <el-card
-      :body-style="{padding: '10px'}"
+      :body-style="{ padding: '10px' }"
       shadow="nerve"
       class="margin-top-xs flex-sub"
     >
       <div class="form-wrapper padding-top">
-        <BaseForm
-          ref="baseForm"
-          :form-items="formItems"
-          :config="formConfig"
-        >
+        <BaseForm ref="baseForm" :form-items="formItems" :config="formConfig">
           <template #extra>
-            <el-form-item
-              label="与会人员："
-              class="form-item"
-            >
+            <el-form-item label="与会人员：" class="form-item">
               <el-select
                 v-model="joinMemeber.value"
                 multiple
@@ -36,10 +26,7 @@
                 />
               </el-select>
             </el-form-item>
-            <el-form-item
-              label="备注："
-              class="form-item"
-            >
+            <el-form-item label="备注：" class="form-item">
               <el-input
                 v-model="remark.value"
                 placeholder="请输入备注信息（选填）"
@@ -55,7 +42,8 @@
                   size="small"
                   :loading="submitLoading"
                   @click="submit"
-                >提交</el-button>
+                  >提交</el-button
+                >
               </div>
             </el-form-item>
           </template>
@@ -66,16 +54,15 @@
 </template>
 
 <script lang="ts" setup>
-import type { BaseForm } from "@/components/types";
 import { ElMessage } from "element-plus";
-import { ref, shallowReactive } from "vue";
+import { reactive, ref, shallowReactive } from "vue";
 
 const formConfig = {
   labelWidth: 100,
   size: "small",
   labelPosition: "right",
 };
-const formItems = [
+const formItems = reactive([
   {
     label: "会议名称：",
     type: "input",
@@ -177,7 +164,7 @@ const formItems = [
       return true;
     },
   },
-];
+]);
 const joinMemeber = shallowReactive({
   value: "",
   options: [
@@ -205,7 +192,7 @@ const joinMemeber = shallowReactive({
 });
 const remark = ref("");
 const submitLoading = ref(false);
-const baseForm = ref<BaseForm>();
+const baseForm = ref();
 function submit() {
   if (baseForm.value?.checkParams()) {
     if (!joinMemeber.value) {
