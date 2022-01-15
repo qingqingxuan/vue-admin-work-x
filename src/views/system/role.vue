@@ -75,11 +75,11 @@
       <template #content>
         <el-tree
           ref="tree"
-          :data="menuData"
+          :data="allMenuList"
           show-checkbox
+          :check-strictly="true"
           node-key="menuUrl"
           :default-expanded-keys="defaultExpandedKeys"
-          :default-checked-keys="defaultCheckedKeys"
           :props="defaultProps"
         />
       </template>
@@ -89,10 +89,14 @@
 
 <script lang="ts" setup>
 import type { DialogType } from "@/components/types";
-import { onMounted, reactive, ref, shallowReactive } from "vue";
+import { nextTick, onMounted, reactive, ref, shallowReactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { usePost } from "@/hooks";
-import { getMenuListByRoleId, getRoleList } from "@/api/url";
+import {
+  getAllMenuByRoleId,
+  getMenuListByRoleId,
+  getRoleList,
+} from "@/api/url";
 import { useDataTable } from "@/hooks";
 import { Plus } from "@element-plus/icons";
 const ROLE_CODE_FLAG = "ROLE_";
@@ -103,13 +107,12 @@ const roleModel = reactive({
   description: "",
   createTime: "",
 });
-const menuData = shallowReactive<Array<any>>([]);
 const defaultProps = {
   children: "children",
   label: "menuName",
 };
-const defaultCheckedKeys = shallowReactive<Array<any>>([]);
-const defaultExpandedKeys = shallowReactive<Array<any>>([]);
+const defaultCheckedKeys = ref<string[]>([]);
+const defaultExpandedKeys = ref<string[]>([]);
 const formItems = reactive([
   {
     label: "角色名称",
@@ -175,6 +178,7 @@ const baseFormRef = ref();
 const tree = ref();
 const post = usePost();
 const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();
+const allMenuList = ref([]);
 function doRefresh() {
   post({
     url: getRoleList,
@@ -183,10 +187,18 @@ function doRefresh() {
     .then(handleSuccess)
     .catch(console.log);
 }
+
+function getAllMenuList() {
+  post({
+    url: getAllMenuByRoleId,
+  }).then((res) => {
+    allMenuList.value = res.data;
+  });
+}
+
 function showMenu(item: RoleModel) {
-  menuData.length = 0;
-  defaultCheckedKeys.length = 0;
-  defaultExpandedKeys.length = 0;
+  defaultCheckedKeys.value = [];
+  defaultExpandedKeys.value = [];
   post({
     url: getMenuListByRoleId,
     data: {
@@ -194,14 +206,16 @@ function showMenu(item: RoleModel) {
     },
   })
     .then((res) => {
-      menuData.push(...res.data);
-      handleRoleMenusSelected(menuData);
+      handleRoleMenusSelected(res.data);
       menuDialogRef.value?.show(() => {
         ElMessage.success(
           "模拟菜单修改成功，数据为：" +
             JSON.stringify(tree.value.getCheckedKeys())
         );
         menuDialogRef.value?.close();
+      });
+      nextTick(() => {
+        tree.value.setCheckedKeys(defaultCheckedKeys.value);
       });
     })
     .catch(console.log);
@@ -248,12 +262,15 @@ function onDeleteItem(item: RoleModel) {
 }
 function handleRoleMenusSelected(menus: Array<any>) {
   menus.forEach((it: any) => {
-    defaultCheckedKeys.push(it.menuUrl);
+    defaultCheckedKeys.value.push(it.menuUrl);
     if (it.children) {
-      defaultExpandedKeys.push(it.menuUrl);
+      defaultExpandedKeys.value.push(it.menuUrl);
       handleRoleMenusSelected(it.children);
     }
   });
 }
-onMounted(doRefresh);
+onMounted(async () => {
+  await getAllMenuList();
+  doRefresh();
+});
 </script>

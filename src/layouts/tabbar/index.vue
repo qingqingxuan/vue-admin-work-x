@@ -95,6 +95,9 @@ export default {
         this.currentTab = "";
         return;
       }
+      if (newVal.path.startsWith("/redirect")) {
+        return;
+      }
       if (newVal.meta.noShowTabbar) {
         this.currentTab = "";
         return;

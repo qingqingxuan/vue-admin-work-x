@@ -344,21 +344,6 @@ export const editorRoutes = [
     children: [
       {
         parentPath: '/list',
-        menuUrl: "/list/table-with-search",
-        menuName: "表格搜索",
-      },
-      {
-        parentPath: '/list',
-        menuUrl: "/list/table-custom",
-        menuName: "自定义表格",
-      },
-      {
-        parentPath: '/list',
-        menuUrl: "/list/list",
-        menuName: "普通列表",
-      },
-      {
-        parentPath: '/list',
         menuUrl: "/list/card-list",
         menuName: "卡片列表",
       },
