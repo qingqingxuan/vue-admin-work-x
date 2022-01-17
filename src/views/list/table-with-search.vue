@@ -165,7 +165,10 @@ const doSearch = () => {
 function doRefresh() {
   post({
     url: getTableList,
-    data: tableFooter.value?.withPageInfoData(),
+    data: {
+      ...tableFooter.value?.withPageInfoData(),
+      ...getSearchParams(),
+    },
   })
     .then(handleSuccess)
     .then((res: any) => {
