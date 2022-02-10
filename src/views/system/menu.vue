@@ -10,7 +10,7 @@
           <template #actions>
             <el-button
               type="primary"
-              size="mini"
+              size="small"
               icon="PlusIcon"
               @click="onAddItem"
               >添加
@@ -53,14 +53,16 @@
             <template #default="scope">
               <el-tag
                 :type="scope.row.cacheable ? 'primary' : 'danger'"
-                size="mini"
+                size="small"
                 >{{ scope.row.cacheable ? "是" : "否" }}</el-tag
               >
             </template>
           </el-table-column>
           <el-table-column align="center" label="是否固定">
             <template #default="scope">
-              <el-tag :type="scope.row.affix ? 'primary' : 'danger'" size="mini"
+              <el-tag
+                :type="scope.row.affix ? 'primary' : 'danger'"
+                size="small"
                 >{{ scope.row.affix ? "是" : "否" }}
               </el-tag>
             </template>
@@ -85,14 +87,14 @@
               <el-button
                 plain
                 type="primary"
-                size="mini"
+                size="small"
                 @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 plain
                 type="danger"
-                size="mini"
+                size="small"
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
@@ -145,7 +147,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="badge提示">
-            <el-radio-group v-model="menuModel.badge" size="mini">
+            <el-radio-group v-model="menuModel.badge" size="small">
               <el-radio-button label="">无</el-radio-button>
               <el-radio-button label="dot">圆点</el-radio-button>
               <el-radio-button label="new">new</el-radio-button>
@@ -154,7 +156,7 @@
             <el-input-number
               v-model="menuModel.badgeNum"
               v-show="menuModel.badge === 'number'"
-              size="mini"
+              size="small"
               type=""
               class="margin-left-sm"
               :max="99"

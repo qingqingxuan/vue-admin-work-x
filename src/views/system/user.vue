@@ -10,7 +10,7 @@
           <template #actions>
             <el-button
               type="primary"
-              size="mini"
+              size="small"
               icon="PlusIcon"
               @click="onAddItem"
             >
@@ -18,7 +18,7 @@
             </el-button>
             <el-button
               type="danger"
-              size="mini"
+              size="small"
               icon="DeleteIcon"
               :disabled="selectRows.length === 0"
               @click="onDeleteItems"
@@ -100,7 +100,7 @@
           <el-table-column align="center" label="状态">
             <template #default="scope">
               <el-tag
-                size="mini"
+                size="small"
                 :type="scope.row.status === 1 ? 'success' : 'danger'"
               >
                 {{ scope.row.status === 1 ? "正常" : "禁用" }}
@@ -116,21 +116,21 @@
             <template #default="scope">
               <el-button
                 type="primary"
-                size="mini"
+                size="small"
                 plain
                 @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 type="danger"
-                size="mini"
+                size="small"
                 plain
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
               <el-button
                 :type="scope.row.status === 1 ? 'warning' : 'success'"
-                size="mini"
+                size="small"
                 plain
                 @click="onEnableItem(scope.row)"
                 >{{ scope.row.status === 1 ? "禁用" : "启用" }}</el-button

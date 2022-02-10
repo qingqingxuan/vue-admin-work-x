@@ -23,7 +23,7 @@
         v-if="showRefresh"
         style="margin-left: 15px; width: 30px; height: 30px"
         circle
-        size="mini"
+        size="small"
         :icon="RefreshIcon"
         type="primary"
         @click="onRefresh"

@@ -10,7 +10,7 @@
           <template #actions>
             <el-button
               type="primary"
-              size="mini"
+              size="small"
               icon="PlusIcon"
               @click="onAddItem"
               >添加
@@ -36,7 +36,7 @@
           </el-table-column>
           <el-table-column
             v-for="item of tableColumns"
-            :key="item.props"
+            :key="item.prop"
             :label="item.label"
             :prop="item.prop"
             align="center"
@@ -45,14 +45,14 @@
               <el-button
                 plain
                 type="primary"
-                size="mini"
+                size="small"
                 @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 plain
                 type="danger"
-                size="mini"
+                size="small"
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >

@@ -1,18 +1,18 @@
 <template>
-  <div class="logo-wrapper">
-    <img
-      v-if="showLogo"
-      class="logo-img"
-      :src="require('@/assets/logo.png')"
-    />
-    <transition
-      v-if="showTitle"
-      name="el-fade-in-linear"
-    >
-      <span
-        v-show="!state.isCollapse || alwaysShow"
-        class="logo-title"
-      >{{setting.projectName}}</span>
+  <div
+    class="logo-wrapper"
+    :style="{
+      'border-bottom':
+        state.layoutMode === 'ttb'
+          ? 'none'
+          : '1px dashed var(--el-border-color-light)',
+    }"
+  >
+    <img v-if="showLogo" class="logo-img" :src="require('@/assets/logo.png')" />
+    <transition v-if="showTitle" name="el-fade-in-linear">
+      <span v-show="!state.isCollapse || alwaysShow" class="logo-title">{{
+        setting.projectName
+      }}</span>
     </transition>
   </div>
 </template>
@@ -73,7 +73,6 @@ export default defineComponent({
   align-items: center;
   background-color: v-bind(bgColor);
   color: v-bind(textColor);
-  border-bottom: 1px dashed var(--el-border-color-light);
   .logo-img {
     width: 30px;
   }

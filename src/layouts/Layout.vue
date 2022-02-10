@@ -3,16 +3,9 @@
     class="vaw-layout-container"
     :class="[state.device === 'mobile' && 'is-mobile', state.theme]"
   >
-    <transition name="header">
+    <template v-if="state.layoutMode === 'ttb'">
       <VAWHeader v-if="isShowHeader" />
-    </transition>
-    <template v-if="isShowHeader">
-      <SideBar
-        ref="sideBar"
-        :show-logo="!isShowHeader"
-        class="layout-mode-ttb"
-      />
-      <MainLayout :show-nav-bar="!isShowHeader" />
+      <MainLayout :show-nav-bar="false" />
     </template>
     <template v-else-if="state.layoutMode === 'lcr'">
       <TabSplitSideBar />
@@ -34,16 +27,22 @@
 
 <script lang="ts">
 import { useEmit } from "@/hooks";
-import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+} from "vue";
 import store from "./store";
 export default defineComponent({
   name: "Layout",
   setup() {
-    const emit =  useEmit()
-    const appSettingRef = ref()
-    emit?.on('show_setting', () => {
-      appSettingRef.value.openDrawer()
-    })
+    const emit = useEmit();
+    const appSettingRef = ref();
+    emit?.on("show_setting", () => {
+      appSettingRef.value.openDrawer();
+    });
     const isShowHeader = computed(() => {
       return store.isShowHeader();
     });

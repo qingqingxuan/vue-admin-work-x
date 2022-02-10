@@ -67,6 +67,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "../styles/variables.scss";
+:deep(.el-dropdown) {
+  color: currentColor !important;
+}
 .vaw-avatar-container {
   .action-wrapper {
     display: flex;

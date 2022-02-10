@@ -10,7 +10,7 @@
           <template #actions>
             <el-button
               type="primary"
-              size="mini"
+              size="small"
               icon="PlusIcon"
               @click="onAddItem"
               >添加
@@ -42,7 +42,7 @@
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
                 plain
                 type="primary"
-                size="mini"
+                size="small"
                 @click="onUpdateItem(scope.row)"
                 >编辑</el-button
               >
@@ -50,14 +50,14 @@
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
                 plain
                 type="danger"
-                size="mini"
+                size="small"
                 @click="onDeleteItem(scope.row)"
                 >删除</el-button
               >
               <el-button
                 plain
                 type="warning"
-                size="mini"
+                size="small"
                 @click="showMenu(scope.row)"
                 >菜单权限</el-button
               >
