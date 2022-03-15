@@ -12,7 +12,7 @@
       :key="i"
       :label="item.label"
     >
-      <el-row>
+      <el-row style="width: 100%">
         <el-col :span="item.span || 24">
           <el-input
             v-if="item.type === 'input' && !item.hidden"
@@ -108,8 +108,7 @@
               v-for="optionItem of item.radioOptions"
               :key="optionItem.value"
               :label="optionItem.value"
-              >{{ optionItem.label }}</component
-            >
+            >{{ optionItem.label }}</component>
           </el-radio-group>
           <el-checkbox-group
             v-if="item.type === 'check-group' && !item.hidden"
@@ -129,8 +128,7 @@
               v-for="optionItem of item.checkOptions"
               :key="optionItem.value"
               :label="optionItem.value"
-              >{{ optionItem.label }}</component
-            >
+            >{{ optionItem.label }}</component>
           </el-checkbox-group>
           <el-switch
             v-if="item.type === 'switch' && !item.hidden"

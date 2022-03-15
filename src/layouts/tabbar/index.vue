@@ -1,15 +1,9 @@
 <template>
   <div class="vaw-tab-bar-container">
-    <div v-if="showHumburger" class="humburger-wrapper">
-      <Humburger />
-    </div>
     <el-tabs
       id="tagViewTab"
       v-model="currentTab"
       type="card"
-      :class="[
-        showHumburger ? 'tab-humburger-wrapper' : 'tab-no-humburger-wrapper',
-      ]"
       @tab-click="clickTab"
       @tab-remove="removeTab"
       @contextmenu.prevent="onContextMenu(currentTab, $event)"
@@ -33,8 +27,7 @@
           :underline="false"
           type="text"
           @click="refreshRoute"
-          >刷新页面</el-button
-        >
+        >刷新页面</el-button>
       </li>
       <li :disabled="showLeftMenu">
         <el-button
@@ -42,8 +35,7 @@
           icon="BackIcon"
           type="text"
           @click="closeLeft"
-          >关闭左侧</el-button
-        >
+        >关闭左侧</el-button>
       </li>
       <li :disabled="showRightMenu">
         <el-button
@@ -51,13 +43,14 @@
           icon="RightIcon"
           type="text"
           @click="closeRight"
-          >关闭右侧</el-button
-        >
+        >关闭右侧</el-button>
       </li>
       <li>
-        <el-button icon="CircleCloseIcon" type="text" @click="closeAll"
-          >关闭所有</el-button
-        >
+        <el-button
+          icon="CircleCloseIcon"
+          type="text"
+          @click="closeAll"
+        >关闭所有</el-button>
       </li>
     </ul>
   </div>
@@ -69,12 +62,6 @@ import path from "path";
 import qs from "qs";
 export default {
   name: "TabBar",
-  props: {
-    showHumburger: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       currentTab: this.$route.fullPath,
@@ -91,7 +78,7 @@ export default {
   },
   watch: {
     $route(newVal) {
-      if (["404", "500", "403", "not-found", "Login"].includes(newVal.name)) {
+      if (["404", "500", "403", "not-found", "Login"].includes(newVal.name) || newVal.path === '/404') {
         this.currentTab = "";
         return;
       }

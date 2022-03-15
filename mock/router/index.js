@@ -14,7 +14,6 @@ export const adminRoutes = [
         parentPath: '/system',
         menuUrl: "/system/department",
         menuName: "部门管理",
-        cacheable: true
       },
       {
         parentPath: '/system',

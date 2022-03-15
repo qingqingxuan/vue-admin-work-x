@@ -93,15 +93,11 @@ body .el-table__fixed::before {
 }
 
 .el-dialog__headerbtn {
-  top: 14px !important;
+  top: 0px !important;
 }
 
 .el-dialog__title {
   font-weight: bold;
-}
-
-.el-dialog__headerbtn {
-  top: 10px;
 }
 
 .el-dialog__body {

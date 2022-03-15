@@ -1,10 +1,11 @@
 <template>
-  <el-menu-item :index="generatorPath()" @click="handleClick">
+  <el-menu-item
+    :index="generatorPath()"
+    @click="handleClick"
+  >
     <!-- <SvgIcon :icon-class="showRoute.meta ? showRoute.meta.icon || 'el-icon-menu' : 'el-icon-menu'" /> -->
     <el-icon>
-      <component
-        :is="showRoute.meta ? showRoute.meta.icon || MenuIcon : MenuIcon"
-      />
+      <component :is="showRoute.meta ? showRoute.meta.icon || MenuIcon : MenuIcon" />
     </el-icon>
     <template #title>
       <span>{{ showRoute.meta ? showRoute.meta.title : showRoute.name }}</span>
@@ -62,6 +63,8 @@ export default defineComponent({
       } else if (
         route.path !== path.resolve(props.fullPath, props.showRoute.path)
       ) {
+        console.log(path.resolve(props.fullPath, props.showRoute.path));
+
         router.push({
           path: path.resolve(props.fullPath, props.showRoute.path),
         });

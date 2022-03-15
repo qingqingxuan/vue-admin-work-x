@@ -10,8 +10,7 @@
       state.isFixedNavBar ? 'main-layout_fixed-nav-bar' : 'main-layout',
     ]"
   >
-    <section
-      :class="[
+    <section :class="[
         state.layoutMode === 'ttb'
           ? 'nav-bar__ttb'
           : !state.isCollapse
@@ -19,10 +18,9 @@
           : 'nav-bar-close-status',
         state.isFixedNavBar ? 'fixed-nav-bar' : '',
         !mShowNavBar ? 'tab-bar-top' : '',
-      ]"
-    >
+      ]">
       <NavBar v-if="mShowNavBar" />
-      <TabBar :show-humburger="mShowNavBar" />
+      <TabBar />
     </section>
     <div class="main-base-style">
       <section class="main-section">

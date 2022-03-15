@@ -1,10 +1,10 @@
-import { App } from "vue"
+import { App } from 'vue'
 
 const range = {
   left: 0,
   right: 0,
   top: 0,
-  bottom: 0
+  bottom: 0,
 }
 const dragger = {
   mounted(el: Element): void {
@@ -17,11 +17,16 @@ const dragger = {
     header.addEventListener('mousedown', (e) => {
       e.preventDefault()
       status = 'down'
-      range.left = -((document.documentElement.clientWidth - dialog.clientWidth) / 2)
+      range.left = -(
+        (document.documentElement.clientWidth - dialog.clientWidth) /
+        2
+      )
       range.right = Math.abs(range.left)
       const marginTop = parseInt(dialog.style.marginTop) / 100
       range.top = -(document.documentElement.clientHeight * marginTop)
-      range.bottom = document.documentElement.clientHeight * (1 - marginTop) - dialog.clientHeight
+      range.bottom =
+        document.documentElement.clientHeight * (1 - marginTop) -
+        dialog.clientHeight
       startX = e.clientX - (parseInt(dialog.style.left) || 0)
       startY = e.clientY - (parseInt(dialog.style.top) || 0)
       const handleMove = (e: MouseEvent) => {
@@ -55,7 +60,7 @@ const dragger = {
     })
   },
   install: function (app: App): void {
-    console.log('install');
-  }
+    console.log('install')
+  },
 }
 export default dragger

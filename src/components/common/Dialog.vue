@@ -5,7 +5,7 @@
     v-model="dialogVisible"
     :close-on-click-modal="closeOnClickModal"
     :width="isMobileScreen ? '85%' : '45%'"
-    @vnodeMounted="onVnodeMounted"
+    draggable
   >
     <div class="dialog__content-wrapper">
       <slot name="content"></slot>
@@ -13,16 +13,17 @@
     <template #footer>
       <span class="dialog-footer">
         <slot name="footer-button"> </slot>
-        <el-button v-if="showCancel" size="mini" @click="dialogVisible = false"
-          >取 消</el-button
-        >
+        <el-button
+          v-if="showCancel"
+          size="small"
+          @click="dialogVisible = false"
+        >取 消</el-button>
         <el-button
           :loading="loading"
           type="primary"
-          size="mini"
+          size="small"
           @click="onConfirm"
-          >确 定</el-button
-        >
+        >确 定</el-button>
       </span>
     </template>
   </el-dialog>
@@ -70,9 +71,6 @@ export default defineComponent({
       });
       _callback.value = callback;
     }
-    function onVnodeMounted() {
-      VDraggable.mounted(dialogRef.value?.$el.nextElementSibling);
-    }
     function close() {
       dialogVisible.value = false;
       loading.value = false;
@@ -105,7 +103,6 @@ export default defineComponent({
       onConfirm,
       close,
       show,
-      onVnodeMounted,
       showLoading,
       closeLoading,
     };

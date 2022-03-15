@@ -3,12 +3,13 @@
     v-model:visible="visible"
     placement="bottom"
     :width="popWidth"
-    trigger="click"
   >
     <template #reference>
       <el-input
         ref="inputRef"
         size="small"
+        @focus="onFocus"
+        @blur="onBlur"
         :placeholder="placeholder"
         v-model="selectValue"
         readonly
@@ -111,6 +112,12 @@ function onNodeClick(key: any, item: any) {
   visible.value = false;
   emitter("update:value", key.value);
 }
+function onFocus() {
+  visible.value = true;
+}
+function onBlur() {
+  visible.value = false;
+}
 onMounted(() => {
   innerData.value = transformData(props.data);
   selectValue.value = getLabelByValue(innerData.value);
@@ -118,64 +125,6 @@ onMounted(() => {
     popWidth.value = unref(inputRef).$el.clientWidth;
   });
 });
-
-const data = [
-  {
-    label: "Level one 1",
-    children: [
-      {
-        label: "Level two 1-1",
-        children: [
-          {
-            label: "Level three 1-1-1",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Level one 2",
-    children: [
-      {
-        label: "Level two 2-1",
-        children: [
-          {
-            label: "Level three 2-1-1",
-          },
-        ],
-      },
-      {
-        label: "Level two 2-2",
-        children: [
-          {
-            label: "Level three 2-2-1",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: "Level one 3",
-    children: [
-      {
-        label: "Level two 3-1",
-        children: [
-          {
-            label: "Level three 3-1-1",
-          },
-        ],
-      },
-      {
-        label: "Level two 3-2",
-        children: [
-          {
-            label: "Level three 3-2-1",
-          },
-        ],
-      },
-    ],
-  },
-];
 </script>
 <style lang="scss">
 .poper-wrapper {

@@ -80,37 +80,31 @@
     >
       <el-col
         :xs="24"
-        :sm="24"
+        :sm="12"
         :md="6"
       >
-        <div class="flex flex-direction">
-          <SalesChart ref="salesChart" />
-          <StudentChart
-            ref="studentChart"
-            class="margin-top-xs"
-          />
-        </div>
+        <SalesChart ref="salesChart" />
       </el-col>
       <el-col
         :xs="24"
-        :sm="24"
-        :md="12"
-        class="map-margin-tb"
+        :sm="12"
+        :md="6"
       >
-        <SchoolChart ref="schoolChart" />
+        <StudentChart ref="studentChart" />
       </el-col>
       <el-col
         :xs="24"
-        :sm="24"
+        :sm="12"
         :md="6"
       >
-        <div class="flex flex-direction">
-          <EnrollmentChannelsChart ref="enrollmentChannelsChart" />
-          <DepartmentChart
-            ref="departmentChart"
-            class="margin-top-xs"
-          />
-        </div>
+        <EnrollmentChannelsChart ref="enrollmentChannelsChart" />
+      </el-col>
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="6"
+      >
+        <DepartmentChart ref="departmentChart" />
       </el-col>
     </el-row>
   </div>
@@ -123,7 +117,6 @@ import SalesChart from "./components/chart/SalesChart.vue";
 import StudentChart from "./components/chart/StudentChart.vue";
 import EnrollmentChannelsChart from "./components/chart/EnrollmentChannelsChart.vue";
 import DepartmentChart from "./components/chart/DepartmentChart.vue";
-import SchoolChart from "./components/chart/SchoolChart.vue";
 import FullYearSalesChart from "./components/chart/FullYearSalesChart.vue";
 import {
   computed,
@@ -138,7 +131,6 @@ export default defineComponent({
   components: {
     DataItem,
     OrderChart,
-    SchoolChart,
     SalesChart,
     StudentChart,
     EnrollmentChannelsChart,
@@ -152,7 +144,6 @@ export default defineComponent({
     const departmentChart = ref<InstanceType<typeof DepartmentChart>>();
     const enrollmentChannelsChart =
       ref<InstanceType<typeof EnrollmentChannelsChart>>();
-    const schoolChart = ref<InstanceType<typeof SchoolChart>>();
     const studentChart = ref<InstanceType<typeof StudentChart>>();
     const fullYearSalesChart = ref<InstanceType<typeof FullYearSalesChart>>();
     const onResize = () => {
@@ -161,7 +152,6 @@ export default defineComponent({
         salesChart.value?.updateChart();
         departmentChart.value?.updateChart();
         enrollmentChannelsChart.value?.updateChart();
-        schoolChart.value?.updateChart();
         studentChart.value?.updateChart();
         fullYearSalesChart.value?.updateChart();
       }, 500);
@@ -178,7 +168,6 @@ export default defineComponent({
       salesChart,
       departmentChart,
       enrollmentChannelsChart,
-      schoolChart,
       studentChart,
       fullYearSalesChart,
       dataList: [

@@ -1,3 +1,19 @@
+### 2022-3-15(2.1.5)
+
+- 升级：升级 `ElementPlus`版本为 `2.0.5`
+
+- 修复：修复 `TreeSelect` 因升级 `Element-Plus` 带来而不能出现选项的 bug
+
+- 修复：修复 `tabbar` 中 404 页面，显示为 空 的 bug
+
+- 移除：移除 `Tabbar` 中 `show-humburger` 的 属性
+
+- 优化：`BaseForm`组件中，在没有设置 `span`的情况下，不能占满全部一行的问题
+
+- 升级：移除 `Dialog`组件中自定义指令实现拖拽的功能，使用 `el-dialog` 自带的 `draggable` 属性
+
+- 修改：移除 `el-button`、`el-tag` 等组件中 `size="mini"`，改成 `size="small"`
+
 ### 2022-2-10(2.1.4)
 
 - 升级：升级 `ElementPlus` 组件库到正式版： `2.0.1`

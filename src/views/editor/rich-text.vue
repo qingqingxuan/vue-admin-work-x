@@ -20,12 +20,12 @@
           <div class="flex-sub"></div>
           <el-button
             type="primary"
-            size="mini"
+            size="small"
             @click="getHtmlContent"
           >获取HTML</el-button>
           <el-button
             type="warning"
-            size="mini"
+            size="small"
             @click="getJsonContent"
           >获取JSON</el-button>
         </div>

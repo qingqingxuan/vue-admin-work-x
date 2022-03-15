@@ -46,13 +46,37 @@
               <div class="value">研发部</div>
             </div>
             <div>
-              <el-tag effect="dark" size="mini">技术控</el-tag>
-              <el-tag effect="dark" size="mini">爱学习</el-tag>
-              <el-tag effect="dark" size="mini">大嘴巴</el-tag>
-              <el-tag effect="dark" size="mini">宅男</el-tag>
-              <el-tag type="info" effect="dark" size="mini">嘚嘚没完</el-tag>
-              <el-tag type="info" effect="dark" size="mini">UP主</el-tag>
-              <el-tag type="info" effect="dark" size="mini">手机控</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >技术控</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >爱学习</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >大嘴巴</el-tag>
+              <el-tag
+                effect="dark"
+                size="small"
+              >宅男</el-tag>
+              <el-tag
+                type="info"
+                effect="dark"
+                size="small"
+              >嘚嘚没完</el-tag>
+              <el-tag
+                type="info"
+                effect="dark"
+                size="small"
+              >UP主</el-tag>
+              <el-tag
+                type="info"
+                effect="dark"
+                size="small"
+              >手机控</el-tag>
             </div>
           </div>
         </el-card>
@@ -76,7 +100,7 @@
             <div style="width: 40px">
               <el-tag
                 :type="item.status === 0 ? 'danger' : 'success'"
-                size="mini"
+                size="small"
               >
                 {{ item.status === 0 ? "未完成" : "已完成" }}
               </el-tag>
@@ -85,12 +109,17 @@
         </el-card>
       </div>
       <div class="margin-top">
-        <el-card class="box-card flex-sub" :body-style="{ padding: '10px' }">
+        <el-card
+          class="box-card flex-sub"
+          :body-style="{ padding: '10px' }"
+        >
           <template #header>
             <div class="flex justify-between align-center">
               <span class="text-sm">消息中心</span>
-              <el-button style="padding: 3px 0" type="text"
-                >查看更多
+              <el-button
+                style="padding: 3px 0"
+                type="text"
+              >查看更多
                 <i class="el-icon-d-arrow-right"></i>
               </el-button>
             </div>

@@ -4,7 +4,7 @@
       <template v-slot:right>
         <el-button
           type="primary"
-          size="mini"
+          size="small"
           @click="exportExcel"
         >导出选中的Excel
         </el-button>

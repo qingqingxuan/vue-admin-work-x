@@ -8,7 +8,7 @@
       <div class="margin-top-lg">
         <el-button
           type="primary"
-          size="mini"
+          size="small"
           @click="backHome"
         >
           返回首页

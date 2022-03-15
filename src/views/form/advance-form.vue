@@ -8,7 +8,7 @@
         <div class="flex justify-between padding-sm">
           <el-link :underline="false">添加学校</el-link>
           <el-button
-            size="mini"
+            size="small"
             type="primary"
           >立即添加</el-button>
         </div>
@@ -54,7 +54,7 @@
               <el-form-item label="加盟方式">
                 <el-radio-group
                   v-model="baseInfoModel.joinType"
-                  size="mini"
+                  size="small"
                 >
                   <el-radio-button label="普通" />
                   <el-radio-button label="独家" />
@@ -124,7 +124,7 @@
               <el-form-item label="学生数量">
                 <el-input-number
                   v-model="baseInfoModel.studentNum"
-                  size="mini"
+                  size="small"
                 />
               </el-form-item>
             </el-col>
@@ -149,7 +149,7 @@
       >
         <div class="flex justify-end padding-sm">
           <el-button
-            size="mini"
+            size="small"
             type="primary"
           >立即添加</el-button>
         </div>

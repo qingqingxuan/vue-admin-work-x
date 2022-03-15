@@ -15,7 +15,10 @@
       :width="300"
     >
       <template #reference>
-        <el-badge :value="12" class="badge-action-item">
+        <el-badge
+          :value="12"
+          class="badge-action-item"
+        >
           <span>
             <el-icon :size="18">
               <bell />
@@ -52,7 +55,7 @@
         <SettingIcon />
       </el-icon>
     </span>
-    <div
+    <!-- <div
       v-if="state.actionItem.showSearch && state.device !== 'mobile'"
       class="input-wrapper"
       :class="{ 'is-active': showSearchContent }"
@@ -64,7 +67,7 @@
         clearable
         @change="onChange"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -93,7 +96,7 @@ export default defineComponent({
     SettingIcon,
   },
   setup() {
-    const searchContentRef = ref();
+    // const searchContentRef = ref();
     const showSearchContent = ref(false);
     const searchContent = ref("");
     const state = store.state;
@@ -104,11 +107,11 @@ export default defineComponent({
     function onShowSearch() {
       showSearchContent.value = !showSearchContent.value;
       searchContent.value = "";
-      if (showSearchContent.value) {
-        searchContentRef.value?.focus();
-      } else {
-        searchContentRef.value?.blur();
-      }
+      // if (showSearchContent.value) {
+      //   searchContentRef.value?.focus();
+      // } else {
+      //   searchContentRef.value?.blur();
+      // }
     }
     function onChange(content: string) {
       if (!content) {
@@ -130,7 +133,7 @@ export default defineComponent({
       emit?.emit("show_setting");
     }
     return {
-      searchContentRef,
+      // searchContentRef,
       showSearchContent,
       searchContent,
       state,
