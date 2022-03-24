@@ -31,7 +31,6 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import VDraggable from "@/directive/draggable/draggable";
 import { useLayoutStore } from "@/layouts/hooks";
 import { nextTick, ref } from "vue";
 export default defineComponent({

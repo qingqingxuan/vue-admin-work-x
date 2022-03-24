@@ -14,6 +14,7 @@ module.exports = {
     open: true,
   },
   configureWebpack: {
+    devtool: 'source-map',
     module: {
       rules: [
         {

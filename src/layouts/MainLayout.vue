@@ -40,8 +40,7 @@ import NavBar from "./navbar/NavBar.vue";
 import TabBar from "./tabbar/index.vue";
 import Main from "./Main.vue";
 import store from "./store";
-import { computed, defineComponent, ref } from "vue";
-import useEmit from "@/hooks/Emit";
+import { computed, defineComponent } from "vue";
 export default defineComponent({
   name: "MainLayout",
   components: { NavBar, Main, TabBar },
