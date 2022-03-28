@@ -16,8 +16,9 @@
 ## 请添加好友~~邀请进入 Vue Admin Work 技术交流群
 
 <div align="center">
-<img src="http://qingqingxuan.gitee.io/img/weixin-custom.jpeg" style="zoom:20%;" /> 
+<img width="20%" src="http://www.vueadminwork.com/weixin-custom.jpg" style="zoom:20%;" /> 
 </div>
+
 
 ## 关注微信公众号 `知码前端` 方便以后更新、升级
 
