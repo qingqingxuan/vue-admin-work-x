@@ -1,3 +1,17 @@
+### 2022-3-29(2.1.7)
+
+- 升级：升级 `ElementPlus`版本为 `2.1.7`
+
+- 修复：`menu` 在横向模式下拉子菜单列表 `hover` 是深色的 bug
+
+- 调整：修改 `menu` 中默认的图标为 `Operation`
+
+- 优化：`table` 高度计算流程
+
+- 调整：`把tableHeader` 合并到 `tableBody` 中
+
+- 调整：调整项目中所有的 `form` 元素尺寸为由原来的 `small` 改为 `default`
+
 ### 2022-3-17(2.1.6)
 
 - 修改：`layout 模式 为 ttb `在 非 `pc` 下头部显示空的 bug

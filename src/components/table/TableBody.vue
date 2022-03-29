@@ -5,6 +5,7 @@
     class="table-body-container table-container"
     shadow="never"
   >
+    <slot name="header"></slot>
     <slot name="tableConfig"></slot>
     <slot name="default"></slot>
     <slot name="footer"></slot>

@@ -4,9 +4,9 @@
     popper-append-to-body
   >
     <template #title>
-     <el-icon>
-      <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon"/>
-    </el-icon>
+      <el-icon>
+        <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon" />
+      </el-icon>
       <span>{{ item.meta ? item.meta.title : item.name }}</span>
     </template>
     <slot></slot>
@@ -14,41 +14,41 @@
 </template>
 
 <script lang="ts">
-import { isExternal } from '../../utils'
-import path from 'path'
-import store from '../../store'
-import { defineComponent } from 'vue'
-import { Menu as MenuIcon } from '@element-plus/icons'
+import { isExternal } from "../../utils";
+import path from "path";
+import store from "../../store";
+import { defineComponent } from "vue";
+import { Operation as MenuIcon } from "@element-plus/icons";
 export default defineComponent({
-  name: 'SubMenuItem',
+  name: "SubMenuItem",
   components: { MenuIcon },
   props: {
     fullPath: {
       type: String,
-      default: ''
+      default: "",
     },
     item: {
       type: Object,
       default: () => {
-        return {}
-      }
-    }
+        return {};
+      },
+    },
   },
   setup(props) {
     function generatorPath(childPath: string) {
       if (isExternal(props.fullPath)) {
-        return props.fullPath
+        return props.fullPath;
       }
       if (isExternal(childPath)) {
-        return childPath
+        return childPath;
       }
-      return path.resolve(props.fullPath, props.item.path)
+      return path.resolve(props.fullPath, props.item.path);
     }
     return {
       state: store.state,
       generatorPath,
-      MenuIcon
-    }
-  }
-})
+      MenuIcon,
+    };
+  },
+});
 </script>

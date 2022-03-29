@@ -1,6 +1,9 @@
 <template>
   <div class="main-container flex flex-direction">
-    <el-card :body-style="{ padding: '15px' }" shadow="hover">
+    <el-card
+      :body-style="{ padding: '15px' }"
+      shadow="hover"
+    >
       <el-link :underline="false">请填写会议基本信息</el-link>
     </el-card>
     <el-card
@@ -9,9 +12,16 @@
       class="margin-top-xs flex-sub"
     >
       <div class="form-wrapper padding-top">
-        <BaseForm ref="baseForm" :form-items="formItems" :config="formConfig">
+        <BaseForm
+          ref="baseForm"
+          :form-items="formItems"
+          :config="formConfig"
+        >
           <template #extra>
-            <el-form-item label="与会人员：" class="form-item">
+            <el-form-item
+              label="与会人员："
+              class="form-item"
+            >
               <el-select
                 v-model="joinMemeber.value"
                 multiple
@@ -26,7 +36,10 @@
                 />
               </el-select>
             </el-form-item>
-            <el-form-item label="备注：" class="form-item">
+            <el-form-item
+              label="备注："
+              class="form-item"
+            >
               <el-input
                 v-model="remark.value"
                 placeholder="请输入备注信息（选填）"
@@ -42,8 +55,7 @@
                   size="small"
                   :loading="submitLoading"
                   @click="submit"
-                  >提交</el-button
-                >
+                >提交</el-button>
               </div>
             </el-form-item>
           </template>
@@ -59,7 +71,7 @@ import { reactive, ref, shallowReactive } from "vue";
 
 const formConfig = {
   labelWidth: 100,
-  size: "small",
+  size: "default",
   labelPosition: "right",
 };
 const formItems = reactive([

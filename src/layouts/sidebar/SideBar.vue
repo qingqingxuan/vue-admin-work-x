@@ -93,7 +93,7 @@ export default defineComponent({
 }
 .el-menu {
   --el-menu-hover-text-color: var(--el-color-primary) !important;
-  --el-menu-hover-background-color: var(--el-color-primary-light-8) !important;
+  --el-menu-hover-bg-color: var(--el-color-primary-light-8) !important;
   border-right: none !important;
   overflow: hidden;
 }

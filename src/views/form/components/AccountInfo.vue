@@ -7,7 +7,7 @@
       status-icon
       label-width="120px"
       class="form-wrapper"
-      size="small"
+      size="default"
     >
       <el-form-item label="付款账户：">
         <el-select

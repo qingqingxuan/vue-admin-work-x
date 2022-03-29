@@ -1,19 +1,19 @@
-import { nextTick, reactive, ref, shallowReactive } from "vue";
-import useEmit from "./Emit";
+import { nextTick, reactive, ref, shallowReactive } from 'vue'
+import useEmit from './Emit'
 
 export default function (): Record<string, any> {
-  const dataList = shallowReactive([]) as Array<any>;
-  const selectRows = ref<Array<any>>([]);
+  const dataList = shallowReactive([]) as Array<any>
+  const selectRows = ref<Array<any>>([])
   const tableConfig = reactive({
     stripe: true,
     border: false,
-    size: 'small',
+    size: 'default',
     headerCellStyle: {
-      color: '#333'
+      color: '#333',
     },
-    height: 200
-  });
-  const tableLoading = ref(true);
+    height: 200,
+  })
+  const tableLoading = ref(true)
   const handleSuccess = ({ data = [], totalSize = 10 }) => {
     dataList.length = 0
     dataList.push(...data)
@@ -31,20 +31,20 @@ export default function (): Record<string, any> {
   }
   const emitter = useEmit()
   function useHeight() {
-     return new Promise((res) => {
+    return new Promise((res) => {
       nextTick(() => {
         let height = 0
         const mainEl = document.querySelector('.main-base-style')
-        height = (mainEl?.clientHeight || 0) - 47
+        height = (mainEl?.clientHeight || 0) - 39
         const footerEl = document.querySelector('.footer-wrapper')
         const tableHeaderEl = document.getElementById('tableHeaderContainer')
         const tableConigEl = document.getElementById('tableConfigContainer')
         const tableFooterEl = document.getElementById('tableFooterContainer')
         if (footerEl) {
-          height = height -(footerEl.clientHeight)
+          height = height - footerEl.clientHeight
         }
         if (tableHeaderEl) {
-          height = height - (tableHeaderEl.clientHeight)
+          height = height - tableHeaderEl.clientHeight
           let originHeight = tableHeaderEl.clientHeight
           emitter?.on('table-collapse-transition', (newVal: boolean) => {
             setTimeout(() => {
@@ -55,17 +55,17 @@ export default function (): Record<string, any> {
           })
         }
         if (tableConigEl) {
-          height = height - (tableConigEl.clientHeight)
+          height = height - tableConigEl.clientHeight
         }
         if (tableFooterEl) {
-          height = height - (tableFooterEl.clientHeight)
+          height = height - tableFooterEl.clientHeight
         }
         nextTick(() => {
           tableConfig.height = height
         })
         res(height)
       })
-     })
+    })
   }
   function offTableCollapseTransition() {
     emitter?.off('table-collapse-transition')
@@ -79,6 +79,6 @@ export default function (): Record<string, any> {
     handleSelectionChange,
     doRefresh,
     useHeight,
-    offTableCollapseTransition
+    offTableCollapseTransition,
   }
 }

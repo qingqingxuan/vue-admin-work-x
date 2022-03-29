@@ -1,6 +1,13 @@
 <template>
-  <div id="tableHeaderContainer" class="table-header-container">
-    <el-card :body-style="{ padding: '0px' }" shadow="never">
+  <div
+    id="tableHeaderContainer"
+    class="table-header-container"
+  >
+    <el-card
+      :body-style="{ padding: '0px' }"
+      shadow="never"
+      style="border: none"
+    >
       <template #header>
         <div class="wrapper">
           <el-tooltip
@@ -9,7 +16,10 @@
             :content="showArrow ? '点击展开/收起查询条件' : title"
             placement="top"
           >
-            <el-button type="text" @click="collapsed">
+            <el-button
+              type="text"
+              @click="collapsed"
+            >
               {{ title
               }}<i
                 v-if="showArrow"
@@ -18,8 +28,7 @@
                     ? 'el-icon-caret-bottom'
                     : 'el-icon-caret-top'
                 "
-              ></i
-            ></el-button>
+              ></i></el-button>
           </el-tooltip>
           <div class="left-wrapper">
             <slot name="left"></slot>
@@ -58,7 +67,6 @@
                 <el-input
                   v-model="item.value"
                   :placeholder="item.placeholder || '请输入内容'"
-                  size="small"
                   clearable
                   class="form-item"
                 />
@@ -71,7 +79,6 @@
                 <el-select
                   v-model="item.value"
                   :placeholder="item.placeholder || '请选择条目'"
-                  size="small"
                   :filterable="item.filterable ? true : false"
                   clearable
                   class="form-item"
@@ -101,7 +108,6 @@
                   start-placeholder="开始日期"
                   end-placeholder="结束日期"
                   class="form-item"
-                  size="small"
                 />
               </div>
               <div
@@ -115,7 +121,6 @@
                   range-separator="-"
                   :placeholder="item.placeholder || '请选择日期'"
                   class="form-item"
-                  size="small"
                 />
               </div>
               <div
@@ -128,7 +133,6 @@
                   type="datetime"
                   :placeholder="item.placeholder || '请选择日期'"
                   class="form-item"
-                  size="small"
                 />
               </div>
               <div
@@ -144,24 +148,24 @@
                   }"
                   :placeholder="item.placeholder || '请选择时间'"
                   class="form-item"
-                  size="small"
                 />
               </div>
-              <div v-else-if="item.type === 'action'" class="flex justify-end">
+              <div
+                v-else-if="item.type === 'action'"
+                class="flex justify-end"
+              >
                 <el-button
                   type="success"
                   size="small"
                   :icon="RefreshIcon"
                   @click="doResetSearch"
-                  >重置</el-button
-                >
+                >重置</el-button>
                 <el-button
                   type="primary"
                   size="small"
                   :icon="SearchIcon"
                   @click="doSearch"
-                  >搜索</el-button
-                >
+                >搜索</el-button>
               </div>
             </el-col>
           </el-row>

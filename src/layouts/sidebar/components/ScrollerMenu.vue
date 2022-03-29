@@ -105,7 +105,7 @@ export default defineComponent({
   line-height: 0;
 }
 :deep(.el-menu-item.is-active) {
-  background-color: var(--el-menu-hover-background-color) !important;
+  background-color: var(--el-menu-hover-bg-color) !important;
 }
 .scrollbar {
   height: calc(100% - #{$logoHeight}) !important;

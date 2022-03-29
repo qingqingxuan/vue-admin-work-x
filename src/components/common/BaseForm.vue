@@ -4,7 +4,7 @@
     ref="form"
     :label-position="config.labelPosition || 'right'"
     :label-width="(config.labelWidth || 80) + 'px'"
-    :size="config.size || 'small'"
+    :size="config.size || 'default'"
   >
     <slot name="prefix"></slot>
     <el-form-item
@@ -18,7 +18,7 @@
             v-if="item.type === 'input' && !item.hidden"
             v-model="item.value"
             :placeholder="item.placeholder || '请输入内容'"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
             clearable
             :disabled="item.disabled || false"
             :type="item.inputType || ''"
@@ -30,7 +30,7 @@
             v-else-if="item.type === 'select' && !item.hidden"
             v-model="item.value"
             :placeholder="item.placeholder || '请选择条目'"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
             :filterable="item.filterable ? true : false"
             clearable
             :disabled="item.disabled || false"
@@ -59,7 +59,7 @@
             class="form-item"
             :disabled="item.disabled || false"
             style="width: 100%"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
           />
           <el-date-picker
             v-else-if="item.type === 'date' && !item.hidden"
@@ -69,7 +69,7 @@
             range-separator="-"
             :placeholder="item.placeholder || '请选择日期'"
             class="form-item"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
           />
           <el-date-picker
             v-else-if="item.type === 'datetime' && !item.hidden"
@@ -78,7 +78,7 @@
             :disabled="item.disabled || false"
             :placeholder="item.placeholder || '请选择日期'"
             class="form-item"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
           />
           <el-time-picker
             v-else-if="item.type === 'time' && !item.hidden"
@@ -90,13 +90,13 @@
             :disabled="item.disabled || false"
             :placeholder="item.placeholder || '请选择时间'"
             class="form-item"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
           />
           <el-radio-group
             v-if="item.type === 'radio-group' && !item.hidden"
             v-model="item.value"
             :disabled="item.disabled || false"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
             @change="
               item.onChange
                 ? item.onChange(item.value, item.associatedOption || '')
@@ -114,7 +114,7 @@
             v-if="item.type === 'check-group' && !item.hidden"
             v-model="item.value"
             :disabled="item.disabled || false"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
             @change="
               item.onChange
                 ? item.onChange(item.value, item.associatedOption || '')
@@ -134,7 +134,7 @@
             v-if="item.type === 'switch' && !item.hidden"
             v-model="item.value"
             :disabled="item.disabled || false"
-            :size="config.size || 'small'"
+            :size="config.size || 'default'"
             @change="
               item.onChange
                 ? item.onChange(item.value, item.associatedOption || '')
@@ -166,7 +166,7 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {
-          size: "small",
+          size: "default",
           labelWidth: "80",
           labelPosition: "right",
         };
