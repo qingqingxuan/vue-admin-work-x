@@ -4,9 +4,9 @@
       <template #header>
         <TableHeader
           :can-collapsed="
-        likeSearchModel.conditionItems &&
-        likeSearchModel.conditionItems.length !== 0
-      "
+            likeSearchModel.conditionItems &&
+            likeSearchModel.conditionItems.length !== 0
+          "
           :search-model="likeSearchModel.conditionItems"
           :default-collapsed-state="true"
           title="表格查询"
@@ -21,17 +21,11 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button
-              type="primary"
-              size="small"
-              icon="PlusIcon"
-            >添加
+            <el-button type="primary" size="small" icon="PlusIcon"
+              >添加
             </el-button>
-            <el-button
-              type="danger"
-              size="small"
-              icon="DeleteIcon"
-            >删除
+            <el-button type="danger" size="small" icon="DeleteIcon"
+              >删除
             </el-button>
           </template>
         </TableConfig>
@@ -46,24 +40,13 @@
           :border="tableConfig.border"
           :height="tableConfig.height"
         >
-          <el-table-column
-            align="center"
-            label="序号"
-            width="80"
-          >
+          <el-table-column align="center" label="序号" width="80">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="名称"
-            prop="nickName"
-          />
-          <el-table-column
-            align="center"
-            label="头像"
-          >
+          <el-table-column align="center" label="名称" prop="nickName" />
+          <el-table-column align="center" label="头像">
             <template v-slot="scope">
               <div class="avatar-container">
                 <el-image
@@ -79,11 +62,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="性别"
-            prop="gender"
-          >
+          <el-table-column align="center" label="性别" prop="gender">
             <template v-slot="scope">
               <div class="gender-container flex justify-center align-center">
                 <img
@@ -98,10 +77,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="状态"
-          >
+          <el-table-column align="center" label="状态">
             <template v-slot="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -110,11 +86,7 @@
               />
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="地址"
-            prop="address"
-          />
+          <el-table-column align="center" label="地址" prop="address" />
           <el-table-column
             align="center"
             label="上次登录时间"
@@ -141,7 +113,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getTableList } from "@/api/url";
+import { getTableList, getUserList } from "@/api/url";
 import { useDataTable, useLikeSearch, usePost } from "@/hooks";
 import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import { ElMessageBox } from "element-plus";
@@ -194,7 +166,7 @@ const doSearch = () => {
 };
 function doRefresh() {
   post({
-    url: getTableList,
+    url: getUserList,
     data: {
       ...tableFooter.value?.withPageInfoData(),
       ...getSearchParams(),

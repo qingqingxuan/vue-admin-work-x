@@ -95,7 +95,7 @@
 import { onMounted, reactive, ref, watch } from "vue";
 import { showConfirmBox, showErrorMessage } from "@/components/types";
 import { useDataTable, usePost } from "@/hooks";
-import { getTableList } from "@/api/url";
+import { getTableList, getUserList } from "@/api/url";
 import type { TableFooter } from "@/components/types";
 import _ from "lodash";
 
@@ -145,7 +145,7 @@ const userModel = reactive({
 const tableFooter = ref<TableFooter>();
 function doRefresh() {
   post({
-    url: getTableList,
+    url: getUserList,
     data: tableFooter.value?.withPageInfoData(),
   })
     .then(handleSuccess)

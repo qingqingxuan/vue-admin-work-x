@@ -166,7 +166,6 @@
           >
             <el-input
               v-model="userModel.nickName"
-              size="small"
               placeholder="请输入用户名称"
               clearable
             />
@@ -174,7 +173,6 @@
           <el-form-item class="form-item__require" label="手机号码" prop="path">
             <el-input
               v-model="userModel.mobile"
-              size="small"
               placeholder="请输入手机号码"
               clearable
             >
@@ -183,7 +181,6 @@
           <el-form-item class="form-item__require" label="邮箱地址">
             <el-input
               v-model="userModel.email"
-              size="small"
               placeholder="请输入邮箱地址"
               clearable
             >
@@ -211,7 +208,6 @@
           </el-form-item>
           <el-form-item class="form-item__require" label="所属角色" prop="path">
             <el-select
-              size="small"
               placeholder="请选择角色"
               v-model="userModel.roleId"
               clearable
@@ -230,7 +226,6 @@
             <el-input
               v-model="userModel.password"
               type="password"
-              size="small"
               placeholder="请输入登录密码"
               clearable
             >

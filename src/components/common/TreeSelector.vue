@@ -1,13 +1,8 @@
 <template>
-  <el-popover
-    v-model:visible="visible"
-    placement="bottom"
-    :width="popWidth"
-  >
+  <el-popover v-model:visible="visible" placement="bottom" :width="popWidth">
     <template #reference>
       <el-input
         ref="inputRef"
-        size="small"
         @focus="onFocus"
         @blur="onBlur"
         :placeholder="placeholder"

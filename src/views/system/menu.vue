@@ -13,7 +13,7 @@
               size="small"
               icon="PlusIcon"
               @click="onAddItem"
-            >添加
+              >添加
             </el-button>
           </template>
         </TableConfig>
@@ -29,31 +29,14 @@
           row-key="menuUrl"
           :tree-props="{ children: 'children' }"
         >
-          <el-table-column
-            align="center"
-            label="序号"
-            fixed="left"
-            width="150"
-          >
+          <el-table-column align="center" label="序号" fixed="left" width="150">
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="菜单名称"
-            prop="menuName"
-          />
-          <el-table-column
-            align="center"
-            label="菜单地址"
-            prop="menuUrl"
-          />
-          <el-table-column
-            align="center"
-            label="图标"
-            prop="menuUrl"
-          >
+          <el-table-column align="center" label="菜单名称" prop="menuName" />
+          <el-table-column align="center" label="菜单地址" prop="menuUrl" />
+          <el-table-column align="center" label="图标" prop="menuUrl">
             <template #default="scope">
               <el-icon
                 v-if="scope.row.icon"
@@ -66,33 +49,23 @@
               <div v-else>--</div>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="是否缓存"
-          >
+          <el-table-column align="center" label="是否缓存">
             <template #default="scope">
               <el-tag
-                :type="scope.row.cacheable ? 'primary' : 'danger'"
+                :type="scope.row.cacheable ? '' : 'danger'"
                 size="small"
-              >{{ scope.row.cacheable ? "是" : "否" }}</el-tag>
+                >{{ scope.row.cacheable ? "是" : "否" }}</el-tag
+              >
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="是否固定"
-          >
+          <el-table-column align="center" label="是否固定">
             <template #default="scope">
-              <el-tag
-                :type="scope.row.affix ? 'primary' : 'danger'"
-                size="small"
-              >{{ scope.row.affix ? "是" : "否" }}
+              <el-tag :type="scope.row.affix ? '' : 'danger'" size="small"
+                >{{ scope.row.affix ? "是" : "否" }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="badge提示"
-          >
+          <el-table-column align="center" label="badge提示">
             <template #default="scope">
               <div class="menu-badge__wrapper">
                 <el-badge
@@ -119,13 +92,15 @@
                 type="primary"
                 size="small"
                 @click="onUpdateItem(scope.row)"
-              >编辑</el-button>
+                >编辑</el-button
+              >
               <el-button
                 plain
                 type="danger"
                 size="small"
                 @click="onDeleteItem(scope.row)"
-              >删除</el-button>
+                >删除</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -151,40 +126,19 @@
               }"
             />
           </el-form-item>
-          <el-form-item
-            label="菜单名称"
-            prop="name"
-          >
-            <el-input
-              v-model="menuModel.name"
-              size="small"
-              placeholder="请输入菜单名称"
-            />
+          <el-form-item label="菜单名称" prop="name">
+            <el-input v-model="menuModel.name" placeholder="请输入菜单名称" />
           </el-form-item>
-          <el-form-item
-            label="菜单地址"
-            prop="path"
-          >
-            <el-input
-              v-model="menuModel.path"
-              size="small"
-              placeholder="请输入菜单地址"
-            >
+          <el-form-item label="菜单地址" prop="path">
+            <el-input v-model="menuModel.path" placeholder="请输入菜单地址">
             </el-input>
           </el-form-item>
           <el-form-item label="外链地址">
-            <el-input
-              v-model="menuModel.outLink"
-              size="small"
-              placeholder="请输入外链地址"
-            >
+            <el-input v-model="menuModel.outLink" placeholder="请输入外链地址">
             </el-input>
           </el-form-item>
           <el-form-item label="badge提示">
-            <el-radio-group
-              v-model="menuModel.badge"
-              size="small"
-            >
+            <el-radio-group v-model="menuModel.badge" size="small">
               <el-radio-button label="">无</el-radio-button>
               <el-radio-button label="dot">圆点</el-radio-button>
               <el-radio-button label="new">new</el-radio-button>
@@ -193,8 +147,6 @@
             <el-input-number
               v-model="menuModel.badgeNum"
               v-show="menuModel.badge === 'number'"
-              size="small"
-              type=""
               class="margin-left-sm"
               :max="99"
               :min="1"

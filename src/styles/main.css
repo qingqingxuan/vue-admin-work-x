@@ -92,9 +92,9 @@ body .el-table__fixed::before {
   border-bottom: 1px solid #ececec;
 }
 
-.el-dialog__headerbtn {
+/* .el-dialog__headerbtn {
   top: 0px !important;
-}
+} */
 
 .el-dialog__title {
   font-weight: bold;

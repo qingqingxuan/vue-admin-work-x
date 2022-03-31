@@ -1,5 +1,5 @@
 <template>
-  <el-popover v-model:visible="visible" :width="380" trigger="click">
+  <el-popover ref="popoverRef" :width="380" trigger="click">
     <div class="icon-container">
       <div class="icon-wrapper">
         <el-row>
@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import * as Icons from "@element-plus/icons";
-import { ref, watch } from "vue";
+import { ref, unref, watch } from "vue";
 const emit = defineEmits(["onSelect", "update:value"]);
 const props = defineProps({
   value: {
@@ -57,7 +57,7 @@ const currentPage = ref(1);
 const iconNames = ref(iconList.slice(0, pageSize));
 const searchList = ref<Array<string>>([]);
 const total = ref(iconList.length);
-const visible = ref(false);
+const popoverRef = ref();
 const seletedItem = ref(props.value);
 watch(
   () => props.value,
@@ -76,7 +76,7 @@ function onSelectItem(item: string) {
   emit("onSelect", item);
   emit("update:value", item);
   seletedItem.value = item;
-  visible.value = false;
+  unref(popoverRef).hide();
 }
 </script>
 <style lang="scss" scoped>
