@@ -1,9 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from '@/views/login/index.vue'
 
-import { Layout } from '@/layouts'
+import { Layout, mapTwoLevelRouter } from '@/layouts'
 
-export const routes = [
+export const constantRoutes = [
   {
     path: '/redirect',
     component: Layout,
@@ -42,25 +42,13 @@ export const routes = [
     ],
   },
   {
-    path: '/query',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'query',
-        name: 'query',
-        component: () => import('@/views/params/query.vue'),
-        meta: {
-          title: 'query参数',
-        },
-      },
-    ],
-  },
-  {
     path: '/',
     redirect: '/index/home',
     hidden: true,
   },
+]
+
+export const asyncRoutes = [
   {
     path: '/index',
     name: 'root',
@@ -80,21 +68,21 @@ export const routes = [
           cacheable: true,
         },
       },
-      {
-        path: 'work-place',
-        name: 'WorkPlace',
-        component: (): any => import('@/views/index/work-place.vue'),
-        meta: {
-          title: '工作台',
-        },
-      },
+      // {
+      //   path: 'work-place',
+      //   name: 'WorkPlace',
+      //   component: (): any => import('@/views/index/work-place.vue'),
+      //   meta: {
+      //     title: '工作台',
+      //   },
+      // },
     ],
   },
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
+  routes: mapTwoLevelRouter([...constantRoutes, ...asyncRoutes]),
 })
 
 export default router

@@ -1,5 +1,9 @@
 <template>
-  <el-popover v-model:visible="visible" placement="bottom" :width="popWidth">
+  <el-popover
+    v-model:visible="visible"
+    placement="bottom"
+    :width="popWidth"
+  >
     <template #reference>
       <el-input
         ref="inputRef"
@@ -30,7 +34,16 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, PropType, ref, toRaw, unref, watch } from "vue";
+import {
+  computed,
+  nextTick,
+  onMounted,
+  PropType,
+  ref,
+  toRaw,
+  unref,
+  watch,
+} from "vue";
 const props = defineProps({
   value: {
     type: [String, Number],
@@ -53,9 +66,9 @@ const props = defineProps({
     }),
   },
 });
-const innerData = ref<Array<TreeDataType>>([]);
 const emitter = defineEmits(["update:value"]);
-const selectValue = ref("");
+const innerData = computed(() => transformData(props.data));
+const selectValue = computed(() => getLabelByValue(innerData.value));
 const visible = ref(false);
 const inputRef = ref();
 const popWidth = ref(300);
@@ -97,12 +110,6 @@ function transformData(data: Array<any>) {
   }
   return innerData;
 }
-watch(
-  () => props.value,
-  () => {
-    selectValue.value = getLabelByValue(innerData.value);
-  }
-);
 function onNodeClick(key: any, item: any) {
   visible.value = false;
   emitter("update:value", key.value);
@@ -114,8 +121,6 @@ function onBlur() {
   visible.value = false;
 }
 onMounted(() => {
-  innerData.value = transformData(props.data);
-  selectValue.value = getLabelByValue(innerData.value);
   nextTick(() => {
     popWidth.value = unref(inputRef).$el.clientWidth;
   });
