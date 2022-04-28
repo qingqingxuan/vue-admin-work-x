@@ -128,6 +128,16 @@ import {
 } from "@/api/url";
 import { useDataTable } from "@/hooks";
 import { Plus } from "@element-plus/icons";
+import { IDataTable } from "@/hooks/DataTable";
+
+interface RoleModelType {
+  id: number;
+  name: string;
+  roleCode: string;
+  description: string;
+  createTime: string;
+}
+
 const ROLE_CODE_FLAG = "ROLE_";
 const roleModel = reactive({
   id: 0,
@@ -206,19 +216,27 @@ const dialogRef = ref<DialogType>();
 const baseFormRef = ref();
 const tree = ref();
 const post = usePost();
-const { handleSuccess, dataList, tableLoading, tableConfig } = useDataTable();
-const allMenuList = ref([]);
+const {
+  handleSuccess,
+  dataList,
+  tableLoading,
+  tableConfig,
+}: IDataTable<RoleModelType> = useDataTable();
+
+const allMenuList = ref<Array<any>>([]);
 function doRefresh() {
-  post({
+  post<Array<RoleModelType>>({
     url: getRoleList,
     data: {},
   })
-    .then(handleSuccess)
+    .then((res) => {
+      handleSuccess(res);
+    })
     .catch(console.log);
 }
 
 function getAllMenuList() {
-  post({
+  post<Array<any>>({
     url: getAllMenuByRoleId,
   }).then((res) => {
     allMenuList.value = res.data;
@@ -228,7 +246,7 @@ function getAllMenuList() {
 function showMenu(item: RoleModel) {
   defaultCheckedKeys.value = [];
   defaultExpandedKeys.value = [];
-  post({
+  post<Array<any>>({
     url: getMenuListByRoleId,
     data: {
       roleId: item.id,

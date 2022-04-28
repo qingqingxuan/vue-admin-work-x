@@ -1,8 +1,53 @@
 ### 2022-4-25(2.2.1)
 
+- 升级：`element-plus` 版本至 `2.1.8`
+
 - 重要升级：`v-permission` 指令源码文件 由原来的 `js` 转成 `ts` 写法
 
 - 升级：在路由中添加 `isSingle` 属性，可以方便配置只有一个子路由时
+
+- 升级：支持 `post` `get` 请求方法的 `泛型`，如：
+
+  ```ts
+  // 定义数据类型
+  interface RoleModelType {
+    id: number
+    name: string
+    roleCode: string
+    description: string
+    createTime: string
+  }
+  const {
+    handleSuccess,
+    dataList,
+    tableLoading,
+    tableConfig,
+  }: IDataTable<RoleModelType> = useDataTable()
+
+  function doRefresh() {
+    post<Array<RoleModelType>>({
+      url: getRoleList,
+      data: {},
+    })
+      .then((res) => {
+        handleSuccess(res)
+      })
+      .catch(console.log)
+  }
+  ```
+
+function doRefresh() {
+post<Array<RoleModelType>>({
+url: getRoleList,
+data: {},
+})
+.then((res) => {
+handleSuccess(res);
+})
+.catch(console.log);
+}
+
+```
 
 ### 2022-3-31(2.2.0)
 
@@ -131,3 +176,4 @@
 ### 2021-11-17(2.0.0)
 
 - 重要升级：把 vaw-layouts-x 项目合并到 Vue Admin Work X 中
+```

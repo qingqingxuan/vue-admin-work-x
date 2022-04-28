@@ -19,8 +19,8 @@ export function useGet() {
   return get
 }
 
-export function useDataTable() {
-  return dataTable()
+export function useDataTable<T>() {
+  return dataTable<T>()
 }
 
 export function useLikeSearch() {
