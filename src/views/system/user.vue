@@ -20,7 +20,7 @@
               type="danger"
               size="small"
               icon="DeleteIcon"
-              :disabled="selectRows.length === 0"
+              :disabled="selectRows!.length === 0"
               @click="onDeleteItems"
             >
               删除
@@ -262,15 +262,17 @@ const {
   handleSelectionChange,
   selectRows,
   useHeight,
-} = useDataTable();
-const departmentList = ref([]);
-const roleList = ref([]);
+} = useDataTable<UserModelType>();
+
+const departmentList = ref<DepartmentModelType[]>([]);
+const roleList = ref<RoleModelType[]>([]);
 
 const tableHeight = computed(() => {
   return tableConfig.height;
 });
 
-const userModel = reactive({
+const userModel = reactive<UserModelType>({
+  id: 0,
   nickName: "",
   mobile: "",
   email: "",
@@ -293,12 +295,12 @@ function doRefresh() {
     })
     .then((res: any) => {
       tableFooter.value?.setTotalSize(res.totalSize);
-      post({
+      post<DepartmentModelType[]>({
         url: getDepartmentList,
       }).then((depRes) => {
         departmentList.value = depRes.data;
       });
-      post({
+      post<RoleModelType[]>({
         url: getRoleList,
       }).then((roleRes) => {
         roleList.value = roleRes.data;
@@ -309,16 +311,14 @@ function doRefresh() {
     });
 }
 function onDeleteItems() {
-  if (selectRows.value.length > 0) {
-    ElMessageBox.confirm("确定要删除这些用户吗？", "提示")
-      .then(() => {
-        ElMessage.success(
-          "数据模拟删除成功, 参数为：" +
-            JSON.stringify(selectRows.value.map((it: any) => it.id))
-        );
-      })
-      .catch(console.log);
-  }
+  ElMessageBox.confirm("确定要删除这些用户吗？", "提示")
+    .then(() => {
+      ElMessage.success(
+        "数据模拟删除成功, 参数为：" +
+          JSON.stringify(selectRows.value?.map((it: any) => it.id))
+      );
+    })
+    .catch(console.log);
 }
 function onAddItem() {
   userModel.nickName = "";
@@ -397,7 +397,7 @@ function onUpdateItem(item: any) {
 function onDeleteItem(item: any) {
   ElMessageBox.confirm("确定要删除此用户吗？", "提示")
     .then(() => {
-      dataList.splice(dataList.indexOf(item), 1);
+      dataList.value?.splice(dataList.value.indexOf(item), 1);
     })
     .catch(console.log);
 }

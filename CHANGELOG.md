@@ -1,3 +1,13 @@
+### 2022-5-8(2.2.2)
+
+- 升级：`element-plus` 版本至 `2.1.11`
+
+- 新增：新增 `FormItemRender` 功能，通过 `render` 可以方便自定义 `form` 表单项
+
+- 优化：优化 `views/system` 下面的功能，添加 `类型`
+
+- 优化：优化 `README.md` 文档
+
 ### 2022-4-25(2.2.1)
 
 - 升级：`element-plus` 版本至 `2.1.8`
@@ -11,18 +21,18 @@
   ```ts
   // 定义数据类型
   interface RoleModelType {
-    id: number
-    name: string
-    roleCode: string
-    description: string
-    createTime: string
+    id: number;
+    name: string;
+    roleCode: string;
+    description: string;
+    createTime: string;
   }
   const {
     handleSuccess,
     dataList,
     tableLoading,
     tableConfig,
-  }: IDataTable<RoleModelType> = useDataTable()
+  }: IDataTable<RoleModelType> = useDataTable();
 
   function doRefresh() {
     post<Array<RoleModelType>>({
@@ -30,9 +40,9 @@
       data: {},
     })
       .then((res) => {
-        handleSuccess(res)
+        handleSuccess(res);
       })
-      .catch(console.log)
+      .catch(console.log);
   }
   ```
 

@@ -5,10 +5,7 @@
     title="系统设置"
     :size="state.device === 'mobile' ? '75%' : '270px'"
   >
-    <el-scrollbar
-      height="90vh"
-      class="wrapper"
-    >
+    <el-scrollbar height="90vh" class="wrapper">
       <el-divider content-position="center">主题风格</el-divider>
       <el-row :gutter="5">
         <el-col
@@ -51,8 +48,8 @@
           v-for="(item, index) of primartyColorList"
           :key="index"
           class="color-wrapper"
-          :class="{'circle' : item.checked}"
-          :style="{'background-color': item.value}"
+          :class="{ circle: item.checked }"
+          :style="{ 'background-color': item.value }"
           @click="colorClick(item)"
         ></div>
       </div>
@@ -211,24 +208,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-.dark {
-  .el-drawer {
-    background-color: #272727 !important;
-  }
-}
-.light,
-.dark-side,
-.blue-side {
-  .el-drawer {
-    background-color: #ffff !important;
-  }
-}
-
-.el-drawer__header {
-  margin-bottom: 0 !important;
-}
-</style>
 <style lang="scss" scoped>
 $width: 60px;
 .wrapper {

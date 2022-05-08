@@ -13,7 +13,7 @@
               size="small"
               icon="PlusIcon"
               @click="onAddItem"
-            >添加
+              >添加
             </el-button>
           </template>
         </TableConfig>
@@ -27,41 +27,16 @@
           :stripe="tableConfig.stripe"
           :border="tableConfig.border"
         >
-          <el-table-column
-            align="center"
-            label="序号"
-            fixed="left"
-            width="80"
-          >
+          <el-table-column align="center" label="序号" fixed="left" width="80">
             <template #default="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column
-            align="center"
-            label="角色名称"
-            prop="name"
-          />
-          <el-table-column
-            align="center"
-            label="角色编号"
-            prop="roleCode"
-          />
-          <el-table-column
-            align="center"
-            label="角色描述"
-            prop="description"
-          />
-          <el-table-column
-            align="center"
-            label="创建时间"
-            prop="createTime"
-          />
-          <el-table-column
-            align="center"
-            label="操作"
-            width="300px"
-          >
+          <el-table-column align="center" label="角色名称" prop="name" />
+          <el-table-column align="center" label="角色编号" prop="roleCode" />
+          <el-table-column align="center" label="角色描述" prop="description" />
+          <el-table-column align="center" label="创建时间" prop="createTime" />
+          <el-table-column align="center" label="操作" width="300px">
             <template #default="scope">
               <el-button
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
@@ -69,20 +44,23 @@
                 type="primary"
                 size="small"
                 @click="onUpdateItem(scope.row)"
-              >编辑</el-button>
+                >编辑</el-button
+              >
               <el-button
                 :disabled="scope.row.roleCode === 'ROLE_admin'"
                 plain
                 type="danger"
                 size="small"
                 @click="onDeleteItem(scope.row)"
-              >删除</el-button>
+                >删除</el-button
+              >
               <el-button
                 plain
                 type="warning"
                 size="small"
                 @click="showMenu(scope.row)"
-              >菜单权限</el-button>
+                >菜单权限</el-button
+              >
             </template>
           </el-table-column>
         </el-table>
@@ -97,10 +75,7 @@
         />
       </template>
     </Dialog>
-    <Dialog
-      ref="menuDialogRef"
-      title="菜单权限"
-    >
+    <Dialog ref="menuDialogRef" title="菜单权限">
       <template #content>
         <el-tree
           ref="tree"
@@ -118,7 +93,7 @@
 
 <script lang="ts" setup>
 import type { DialogType } from "@/components/types";
-import { nextTick, onMounted, reactive, ref, shallowReactive } from "vue";
+import { nextTick, onMounted, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { usePost } from "@/hooks";
 import {
@@ -129,14 +104,6 @@ import {
 import { useDataTable } from "@/hooks";
 import { Plus } from "@element-plus/icons";
 import { IDataTable } from "@/hooks/DataTable";
-
-interface RoleModelType {
-  id: number;
-  name: string;
-  roleCode: string;
-  description: string;
-  createTime: string;
-}
 
 const ROLE_CODE_FLAG = "ROLE_";
 const roleModel = reactive({

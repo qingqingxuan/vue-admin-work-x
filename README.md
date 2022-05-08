@@ -1,59 +1,155 @@
-## 客户留步
-
-尊敬的小主，为了更好的开源，让开源走的更长久，请动一下可爱的小手指，点一下 star 吧~~在这里感谢您的支持与鼓励。我们将带着您的支持继续前行，为祖国的前端事业奉献一点点微薄之力~
-
 <div align="center">
-<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" style="zoom: 50%"/>
+<img src="http://qingqingxuan.gitee.io/img/logo.png" align="center" width="150" height="150"/>
 </div>
 
+<p align="center">
+    <a href="./LICENSE">
+        <img src="https://img.shields.io/github/license/qingqingxuan/admin-work" alt="MIT License" />
+    </a>
+    <a href="https://v3.cn.vuejs.org/">
+        <img src="https://img.shields.io/badge/vue.js-3.0-green" alt="Vue3.0">
+    </a>
+    <a href="http://p.vueadminwork.com">
+        <img src="https://img.shields.io/badge/🚀-open--in--browser-blueviolet" alt="Live Demo">
+    </a>
+</p>
 <h1 align = "center">Admin Work X</h1>
+
+## 简介：
+
+Admin Work X，是 Vue Admini Work 系列中最成熟和完善的中后台框架，全面的系统配置，优质模板，常用组件，真正一站式开箱即用 采用时下最流行的 Vue3 UI 库--NaiveUI
+
+使用了当今最流行的技术框架： `Vue3 + Webpack + Typescript + Element Plus`
+
+## 特性：
+
+- 常用模板
+  - 内置常用模板，无需考虑交互排版，助你高效开发
+- 预设样式
+  - 样式美观大方，无缝对接 Naive Ui，随意组合页面，随心所欲
+- 布局方案
+  - 丰富的布局模式，具有高可配性，满足您的各类布局需求
+- 技术支持
+  - 优质的售后技术支持，完善的文档，让您事半功倍
+- 最新技术栈
+  - 基于 Vue3、Vite2、TypeScript、NaiveUI、Pinia 等最新技术栈开发
+- 轻量快速的热重载
+  - 无论应用程序大小如何，都始终极快的模块热重载（HMR）
+- 丰富的示例
+  - 常见的 Web 端插件示例实现
+- 组件封装
+  - 对日常使用频率较高的组件二次封装,满足基础工作需求
+- 主题配置
+  - 丰富的主题配置及黑暗主题适配
+- 权限管理
+  - 完善的前后端权限管理方案
 
 ## 项目地址：
 
-- [🎉 官网地址](http://www.vueadminwork.com)
-- [🎉Vue Admin Work X **gitee** 演示地址](http://x.vueadminwork.com)
+- [🎉 文档地址](http://www.vueadminwork.com)
 
-## 请添加好友~~邀请进入 Vue Admin Work 技术交流群
+- [🎉 演示地址（Vue3.x + Typescript + Webpack+ ElementPlus)](http://x.vueadminwork.com)
 
-<div align="center">
-<img width="20%" src="http://www.vueadminwork.com/weixin-custom.jpg" style="zoom:20%;" /> 
+## Vue Admin Work 系列中其它开源项目的演示地址
+
+- [🎉 Vue Admin Work 演示地址（Vue2.x + Javascript + Element UI + Webpack）](http://x.vueadminwork.com)
+
+- [🎉 Vue Admin Work X 演示地址（Vue3.x + Typescript + Element Plus + Webpack）](http://x.vueadminwork.com)
+
+- [🎉 Vue Admin Work P 演示地址（Vue3.x + Typescript + Navie UI + Vite2)](http://p.vueadminwork.com)
+
+- [🎉 Vue Admin Work A 演示地址（Vue3.x + Typescript + Antd + Vite2)](http://a.vueadminwork.com)
+
+- [🎉 Arco Work 演示地址（Vue3.x + Typescript + Arco Design + Vite2)](http://arco.vueadminwork.com)
+
+## 现在微信技术交流群需要添加好友之后邀请，如需要入群讨论请关注微信公众号添加好友。
+
+<div  align="center">
+<img width="30%" src="http://www.vueadminwork.com/weixin-custom.jpg"/>
 </div>
 
+## 请关注我们的微信公众号 `知码前端` ，里面包含了各个版本的源码和进入微信福利群的方式
 
-## 关注微信公众号 `知码前端` 方便以后更新、升级
-
-<div align="center"><img src="http://qingqingxuan.gitee.io/img/wx-service.jpg" align="center"/>
+<div  align="center">
+<img width="30%" src="http://qingqingxuan.gitee.io/img/wx-service.jpg"/>
 </div>
 
 ## 适合人群
 
-- 正在以及想使用 vue/element plus 开发，最好是有一定的编程知识，或者原来只从事切图写静态页的人想提高自己的前端能力。
+- 正在以及想使用 vue/element-plus 开发，最好是有一定的编程知识，或者原来只从事切图写静态页的人想提高自己的前端能力。
 - 熟悉 Vue.js 技术栈，使用它开发过几个实际项目。
 - 对原理技术感兴趣，想进阶和提升的同学。
 
 ## 下载&安装
 
-```shell
-# 克隆项目，如果github打开速度比较慢，可以使用gitee地址
-git clone https://github.com/qingqingxuan/vue-admin-work-x.git
-# or
-git clone https://gitee.com/qingqingxuan/vue-admin-work-x.git
+- 下载
 
-# 进入项目目录
-cd vue-admin-work-x
-# 安装依赖
-npm install
-# 本地开发 启动项目
-npm run dev
-```
+  ```bash
+  git clone -b master https://github.com/qingqingxuan/vue-admin-work-x.git
+  ```
+
+- 进入项目目录
+  ```bash
+  cd admin-work-x
+  ```
+- 安装依赖
+
+  ```bash
+  npm install
+  ```
+
+- 运行
+  ```bash
+  npm run dev
+  ```
+
+## 如何贡献
+
+非常欢迎你的加入！[提一个 Issue](https://github.com/qingqingxuan/admin-work/issues/new) 或者提交一个 Pull Request。
+
+**Pull Request:**
+
+1. Fork 代码!
+2. 创建自己的分支: `git checkout -b feat/xxxx`
+3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
+4. 推送您的分支: `git push origin feat/xxxx`
+5. 提交`pull request`
+
+## Git 贡献提交规范
+
+- 参考 [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) 规范 ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
+
+  - `feat` 增加新功能
+  - `fix` 修复问题/BUG
+  - `style` 代码风格相关无影响运行结果的
+  - `perf` 优化/性能提升
+  - `refactor` 重构
+  - `revert` 撤销修改
+  - `test` 测试相关
+  - `docs` 文档/注释
+  - `chore` 依赖更新/脚手架配置修改等
+  - `workflow` 工作流改进
+  - `ci` 持续集成
+  - `types` 类型定义文件更改
+  - `wip` 开发中
+
+## 浏览器支持
+
+本地开发推荐使用`Chrome 80+` 浏览器
+
+支持现代浏览器, 不支持 IE
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                             not support                                                                                              |                                                                                            last 2 versions                                                                                             |                                                                                                  last 2 versions                                                                                                  |                                                                                                last 2 versions                                                                                                |                                                                                                last 2 versions                                                                                                |
 
 ## 特别感谢
 
-| **🚀 [vue3.x](https://cn.vuejs.org/)**                     |
-| ---------------------------------------------------------- |
-| **[🚀 element-plus]([网站快速成型工具)**                   |
+| **[🚀 vue3.x](https://cn.vuejs.org/)**                     |
+| --------------------------------------------------------- |
+| **[🚀 element-plus](https://element-plus.org)**            |
 | **[🚀 vue-router-next](https://next.router.vuejs.org/)**   |
-| **[🚀 vuex-next](https://next.vuex.vuejs.org/)**           |
+| **[🚀 pinia](https://pinia.vuejs.org/)**                   |
 | **[🚀 axios](http://www.axios-js.com/)**                   |
 | **[🚀 mockjs](http://mockjs.com/)**                        |
 | **[🚀 echarts](https://echarts.apache.org/zh/index.html)** |
@@ -70,20 +166,11 @@ vue-admin-work 有如下优势:
 使用注意事项:
 1. 项目默认使用使用vscode工具进行开发，也是唯一推荐的开发工具
 2. 项目默认eslint校验规范
-3. 项目仅供个人或者团队学习商用。
 ```
 
 ## 效果图
 
-| <img src="http://qingqingxuan.gitee.io/img/demo-x-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-2.png" style="zoom:20%;" />        |
-| :---------------------------------------------------------------------------: | ------------------------------------------------------------------------------------ |
-| <img src="http://qingqingxuan.gitee.io/img/demo-x-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-4.png" style="zoom:20%;" />        |
-| <img src="http://qingqingxuan.gitee.io/img/demo-x-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-x-6.png" style="zoom:20%;" />        |
-| <img src="http://qingqingxuan.gitee.io/img/demo-x-6.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/project-image-8.png" style="zoom:20%;" /> |
-
-## 捐赠
-
-本项目是开源项目，开源不易，还请各们小主赏杯咖啡，以更好的维护此项目。您的支持是我们前进的最大动力。
-
-| <img src="http://qingqingxuan.gitee.io/img/wx-donation.jpg" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/ali-donation.jpg" style="zoom:20%;" /> |
-| :------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: |
+| <img src="http://qingqingxuan.gitee.io/img/demo-arco-1.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-2.png" style="zoom:20%;" /> |
+| :------------------------------------------------------------------------------: | -------------------------------------------------------------------------------- |
+| <img src="http://qingqingxuan.gitee.io/img/demo-arco-3.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-4.png" style="zoom:20%;" /> |
+| <img src="http://qingqingxuan.gitee.io/img/demo-arco-5.png" style="zoom:20%;" /> | <img src="http://qingqingxuan.gitee.io/img/demo-arco-6.png" style="zoom:20%;" /> |

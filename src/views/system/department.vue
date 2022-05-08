@@ -91,19 +91,11 @@
 import { post } from "@/api/http";
 import { getDepartmentList } from "@/api/url";
 import type { BaseFormType, DialogType } from "@/components/types";
-import { computed, onMounted, reactive, ref } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { computed, h, onMounted, reactive, ref } from "vue";
+import { ElInput, ElMessage, ElMessageBox } from "element-plus";
 import _ from "lodash";
 import { useDataTable } from "@/hooks";
-interface Department {
-  parentId: number;
-  id: number;
-  name: string;
-  depCode: string;
-  order: number;
-  status: number;
-  children: Array<Department>;
-}
+import { FormRenderItem } from "@/components/common/FormRender";
 const DP_CODE_FLAG = "dp_code_";
 
 const tableColumns = reactive([
@@ -116,10 +108,6 @@ const tableColumns = reactive([
     prop: "depCode",
   },
   {
-    label: "排序",
-    prop: "order",
-  },
-  {
     label: "操作",
     prop: "actions",
   },
@@ -127,18 +115,19 @@ const tableColumns = reactive([
 const dialog = ref<DialogType>();
 const baseForm = ref();
 const dialogTitle = ref("添加部门");
-const { tableConfig, tableLoading, dataList, handleSuccess } = useDataTable();
+const { tableConfig, tableLoading, dataList, handleSuccess } =
+  useDataTable<DepartmentModelType>();
 const parentFormItem = reactive({
   label: "上级部门",
   name: "parentId",
-  value: "",
+  value: 0,
   placeholder: "请选择上级部门",
   selectOptions: {},
   reset() {
-    this.value = "";
+    this.value = 0;
   },
 });
-const depCodeFormItem = {
+const depCodeFormItem: FormRenderItem = {
   label: "部门编号",
   type: "input",
   name: "depCode",
@@ -158,13 +147,30 @@ const depCodeFormItem = {
     this.value = "";
     this.disabled = false;
   },
+  render: (formItem) => {
+    return h(
+      ElInput,
+      {
+        modelValue: formItem.value,
+        "onUpdate:modelValue": (newVal) => {
+          formItem.value = newVal;
+        },
+        placeholder: formItem.placeholder,
+      },
+      {
+        prepend: () => {
+          return h("span", DP_CODE_FLAG);
+        },
+      }
+    );
+  },
 };
-const formItems = reactive([
+const formItems = reactive<FormItem[]>([
   {
     label: "部门名称",
     type: "input",
     name: "name",
-    value: "",
+    value: ref(""),
     maxLength: 50,
     inputType: "text",
     placeholder: "请输入部门名称",
@@ -181,10 +187,10 @@ const formItems = reactive([
   },
   depCodeFormItem,
 ]);
-const onUpdateItem = (item: any) => {
+const onUpdateItem = (item: DepartmentModelType) => {
   dialogTitle.value = "编辑部门";
   formItems.forEach((it) => {
-    const propName = item[it.name];
+    const propName = (item as any)[it.name];
     if (propName) {
       if (it.name === "depCode") {
         it.value = propName.replace(DP_CODE_FLAG, "");
@@ -215,7 +221,10 @@ const doRefresh = () => {
     url: getDepartmentList,
   }).then(handleSuccess);
 };
-function filterItems(srcArray: Array<Department>, filterItem: Department) {
+function filterItems(
+  srcArray: Array<DepartmentModelType>,
+  filterItem: DepartmentModelType
+) {
   for (let index = 0; index < srcArray.length; index++) {
     const element = srcArray[index];
     if (element.id === filterItem.id) {
@@ -235,14 +244,14 @@ function filterItems(srcArray: Array<Department>, filterItem: Department) {
 const onDeleteItem = (item: any) => {
   ElMessageBox.confirm("确定要删除此信息，删除后不可恢复？", "提示")
     .then(() => {
-      filterItems(dataList, item);
+      filterItems(dataList.value!, item);
     })
     .catch(console.log);
 };
 const onAddItem = () => {
   dialogTitle.value = "添加部门";
   formItems.forEach((it: any) => it.reset());
-  parentFormItem.value = "";
+  parentFormItem.value = 0;
   dialog.value?.show(() => {
     if (!baseForm.value?.checkParams()) {
       return;
@@ -259,7 +268,7 @@ const onAddItem = () => {
   });
 };
 parentFormItem.selectOptions = computed(() => {
-  return dataList.map((it: any) => {
+  return dataList.value?.map((it: any) => {
     return {
       label: it.name,
       value: it.id,
