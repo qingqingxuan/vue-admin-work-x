@@ -27,6 +27,7 @@ interface OriginRoute {
   cacheable?: boolean
   icon?: string
   tip?: string | number
+  isSingle?: boolean
   children: Array<OriginRoute>
 }
 
@@ -70,6 +71,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
         cacheable: !!it.cacheable,
         icon: it.icon || '',
         badge: it.tip,
+        isSingle: !!it.isSingle,
       },
     }
     if (it.children) {
