@@ -3,6 +3,9 @@ import Login from "@/views/login/index.vue";
 
 import { Layout, mapTwoLevelRouter } from "@/layouts";
 
+/**
+ * 这里存放一些系统必要的路由，不需要权限控制。如：登录、重定向、404等，可以根据自己的实际情况进行修改
+ */
 export const constantRoutes = [
   {
     path: "/redirect",
@@ -48,6 +51,9 @@ export const constantRoutes = [
   },
 ];
 
+/**
+ * 这里存放一些需要进行权限控制的页面，但是不需要在菜单接口返回的路由信息，如某些页面的二级详情页面。
+ */
 export const asyncRoutes = [
   {
     path: "/index",
