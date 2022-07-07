@@ -21,11 +21,17 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="small" icon="PlusIcon"
-              >添加
+            <el-button
+              type="primary"
+              size="small"
+              icon="PlusIcon"
+            >添加
             </el-button>
-            <el-button type="danger" size="small" icon="DeleteIcon"
-              >删除
+            <el-button
+              type="danger"
+              size="small"
+              icon="DeleteIcon"
+            >删除
             </el-button>
           </template>
         </TableConfig>
@@ -40,44 +46,54 @@
           :border="tableConfig.border"
           :height="tableConfig.height"
         >
-          <el-table-column align="center" label="序号" width="80">
+          <el-table-column
+            align="center"
+            label="序号"
+            width="80"
+          >
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
           </el-table-column>
-          <el-table-column align="center" label="名称" prop="nickName" />
-          <el-table-column align="center" label="头像">
+          <el-table-column
+            align="center"
+            label="名称"
+            prop="nickName"
+          />
+          <el-table-column
+            align="center"
+            label="头像"
+          >
             <template v-slot="scope">
               <div class="avatar-container">
                 <el-image
-                  :src="require('@/assets/img_avatar_default.png')"
+                  :src="defaultIcon"
                   class="avatar"
                   :class="{ 'avatar-vip': scope.row.vip === 1 }"
                 />
                 <img
                   v-if="scope.row.vip === 1"
                   class="vip"
-                  :src="require('@/assets/img_vip_icon.png')"
+                  :src="vipIcon"
                 />
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="性别" prop="gender">
+          <el-table-column
+            align="center"
+            label="性别"
+            prop="gender"
+          >
             <template v-slot="scope">
               <div class="gender-container flex justify-center align-center">
-                <img
-                  class="gender-icon"
-                  :src="
-                    scope.row.gender === 0
-                      ? require('@/assets/icon_sex_man.png')
-                      : require('@/assets/icon_sex_woman.png')
-                  "
-                />
                 <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="状态">
+          <el-table-column
+            align="center"
+            label="状态"
+          >
             <template v-slot="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -86,7 +102,11 @@
               />
             </template>
           </el-table-column>
-          <el-table-column align="center" label="地址" prop="address" />
+          <el-table-column
+            align="center"
+            label="地址"
+            prop="address"
+          />
           <el-table-column
             align="center"
             label="上次登录时间"
@@ -118,6 +138,9 @@ import { useDataTable, useLikeSearch, usePost } from "@/hooks";
 import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import { ElMessageBox } from "element-plus";
 import type { TableFooter } from "@/components/types";
+import defaultIcon from "@/assets/img_avatar_default.png";
+import vipIcon from "@/assets/img_vip_icon.png";
+
 const tableFooter = ref<TableFooter>();
 const { likeSearchModel, getSearchParams, resetSearch } = useLikeSearch();
 const {

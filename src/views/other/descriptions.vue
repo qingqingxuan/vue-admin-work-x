@@ -119,7 +119,7 @@
       <el-descriptions-item label="商品图片">
         <el-image
           style="width: 40px"
-          :src="require('@/assets/images/2.jpeg')"
+          :src="TestIcon"
         ></el-image>
       </el-descriptions-item>
       <el-descriptions-item label="商品规格">颜色：红色；大小：xxl；材质：金属</el-descriptions-item>
@@ -129,8 +129,14 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import TestIcon from "@/assets/images/2.jpeg";
 
 export default defineComponent({
   name: "Descriptions",
+  setup() {
+    return {
+      TestIcon,
+    };
+  },
 });
 </script>

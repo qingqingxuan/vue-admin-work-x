@@ -4,8 +4,14 @@
     :class="[!state.isCollapse ? 'open-status' : 'close-status']"
   >
     <div class="tab-split-tab-wrapper">
-      <Logo class="tab-split-logo-wrapper" :show-title="false" />
-      <el-scrollbar class="scrollbar" wrap-class="scrollbar-wrap-class">
+      <Logo
+        class="tab-split-logo-wrapper"
+        :show-title="false"
+      />
+      <el-scrollbar
+        class="scrollbar"
+        wrap-class="scrollbar-wrap-class"
+      >
         <div class="tab-split-content-wrapper">
           <div
             v-for="item of tabs"
@@ -15,9 +21,7 @@
             @click="changeTab(item)"
           >
             <el-icon>
-              <component
-                :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon"
-              />
+              <component :is="item.meta ? item.meta.icon || MenuIcon : MenuIcon" />
             </el-icon>
             <span class="label">{{
               item.meta ? item.meta.title : item.name
@@ -27,7 +31,10 @@
       </el-scrollbar>
     </div>
     <div class="tab-split-menu-wrapper">
-      <Logo class="tab-split-logo-wrapper" :show-logo="false" />
+      <Logo
+        class="tab-split-logo-wrapper"
+        :show-logo="false"
+      />
       <ScrollerMenu>
         <template #default>
           <SideBarItem
@@ -44,7 +51,7 @@
 
 <script>
 import store from "../store";
-import path from "path";
+import path from "path-browserify";
 import { isExternal } from "../utils";
 import { Menu as MenuIcon } from "@element-plus/icons";
 export default {

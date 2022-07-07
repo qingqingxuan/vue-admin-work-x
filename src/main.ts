@@ -4,6 +4,7 @@ import router from "./router";
 import "./utils/router";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
+import "normalize.css/normalize.css";
 import "dayjs/locale/zh-cn";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 import "@/icons/iconfont/iconfont.css";

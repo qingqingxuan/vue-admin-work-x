@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { isExternal } from "../../utils";
-import path from "path";
+import path from "path-browserify";
 import store from "../../store";
 import { defineComponent } from "vue";
 import { Operation as MenuIcon } from "@element-plus/icons";

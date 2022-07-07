@@ -1,12 +1,13 @@
 <template>
-  <el-menu-item :index="generatorPath()" @click="handleClick">
+  <el-menu-item
+    :index="generatorPath()"
+    @click="handleClick"
+  >
     <!-- <SvgIcon :icon-class="showRoute.meta ? showRoute.meta.icon || 'el-icon-menu' : 'el-icon-menu'" /> -->
     <el-icon>
-      <component
-        :is="
+      <component :is="
           showRoute.meta ? showRoute.meta.icon || OperationIcon : OperationIcon
-        "
-      />
+        " />
     </el-icon>
     <template #title>
       <span>{{ showRoute.meta ? showRoute.meta.title : showRoute.name }}</span>
@@ -20,7 +21,7 @@
 
 <script lang="ts">
 import { isExternal } from "../../utils";
-import path from "path";
+import path from "path-browserify";
 import { defineComponent } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { Operation as OperationIcon } from "@element-plus/icons";

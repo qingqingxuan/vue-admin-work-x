@@ -9,11 +9,17 @@
           @refresh="doRefresh"
         >
           <template #actions>
-            <el-button type="primary" size="small" icon="PlusIcon"
-              >添加
+            <el-button
+              type="primary"
+              size="small"
+              icon="PlusIcon"
+            >添加
             </el-button>
-            <el-button type="danger" size="small" icon="DeleteIcon"
-              >删除
+            <el-button
+              type="danger"
+              size="small"
+              icon="DeleteIcon"
+            >删除
             </el-button>
           </template>
         </TableConfig>
@@ -28,8 +34,15 @@
           :border="tableConfig.border"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="45" />
-          <el-table-column align="center" label="序号" width="80">
+          <el-table-column
+            type="selection"
+            width="45"
+          />
+          <el-table-column
+            align="center"
+            label="序号"
+            width="80"
+          >
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
@@ -50,32 +63,39 @@
                   class="gender-icon"
                   :src="
                     scope.row.gender === 0
-                      ? require('@/assets/icon_sex_man.png')
-                      : require('@/assets/icon_sex_woman.png')
+                      ? ManVIP
+                      : WoManVIP
                   "
                 />
                 <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
               </div>
-              <div v-else-if="item.prop === 'vip'" class="avatar-container">
+              <div
+                v-else-if="item.prop === 'vip'"
+                class="avatar-container"
+              >
                 <el-image
-                  :src="require('@/assets/img_avatar_default.png')"
+                  :src="defaultIcon"
                   class="avatar"
                   :class="{ 'avatar-vip': scope.row.vip === 1 }"
                 />
                 <img
                   v-if="scope.row.vip === 1"
                   class="vip"
-                  :src="require('@/assets/img_vip_icon.png')"
+                  :src="VIPIcon"
                 />
               </div>
               <div v-else>{{ scope.row[item.prop] }}</div>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="操作">
+          <el-table-column
+            align="center"
+            label="操作"
+          >
             <template v-slot="scope">
-              <el-button type="text" @click="onDeleteItem(scope.row)"
-                >删除</el-button
-              >
+              <el-button
+                type="text"
+                @click="onDeleteItem(scope.row)"
+              >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -98,6 +118,10 @@ import { useDataTable, usePost } from "@/hooks";
 import { getTableList, getUserList } from "@/api/url";
 import type { TableFooter } from "@/components/types";
 import _ from "lodash";
+import ManVIP from "@/assets/icon_sex_man.png";
+import WoManVIP from "@/assets/icon_sex_woman.png";
+import defaultIcon from "@/assets/img_avatar_default.png";
+import VIPIcon from "@/assets/img_vip_icon.png";
 
 const {
   handleSuccess,

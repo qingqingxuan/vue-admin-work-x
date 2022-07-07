@@ -22,6 +22,8 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
+import Avatar1 from "@/assets/img_avatar_01.jpeg";
+import Avatar2 from "@/assets/img_avatar_02.jpeg";
 
 export default defineComponent({
   name: "StackAvatar",
@@ -30,11 +32,11 @@ export default defineComponent({
       type: Array,
       default: () => [
         {
-          avatar: require("@/assets/img_avatar_01.jpeg"),
+          avatar: Avatar1,
           name: "悟空",
         },
         {
-          avatar: require("@/assets/img_avatar_02.jpeg"),
+          avatar: Avatar2,
           name: "唐僧",
         },
       ],

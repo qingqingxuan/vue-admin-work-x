@@ -8,9 +8,19 @@
           : '1px dashed var(--el-border-color-light)',
     }"
   >
-    <img v-if="showLogo" class="logo-img" :src="require('@/assets/logo.png')" />
-    <transition v-if="showTitle" name="el-fade-in-linear">
-      <span v-show="!state.isCollapse || alwaysShow" class="logo-title">{{
+    <img
+      v-if="showLogo"
+      class="logo-img"
+      :src="Logo"
+    />
+    <transition
+      v-if="showTitle"
+      name="el-fade-in-linear"
+    >
+      <span
+        v-show="!state.isCollapse || alwaysShow"
+        class="logo-title"
+      >{{
         setting.projectName
       }}</span>
     </transition>
@@ -21,6 +31,7 @@
 import store from "../store";
 import { defineComponent, ref, watch } from "vue";
 import { useSetting } from "@/hooks";
+import Logo from "@/assets/logo.png";
 export default defineComponent({
   name: "Logo",
   props: {
@@ -56,6 +67,7 @@ export default defineComponent({
       }
     );
     return {
+      Logo,
       state,
       setting,
       bgColor,

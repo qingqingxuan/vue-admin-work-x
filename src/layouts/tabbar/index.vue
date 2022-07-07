@@ -58,7 +58,7 @@
 
 <script>
 import store from "../store";
-import path from "path";
+import path from "path-browserify";
 import qs from "qs";
 export default {
   name: "TabBar",

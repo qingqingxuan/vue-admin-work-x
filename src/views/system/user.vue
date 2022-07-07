@@ -40,7 +40,11 @@
           :height="tableConfig.height"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="45" fixed="left" />
+          <el-table-column
+            type="selection"
+            width="45"
+            fixed="left"
+          />
           <el-table-column
             align="center"
             label="名称"
@@ -59,20 +63,27 @@
             prop="email"
             width="150"
           />
-          <el-table-column align="center" label="头像">
+          <el-table-column
+            align="center"
+            label="头像"
+          >
             <template #default="scope">
               <el-avatar>{{ scope.row.nickName.substring(0, 1) }}</el-avatar>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="性别" prop="gender">
+          <el-table-column
+            align="center"
+            label="性别"
+            prop="gender"
+          >
             <template #default="scope">
               <div class="gender-container flex justify-center align-center">
                 <img
                   class="gender-icon"
                   :src="
                     scope.row.gender === 0
-                      ? require('@/assets/icon_sex_man.png')
-                      : require('@/assets/icon_sex_woman.png')
+                      ? ManVIP
+                      : WoManVIP
                   "
                 />
                 <span>{{ scope.row.gender === 0 ? "男" : "女" }}</span>
@@ -84,7 +95,11 @@
             label="所属部门"
             prop="departmentName"
           />
-          <el-table-column align="center" label="所属角色" prop="roleName" />
+          <el-table-column
+            align="center"
+            label="所属角色"
+            prop="roleName"
+          />
           <el-table-column
             align="center"
             label="上次登录时间"
@@ -97,7 +112,10 @@
             prop="lastLoginIp"
             width="130px"
           />
-          <el-table-column align="center" label="状态">
+          <el-table-column
+            align="center"
+            label="状态"
+          >
             <template #default="scope">
               <el-tag
                 size="small"
@@ -119,22 +137,19 @@
                 size="small"
                 plain
                 @click="onUpdateItem(scope.row)"
-                >编辑</el-button
-              >
+              >编辑</el-button>
               <el-button
                 type="danger"
                 size="small"
                 plain
                 @click="onDeleteItem(scope.row)"
-                >删除</el-button
-              >
+              >删除</el-button>
               <el-button
                 :type="scope.row.status === 1 ? 'warning' : 'success'"
                 size="small"
                 plain
                 @click="onEnableItem(scope.row)"
-                >{{ scope.row.status === 1 ? "禁用" : "启用" }}</el-button
-              >
+              >{{ scope.row.status === 1 ? "禁用" : "启用" }}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -156,9 +171,10 @@
           label-width="80px"
           label-position="right"
         >
-          <el-divider border-style="dashed" content-position="left"
-            >基本信息</el-divider
-          >
+          <el-divider
+            border-style="dashed"
+            content-position="left"
+          >基本信息</el-divider>
           <el-form-item
             class="form-item__require"
             label="用户名称"
@@ -170,7 +186,11 @@
               clearable
             />
           </el-form-item>
-          <el-form-item class="form-item__require" label="手机号码" prop="path">
+          <el-form-item
+            class="form-item__require"
+            label="手机号码"
+            prop="path"
+          >
             <el-input
               v-model="userModel.mobile"
               placeholder="请输入手机号码"
@@ -178,7 +198,10 @@
             >
             </el-input>
           </el-form-item>
-          <el-form-item class="form-item__require" label="邮箱地址">
+          <el-form-item
+            class="form-item__require"
+            label="邮箱地址"
+          >
             <el-input
               v-model="userModel.email"
               placeholder="请输入邮箱地址"
@@ -192,10 +215,17 @@
               <el-radio :label="1">女</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-divider border-style="dashed" content-position="left">
+          <el-divider
+            border-style="dashed"
+            content-position="left"
+          >
             权限设置
           </el-divider>
-          <el-form-item class="form-item__require" label="所属部门" prop="name">
+          <el-form-item
+            class="form-item__require"
+            label="所属部门"
+            prop="name"
+          >
             <TreeSelector
               v-model:value="userModel.departmentId"
               placeholder="请选择所属部门"
@@ -206,7 +236,11 @@
               }"
             />
           </el-form-item>
-          <el-form-item class="form-item__require" label="所属角色" prop="path">
+          <el-form-item
+            class="form-item__require"
+            label="所属角色"
+            prop="path"
+          >
             <el-select
               placeholder="请选择角色"
               v-model="userModel.roleId"
@@ -222,7 +256,10 @@
             </el-select>
           </el-form-item>
           <el-divider content-position="left">其它信息</el-divider>
-          <el-form-item label="登录密码" prop="path">
+          <el-form-item
+            label="登录密码"
+            prop="path"
+          >
             <el-input
               v-model="userModel.password"
               type="password"
@@ -231,7 +268,10 @@
             >
             </el-input>
           </el-form-item>
-          <el-form-item label="用户状态" prop="path">
+          <el-form-item
+            label="用户状态"
+            prop="path"
+          >
             <el-radio-group v-model="userModel.status">
               <el-radio :label="1">正常</el-radio>
               <el-radio :label="0">禁用</el-radio>
@@ -249,6 +289,8 @@ import { computed, onMounted, reactive, ref } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getDepartmentList, getRoleList, getUserList } from "@/api/url";
 import type { DialogType, TableFooter } from "@/components/types";
+import ManVIP from "@/assets/icon_sex_man.png";
+import WoManVIP from "@/assets/icon_sex_woman.png";
 
 const post = usePost();
 const dialogRef = ref<DialogType>();

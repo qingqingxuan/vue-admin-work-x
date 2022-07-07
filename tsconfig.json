@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "vite/client"
     ],
     "paths": {
       "@/*": [

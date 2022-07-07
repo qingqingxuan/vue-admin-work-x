@@ -19,9 +19,9 @@ function getComponentName(key: string) {
 }
 
 export function registerComponents(app: App) {
-  const components = require.context("./", true, /\.vue$/);
-  components.keys().forEach((it) => {
-    const component = components(it);
+  const components = import.meta.globEager("./**/**.{vue,tsx}");
+  Object.keys(components).forEach((it) => {
+    const component = components[it];
     app.component(
       component.default.name || getComponentName(it),
       component.default

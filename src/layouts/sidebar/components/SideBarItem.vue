@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import path from "path";
+import path from "path-browserify";
 import MenuItem from "./MenuItem.vue";
 import SubMenuItem from "./SubMenuItem.vue";
 import { isExternal } from "../../utils";

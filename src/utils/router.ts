@@ -10,6 +10,7 @@ import { RouteRecordRaw } from "vue-router";
 import { toHump } from ".";
 import { RouteRecordRawWithHidden } from "@/layouts/types";
 import useUserStore from "@/store/modules/user";
+import path from "path-browserify";
 import pinia from "@/store/pinia";
 
 const userStore = useUserStore(pinia);
@@ -31,6 +32,12 @@ interface OriginRoute {
   children: Array<OriginRoute>;
 }
 
+export function loadComponents() {
+  return import.meta.glob("/src/views/**/*.vue");
+}
+
+export const asynComponents = loadComponents();
+
 function getRoutes() {
   return post({
     url: getMenuListByRoleId,
@@ -44,8 +51,13 @@ function getRoutes() {
   });
 }
 
+export function getFilePath(it: OriginRoute) {
+  it.menuUrl = path.resolve("/", it.menuUrl);
+  return "/src/views" + it.menuUrl + ".vue";
+}
+
 function getComponent(it: OriginRoute) {
-  return (): any => import("@/views" + it.menuUrl + ".vue");
+  return asynComponents[getFilePath(it)];
 }
 
 function isMenu(route: OriginRoute) {

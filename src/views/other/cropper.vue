@@ -17,7 +17,7 @@
           <img
             style="display: block; max-width: 100%;"
             ref="cropperImg"
-            :src="require('@/assets/images/1.jpeg')"
+            :src="TestIcon"
           >
         </div>
       </el-col>
@@ -49,6 +49,7 @@ import {
 } from "@vue/runtime-core";
 import "cropperjs/dist/cropper.css";
 import Cropper from "cropperjs";
+import TestIcon from "@/assets/images/1.jpeg";
 
 export default defineComponent({
   name: "Copper",
@@ -64,7 +65,7 @@ export default defineComponent({
         },
       });
     });
-    return { cropperImg, cropperSrc };
+    return { cropperImg, cropperSrc, TestIcon };
   },
 });
 </script>

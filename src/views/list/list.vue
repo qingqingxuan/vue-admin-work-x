@@ -21,7 +21,7 @@
               />
               <img
                 class="vip"
-                :src="require('@/assets/img_vip_icon.png')"
+                :src="VIPIcon"
               />
             </div>
             <div class="nick-wrapper">
@@ -78,6 +78,7 @@ import { getCommentList } from "@/api/url";
 import type { TableFooter } from "@/components/types";
 import { useDataTable, usePost } from "@/hooks";
 import { onMounted, ref } from "vue";
+import VIPIcon from "@/assets/img_vip_icon.png";
 
 const post = usePost();
 const { handleSuccess, dataList } = useDataTable();
