@@ -75,7 +75,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
       },
     };
     if (it.children) {
-      route.children = generatorRoutes(it.children);
+      route.children = generatorRoutes(it.children) as RouteRecordRaw[];
     }
     tempRoutes.push(route);
   });
