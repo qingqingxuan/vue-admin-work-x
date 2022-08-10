@@ -13,7 +13,7 @@
               size="small"
               icon="PlusIcon"
               @click="onAddItem"
-              >添加
+            >添加
             </el-button>
           </template>
         </TableConfig>
@@ -29,7 +29,12 @@
           row-key="id"
           :tree-props="{ children: 'children' }"
         >
-          <el-table-column align="center" label="序号" fixed="left" width="80">
+          <el-table-column
+            align="center"
+            label="序号"
+            fixed="left"
+            width="80"
+          >
             <template v-slot="scope">
               {{ scope.$index + 1 }}
             </template>
@@ -41,27 +46,31 @@
             :prop="item.prop"
             align="center"
           >
-            <template v-if="item.prop === 'actions'" #default="scope">
+            <template
+              v-if="item.prop === 'actions'"
+              #default="scope"
+            >
               <el-button
                 plain
                 type="primary"
                 size="small"
                 @click="onUpdateItem(scope.row)"
-                >编辑</el-button
-              >
+              >编辑</el-button>
               <el-button
                 plain
                 type="danger"
                 size="small"
                 @click="onDeleteItem(scope.row)"
-                >删除</el-button
-              >
+              >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
       </template>
     </TableBody>
-    <Dialog ref="dialog" :title="dialogTitle">
+    <Dialog
+      ref="dialog"
+      :title="dialogTitle"
+    >
       <template #content>
         <BaseForm
           class="padding-left padding-right"
@@ -244,7 +253,9 @@ function filterItems(
 const onDeleteItem = (item: any) => {
   ElMessageBox.confirm("确定要删除此信息，删除后不可恢复？", "提示")
     .then(() => {
-      filterItems(dataList.value!, item);
+      if (dataList.value) {
+        filterItems(dataList.value, item);
+      }
     })
     .catch(console.log);
 };
