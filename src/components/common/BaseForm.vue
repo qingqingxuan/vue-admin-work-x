@@ -11,11 +11,15 @@
       v-for="(item, i) of innerFormItems"
       :key="i"
       :label="item.label"
+      :class="{ 'form-item__require': item.validator || item.required }"
     >
       <el-row style="width: 100%">
         <el-col :span="item.span || 24">
           <template v-if="item.render">
-            <FormRender :render="item.render" :form-item="item" />
+            <FormRender
+              :render="item.render"
+              :form-item="item"
+            />
           </template>
           <template v-else>
             <el-input
@@ -112,8 +116,7 @@
                 v-for="optionItem of item.radioOptions"
                 :key="optionItem.value"
                 :label="optionItem.value"
-                >{{ optionItem.label }}</component
-              >
+              >{{ optionItem.label }}</component>
             </el-radio-group>
             <el-checkbox-group
               v-if="item.type === 'check-group' && !item.hidden"
@@ -133,8 +136,7 @@
                 v-for="optionItem of item.checkOptions"
                 :key="optionItem.value"
                 :label="optionItem.value"
-                >{{ optionItem.label }}</component
-              >
+              >{{ optionItem.label }}</component>
             </el-checkbox-group>
             <el-switch
               v-if="item.type === 'switch' && !item.hidden"
