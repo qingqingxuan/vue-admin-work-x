@@ -1,6 +1,5 @@
 <template>
   <el-menu-item :index="generatorPath()" @click="handleClick">
-    <!-- <SvgIcon :icon-class="showRoute.meta ? showRoute.meta.icon || 'el-icon-menu' : 'el-icon-menu'" /> -->
     <el-icon>
       <component
         :is="
@@ -10,10 +9,10 @@
     </el-icon>
     <template #title>
       <span>{{ showRoute.meta ? showRoute.meta.title : showRoute.name }}</span>
-      <MenuItemTip
+      <!-- <MenuItemTip
         :value="showRoute.meta ? showRoute.meta.badge || '' : ''"
         :is-dot="showRoute.meta ? showRoute.meta.badge === 'dot' : false"
-      />
+      /> -->
     </template>
   </el-menu-item>
 </template>

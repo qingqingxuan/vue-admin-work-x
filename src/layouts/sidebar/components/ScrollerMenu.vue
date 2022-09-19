@@ -1,12 +1,18 @@
 <template>
   <el-scrollbar
-    :class="mMode === 'vertical' ? 'scrollbar' : ''"
+    :class="
+      mMode === 'vertical'
+        ? innerMode
+          ? 'scrollbar-inner-mode'
+          : 'scrollbar'
+        : ''
+    "
     wrap-class="scrollbar-wrap-class"
   >
     <el-menu
       :default-active="activePath"
       :mode="mMode"
-      :collapse="state.isCollapse"
+      :collapse="mMode === 'vertical' && state.isCollapse"
       active-text-color="var(--el-color-primary)"
       :text-color="state.theme === 'light' ? '#303133' : '#bbbbbb'"
       :background-color="bgColor"
@@ -18,15 +24,8 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  nextTick,
-  ref,
-  watch,
-  watchEffect,
-} from "vue";
-import { useRoute } from "vue-router";
+import { computed, defineComponent, nextTick, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import store from "../../store";
 export default defineComponent({
   name: "ScrollerMenu",
@@ -46,6 +45,10 @@ export default defineComponent({
       type: String,
       default: "vertical",
     },
+    innerMode: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const state = store.state;
@@ -61,8 +64,15 @@ export default defineComponent({
       () => route.fullPath,
       () => {
         nextTick(() => {
-          activePath.value = route.fullPath;
+          if (mMode.value === "vertical") {
+            activePath.value = route.fullPath;
+          } else {
+            activePath.value = route.matched[0].path;
+          }
         });
+      },
+      {
+        immediate: true,
       }
     );
     watch(
@@ -97,7 +107,7 @@ export default defineComponent({
   color: var(--el-menu-hover-text-color) !important;
 }
 :deep(.el-menu .el-menu-item) {
-  height: 45px;
+  height: 48px;
   line-height: 0;
 }
 :deep(.el-sub-menu .el-menu-item) {
@@ -107,8 +117,15 @@ export default defineComponent({
 :deep(.el-menu-item.is-active) {
   background-color: var(--el-menu-hover-bg-color) !important;
 }
+:deep(.el-menu--horizontal) {
+  border-bottom: none;
+}
 .scrollbar {
   height: calc(100% - #{$logoHeight}) !important;
+  background-color: v-bind(bgColor);
+}
+.scrollbar-inner-mode {
+  height: 100%;
   background-color: v-bind(bgColor);
 }
 .scrollbar-wrap-class {

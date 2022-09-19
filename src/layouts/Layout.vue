@@ -10,6 +10,7 @@
     <template v-else>
       <template v-if="state.layoutMode === 'ttb'">
         <VAWHeader />
+        <InnerSideBar />
       </template>
       <template v-else-if="state.layoutMode === 'lcr'">
         <TabSplitSideBar />
@@ -31,13 +32,7 @@
 
 <script lang="ts">
 import { useEmit } from "@/hooks";
-import {
-  computed,
-  defineComponent,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-} from "vue";
+import { defineComponent, onBeforeUnmount, onMounted, ref } from "vue";
 import store from "./store";
 export default defineComponent({
   name: "Layout",

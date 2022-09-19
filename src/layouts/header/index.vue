@@ -34,7 +34,7 @@ export default defineComponent({
   setup() {
     const state = store.state;
     const routes = computed(() => {
-      return state.permissionRoutes.filter((it) => !!it.name);
+      return store.getTopLevelItems();
     });
     const bgColor = ref({
       backgroundColor:

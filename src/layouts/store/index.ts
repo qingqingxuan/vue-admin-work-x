@@ -4,6 +4,7 @@ import { Device, StoreState, UserInfo } from "../types.js";
 import { RouteRecordRaw } from "vue-router";
 import { usePrimaryColor } from "../hooks";
 import defaultSetting from "../../setting";
+import { omit } from "lodash";
 const layoutModes = ["ltr", "lcr", "ttb"];
 
 export default {
@@ -61,6 +62,23 @@ export default {
         it.path && !(it as any).hidden && it.children && it.children.length > 0
       );
     });
+  },
+  getTopLevelItems() {
+    return this.state.permissionRoutes
+      .filter((it) => {
+        return (
+          it.path &&
+          !(it as any).hidden &&
+          it.children &&
+          it.children.length > 0
+        );
+      })
+      .map((it) => {
+        return {
+          items: it.children,
+          ...omit(it, "children"),
+        };
+      });
   },
   initPermissionRoute(routes: Array<RouteRecordRaw>) {
     this.state.permissionRoutes.length = 0;
