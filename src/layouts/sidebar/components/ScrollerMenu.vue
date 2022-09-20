@@ -14,7 +14,7 @@
       :mode="mMode"
       :collapse="mMode === 'vertical' && state.isCollapse"
       active-text-color="var(--el-color-primary)"
-      :text-color="state.theme === 'light' ? '#303133' : '#bbbbbb'"
+      :text-color="textColor"
       :background-color="bgColor"
       :style="{ height: mMode === 'vertical' ? '100%' : '48px' }"
     >
@@ -53,9 +53,20 @@ export default defineComponent({
   setup(props) {
     const state = store.state;
     const route = useRoute();
-    const bgColor = ref(
-      state.theme === "light" ? "var(--el-color-white)" : "#001428"
-    );
+    const bgColor = computed(() => {
+      return state.theme === "light"
+        ? "var(--el-color-white)"
+        : props.innerMode
+        ? "var(--el-color-white)"
+        : "#001428";
+    });
+    const textColor = computed(() => {
+      return state.theme === "light"
+        ? "#303133"
+        : props.innerMode
+        ? "#303133"
+        : "#bbbbbb";
+    });
     const activePath = ref(route.fullPath);
     const mMode = computed(() => {
       return props.mode;
@@ -75,18 +86,12 @@ export default defineComponent({
         immediate: true,
       }
     );
-    watch(
-      () => state.theme,
-      (newVal) => {
-        bgColor.value =
-          newVal === "light" ? "var(--el-color-white)" : "#001428";
-      }
-    );
     return {
       mMode,
       activePath,
       state,
       bgColor,
+      textColor,
     };
   },
 });
