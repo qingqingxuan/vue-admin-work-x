@@ -122,9 +122,6 @@ export default defineComponent({
       useEcharts(studentChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(studentChart.value as HTMLDivElement);
-    });
     return {
       loading,
       updateChart,

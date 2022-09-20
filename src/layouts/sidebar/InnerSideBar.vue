@@ -30,17 +30,6 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const routes = ref<RouteRecordRaw[]>([]);
-    function handlePath(routes: RouteRecordRaw[]) {
-      for (let index = 0; index < routes.length; index++) {
-        const it = routes[index];
-        if (it.children && it.children.length > 0) {
-          handlePath(it.children);
-        } else {
-          router.push(it.path);
-        }
-        break;
-      }
-    }
     watch(
       () => route.fullPath,
       () => {
@@ -50,7 +39,6 @@ export default defineComponent({
             (it) => it.path === path
           );
           routes.value = tempRoutes?.children || [];
-          handlePath(routes.value);
         });
       },
       {

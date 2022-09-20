@@ -137,28 +137,12 @@ export default defineComponent({
             option
           )
         );
-        interval = setInterval(() => {
-          const option = {
-            series: [
-              {
-                data: getData(),
-              },
-            ],
-          };
-          useEcharts(fullYearSalesChart.value as HTMLDivElement).setOption(
-            option
-          );
-        }, 5000);
       }, 1000);
     };
     const updateChart = () => {
       useEcharts(fullYearSalesChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(fullYearSalesChart.value as HTMLDivElement);
-      clearInterval(interval);
-    });
     return {
       loading,
       fullYearSalesChart,

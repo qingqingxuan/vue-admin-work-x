@@ -121,9 +121,6 @@ export default defineComponent({
       useEcharts(salesChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(salesChart.value as HTMLDivElement);
-    });
     return {
       loading,
       salesChart,

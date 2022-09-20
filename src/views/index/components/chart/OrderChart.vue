@@ -103,9 +103,6 @@ export default defineComponent({
       useEcharts(orderChartWrapper.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(orderChartWrapper.value as HTMLDivElement);
-    });
     return {
       loading,
       orderChartWrapper,

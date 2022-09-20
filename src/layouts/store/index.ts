@@ -75,6 +75,7 @@ export default {
       })
       .map((it) => {
         return {
+          isTopItem: true,
           items: it.children,
           ...omit(it, "children"),
         };

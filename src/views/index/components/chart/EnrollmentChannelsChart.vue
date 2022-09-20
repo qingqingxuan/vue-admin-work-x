@@ -119,9 +119,6 @@ export default defineComponent({
       useEcharts(channelsChart.value as HTMLDivElement).resize();
     };
     onMounted(init);
-    onBeforeUnmount(() => {
-      dispose(channelsChart.value as HTMLDivElement);
-    });
     return {
       loading,
       channelsChart,

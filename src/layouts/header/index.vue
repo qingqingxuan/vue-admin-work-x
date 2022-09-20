@@ -14,6 +14,7 @@
             :key="item.path"
             :full-path="item.path"
             :item="item"
+            @top-item-click="topItemClick"
           />
         </template>
       </ScrollerMenu>
@@ -32,9 +33,11 @@
 <script lang="ts">
 import store from "../store";
 import { computed, defineComponent, ref, watch } from "vue";
+import { RouteRecordRaw, useRouter } from "vue-router";
 export default defineComponent({
   name: "VAWHeader",
   setup() {
+    const router = useRouter();
     const state = store.state;
     const routes = computed(() => {
       return store.getTopLevelItems();
@@ -54,10 +57,25 @@ export default defineComponent({
         };
       }
     );
+    function handlePath(routes: RouteRecordRaw[]) {
+      for (let index = 0; index < routes.length; index++) {
+        const it = routes[index];
+        if (it.children && it.children.length > 0) {
+          handlePath(it.children);
+        } else {
+          router.push(it.path);
+        }
+        break;
+      }
+    }
+    function topItemClick(item: any) {
+      handlePath(item.items);
+    }
     return {
       bgColor,
       routes,
       state,
+      topItemClick,
     };
   },
 });

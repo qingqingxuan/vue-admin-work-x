@@ -1,11 +1,12 @@
 <template>
-  <el-menu-item :index="generatorPath()" @click="handleClick">
+  <el-menu-item
+    :index="generatorPath()"
+    @click="handleClick"
+  >
     <el-icon>
-      <component
-        :is="
+      <component :is="
           showRoute.meta ? showRoute.meta.icon || OperationIcon : OperationIcon
-        "
-      />
+        " />
     </el-icon>
     <template #title>
       <span>{{ showRoute.meta ? showRoute.meta.title : showRoute.name }}</span>
@@ -43,7 +44,8 @@ export default defineComponent({
       },
     },
   },
-  setup(props) {
+  emits: ["top-item-click"],
+  setup(props, { emit }) {
     const router = useRouter();
     const route = useRoute();
     function generatorPath() {
@@ -56,6 +58,10 @@ export default defineComponent({
       return path.resolve(props.fullPath, props.showRoute.path);
     }
     function handleClick() {
+      if (props.showRoute.isTopItem) {
+        emit("top-item-click", props.showRoute);
+        return;
+      }
       if (isExternal(props.showRoute.path)) {
         window.open(props.showRoute.path);
       } else if (isExternal(props.fullPath)) {
