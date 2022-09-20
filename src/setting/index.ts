@@ -31,7 +31,7 @@ export default Object.assign(
     projectName,
     version,
     primaryColor: "#409eff",
-    layoutMode: "ltr",
+    layoutMode: "ttb",
     theme: "light",
   },
   defaultSetting

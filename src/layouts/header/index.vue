@@ -1,5 +1,8 @@
 <template>
-  <div class="vaw-header-layout" :style="bgColor">
+  <div
+    class="vaw-header-layout"
+    :style="bgColor"
+  >
     <div class="logo-wrapper">
       <Logo :always-show="true" />
     </div>
@@ -73,6 +76,7 @@ export default defineComponent({
   align-items: center;
   box-sizing: border-box;
   border-bottom: 1px solid var(--el-border-color-light);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   .logo-wrapper {
     width: $menuWidth;
   }
