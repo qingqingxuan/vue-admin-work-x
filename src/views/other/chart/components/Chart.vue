@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import useEcharts from "@/hooks/Echarts";
-import { defineComponent, onMounted, ref, toRef } from "@vue/runtime-core";
+import { defineComponent, onMounted, ref, toRef } from "vue";
 import { EChartsCoreOption } from "echarts";
 
 export default defineComponent({

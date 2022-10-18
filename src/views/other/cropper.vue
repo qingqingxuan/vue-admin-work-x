@@ -46,7 +46,7 @@ import {
   reactive,
   ref,
   unref,
-} from "@vue/runtime-core";
+} from "vue";
 import "cropperjs/dist/cropper.css";
 import Cropper from "cropperjs";
 

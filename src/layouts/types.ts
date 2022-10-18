@@ -30,7 +30,10 @@ export interface StoreState {
   cachedView: Array<string>;
 }
 
-export type RouteRecordRawWithHidden = RouteRecordRaw & { hidden: boolean };
+export type RouteRecordRawWithHidden = RouteRecordRaw & {
+  hidden: boolean;
+  children: RouteRecordRawWithHidden[];
+};
 
 export interface LocalLayoutStore {
   state: UnwrapNestedRefs<StoreState>;

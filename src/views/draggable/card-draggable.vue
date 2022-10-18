@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from "@vue/runtime-core";
+import { defineComponent, onMounted, reactive } from "vue";
 import draggable from "vuedraggable";
 import * as icons from "@element-plus/icons";
 interface IconItemType {

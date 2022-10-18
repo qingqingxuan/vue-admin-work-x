@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@vue/runtime-core";
+import { defineComponent, onMounted, ref } from "vue";
 import { useCreateScript } from "@/hooks";
 
 const SCRIPT_URL =

@@ -238,7 +238,7 @@ $leftWith: 35%;
     }
   }
 }
-@media screen and(max-width: 966px) {
+@media screen and (max-width: 966px) {
   .left {
     display: none;
   }

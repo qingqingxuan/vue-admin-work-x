@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, shallowReactive, toRef } from "@vue/runtime-core";
+import { defineComponent, shallowReactive, toRef } from "vue";
 import { showSuccessMessage } from "../types";
 
 export default defineComponent({

@@ -277,7 +277,7 @@ import {
   onMounted,
   reactive,
   ref,
-} from "@vue/runtime-core";
+} from "vue";
 import { useRouter } from "vue-router";
 import { useLayoutStore } from "@/layouts/hooks";
 import { random } from "lodash";

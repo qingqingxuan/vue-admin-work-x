@@ -22,7 +22,7 @@
 import image_404 from '@/assets/img_404.png'
 import image_403 from '@/assets/img_403.png'
 import image_500 from '@/assets/img_500.png'
-import { defineComponent } from '@vue/runtime-core'
+import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'ExceptionStatus',
   props: {

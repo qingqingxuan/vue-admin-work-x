@@ -65,6 +65,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
       name: getNameByUrl(it.menuUrl),
       hidden: !!it.hidden,
       component: isMenu(it) ? Layout : getComponent(it),
+      children: [],
       meta: {
         title: it.menuName,
         affix: !!it.affix,
@@ -75,7 +76,7 @@ function generatorRoutes(res: Array<OriginRoute>) {
       },
     };
     if (it.children) {
-      route.children = generatorRoutes(it.children) as RouteRecordRaw[];
+      route.children = generatorRoutes(it.children);
     }
     tempRoutes.push(route);
   });

@@ -54,7 +54,7 @@ import {
   onBeforeUnmount,
   onMounted,
   ref,
-} from "@vue/runtime-core";
+} from "vue";
 import { dispose, graphic } from "echarts";
 import { useEcharts } from "@/hooks";
 export default defineComponent({

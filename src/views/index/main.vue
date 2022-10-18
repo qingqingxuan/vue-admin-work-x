@@ -124,7 +124,7 @@ import {
   onMounted,
   ref,
   watch,
-} from "@vue/runtime-core";
+} from "vue";
 import { useLayoutStore } from "@/layouts/hooks";
 export default defineComponent({
   name: "Home",

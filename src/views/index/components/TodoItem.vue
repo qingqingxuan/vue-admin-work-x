@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "@vue/runtime-core";
+import { computed, defineComponent } from "vue";
 
 export default defineComponent({
   name: "TodoItem",

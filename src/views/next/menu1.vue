@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@vue/runtime-core";
+import { defineComponent, onMounted, ref } from "vue";
 
 export default defineComponent({
   name: "Menu1",
