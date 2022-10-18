@@ -13,6 +13,7 @@
     "clipboard": "^2.0.8",
     "core-js": "^3.6.5",
     "cropperjs": "^1.5.12",
+    "dayjs": "^1.11.5",
     "echarts": "^5.0.2",
     "element-plus": "^2.2.18",
     "js-cookie": "^2.2.1",
@@ -36,10 +37,12 @@
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",
     "@types/lodash": "^4.14.177",
+    "@types/node": "^18.11.0",
     "@types/nprogress": "^0.2.0",
     "@types/qrcode": "^1.4.0",
     "@types/qs": "^6.9.7",
     "@types/quill": "^2.0.8",
+    "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -60,13 +63,5 @@
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "typescript": "^4.4.4"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue}": [
-      "git add"
-    ]
   }
 }
