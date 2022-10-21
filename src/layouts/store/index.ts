@@ -138,7 +138,7 @@ export default {
         .filter((it: RouteRecordRaw) => {
           return it.name && it.meta && it.meta.cacheable;
         })
-        .map((it: { name: string }) => toHump(it.name as string))
+        .map((it: RouteRecordRaw) => toHump(it.name as string))
     );
   },
   addVisitedView(route: any) {
@@ -168,7 +168,7 @@ export default {
       const selectIndex = this.state.visitedView.indexOf(selectRoute);
       if (selectIndex !== -1) {
         const tempList = this.state.visitedView.filter(
-          (it: { meta: { affix: any } }, index: number) => {
+          (it: RouteRecordRaw, index: number) => {
             return (it.meta && it.meta.affix) || index >= selectIndex;
           }
         );
@@ -185,7 +185,7 @@ export default {
       const selectIndex = this.state.visitedView.indexOf(selectRoute);
       if (selectIndex !== -1) {
         const tempList = this.state.visitedView.filter(
-          (it: { meta: { affix: any } }, index: number) => {
+          (it: RouteRecordRaw, index: number) => {
             return (it.meta && it.meta.affix) || index <= selectIndex;
           }
         );
@@ -200,7 +200,7 @@ export default {
   closeAllVisitedView() {
     return new Promise<void>((resolve) => {
       const tempList = this.state.visitedView.filter(
-        (it: { meta: { affix: any } }, _index: any) => {
+        (it: RouteRecordRaw, _index: any) => {
           return it.meta && it.meta.affix;
         }
       );
@@ -211,10 +211,10 @@ export default {
       this.state.cachedView.push(
         ...this.state.visitedView
           .filter(
-            (route: { name: any; meta: { cacheable: any } }) =>
+            (route: RouteRecordRaw) =>
               route.name && route.meta && route.meta.cacheable
           )
-          .map((it: { name: string }) => toHump(it.name as string))
+          .map((it: RouteRecordRaw) => toHump(it.name as string))
       );
       resolve();
     });
